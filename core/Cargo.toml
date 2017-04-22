@@ -6,24 +6,23 @@ authors = [
     "Nikita Pekin <contact@nikitapek.in>"
 ]
 build = "build.rs"
-description = "AWS SDK for Rust - S3"
+description = "AWS SDK for Rust"
 documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
 exclude = [".gitignore", ".travis.yml", "docgen.sh", "helpers/**/*", "codegen/**/*"]
 keywords = ["AWS", "Amazon"]
 license = "MIT"
-name = "rusoto_s3"
+name = "rusoto_core"
 readme = "README.md"
 repository = "https://github.com/rusoto/rusoto"
-version = "0.1.0"
+version = "0.24.0"
+homepage = "https://www.rusoto.org/"
+
+[badges]
+travis-ci = { repository = "rusoto/rusoto", branch = "master" }
+appveyor = { repository = "rusoto/rusoto", branch = "master" }
 
 [build-dependencies]
 rustc_version = "0.1.7"
-rayon = "0.6.0"
-
-[build-dependencies.rusoto_codegen]
-default-features = false
-path = "../../codegen"
-version = ">= 0.8.0"
 
 [dependencies]
 chrono = "0.2.21"
@@ -36,8 +35,6 @@ regex = "0.2.1"
 ring = "0.7"
 rustc-serialize = "0.3.19"
 serde = "0.9.5"
-serde_derive = "0.9.5"
-serde_json = "0.9.4"
 time = "0.1.35"
 url = "1.2.0"
 xml-rs = "0.3"
@@ -46,16 +43,13 @@ xml-rs = "0.3"
 optional = true
 version = "0.0"
 
-[dependencies.rusoto_core]
-path = "../../core"
-version = "0.24.0"
+[dependencies.rusoto_credential]
+path = "credential"
+version = "0.6.0"
 
 [dev-dependencies]
 env_logger = "0.4.0"
 rand = "^0.3.14"
 
 [features]
-default = []
-nightly-testing = ["clippy", "rusoto_codegen/nightly-testing", "rusoto_core/nightly-testing"]
-s3 = []
-unstable = []
+nightly-testing = ["clippy", "rusoto_credential/nightly-testing"]

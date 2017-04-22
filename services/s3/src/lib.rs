@@ -2,14 +2,13 @@
 //!
 //! If you're using the service, you're probably looking for [S3Client](struct.S3Client.html).
 
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate hyper;
 extern crate md5;
 extern crate xml;
 extern crate rustc_serialize;
-extern crate rusoto_credential;
 
-use rusoto::*;
+use rusoto_core::*;
 
 use std::result::Result::Ok;
 
