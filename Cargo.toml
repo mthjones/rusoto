@@ -55,6 +55,11 @@ version = "0.0"
 path = "core"
 version = "0.24.0"
 
+[dependencies.rusoto_s3]
+optional = true
+path = "services/s3"
+version = "*"
+
 [dev-dependencies]
 env_logger = "0.4.0"
 rand = "^0.3.14"
@@ -110,6 +115,7 @@ all = [
 	   	"rds",
 	   	"route53",
 	   	"route53domains",
+		"s3",
 	   	"sdb",
 	   	"ses",
 	   	"sns",
@@ -168,6 +174,7 @@ redshift = []
 rds = []
 route53 = []
 route53domains = []
+s3 = ["rusoto_s3"]
 sdb = []
 ses = []
 sns = []
