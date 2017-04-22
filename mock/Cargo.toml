@@ -24,7 +24,7 @@ optional = true
 version = "0.0"
 
 [dependencies.rusoto_core]
-path = "../../core"
+path = "../core"
 version = "0.24.0"
 
 [features]

@@ -45,48 +45,15 @@
 
 extern crate chrono;
 extern crate hyper;
-extern crate hyper_native_tls;
-#[macro_use]
-extern crate lazy_static;
-#[macro_use]
-extern crate log;
-extern crate md5;
-extern crate regex;
-extern crate ring;
-extern crate rusoto_credential;
-extern crate rustc_serialize;
-extern crate serde;
+extern crate rusoto_core;
+#[cfg(test)]
+extern crate rusoto_mock;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
-extern crate time;
-extern crate url;
 extern crate xml;
 
-pub use region::{ParseRegionError, Region};
-pub use rusoto_credential::{AwsCredentials, ChainProvider, ContainerProvider, CredentialsError,
-                            EnvironmentProvider, InstanceMetadataProvider, ProfileProvider,
-                            ProvideAwsCredentials, DefaultCredentialsProvider,
-                            DefaultCredentialsProviderSync, claims,
-                            AutoRefreshingProviderSync, AutoRefreshingProvider,
-                            BaseAutoRefreshingProvider};
-pub use request::{DispatchSignedRequest, HttpResponse, HttpDispatchError, TlsError};
-pub use signature::SignedRequest;
-pub use request::default_tls_client;
-pub use region::default_region;
-
-pub mod param;
-pub mod region;
-pub mod request;
-pub mod xmlerror;
-pub mod xmlutil;
-pub mod serialization;
-#[macro_use]
-pub mod signature;
-
-// This isn't exported if you compile just the S3 crate, so tests fail.
-// #[cfg(test)]
-pub mod mock;
+pub use rusoto_core::*;
 
 #[cfg(feature = "acm")]
 pub mod acm;

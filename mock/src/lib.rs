@@ -1,10 +1,15 @@
 //! Mock request dispatcher and credentials for unit testing services
+
+extern crate chrono;
+extern crate hyper;
+extern crate rusoto_core;
+
 use std::fs::File;
 use std::io::Read;
 use std::collections::HashMap;
 
-use super::{DispatchSignedRequest, HttpResponse, HttpDispatchError, SignedRequest};
-use super::{ProvideAwsCredentials, CredentialsError, AwsCredentials};
+use rusoto_core::{DispatchSignedRequest, HttpResponse, HttpDispatchError, SignedRequest, 
+                  ProvideAwsCredentials, CredentialsError, AwsCredentials};
 use chrono::{Duration, UTC};
 use hyper::status::StatusCode;
 

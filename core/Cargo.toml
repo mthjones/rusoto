@@ -6,9 +6,8 @@ authors = [
     "Nikita Pekin <contact@nikitapek.in>"
 ]
 build = "build.rs"
-description = "AWS SDK for Rust"
+description = "AWS SDK for Rust - Core functionality"
 documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
-exclude = [".gitignore", ".travis.yml", "docgen.sh", "helpers/**/*", "codegen/**/*"]
 keywords = ["AWS", "Amazon"]
 license = "MIT"
 name = "rusoto_core"
@@ -44,7 +43,7 @@ optional = true
 version = "0.0"
 
 [dependencies.rusoto_credential]
-path = "credential"
+path = "../credential"
 version = "0.6.0"
 
 [dev-dependencies]

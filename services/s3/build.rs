@@ -1,6 +1,5 @@
 extern crate rustc_version;
 extern crate rusoto_codegen;
-extern crate rayon;
 
 use std::env;
 use std::path::Path;
@@ -8,7 +7,6 @@ use std::io::Write;
 use std::fs::File;
 
 use rusoto_codegen::{Service, generate};
-use rayon::prelude::*;
 
 /// Parses and generates variables used to construct a User-Agent.
 ///
@@ -42,13 +40,7 @@ fn main() {
     let out_dir = env::var_os("OUT_DIR").expect("OUT_DIR not specified");
     let out_path = Path::new(&out_dir).to_owned();
 
-    let services = services! {
-        ["s3", "2006-03-01"]
-    };
-
-    let count: usize =
-        services.into_par_iter().map(|service| generate(service, &out_path.clone())).count();
-    println!("\nGenerated {:?} services.\n", count);
+    generate(Service::new("s3", "2006-03-01"), &out_path);
 
     generate_user_agent_vars(&out_path);
 

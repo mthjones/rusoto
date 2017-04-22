@@ -10,8 +10,6 @@ extern crate rustc_serialize;
 
 use rusoto_core::*;
 
-use std::result::Result::Ok;
-
 include!(concat!(env!("OUT_DIR"), "/s3.rs"));
 
 #[cfg(test)]
@@ -24,11 +22,11 @@ mod test {
     use xmlutil::{XmlResponse, Next};
     use xml::EventReader;
 
-    use rusoto::{Region, SignedRequest};
-    use mock::{MockRequestDispatcher, MockCredentialsProvider};
-
     extern crate env_logger;
-    extern crate rusoto;
+    extern crate rusoto_mock;
+
+    use rusoto_core::{Region, SignedRequest};
+    use rusoto_mock::{MockRequestDispatcher, MockCredentialsProvider};
 
     #[test]
     fn initiate_multipart_upload_happy_path() {
