@@ -11,7 +11,7 @@ mod cargo;
 
 use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
-use std::io::{self, Write, BufWriter};
+use std::io::{self, Read, Write, BufWriter};
 use std::path::Path;
 
 use clap::{Arg, App};
@@ -76,12 +76,20 @@ fn main() {
                         .short("o")
                         .takes_value(true)
                         .required(true))
-                    .arg(Arg::with_name("version")
-                        .long("version")
-                        .short("v")
-                        .takes_value(true)
-                        .required(true))
                     .get_matches();
+    
+    let core_manifest_raw = OpenOptions::new()
+        .read(true)
+        .open("../core/Cargo.toml")
+        .and_then(|mut f| {
+            let mut buf = String::new();
+            f.read_to_string(&mut buf).map(|_| buf)
+        })
+        .expect("Unable to read core crate's Cargo.toml");
+    
+    let core_manifest: cargo::Manifest = toml::from_str(&core_manifest_raw).expect("Unable to parse core crate's Cargo.toml");
+
+    let version = &core_manifest.package.version;
 
     let out_dir = Path::new(matches.value_of("out_dir").unwrap());
 
@@ -96,8 +104,6 @@ fn main() {
     }
 
     fs::create_dir(out_dir).expect("Unable to create output directory");
-
-    let version = matches.value_of("version").unwrap();
     
     let services: Vec<io::Result<Service>> = matches.values_of("services").unwrap().map(|s| {
         let mut service_parts = s.splitn(2, "@");
@@ -142,7 +148,7 @@ fn main() {
                 name: format!("rusoto_{}", &service.metadata.endpoint_prefix),
                 readme: Some("README.md".into()),
                 repository: Some("https://github.com/rusoto/rusoto".into()),
-                version: version.into(),
+                version: version.clone(),
                 homepage: Some("https://www.rusoto.org/".into()),
                 ..cargo::Metadata::default()
             },

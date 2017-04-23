@@ -2,7 +2,7 @@ use toml;
 
 use std::collections::HashMap;
 
-#[derive(Debug, Default, Clone, Serialize)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize)]
 pub struct Manifest {
     pub package: Metadata,
     pub badges: Option<HashMap<String, Badge>>,
@@ -17,7 +17,7 @@ pub struct Manifest {
     pub features: Option<HashMap<String, Vec<String>>>
 }
 
-#[derive(Debug, Default, Clone, Serialize)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize)]
 pub struct Metadata {
     pub authors: Option<Vec<String>>,
     pub description: Option<String>,
@@ -31,13 +31,13 @@ pub struct Metadata {
     pub homepage: Option<String>
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Badge {
     pub repository: String,
     pub branch: String
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum Dependency {
     Simple(String),
