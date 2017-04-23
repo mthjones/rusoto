@@ -13,26 +13,15 @@ homepage = "https://www.rusoto.org/"
 [build-dependencies]
 
 [dependencies]
-rustc-serialize = "0.3.19"
-time = "0.1.35"
-url = "1.2.0"
-xml-rs = "0.3"
-serde_json = "0.9.4"
-md5 = "0.3.2"
-lazy_static = "0.2.1"
-ring = "0.7"
 hyper = "0.10.0"
-hyper-native-tls = "0.2.1"
-serde_derive = "0.9.5"
+serde_json = "0.9.4"
 serde = "0.9.5"
-chrono = "0.2.21"
-log = "0.3.6"
-regex = "0.2.1"
-
-[dependencies.rusoto]
-path = "../.."
+serde_derive = "0.9.5"
 
 [dependencies.rusoto_credential]
 path = "../../credential"
+
+[dependencies.rusoto]
+path = "../.."
 
 [dev-dependencies]

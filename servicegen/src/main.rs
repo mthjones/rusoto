@@ -9,6 +9,7 @@ extern crate toml;
 
 mod cargo;
 
+use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
 use std::io::{self, Write, BufWriter};
 use std::path::Path;
@@ -16,6 +17,55 @@ use std::path::Path;
 use clap::{Arg, App};
 
 use rusoto_codegen::botocore::Service;
+
+fn get_dependencies(service: &Service) -> HashMap<String, cargo::Dependency> {
+    let mut dependencies = HashMap::new();
+
+    dependencies.insert("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into()));
+    dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+        path: Some("../..".into()),
+        version: None,
+        optional: None,
+        default_features: None,
+    });
+    dependencies.insert("rusoto_credential".to_owned(), cargo::Dependency::Extended {
+        path: Some("../../credential".into()),
+        version: None,
+        optional: None,
+        default_features: None,
+    });
+
+    match &service.metadata.protocol[..] {
+        "json" => {
+            dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
+            dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
+            dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
+        },
+        "query" | "ec2" => {
+            dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
+        },
+        "rest-json" => {
+            dependencies.insert("log".to_owned(), cargo::Dependency::Simple("0.3.6".into()));
+            dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
+            dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
+            dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
+        },
+        "rest-xml" => {
+            dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
+        },
+        protocol => panic!("Unknown protocol {}", protocol),
+    }
+
+    match &service.metadata.endpoint_prefix[..] {
+        "s3" => {
+            dependencies.insert("rustc-serialize".to_owned(), cargo::Dependency::Simple("0.3.19".into()));
+            dependencies.insert("md5".to_owned(), cargo::Dependency::Simple("0.3.2".into()));
+        }
+        _ => {}
+    };
+
+    dependencies
+}
 
 fn main() {
     let matches = App::new("Rusoto Service Crate Generator")
@@ -102,35 +152,7 @@ fn main() {
                 homepage: Some("https://www.rusoto.org/".into()),
                 ..cargo::Metadata::default()
             },
-            dependencies: vec![
-                ("chrono".to_owned(), cargo::Dependency::Simple("0.2.21".into())),
-                ("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into())),
-                ("hyper-native-tls".to_owned(), cargo::Dependency::Simple("0.2.1".into())),
-                ("lazy_static".to_owned(), cargo::Dependency::Simple("0.2.1".into())),
-                ("log".to_owned(), cargo::Dependency::Simple("0.3.6".into())),
-                ("md5".to_owned(), cargo::Dependency::Simple("0.3.2".into())),
-                ("regex".to_owned(), cargo::Dependency::Simple("0.2.1".into())),
-                ("ring".to_owned(), cargo::Dependency::Simple("0.7".into())),
-                ("rustc-serialize".to_owned(), cargo::Dependency::Simple("0.3.19".into())),
-                ("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into())),
-                ("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into())),
-                ("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into())),
-                ("time".to_owned(), cargo::Dependency::Simple("0.1.35".into())),
-                ("url".to_owned(), cargo::Dependency::Simple("1.2.0".into())),
-                ("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into())),
-                ("rusoto".to_owned(), cargo::Dependency::Extended {
-                    path: Some("../..".into()),
-                    version: None,
-                    optional: None,
-                    default_features: None,
-                }),
-                ("rusoto_credential".to_owned(), cargo::Dependency::Extended {
-                    path: Some("../../credential".into()),
-                    version: None,
-                    optional: None,
-                    default_features: None,
-                }),
-            ].into_iter().collect(),
+            dependencies: get_dependencies(&service),
             ..cargo::Manifest::default()
         };
 

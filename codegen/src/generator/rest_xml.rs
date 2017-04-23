@@ -96,7 +96,6 @@ impl GenerateProtocol for RestXmlGenerator {
 
         if service.service_type_name() == "S3" {
             imports += "
-                use md5;
                 use rustc_serialize::base64::{ToBase64, Config, CharacterSet, Newline};";
         }
 
