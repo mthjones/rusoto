@@ -108,9 +108,11 @@ fn main() {
     let services: Vec<io::Result<Service>> = matches.values_of("services").unwrap().map(|s| {
         let mut service_parts = s.splitn(2, "@");
         let name = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s));
-        let version = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s));
-        
-        Service::load(name, version)
+        if let Some(version) = service_parts.next() {
+            Service::load(name, version)
+        } else {
+            Service::load_latest(name)
+        }
     }).collect();
 
     for service in services {

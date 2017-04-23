@@ -35,6 +35,16 @@ impl Service {
         Ok(service)
     }
 
+    pub fn load_latest(name: &str) -> io::Result<Self> {
+        let max_version = Path::new(BOTOCORE_DIR).join(name).read_dir()?
+            .filter_map(|e| e.ok())
+            .filter(|e| e.path().is_dir())
+            .map(|e| e.path().file_name().unwrap().to_os_string())
+            .max().unwrap();
+
+        Self::load(name, max_version.to_str().unwrap())
+    }
+
     pub fn client_type_name(&self) -> String {
         format!("{}Client", self.service_type_name())
     }
