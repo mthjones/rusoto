@@ -23,13 +23,7 @@ fn get_dependencies(service: &Service) -> HashMap<String, cargo::Dependency> {
 
     dependencies.insert("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into()));
     dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
-        path: Some("../..".into()),
-        version: None,
-        optional: None,
-        default_features: None,
-    });
-    dependencies.insert("rusoto_credential".to_owned(), cargo::Dependency::Extended {
-        path: Some("../../credential".into()),
+        path: Some("../../core".into()),
         version: None,
         optional: None,
         default_features: None,
@@ -153,6 +147,14 @@ fn main() {
                 ..cargo::Metadata::default()
             },
             dependencies: get_dependencies(&service),
+            dev_dependencies: vec![
+                ("rusoto_mock".to_owned(), cargo::Dependency::Extended {
+                    path: Some("../../mock".into()),
+                    version: None,
+                    optional: None,
+                    default_features: None,
+                })
+            ].into_iter().collect(),
             ..cargo::Manifest::default()
         };
 

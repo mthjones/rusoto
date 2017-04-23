@@ -13,15 +13,12 @@ homepage = "https://www.rusoto.org/"
 [build-dependencies]
 
 [dependencies]
-hyper = "0.10.0"
+serde_derive = "0.9.5"
 serde_json = "0.9.4"
 serde = "0.9.5"
-serde_derive = "0.9.5"
-
-[dependencies.rusoto_credential]
-path = "../../credential"
+hyper = "0.10.0"
 
 [dependencies.rusoto]
-path = "../.."
-
-[dev-dependencies]
+path = "../../core"
+[dev-dependencies.rusoto_mock]
+path = "../../mock"
