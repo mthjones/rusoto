@@ -94,8 +94,6 @@ pub mod ds;
 pub mod dynamodb;
 #[cfg(feature = "dynamodbstreams")]
 pub mod dynamodbstreams;
-#[cfg(feature = "ec2")]
-pub mod ec2;
 #[cfg(feature = "ecr")]
 pub mod ecr;
 #[cfg(feature = "ecs")]

@@ -60,6 +60,11 @@ optional = true
 path = "services/s3"
 version = "*"
 
+[dependencies.rusoto_ec2]
+optional = true
+path = "services/ec2"
+version = "*"
+
 [dev-dependencies]
 env_logger = "0.4.0"
 rand = "^0.3.14"
@@ -89,7 +94,7 @@ all = [
 	   	"ds",
 	   	"dynamodb",
 	   	"dynamodbstreams",
-	   	"ec2",
+		"ec2",
 	   	"ecr",
 	   	"ecs",
 	   	"elasticache",
@@ -147,7 +152,7 @@ directconnect = []
 ds = []
 dynamodb = []
 dynamodbstreams = []
-ec2 = []
+ec2 = ["rusoto_ec2"]
 ecr = []
 ecs = []
 elasticache = []
@@ -206,7 +211,6 @@ packagea = [
 	"ds",
 	"dynamodb",
 	"dynamodbstreams",
-	"ec2",
 	"ecr",
 	"ecs",
 	"elasticache",
