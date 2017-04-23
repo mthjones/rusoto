@@ -52,6 +52,18 @@ pub fn generate(service: Service, output_path: &Path) -> i32 {
     return 1;
 }
 
+/// Parses and generates variables used to construct a User-Agent.
+///
+/// This is used to create a User-Agent header string resembling
+/// `rusoto/x.y.z rust/x.y.z <os>`.
+pub fn generate_user_agent_vars(output_path: &Path) {
+    let rust_version = rustc_version::version();
+    let mut f = File::create(&output_path.join("user_agent_vars.rs"))
+        .expect("Could not create user agent file");
+    f.write_all(format!("static RUST_VERSION: &'static str = \"{}\";", rust_version).as_bytes())
+        .expect("Unable to write user agent");
+}
+
 fn botocore_generate(input_path: &Path, output_path: &Path) {
     let input_file = File::open(input_path).expect(&format!(
         "{:?} not found",

@@ -9,15 +9,12 @@ build = "build.rs"
 description = "AWS SDK for Rust - S3"
 documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
 exclude = [".gitignore", ".travis.yml", "docgen.sh", "helpers/**/*", "codegen/**/*"]
-keywords = ["AWS", "Amazon"]
+keywords = ["AWS", "Amazon", "S3"]
 license = "MIT"
 name = "rusoto_s3"
 readme = "README.md"
 repository = "https://github.com/rusoto/rusoto"
 version = "0.1.0"
-
-[build-dependencies]
-rustc_version = "0.1.7"
 
 [build-dependencies.rusoto_codegen]
 default-features = false
