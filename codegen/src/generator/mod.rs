@@ -70,14 +70,18 @@ pub fn generate_source(service: &Service, output_path: &Path) -> IoResult {
 
     let mut writer = BufWriter::new(output_file);
 
+    generate_source2(service, &mut writer)
+}
+
+pub fn generate_source2(service: &Service, writer: &mut FileWriter) -> IoResult {
     // EC2 service protocol is similar to query but not the same.  Rusoto is able to generate Rust code
     // from the service definition through the same QueryGenerator, but botocore uses a special class.
     // See https://github.com/boto/botocore/blob/dff99fdf2666accf6b448aef7f03fe3d66dd38fa/botocore/serialize.py#L259-L266 .
     match &service.metadata.protocol[..] {
-        "json" => generate(&mut writer, service, JsonGenerator, JsonErrorTypes),
-        "query" | "ec2" => generate(&mut writer, service, QueryGenerator, XmlErrorTypes),
-        "rest-json" => generate(&mut writer, service, RestJsonGenerator, JsonErrorTypes),
-        "rest-xml" => generate(&mut writer, service, RestXmlGenerator, XmlErrorTypes),
+        "json" => generate(writer, service, JsonGenerator, JsonErrorTypes),
+        "query" | "ec2" => generate(writer, service, QueryGenerator, XmlErrorTypes),
+        "rest-json" => generate(writer, service, RestJsonGenerator, JsonErrorTypes),
+        "rest-xml" => generate(writer, service, RestXmlGenerator, XmlErrorTypes),
         protocol => panic!("Unknown protocol {}", protocol),
     }
 }
@@ -113,12 +117,12 @@ fn generate<P, E>(writer: &mut FileWriter, service: &Service, protocol_generator
     writeln!(writer, "#[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use request::DispatchSignedRequest;
-        use region;
+        use rusoto::request::DispatchSignedRequest;
+        use rusoto::region;
 
         use std::fmt;
         use std::error::Error;
-        use request::HttpDispatchError;
+        use rusoto::request::HttpDispatchError;
         use rusoto_credential::{{CredentialsError, ProvideAwsCredentials}};
     ")?;
 
@@ -337,8 +341,8 @@ fn generate_struct_fields(service: &Service, shape: &Shape, serde_attrs: bool) -
                 if shape_type == ShapeType::Blob {
                     lines.push(
                         "#[serde(
-                            deserialize_with=\"::serialization::SerdeBlob::deserialize_blob\",
-                            serialize_with=\"::serialization::SerdeBlob::serialize_blob\",
+                            deserialize_with=\"rusoto::serialization::SerdeBlob::deserialize_blob\",
+                            serialize_with=\"rusoto::serialization::SerdeBlob::serialize_blob\",
                             default,
                         )]".to_owned()
                     );

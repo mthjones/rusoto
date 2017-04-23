@@ -5,8 +5,11 @@ name = "rusoto_servicegen"
 version = "0.1.0"
 
 [dependencies]
-Inflector = "0.10.0"
 clap = "2.23.3"
 serde = "0.9.5"
 serde_derive = "0.9.5"
 serde_json = "0.9.5"
+toml = "0.3.2"
+
+[dependencies.rusoto_codegen]
+path = "../codegen"

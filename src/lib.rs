@@ -56,6 +56,7 @@ extern crate ring;
 extern crate rusoto_credential;
 extern crate rustc_serialize;
 extern crate serde;
+#[allow(unused_imports)]
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
@@ -75,14 +76,14 @@ pub use signature::SignedRequest;
 pub use request::default_tls_client;
 pub use region::default_region;
 
-mod param;
-mod region;
-mod request;
-mod xmlerror;
-mod xmlutil;
-mod serialization;
+pub mod param;
+pub mod region;
+pub mod request;
+pub mod xmlerror;
+pub mod xmlutil;
+pub mod serialization;
 #[macro_use]
-mod signature;
+pub mod signature;
 
 #[cfg(test)]
 mod mock;

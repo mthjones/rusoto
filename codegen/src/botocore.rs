@@ -1,6 +1,13 @@
 use std::collections::{HashSet, BTreeMap};
+use std::fs::File;
+use std::io::{self, BufReader};
+use std::path::Path;
+
+use serde_json;
 
 use serialization::{ShapesMap, ShapeName};
+
+const BOTOCORE_DIR: &'static str = concat!(env!("CARGO_MANIFEST_DIR"), "/botocore/botocore/data/");
 
 #[derive(Debug, Deserialize)]
 pub struct Service {
@@ -14,6 +21,20 @@ pub struct Service {
 }
 
 impl Service {
+    pub fn load(name: &str, version: &str) -> io::Result<Self> {
+        let input_path = Path::new(BOTOCORE_DIR)
+            .join(format!("{}/{}/service-2.json", name, version));
+
+        let input_file = BufReader::new(File::open(&input_path)?);
+
+        let service: Service = serde_json::from_reader(input_file).expect(&format!(
+            "Could not convert JSON in {:?} to Service",
+            input_path,
+        ));
+
+        Ok(service)
+    }
+
     pub fn client_type_name(&self) -> String {
         format!("{}Client", self.service_type_name())
     }
