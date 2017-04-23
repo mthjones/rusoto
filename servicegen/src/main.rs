@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate clap;
+extern crate rayon;
 extern crate rusoto_codegen;
 extern crate serde;
 #[macro_use]
@@ -13,6 +14,8 @@ use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
 use std::io::{self, Read, Write, BufWriter};
 use std::path::Path;
+
+use rayon::prelude::*;
 
 use clap::{Arg, App};
 
@@ -115,13 +118,13 @@ fn main() {
         }
     }).collect();
 
-    for service in services {
-        if let Err(e) = service {
+    services.par_iter().for_each(|service| {
+        if let Err(ref e) = *service {
             println!("Failed to load service: {}", e);
-            continue;
+            return;
         }
         
-        let service = service.unwrap();
+        let service = service.as_ref().unwrap();
 
         let crate_dir = out_dir.join(&service.metadata.endpoint_prefix);
 
@@ -196,5 +199,5 @@ fn main() {
         writer.write_all(b"\n").unwrap();
 
         rusoto_codegen::generator::generate_source2(&service, &mut writer).unwrap();
-    }
+    });
 }
