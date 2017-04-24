@@ -1754,20 +1754,20 @@ pub type Version = i64;
                 #[derive(Debug, PartialEq)]
                 pub enum AcceptCertificateTransferError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
-TransferAlreadyCompleted(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
+TransferAlreadyCompleted(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1786,7 +1786,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => AcceptCertificateTransferError::ResourceNotFound(String::from(error_message)),"TransferAlreadyCompletedException" => AcceptCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"InvalidRequestException" => AcceptCertificateTransferError::InvalidRequest(String::from(error_message)),"ThrottlingException" => AcceptCertificateTransferError::Throttling(String::from(error_message)),"UnauthorizedException" => AcceptCertificateTransferError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => AcceptCertificateTransferError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => AcceptCertificateTransferError::InternalFailure(String::from(error_message)),"ValidationException" => AcceptCertificateTransferError::Validation(error_message.to_string()),_ => AcceptCertificateTransferError::Unknown(String::from(body))
+                                    "InternalFailureException" => AcceptCertificateTransferError::InternalFailure(String::from(error_message)),"ThrottlingException" => AcceptCertificateTransferError::Throttling(String::from(error_message)),"InvalidRequestException" => AcceptCertificateTransferError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => AcceptCertificateTransferError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => AcceptCertificateTransferError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => AcceptCertificateTransferError::Unauthorized(String::from(error_message)),"TransferAlreadyCompletedException" => AcceptCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"ValidationException" => AcceptCertificateTransferError::Validation(error_message.to_string()),_ => AcceptCertificateTransferError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AcceptCertificateTransferError::Unknown(String::from(body))
@@ -1817,7 +1817,7 @@ Unknown(String)
                 impl Error for AcceptCertificateTransferError {
                     fn description(&self) -> &str {
                         match *self {
-                            AcceptCertificateTransferError::ResourceNotFound(ref cause) => cause,AcceptCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,AcceptCertificateTransferError::InvalidRequest(ref cause) => cause,AcceptCertificateTransferError::Throttling(ref cause) => cause,AcceptCertificateTransferError::Unauthorized(ref cause) => cause,AcceptCertificateTransferError::ServiceUnavailable(ref cause) => cause,AcceptCertificateTransferError::InternalFailure(ref cause) => cause,AcceptCertificateTransferError::Validation(ref cause) => cause,AcceptCertificateTransferError::Credentials(ref err) => err.description(),AcceptCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AcceptCertificateTransferError::Unknown(ref cause) => cause
+                            AcceptCertificateTransferError::InternalFailure(ref cause) => cause,AcceptCertificateTransferError::Throttling(ref cause) => cause,AcceptCertificateTransferError::InvalidRequest(ref cause) => cause,AcceptCertificateTransferError::ServiceUnavailable(ref cause) => cause,AcceptCertificateTransferError::ResourceNotFound(ref cause) => cause,AcceptCertificateTransferError::Unauthorized(ref cause) => cause,AcceptCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,AcceptCertificateTransferError::Validation(ref cause) => cause,AcceptCertificateTransferError::Credentials(ref err) => err.description(),AcceptCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AcceptCertificateTransferError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1825,20 +1825,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AttachPrincipalPolicyError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
 ///<p>The number of attached entities exceeds the limit.</p>
-LimitExceeded(String),/// An error occurred dispatching the HTTP request
+LimitExceeded(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1857,7 +1857,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => AttachPrincipalPolicyError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => AttachPrincipalPolicyError::InvalidRequest(String::from(error_message)),"ThrottlingException" => AttachPrincipalPolicyError::Throttling(String::from(error_message)),"UnauthorizedException" => AttachPrincipalPolicyError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => AttachPrincipalPolicyError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => AttachPrincipalPolicyError::InternalFailure(String::from(error_message)),"LimitExceededException" => AttachPrincipalPolicyError::LimitExceeded(String::from(error_message)),"ValidationException" => AttachPrincipalPolicyError::Validation(error_message.to_string()),_ => AttachPrincipalPolicyError::Unknown(String::from(body))
+                                    "InternalFailureException" => AttachPrincipalPolicyError::InternalFailure(String::from(error_message)),"LimitExceededException" => AttachPrincipalPolicyError::LimitExceeded(String::from(error_message)),"ThrottlingException" => AttachPrincipalPolicyError::Throttling(String::from(error_message)),"InvalidRequestException" => AttachPrincipalPolicyError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => AttachPrincipalPolicyError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => AttachPrincipalPolicyError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => AttachPrincipalPolicyError::Unauthorized(String::from(error_message)),"ValidationException" => AttachPrincipalPolicyError::Validation(error_message.to_string()),_ => AttachPrincipalPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AttachPrincipalPolicyError::Unknown(String::from(body))
@@ -1888,7 +1888,7 @@ Unknown(String)
                 impl Error for AttachPrincipalPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            AttachPrincipalPolicyError::ResourceNotFound(ref cause) => cause,AttachPrincipalPolicyError::InvalidRequest(ref cause) => cause,AttachPrincipalPolicyError::Throttling(ref cause) => cause,AttachPrincipalPolicyError::Unauthorized(ref cause) => cause,AttachPrincipalPolicyError::ServiceUnavailable(ref cause) => cause,AttachPrincipalPolicyError::InternalFailure(ref cause) => cause,AttachPrincipalPolicyError::LimitExceeded(ref cause) => cause,AttachPrincipalPolicyError::Validation(ref cause) => cause,AttachPrincipalPolicyError::Credentials(ref err) => err.description(),AttachPrincipalPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachPrincipalPolicyError::Unknown(ref cause) => cause
+                            AttachPrincipalPolicyError::InternalFailure(ref cause) => cause,AttachPrincipalPolicyError::LimitExceeded(ref cause) => cause,AttachPrincipalPolicyError::Throttling(ref cause) => cause,AttachPrincipalPolicyError::InvalidRequest(ref cause) => cause,AttachPrincipalPolicyError::ServiceUnavailable(ref cause) => cause,AttachPrincipalPolicyError::ResourceNotFound(ref cause) => cause,AttachPrincipalPolicyError::Unauthorized(ref cause) => cause,AttachPrincipalPolicyError::Validation(ref cause) => cause,AttachPrincipalPolicyError::Credentials(ref err) => err.description(),AttachPrincipalPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachPrincipalPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1896,18 +1896,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AttachThingPrincipalError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1926,7 +1926,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => AttachThingPrincipalError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => AttachThingPrincipalError::InvalidRequest(String::from(error_message)),"ThrottlingException" => AttachThingPrincipalError::Throttling(String::from(error_message)),"UnauthorizedException" => AttachThingPrincipalError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => AttachThingPrincipalError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => AttachThingPrincipalError::InternalFailure(String::from(error_message)),"ValidationException" => AttachThingPrincipalError::Validation(error_message.to_string()),_ => AttachThingPrincipalError::Unknown(String::from(body))
+                                    "InternalFailureException" => AttachThingPrincipalError::InternalFailure(String::from(error_message)),"ThrottlingException" => AttachThingPrincipalError::Throttling(String::from(error_message)),"InvalidRequestException" => AttachThingPrincipalError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => AttachThingPrincipalError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => AttachThingPrincipalError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => AttachThingPrincipalError::Unauthorized(String::from(error_message)),"ValidationException" => AttachThingPrincipalError::Validation(error_message.to_string()),_ => AttachThingPrincipalError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AttachThingPrincipalError::Unknown(String::from(body))
@@ -1957,7 +1957,7 @@ Unknown(String)
                 impl Error for AttachThingPrincipalError {
                     fn description(&self) -> &str {
                         match *self {
-                            AttachThingPrincipalError::ResourceNotFound(ref cause) => cause,AttachThingPrincipalError::InvalidRequest(ref cause) => cause,AttachThingPrincipalError::Throttling(ref cause) => cause,AttachThingPrincipalError::Unauthorized(ref cause) => cause,AttachThingPrincipalError::ServiceUnavailable(ref cause) => cause,AttachThingPrincipalError::InternalFailure(ref cause) => cause,AttachThingPrincipalError::Validation(ref cause) => cause,AttachThingPrincipalError::Credentials(ref err) => err.description(),AttachThingPrincipalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachThingPrincipalError::Unknown(ref cause) => cause
+                            AttachThingPrincipalError::InternalFailure(ref cause) => cause,AttachThingPrincipalError::Throttling(ref cause) => cause,AttachThingPrincipalError::InvalidRequest(ref cause) => cause,AttachThingPrincipalError::ServiceUnavailable(ref cause) => cause,AttachThingPrincipalError::ResourceNotFound(ref cause) => cause,AttachThingPrincipalError::Unauthorized(ref cause) => cause,AttachThingPrincipalError::Validation(ref cause) => cause,AttachThingPrincipalError::Credentials(ref err) => err.description(),AttachThingPrincipalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachThingPrincipalError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1965,20 +1965,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CancelCertificateTransferError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
-TransferAlreadyCompleted(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
+TransferAlreadyCompleted(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1997,7 +1997,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => CancelCertificateTransferError::ResourceNotFound(String::from(error_message)),"TransferAlreadyCompletedException" => CancelCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"InvalidRequestException" => CancelCertificateTransferError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CancelCertificateTransferError::Throttling(String::from(error_message)),"UnauthorizedException" => CancelCertificateTransferError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CancelCertificateTransferError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CancelCertificateTransferError::InternalFailure(String::from(error_message)),"ValidationException" => CancelCertificateTransferError::Validation(error_message.to_string()),_ => CancelCertificateTransferError::Unknown(String::from(body))
+                                    "InternalFailureException" => CancelCertificateTransferError::InternalFailure(String::from(error_message)),"ThrottlingException" => CancelCertificateTransferError::Throttling(String::from(error_message)),"InvalidRequestException" => CancelCertificateTransferError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => CancelCertificateTransferError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => CancelCertificateTransferError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => CancelCertificateTransferError::Unauthorized(String::from(error_message)),"TransferAlreadyCompletedException" => CancelCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"ValidationException" => CancelCertificateTransferError::Validation(error_message.to_string()),_ => CancelCertificateTransferError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CancelCertificateTransferError::Unknown(String::from(body))
@@ -2028,7 +2028,7 @@ Unknown(String)
                 impl Error for CancelCertificateTransferError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelCertificateTransferError::ResourceNotFound(ref cause) => cause,CancelCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,CancelCertificateTransferError::InvalidRequest(ref cause) => cause,CancelCertificateTransferError::Throttling(ref cause) => cause,CancelCertificateTransferError::Unauthorized(ref cause) => cause,CancelCertificateTransferError::ServiceUnavailable(ref cause) => cause,CancelCertificateTransferError::InternalFailure(ref cause) => cause,CancelCertificateTransferError::Validation(ref cause) => cause,CancelCertificateTransferError::Credentials(ref err) => err.description(),CancelCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelCertificateTransferError::Unknown(ref cause) => cause
+                            CancelCertificateTransferError::InternalFailure(ref cause) => cause,CancelCertificateTransferError::Throttling(ref cause) => cause,CancelCertificateTransferError::InvalidRequest(ref cause) => cause,CancelCertificateTransferError::ServiceUnavailable(ref cause) => cause,CancelCertificateTransferError::ResourceNotFound(ref cause) => cause,CancelCertificateTransferError::Unauthorized(ref cause) => cause,CancelCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,CancelCertificateTransferError::Validation(ref cause) => cause,CancelCertificateTransferError::Credentials(ref err) => err.description(),CancelCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelCertificateTransferError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2036,16 +2036,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateCertificateFromCsrError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2064,7 +2064,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => CreateCertificateFromCsrError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreateCertificateFromCsrError::Throttling(String::from(error_message)),"UnauthorizedException" => CreateCertificateFromCsrError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreateCertificateFromCsrError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreateCertificateFromCsrError::InternalFailure(String::from(error_message)),"ValidationException" => CreateCertificateFromCsrError::Validation(error_message.to_string()),_ => CreateCertificateFromCsrError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreateCertificateFromCsrError::InternalFailure(String::from(error_message)),"ThrottlingException" => CreateCertificateFromCsrError::Throttling(String::from(error_message)),"InvalidRequestException" => CreateCertificateFromCsrError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => CreateCertificateFromCsrError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => CreateCertificateFromCsrError::Unauthorized(String::from(error_message)),"ValidationException" => CreateCertificateFromCsrError::Validation(error_message.to_string()),_ => CreateCertificateFromCsrError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateCertificateFromCsrError::Unknown(String::from(body))
@@ -2095,7 +2095,7 @@ Unknown(String)
                 impl Error for CreateCertificateFromCsrError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateCertificateFromCsrError::InvalidRequest(ref cause) => cause,CreateCertificateFromCsrError::Throttling(ref cause) => cause,CreateCertificateFromCsrError::Unauthorized(ref cause) => cause,CreateCertificateFromCsrError::ServiceUnavailable(ref cause) => cause,CreateCertificateFromCsrError::InternalFailure(ref cause) => cause,CreateCertificateFromCsrError::Validation(ref cause) => cause,CreateCertificateFromCsrError::Credentials(ref err) => err.description(),CreateCertificateFromCsrError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateCertificateFromCsrError::Unknown(ref cause) => cause
+                            CreateCertificateFromCsrError::InternalFailure(ref cause) => cause,CreateCertificateFromCsrError::Throttling(ref cause) => cause,CreateCertificateFromCsrError::InvalidRequest(ref cause) => cause,CreateCertificateFromCsrError::ServiceUnavailable(ref cause) => cause,CreateCertificateFromCsrError::Unauthorized(ref cause) => cause,CreateCertificateFromCsrError::Validation(ref cause) => cause,CreateCertificateFromCsrError::Credentials(ref err) => err.description(),CreateCertificateFromCsrError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateCertificateFromCsrError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2103,16 +2103,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateKeysAndCertificateError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2131,7 +2131,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => CreateKeysAndCertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreateKeysAndCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => CreateKeysAndCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreateKeysAndCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreateKeysAndCertificateError::InternalFailure(String::from(error_message)),"ValidationException" => CreateKeysAndCertificateError::Validation(error_message.to_string()),_ => CreateKeysAndCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreateKeysAndCertificateError::InternalFailure(String::from(error_message)),"ThrottlingException" => CreateKeysAndCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => CreateKeysAndCertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => CreateKeysAndCertificateError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => CreateKeysAndCertificateError::Unauthorized(String::from(error_message)),"ValidationException" => CreateKeysAndCertificateError::Validation(error_message.to_string()),_ => CreateKeysAndCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateKeysAndCertificateError::Unknown(String::from(body))
@@ -2162,7 +2162,7 @@ Unknown(String)
                 impl Error for CreateKeysAndCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateKeysAndCertificateError::InvalidRequest(ref cause) => cause,CreateKeysAndCertificateError::Throttling(ref cause) => cause,CreateKeysAndCertificateError::Unauthorized(ref cause) => cause,CreateKeysAndCertificateError::ServiceUnavailable(ref cause) => cause,CreateKeysAndCertificateError::InternalFailure(ref cause) => cause,CreateKeysAndCertificateError::Validation(ref cause) => cause,CreateKeysAndCertificateError::Credentials(ref err) => err.description(),CreateKeysAndCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateKeysAndCertificateError::Unknown(ref cause) => cause
+                            CreateKeysAndCertificateError::InternalFailure(ref cause) => cause,CreateKeysAndCertificateError::Throttling(ref cause) => cause,CreateKeysAndCertificateError::InvalidRequest(ref cause) => cause,CreateKeysAndCertificateError::ServiceUnavailable(ref cause) => cause,CreateKeysAndCertificateError::Unauthorized(ref cause) => cause,CreateKeysAndCertificateError::Validation(ref cause) => cause,CreateKeysAndCertificateError::Credentials(ref err) => err.description(),CreateKeysAndCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateKeysAndCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2170,20 +2170,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreatePolicyError {
                     
-///<p>The resource already exists.</p>
-ResourceAlreadyExists(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The policy documentation is not valid.</p>
 MalformedPolicy(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The resource already exists.</p>
+ResourceAlreadyExists(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2202,7 +2202,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceAlreadyExistsException" => CreatePolicyError::ResourceAlreadyExists(String::from(error_message)),"MalformedPolicyException" => CreatePolicyError::MalformedPolicy(String::from(error_message)),"InvalidRequestException" => CreatePolicyError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreatePolicyError::Throttling(String::from(error_message)),"UnauthorizedException" => CreatePolicyError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreatePolicyError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreatePolicyError::InternalFailure(String::from(error_message)),"ValidationException" => CreatePolicyError::Validation(error_message.to_string()),_ => CreatePolicyError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreatePolicyError::InternalFailure(String::from(error_message)),"MalformedPolicyException" => CreatePolicyError::MalformedPolicy(String::from(error_message)),"ThrottlingException" => CreatePolicyError::Throttling(String::from(error_message)),"InvalidRequestException" => CreatePolicyError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => CreatePolicyError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreatePolicyError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => CreatePolicyError::Unauthorized(String::from(error_message)),"ValidationException" => CreatePolicyError::Validation(error_message.to_string()),_ => CreatePolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreatePolicyError::Unknown(String::from(body))
@@ -2233,7 +2233,7 @@ Unknown(String)
                 impl Error for CreatePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreatePolicyError::ResourceAlreadyExists(ref cause) => cause,CreatePolicyError::MalformedPolicy(ref cause) => cause,CreatePolicyError::InvalidRequest(ref cause) => cause,CreatePolicyError::Throttling(ref cause) => cause,CreatePolicyError::Unauthorized(ref cause) => cause,CreatePolicyError::ServiceUnavailable(ref cause) => cause,CreatePolicyError::InternalFailure(ref cause) => cause,CreatePolicyError::Validation(ref cause) => cause,CreatePolicyError::Credentials(ref err) => err.description(),CreatePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePolicyError::Unknown(ref cause) => cause
+                            CreatePolicyError::InternalFailure(ref cause) => cause,CreatePolicyError::MalformedPolicy(ref cause) => cause,CreatePolicyError::Throttling(ref cause) => cause,CreatePolicyError::InvalidRequest(ref cause) => cause,CreatePolicyError::ResourceAlreadyExists(ref cause) => cause,CreatePolicyError::ServiceUnavailable(ref cause) => cause,CreatePolicyError::Unauthorized(ref cause) => cause,CreatePolicyError::Validation(ref cause) => cause,CreatePolicyError::Credentials(ref err) => err.description(),CreatePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2241,22 +2241,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreatePolicyVersionError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The policy documentation is not valid.</p>
-MalformedPolicy(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The number of policy versions exceeds the limit.</p>
 VersionsLimitExceeded(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>The policy documentation is not valid.</p>
+MalformedPolicy(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2275,7 +2275,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => CreatePolicyVersionError::ResourceNotFound(String::from(error_message)),"MalformedPolicyException" => CreatePolicyVersionError::MalformedPolicy(String::from(error_message)),"VersionsLimitExceededException" => CreatePolicyVersionError::VersionsLimitExceeded(String::from(error_message)),"InvalidRequestException" => CreatePolicyVersionError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreatePolicyVersionError::Throttling(String::from(error_message)),"UnauthorizedException" => CreatePolicyVersionError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreatePolicyVersionError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreatePolicyVersionError::InternalFailure(String::from(error_message)),"ValidationException" => CreatePolicyVersionError::Validation(error_message.to_string()),_ => CreatePolicyVersionError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreatePolicyVersionError::InternalFailure(String::from(error_message)),"VersionsLimitExceededException" => CreatePolicyVersionError::VersionsLimitExceeded(String::from(error_message)),"MalformedPolicyException" => CreatePolicyVersionError::MalformedPolicy(String::from(error_message)),"ThrottlingException" => CreatePolicyVersionError::Throttling(String::from(error_message)),"InvalidRequestException" => CreatePolicyVersionError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => CreatePolicyVersionError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => CreatePolicyVersionError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => CreatePolicyVersionError::Unauthorized(String::from(error_message)),"ValidationException" => CreatePolicyVersionError::Validation(error_message.to_string()),_ => CreatePolicyVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreatePolicyVersionError::Unknown(String::from(body))
@@ -2306,7 +2306,7 @@ Unknown(String)
                 impl Error for CreatePolicyVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreatePolicyVersionError::ResourceNotFound(ref cause) => cause,CreatePolicyVersionError::MalformedPolicy(ref cause) => cause,CreatePolicyVersionError::VersionsLimitExceeded(ref cause) => cause,CreatePolicyVersionError::InvalidRequest(ref cause) => cause,CreatePolicyVersionError::Throttling(ref cause) => cause,CreatePolicyVersionError::Unauthorized(ref cause) => cause,CreatePolicyVersionError::ServiceUnavailable(ref cause) => cause,CreatePolicyVersionError::InternalFailure(ref cause) => cause,CreatePolicyVersionError::Validation(ref cause) => cause,CreatePolicyVersionError::Credentials(ref err) => err.description(),CreatePolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePolicyVersionError::Unknown(ref cause) => cause
+                            CreatePolicyVersionError::InternalFailure(ref cause) => cause,CreatePolicyVersionError::VersionsLimitExceeded(ref cause) => cause,CreatePolicyVersionError::MalformedPolicy(ref cause) => cause,CreatePolicyVersionError::Throttling(ref cause) => cause,CreatePolicyVersionError::InvalidRequest(ref cause) => cause,CreatePolicyVersionError::ServiceUnavailable(ref cause) => cause,CreatePolicyVersionError::ResourceNotFound(ref cause) => cause,CreatePolicyVersionError::Unauthorized(ref cause) => cause,CreatePolicyVersionError::Validation(ref cause) => cause,CreatePolicyVersionError::Credentials(ref err) => err.description(),CreatePolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePolicyVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2314,20 +2314,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateThingError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The resource already exists.</p>
 ResourceAlreadyExists(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2346,7 +2346,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => CreateThingError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreateThingError::Throttling(String::from(error_message)),"UnauthorizedException" => CreateThingError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreateThingError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreateThingError::InternalFailure(String::from(error_message)),"ResourceAlreadyExistsException" => CreateThingError::ResourceAlreadyExists(String::from(error_message)),"ResourceNotFoundException" => CreateThingError::ResourceNotFound(String::from(error_message)),"ValidationException" => CreateThingError::Validation(error_message.to_string()),_ => CreateThingError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreateThingError::InternalFailure(String::from(error_message)),"ThrottlingException" => CreateThingError::Throttling(String::from(error_message)),"InvalidRequestException" => CreateThingError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => CreateThingError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreateThingError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => CreateThingError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => CreateThingError::Unauthorized(String::from(error_message)),"ValidationException" => CreateThingError::Validation(error_message.to_string()),_ => CreateThingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateThingError::Unknown(String::from(body))
@@ -2377,7 +2377,7 @@ Unknown(String)
                 impl Error for CreateThingError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateThingError::InvalidRequest(ref cause) => cause,CreateThingError::Throttling(ref cause) => cause,CreateThingError::Unauthorized(ref cause) => cause,CreateThingError::ServiceUnavailable(ref cause) => cause,CreateThingError::InternalFailure(ref cause) => cause,CreateThingError::ResourceAlreadyExists(ref cause) => cause,CreateThingError::ResourceNotFound(ref cause) => cause,CreateThingError::Validation(ref cause) => cause,CreateThingError::Credentials(ref err) => err.description(),CreateThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateThingError::Unknown(ref cause) => cause
+                            CreateThingError::InternalFailure(ref cause) => cause,CreateThingError::Throttling(ref cause) => cause,CreateThingError::InvalidRequest(ref cause) => cause,CreateThingError::ResourceAlreadyExists(ref cause) => cause,CreateThingError::ServiceUnavailable(ref cause) => cause,CreateThingError::ResourceNotFound(ref cause) => cause,CreateThingError::Unauthorized(ref cause) => cause,CreateThingError::Validation(ref cause) => cause,CreateThingError::Credentials(ref err) => err.description(),CreateThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateThingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2385,18 +2385,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateThingTypeError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The resource already exists.</p>
-ResourceAlreadyExists(String),/// An error occurred dispatching the HTTP request
+ResourceAlreadyExists(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2415,7 +2415,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => CreateThingTypeError::InvalidRequest(String::from(error_message)),"ThrottlingException" => CreateThingTypeError::Throttling(String::from(error_message)),"UnauthorizedException" => CreateThingTypeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => CreateThingTypeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => CreateThingTypeError::InternalFailure(String::from(error_message)),"ResourceAlreadyExistsException" => CreateThingTypeError::ResourceAlreadyExists(String::from(error_message)),"ValidationException" => CreateThingTypeError::Validation(error_message.to_string()),_ => CreateThingTypeError::Unknown(String::from(body))
+                                    "InternalFailureException" => CreateThingTypeError::InternalFailure(String::from(error_message)),"ThrottlingException" => CreateThingTypeError::Throttling(String::from(error_message)),"InvalidRequestException" => CreateThingTypeError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => CreateThingTypeError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreateThingTypeError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => CreateThingTypeError::Unauthorized(String::from(error_message)),"ValidationException" => CreateThingTypeError::Validation(error_message.to_string()),_ => CreateThingTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateThingTypeError::Unknown(String::from(body))
@@ -2446,7 +2446,7 @@ Unknown(String)
                 impl Error for CreateThingTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateThingTypeError::InvalidRequest(ref cause) => cause,CreateThingTypeError::Throttling(ref cause) => cause,CreateThingTypeError::Unauthorized(ref cause) => cause,CreateThingTypeError::ServiceUnavailable(ref cause) => cause,CreateThingTypeError::InternalFailure(ref cause) => cause,CreateThingTypeError::ResourceAlreadyExists(ref cause) => cause,CreateThingTypeError::Validation(ref cause) => cause,CreateThingTypeError::Credentials(ref err) => err.description(),CreateThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateThingTypeError::Unknown(ref cause) => cause
+                            CreateThingTypeError::InternalFailure(ref cause) => cause,CreateThingTypeError::Throttling(ref cause) => cause,CreateThingTypeError::InvalidRequest(ref cause) => cause,CreateThingTypeError::ResourceAlreadyExists(ref cause) => cause,CreateThingTypeError::ServiceUnavailable(ref cause) => cause,CreateThingTypeError::Unauthorized(ref cause) => cause,CreateThingTypeError::Validation(ref cause) => cause,CreateThingTypeError::Credentials(ref err) => err.description(),CreateThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateThingTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2454,10 +2454,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTopicRuleError {
                     
-///<p>The Rule-SQL expression can't be parsed correctly.</p>
-SqlParse(String),
 ///<p>An unexpected error has occurred.</p>
 Internal(String),
+///<p>The Rule-SQL expression can't be parsed correctly.</p>
+SqlParse(String),
 ///<p>The request is not valid.</p>
 InvalidRequest(String),
 ///<p>The resource already exists.</p>
@@ -2482,7 +2482,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "SqlParseException" => CreateTopicRuleError::SqlParse(String::from(error_message)),"InternalException" => CreateTopicRuleError::Internal(String::from(error_message)),"InvalidRequestException" => CreateTopicRuleError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => CreateTopicRuleError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreateTopicRuleError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CreateTopicRuleError::Validation(error_message.to_string()),_ => CreateTopicRuleError::Unknown(String::from(body))
+                                    "InternalException" => CreateTopicRuleError::Internal(String::from(error_message)),"SqlParseException" => CreateTopicRuleError::SqlParse(String::from(error_message)),"InvalidRequestException" => CreateTopicRuleError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => CreateTopicRuleError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreateTopicRuleError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CreateTopicRuleError::Validation(error_message.to_string()),_ => CreateTopicRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateTopicRuleError::Unknown(String::from(body))
@@ -2513,7 +2513,7 @@ Unknown(String)
                 impl Error for CreateTopicRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTopicRuleError::SqlParse(ref cause) => cause,CreateTopicRuleError::Internal(ref cause) => cause,CreateTopicRuleError::InvalidRequest(ref cause) => cause,CreateTopicRuleError::ResourceAlreadyExists(ref cause) => cause,CreateTopicRuleError::ServiceUnavailable(ref cause) => cause,CreateTopicRuleError::Validation(ref cause) => cause,CreateTopicRuleError::Credentials(ref err) => err.description(),CreateTopicRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTopicRuleError::Unknown(ref cause) => cause
+                            CreateTopicRuleError::Internal(ref cause) => cause,CreateTopicRuleError::SqlParse(ref cause) => cause,CreateTopicRuleError::InvalidRequest(ref cause) => cause,CreateTopicRuleError::ResourceAlreadyExists(ref cause) => cause,CreateTopicRuleError::ServiceUnavailable(ref cause) => cause,CreateTopicRuleError::Validation(ref cause) => cause,CreateTopicRuleError::Credentials(ref err) => err.description(),CreateTopicRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTopicRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2521,20 +2521,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteCACertificateError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The certificate operation is not allowed.</p>
 CertificateState(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2553,7 +2553,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => DeleteCACertificateError::InvalidRequest(String::from(error_message)),"CertificateStateException" => DeleteCACertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => DeleteCACertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => DeleteCACertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeleteCACertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeleteCACertificateError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => DeleteCACertificateError::ResourceNotFound(String::from(error_message)),"ValidationException" => DeleteCACertificateError::Validation(error_message.to_string()),_ => DeleteCACertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeleteCACertificateError::InternalFailure(String::from(error_message)),"CertificateStateException" => DeleteCACertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => DeleteCACertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => DeleteCACertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeleteCACertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeleteCACertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteCACertificateError::Unauthorized(String::from(error_message)),"ValidationException" => DeleteCACertificateError::Validation(error_message.to_string()),_ => DeleteCACertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteCACertificateError::Unknown(String::from(body))
@@ -2584,7 +2584,7 @@ Unknown(String)
                 impl Error for DeleteCACertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteCACertificateError::InvalidRequest(ref cause) => cause,DeleteCACertificateError::CertificateState(ref cause) => cause,DeleteCACertificateError::Throttling(ref cause) => cause,DeleteCACertificateError::Unauthorized(ref cause) => cause,DeleteCACertificateError::ServiceUnavailable(ref cause) => cause,DeleteCACertificateError::InternalFailure(ref cause) => cause,DeleteCACertificateError::ResourceNotFound(ref cause) => cause,DeleteCACertificateError::Validation(ref cause) => cause,DeleteCACertificateError::Credentials(ref err) => err.description(),DeleteCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCACertificateError::Unknown(ref cause) => cause
+                            DeleteCACertificateError::InternalFailure(ref cause) => cause,DeleteCACertificateError::CertificateState(ref cause) => cause,DeleteCACertificateError::Throttling(ref cause) => cause,DeleteCACertificateError::InvalidRequest(ref cause) => cause,DeleteCACertificateError::ServiceUnavailable(ref cause) => cause,DeleteCACertificateError::ResourceNotFound(ref cause) => cause,DeleteCACertificateError::Unauthorized(ref cause) => cause,DeleteCACertificateError::Validation(ref cause) => cause,DeleteCACertificateError::Credentials(ref err) => err.description(),DeleteCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCACertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2592,22 +2592,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteCertificateError {
                     
-///<p>The certificate operation is not allowed.</p>
-CertificateState(String),
-///<p>You can't delete the resource because it is attached to one or more resources.</p>
-DeleteConflict(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The certificate operation is not allowed.</p>
+CertificateState(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't delete the resource because it is attached to one or more resources.</p>
+DeleteConflict(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2626,7 +2626,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CertificateStateException" => DeleteCertificateError::CertificateState(String::from(error_message)),"DeleteConflictException" => DeleteCertificateError::DeleteConflict(String::from(error_message)),"InvalidRequestException" => DeleteCertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeleteCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => DeleteCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeleteCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeleteCertificateError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => DeleteCertificateError::ResourceNotFound(String::from(error_message)),"ValidationException" => DeleteCertificateError::Validation(error_message.to_string()),_ => DeleteCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeleteCertificateError::InternalFailure(String::from(error_message)),"CertificateStateException" => DeleteCertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => DeleteCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => DeleteCertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeleteCertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeleteCertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteCertificateError::Unauthorized(String::from(error_message)),"DeleteConflictException" => DeleteCertificateError::DeleteConflict(String::from(error_message)),"ValidationException" => DeleteCertificateError::Validation(error_message.to_string()),_ => DeleteCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteCertificateError::Unknown(String::from(body))
@@ -2657,7 +2657,7 @@ Unknown(String)
                 impl Error for DeleteCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteCertificateError::CertificateState(ref cause) => cause,DeleteCertificateError::DeleteConflict(ref cause) => cause,DeleteCertificateError::InvalidRequest(ref cause) => cause,DeleteCertificateError::Throttling(ref cause) => cause,DeleteCertificateError::Unauthorized(ref cause) => cause,DeleteCertificateError::ServiceUnavailable(ref cause) => cause,DeleteCertificateError::InternalFailure(ref cause) => cause,DeleteCertificateError::ResourceNotFound(ref cause) => cause,DeleteCertificateError::Validation(ref cause) => cause,DeleteCertificateError::Credentials(ref err) => err.description(),DeleteCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCertificateError::Unknown(ref cause) => cause
+                            DeleteCertificateError::InternalFailure(ref cause) => cause,DeleteCertificateError::CertificateState(ref cause) => cause,DeleteCertificateError::Throttling(ref cause) => cause,DeleteCertificateError::InvalidRequest(ref cause) => cause,DeleteCertificateError::ServiceUnavailable(ref cause) => cause,DeleteCertificateError::ResourceNotFound(ref cause) => cause,DeleteCertificateError::Unauthorized(ref cause) => cause,DeleteCertificateError::DeleteConflict(ref cause) => cause,DeleteCertificateError::Validation(ref cause) => cause,DeleteCertificateError::Credentials(ref err) => err.description(),DeleteCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2665,20 +2665,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeletePolicyError {
                     
-///<p>You can't delete the resource because it is attached to one or more resources.</p>
-DeleteConflict(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't delete the resource because it is attached to one or more resources.</p>
+DeleteConflict(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2697,7 +2697,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DeleteConflictException" => DeletePolicyError::DeleteConflict(String::from(error_message)),"ResourceNotFoundException" => DeletePolicyError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DeletePolicyError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeletePolicyError::Throttling(String::from(error_message)),"UnauthorizedException" => DeletePolicyError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeletePolicyError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeletePolicyError::InternalFailure(String::from(error_message)),"ValidationException" => DeletePolicyError::Validation(error_message.to_string()),_ => DeletePolicyError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeletePolicyError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeletePolicyError::Throttling(String::from(error_message)),"InvalidRequestException" => DeletePolicyError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeletePolicyError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeletePolicyError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeletePolicyError::Unauthorized(String::from(error_message)),"DeleteConflictException" => DeletePolicyError::DeleteConflict(String::from(error_message)),"ValidationException" => DeletePolicyError::Validation(error_message.to_string()),_ => DeletePolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeletePolicyError::Unknown(String::from(body))
@@ -2728,7 +2728,7 @@ Unknown(String)
                 impl Error for DeletePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeletePolicyError::DeleteConflict(ref cause) => cause,DeletePolicyError::ResourceNotFound(ref cause) => cause,DeletePolicyError::InvalidRequest(ref cause) => cause,DeletePolicyError::Throttling(ref cause) => cause,DeletePolicyError::Unauthorized(ref cause) => cause,DeletePolicyError::ServiceUnavailable(ref cause) => cause,DeletePolicyError::InternalFailure(ref cause) => cause,DeletePolicyError::Validation(ref cause) => cause,DeletePolicyError::Credentials(ref err) => err.description(),DeletePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePolicyError::Unknown(ref cause) => cause
+                            DeletePolicyError::InternalFailure(ref cause) => cause,DeletePolicyError::Throttling(ref cause) => cause,DeletePolicyError::InvalidRequest(ref cause) => cause,DeletePolicyError::ServiceUnavailable(ref cause) => cause,DeletePolicyError::ResourceNotFound(ref cause) => cause,DeletePolicyError::Unauthorized(ref cause) => cause,DeletePolicyError::DeleteConflict(ref cause) => cause,DeletePolicyError::Validation(ref cause) => cause,DeletePolicyError::Credentials(ref err) => err.description(),DeletePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2736,20 +2736,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeletePolicyVersionError {
                     
-///<p>You can't delete the resource because it is attached to one or more resources.</p>
-DeleteConflict(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't delete the resource because it is attached to one or more resources.</p>
+DeleteConflict(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2768,7 +2768,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DeleteConflictException" => DeletePolicyVersionError::DeleteConflict(String::from(error_message)),"ResourceNotFoundException" => DeletePolicyVersionError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DeletePolicyVersionError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeletePolicyVersionError::Throttling(String::from(error_message)),"UnauthorizedException" => DeletePolicyVersionError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeletePolicyVersionError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeletePolicyVersionError::InternalFailure(String::from(error_message)),"ValidationException" => DeletePolicyVersionError::Validation(error_message.to_string()),_ => DeletePolicyVersionError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeletePolicyVersionError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeletePolicyVersionError::Throttling(String::from(error_message)),"InvalidRequestException" => DeletePolicyVersionError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeletePolicyVersionError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeletePolicyVersionError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeletePolicyVersionError::Unauthorized(String::from(error_message)),"DeleteConflictException" => DeletePolicyVersionError::DeleteConflict(String::from(error_message)),"ValidationException" => DeletePolicyVersionError::Validation(error_message.to_string()),_ => DeletePolicyVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeletePolicyVersionError::Unknown(String::from(body))
@@ -2799,7 +2799,7 @@ Unknown(String)
                 impl Error for DeletePolicyVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeletePolicyVersionError::DeleteConflict(ref cause) => cause,DeletePolicyVersionError::ResourceNotFound(ref cause) => cause,DeletePolicyVersionError::InvalidRequest(ref cause) => cause,DeletePolicyVersionError::Throttling(ref cause) => cause,DeletePolicyVersionError::Unauthorized(ref cause) => cause,DeletePolicyVersionError::ServiceUnavailable(ref cause) => cause,DeletePolicyVersionError::InternalFailure(ref cause) => cause,DeletePolicyVersionError::Validation(ref cause) => cause,DeletePolicyVersionError::Credentials(ref err) => err.description(),DeletePolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePolicyVersionError::Unknown(ref cause) => cause
+                            DeletePolicyVersionError::InternalFailure(ref cause) => cause,DeletePolicyVersionError::Throttling(ref cause) => cause,DeletePolicyVersionError::InvalidRequest(ref cause) => cause,DeletePolicyVersionError::ServiceUnavailable(ref cause) => cause,DeletePolicyVersionError::ResourceNotFound(ref cause) => cause,DeletePolicyVersionError::Unauthorized(ref cause) => cause,DeletePolicyVersionError::DeleteConflict(ref cause) => cause,DeletePolicyVersionError::Validation(ref cause) => cause,DeletePolicyVersionError::Credentials(ref err) => err.description(),DeletePolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePolicyVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2807,16 +2807,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteRegistrationCodeError {
                     
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
 ResourceNotFound(String),
 ///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2835,7 +2835,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ThrottlingException" => DeleteRegistrationCodeError::Throttling(String::from(error_message)),"ResourceNotFoundException" => DeleteRegistrationCodeError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteRegistrationCodeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeleteRegistrationCodeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeleteRegistrationCodeError::InternalFailure(String::from(error_message)),"ValidationException" => DeleteRegistrationCodeError::Validation(error_message.to_string()),_ => DeleteRegistrationCodeError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeleteRegistrationCodeError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeleteRegistrationCodeError::Throttling(String::from(error_message)),"ServiceUnavailableException" => DeleteRegistrationCodeError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeleteRegistrationCodeError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteRegistrationCodeError::Unauthorized(String::from(error_message)),"ValidationException" => DeleteRegistrationCodeError::Validation(error_message.to_string()),_ => DeleteRegistrationCodeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteRegistrationCodeError::Unknown(String::from(body))
@@ -2866,7 +2866,7 @@ Unknown(String)
                 impl Error for DeleteRegistrationCodeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRegistrationCodeError::Throttling(ref cause) => cause,DeleteRegistrationCodeError::ResourceNotFound(ref cause) => cause,DeleteRegistrationCodeError::Unauthorized(ref cause) => cause,DeleteRegistrationCodeError::ServiceUnavailable(ref cause) => cause,DeleteRegistrationCodeError::InternalFailure(ref cause) => cause,DeleteRegistrationCodeError::Validation(ref cause) => cause,DeleteRegistrationCodeError::Credentials(ref err) => err.description(),DeleteRegistrationCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRegistrationCodeError::Unknown(ref cause) => cause
+                            DeleteRegistrationCodeError::InternalFailure(ref cause) => cause,DeleteRegistrationCodeError::Throttling(ref cause) => cause,DeleteRegistrationCodeError::ServiceUnavailable(ref cause) => cause,DeleteRegistrationCodeError::ResourceNotFound(ref cause) => cause,DeleteRegistrationCodeError::Unauthorized(ref cause) => cause,DeleteRegistrationCodeError::Validation(ref cause) => cause,DeleteRegistrationCodeError::Credentials(ref err) => err.description(),DeleteRegistrationCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRegistrationCodeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2874,20 +2874,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteThingError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>An exception thrown when the version of a thing passed to a command is different than the version specified with the --version parameter. </p>
 VersionConflict(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2906,7 +2906,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DeleteThingError::ResourceNotFound(String::from(error_message)),"VersionConflictException" => DeleteThingError::VersionConflict(String::from(error_message)),"InvalidRequestException" => DeleteThingError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeleteThingError::Throttling(String::from(error_message)),"UnauthorizedException" => DeleteThingError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeleteThingError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeleteThingError::InternalFailure(String::from(error_message)),"ValidationException" => DeleteThingError::Validation(error_message.to_string()),_ => DeleteThingError::Unknown(String::from(body))
+                                    "VersionConflictException" => DeleteThingError::VersionConflict(String::from(error_message)),"InternalFailureException" => DeleteThingError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeleteThingError::Throttling(String::from(error_message)),"InvalidRequestException" => DeleteThingError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeleteThingError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeleteThingError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteThingError::Unauthorized(String::from(error_message)),"ValidationException" => DeleteThingError::Validation(error_message.to_string()),_ => DeleteThingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteThingError::Unknown(String::from(body))
@@ -2937,7 +2937,7 @@ Unknown(String)
                 impl Error for DeleteThingError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteThingError::ResourceNotFound(ref cause) => cause,DeleteThingError::VersionConflict(ref cause) => cause,DeleteThingError::InvalidRequest(ref cause) => cause,DeleteThingError::Throttling(ref cause) => cause,DeleteThingError::Unauthorized(ref cause) => cause,DeleteThingError::ServiceUnavailable(ref cause) => cause,DeleteThingError::InternalFailure(ref cause) => cause,DeleteThingError::Validation(ref cause) => cause,DeleteThingError::Credentials(ref err) => err.description(),DeleteThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteThingError::Unknown(ref cause) => cause
+                            DeleteThingError::VersionConflict(ref cause) => cause,DeleteThingError::InternalFailure(ref cause) => cause,DeleteThingError::Throttling(ref cause) => cause,DeleteThingError::InvalidRequest(ref cause) => cause,DeleteThingError::ServiceUnavailable(ref cause) => cause,DeleteThingError::ResourceNotFound(ref cause) => cause,DeleteThingError::Unauthorized(ref cause) => cause,DeleteThingError::Validation(ref cause) => cause,DeleteThingError::Credentials(ref err) => err.description(),DeleteThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteThingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2945,18 +2945,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteThingTypeError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2975,7 +2975,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DeleteThingTypeError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DeleteThingTypeError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeleteThingTypeError::Throttling(String::from(error_message)),"UnauthorizedException" => DeleteThingTypeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeleteThingTypeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeleteThingTypeError::InternalFailure(String::from(error_message)),"ValidationException" => DeleteThingTypeError::Validation(error_message.to_string()),_ => DeleteThingTypeError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeleteThingTypeError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeleteThingTypeError::Throttling(String::from(error_message)),"InvalidRequestException" => DeleteThingTypeError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeleteThingTypeError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeleteThingTypeError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeleteThingTypeError::Unauthorized(String::from(error_message)),"ValidationException" => DeleteThingTypeError::Validation(error_message.to_string()),_ => DeleteThingTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteThingTypeError::Unknown(String::from(body))
@@ -3006,7 +3006,7 @@ Unknown(String)
                 impl Error for DeleteThingTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteThingTypeError::ResourceNotFound(ref cause) => cause,DeleteThingTypeError::InvalidRequest(ref cause) => cause,DeleteThingTypeError::Throttling(ref cause) => cause,DeleteThingTypeError::Unauthorized(ref cause) => cause,DeleteThingTypeError::ServiceUnavailable(ref cause) => cause,DeleteThingTypeError::InternalFailure(ref cause) => cause,DeleteThingTypeError::Validation(ref cause) => cause,DeleteThingTypeError::Credentials(ref err) => err.description(),DeleteThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteThingTypeError::Unknown(ref cause) => cause
+                            DeleteThingTypeError::InternalFailure(ref cause) => cause,DeleteThingTypeError::Throttling(ref cause) => cause,DeleteThingTypeError::InvalidRequest(ref cause) => cause,DeleteThingTypeError::ServiceUnavailable(ref cause) => cause,DeleteThingTypeError::ResourceNotFound(ref cause) => cause,DeleteThingTypeError::Unauthorized(ref cause) => cause,DeleteThingTypeError::Validation(ref cause) => cause,DeleteThingTypeError::Credentials(ref err) => err.description(),DeleteThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteThingTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3079,18 +3079,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeprecateThingTypeError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3109,7 +3109,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DeprecateThingTypeError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DeprecateThingTypeError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DeprecateThingTypeError::Throttling(String::from(error_message)),"UnauthorizedException" => DeprecateThingTypeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DeprecateThingTypeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DeprecateThingTypeError::InternalFailure(String::from(error_message)),"ValidationException" => DeprecateThingTypeError::Validation(error_message.to_string()),_ => DeprecateThingTypeError::Unknown(String::from(body))
+                                    "InternalFailureException" => DeprecateThingTypeError::InternalFailure(String::from(error_message)),"ThrottlingException" => DeprecateThingTypeError::Throttling(String::from(error_message)),"InvalidRequestException" => DeprecateThingTypeError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DeprecateThingTypeError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DeprecateThingTypeError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DeprecateThingTypeError::Unauthorized(String::from(error_message)),"ValidationException" => DeprecateThingTypeError::Validation(error_message.to_string()),_ => DeprecateThingTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeprecateThingTypeError::Unknown(String::from(body))
@@ -3140,7 +3140,7 @@ Unknown(String)
                 impl Error for DeprecateThingTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeprecateThingTypeError::ResourceNotFound(ref cause) => cause,DeprecateThingTypeError::InvalidRequest(ref cause) => cause,DeprecateThingTypeError::Throttling(ref cause) => cause,DeprecateThingTypeError::Unauthorized(ref cause) => cause,DeprecateThingTypeError::ServiceUnavailable(ref cause) => cause,DeprecateThingTypeError::InternalFailure(ref cause) => cause,DeprecateThingTypeError::Validation(ref cause) => cause,DeprecateThingTypeError::Credentials(ref err) => err.description(),DeprecateThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateThingTypeError::Unknown(ref cause) => cause
+                            DeprecateThingTypeError::InternalFailure(ref cause) => cause,DeprecateThingTypeError::Throttling(ref cause) => cause,DeprecateThingTypeError::InvalidRequest(ref cause) => cause,DeprecateThingTypeError::ServiceUnavailable(ref cause) => cause,DeprecateThingTypeError::ResourceNotFound(ref cause) => cause,DeprecateThingTypeError::Unauthorized(ref cause) => cause,DeprecateThingTypeError::Validation(ref cause) => cause,DeprecateThingTypeError::Credentials(ref err) => err.description(),DeprecateThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateThingTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3148,18 +3148,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeCACertificateError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3178,7 +3178,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => DescribeCACertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DescribeCACertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => DescribeCACertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DescribeCACertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DescribeCACertificateError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => DescribeCACertificateError::ResourceNotFound(String::from(error_message)),"ValidationException" => DescribeCACertificateError::Validation(error_message.to_string()),_ => DescribeCACertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => DescribeCACertificateError::InternalFailure(String::from(error_message)),"ThrottlingException" => DescribeCACertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => DescribeCACertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DescribeCACertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DescribeCACertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DescribeCACertificateError::Unauthorized(String::from(error_message)),"ValidationException" => DescribeCACertificateError::Validation(error_message.to_string()),_ => DescribeCACertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeCACertificateError::Unknown(String::from(body))
@@ -3209,7 +3209,7 @@ Unknown(String)
                 impl Error for DescribeCACertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeCACertificateError::InvalidRequest(ref cause) => cause,DescribeCACertificateError::Throttling(ref cause) => cause,DescribeCACertificateError::Unauthorized(ref cause) => cause,DescribeCACertificateError::ServiceUnavailable(ref cause) => cause,DescribeCACertificateError::InternalFailure(ref cause) => cause,DescribeCACertificateError::ResourceNotFound(ref cause) => cause,DescribeCACertificateError::Validation(ref cause) => cause,DescribeCACertificateError::Credentials(ref err) => err.description(),DescribeCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCACertificateError::Unknown(ref cause) => cause
+                            DescribeCACertificateError::InternalFailure(ref cause) => cause,DescribeCACertificateError::Throttling(ref cause) => cause,DescribeCACertificateError::InvalidRequest(ref cause) => cause,DescribeCACertificateError::ServiceUnavailable(ref cause) => cause,DescribeCACertificateError::ResourceNotFound(ref cause) => cause,DescribeCACertificateError::Unauthorized(ref cause) => cause,DescribeCACertificateError::Validation(ref cause) => cause,DescribeCACertificateError::Credentials(ref err) => err.description(),DescribeCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCACertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3217,18 +3217,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeCertificateError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3247,7 +3247,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => DescribeCertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DescribeCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => DescribeCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DescribeCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DescribeCertificateError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => DescribeCertificateError::ResourceNotFound(String::from(error_message)),"ValidationException" => DescribeCertificateError::Validation(error_message.to_string()),_ => DescribeCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => DescribeCertificateError::InternalFailure(String::from(error_message)),"ThrottlingException" => DescribeCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => DescribeCertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DescribeCertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DescribeCertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DescribeCertificateError::Unauthorized(String::from(error_message)),"ValidationException" => DescribeCertificateError::Validation(error_message.to_string()),_ => DescribeCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeCertificateError::Unknown(String::from(body))
@@ -3278,7 +3278,7 @@ Unknown(String)
                 impl Error for DescribeCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeCertificateError::InvalidRequest(ref cause) => cause,DescribeCertificateError::Throttling(ref cause) => cause,DescribeCertificateError::Unauthorized(ref cause) => cause,DescribeCertificateError::ServiceUnavailable(ref cause) => cause,DescribeCertificateError::InternalFailure(ref cause) => cause,DescribeCertificateError::ResourceNotFound(ref cause) => cause,DescribeCertificateError::Validation(ref cause) => cause,DescribeCertificateError::Credentials(ref err) => err.description(),DescribeCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCertificateError::Unknown(ref cause) => cause
+                            DescribeCertificateError::InternalFailure(ref cause) => cause,DescribeCertificateError::Throttling(ref cause) => cause,DescribeCertificateError::InvalidRequest(ref cause) => cause,DescribeCertificateError::ServiceUnavailable(ref cause) => cause,DescribeCertificateError::ResourceNotFound(ref cause) => cause,DescribeCertificateError::Unauthorized(ref cause) => cause,DescribeCertificateError::Validation(ref cause) => cause,DescribeCertificateError::Credentials(ref err) => err.description(),DescribeCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3288,10 +3288,10 @@ Unknown(String)
                     
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
 ///<p>The rate exceeds the limit.</p>
-Throttling(String),/// An error occurred dispatching the HTTP request
+Throttling(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3310,7 +3310,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalFailureException" => DescribeEndpointError::InternalFailure(String::from(error_message)),"UnauthorizedException" => DescribeEndpointError::Unauthorized(String::from(error_message)),"ThrottlingException" => DescribeEndpointError::Throttling(String::from(error_message)),"ValidationException" => DescribeEndpointError::Validation(error_message.to_string()),_ => DescribeEndpointError::Unknown(String::from(body))
+                                    "InternalFailureException" => DescribeEndpointError::InternalFailure(String::from(error_message)),"ThrottlingException" => DescribeEndpointError::Throttling(String::from(error_message)),"UnauthorizedException" => DescribeEndpointError::Unauthorized(String::from(error_message)),"ValidationException" => DescribeEndpointError::Validation(error_message.to_string()),_ => DescribeEndpointError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeEndpointError::Unknown(String::from(body))
@@ -3341,7 +3341,7 @@ Unknown(String)
                 impl Error for DescribeEndpointError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeEndpointError::InternalFailure(ref cause) => cause,DescribeEndpointError::Unauthorized(ref cause) => cause,DescribeEndpointError::Throttling(ref cause) => cause,DescribeEndpointError::Validation(ref cause) => cause,DescribeEndpointError::Credentials(ref err) => err.description(),DescribeEndpointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEndpointError::Unknown(ref cause) => cause
+                            DescribeEndpointError::InternalFailure(ref cause) => cause,DescribeEndpointError::Throttling(ref cause) => cause,DescribeEndpointError::Unauthorized(ref cause) => cause,DescribeEndpointError::Validation(ref cause) => cause,DescribeEndpointError::Credentials(ref err) => err.description(),DescribeEndpointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEndpointError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3349,18 +3349,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeThingError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3379,7 +3379,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DescribeThingError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DescribeThingError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DescribeThingError::Throttling(String::from(error_message)),"UnauthorizedException" => DescribeThingError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DescribeThingError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DescribeThingError::InternalFailure(String::from(error_message)),"ValidationException" => DescribeThingError::Validation(error_message.to_string()),_ => DescribeThingError::Unknown(String::from(body))
+                                    "InternalFailureException" => DescribeThingError::InternalFailure(String::from(error_message)),"ThrottlingException" => DescribeThingError::Throttling(String::from(error_message)),"InvalidRequestException" => DescribeThingError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DescribeThingError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DescribeThingError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DescribeThingError::Unauthorized(String::from(error_message)),"ValidationException" => DescribeThingError::Validation(error_message.to_string()),_ => DescribeThingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeThingError::Unknown(String::from(body))
@@ -3410,7 +3410,7 @@ Unknown(String)
                 impl Error for DescribeThingError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeThingError::ResourceNotFound(ref cause) => cause,DescribeThingError::InvalidRequest(ref cause) => cause,DescribeThingError::Throttling(ref cause) => cause,DescribeThingError::Unauthorized(ref cause) => cause,DescribeThingError::ServiceUnavailable(ref cause) => cause,DescribeThingError::InternalFailure(ref cause) => cause,DescribeThingError::Validation(ref cause) => cause,DescribeThingError::Credentials(ref err) => err.description(),DescribeThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeThingError::Unknown(ref cause) => cause
+                            DescribeThingError::InternalFailure(ref cause) => cause,DescribeThingError::Throttling(ref cause) => cause,DescribeThingError::InvalidRequest(ref cause) => cause,DescribeThingError::ServiceUnavailable(ref cause) => cause,DescribeThingError::ResourceNotFound(ref cause) => cause,DescribeThingError::Unauthorized(ref cause) => cause,DescribeThingError::Validation(ref cause) => cause,DescribeThingError::Credentials(ref err) => err.description(),DescribeThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeThingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3418,18 +3418,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeThingTypeError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3448,7 +3448,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DescribeThingTypeError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DescribeThingTypeError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DescribeThingTypeError::Throttling(String::from(error_message)),"UnauthorizedException" => DescribeThingTypeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DescribeThingTypeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DescribeThingTypeError::InternalFailure(String::from(error_message)),"ValidationException" => DescribeThingTypeError::Validation(error_message.to_string()),_ => DescribeThingTypeError::Unknown(String::from(body))
+                                    "InternalFailureException" => DescribeThingTypeError::InternalFailure(String::from(error_message)),"ThrottlingException" => DescribeThingTypeError::Throttling(String::from(error_message)),"InvalidRequestException" => DescribeThingTypeError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DescribeThingTypeError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DescribeThingTypeError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DescribeThingTypeError::Unauthorized(String::from(error_message)),"ValidationException" => DescribeThingTypeError::Validation(error_message.to_string()),_ => DescribeThingTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeThingTypeError::Unknown(String::from(body))
@@ -3479,7 +3479,7 @@ Unknown(String)
                 impl Error for DescribeThingTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeThingTypeError::ResourceNotFound(ref cause) => cause,DescribeThingTypeError::InvalidRequest(ref cause) => cause,DescribeThingTypeError::Throttling(ref cause) => cause,DescribeThingTypeError::Unauthorized(ref cause) => cause,DescribeThingTypeError::ServiceUnavailable(ref cause) => cause,DescribeThingTypeError::InternalFailure(ref cause) => cause,DescribeThingTypeError::Validation(ref cause) => cause,DescribeThingTypeError::Credentials(ref err) => err.description(),DescribeThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeThingTypeError::Unknown(ref cause) => cause
+                            DescribeThingTypeError::InternalFailure(ref cause) => cause,DescribeThingTypeError::Throttling(ref cause) => cause,DescribeThingTypeError::InvalidRequest(ref cause) => cause,DescribeThingTypeError::ServiceUnavailable(ref cause) => cause,DescribeThingTypeError::ResourceNotFound(ref cause) => cause,DescribeThingTypeError::Unauthorized(ref cause) => cause,DescribeThingTypeError::Validation(ref cause) => cause,DescribeThingTypeError::Credentials(ref err) => err.description(),DescribeThingTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeThingTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3487,18 +3487,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DetachPrincipalPolicyError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3517,7 +3517,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DetachPrincipalPolicyError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DetachPrincipalPolicyError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DetachPrincipalPolicyError::Throttling(String::from(error_message)),"UnauthorizedException" => DetachPrincipalPolicyError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DetachPrincipalPolicyError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DetachPrincipalPolicyError::InternalFailure(String::from(error_message)),"ValidationException" => DetachPrincipalPolicyError::Validation(error_message.to_string()),_ => DetachPrincipalPolicyError::Unknown(String::from(body))
+                                    "InternalFailureException" => DetachPrincipalPolicyError::InternalFailure(String::from(error_message)),"ThrottlingException" => DetachPrincipalPolicyError::Throttling(String::from(error_message)),"InvalidRequestException" => DetachPrincipalPolicyError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DetachPrincipalPolicyError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DetachPrincipalPolicyError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DetachPrincipalPolicyError::Unauthorized(String::from(error_message)),"ValidationException" => DetachPrincipalPolicyError::Validation(error_message.to_string()),_ => DetachPrincipalPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DetachPrincipalPolicyError::Unknown(String::from(body))
@@ -3548,7 +3548,7 @@ Unknown(String)
                 impl Error for DetachPrincipalPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DetachPrincipalPolicyError::ResourceNotFound(ref cause) => cause,DetachPrincipalPolicyError::InvalidRequest(ref cause) => cause,DetachPrincipalPolicyError::Throttling(ref cause) => cause,DetachPrincipalPolicyError::Unauthorized(ref cause) => cause,DetachPrincipalPolicyError::ServiceUnavailable(ref cause) => cause,DetachPrincipalPolicyError::InternalFailure(ref cause) => cause,DetachPrincipalPolicyError::Validation(ref cause) => cause,DetachPrincipalPolicyError::Credentials(ref err) => err.description(),DetachPrincipalPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachPrincipalPolicyError::Unknown(ref cause) => cause
+                            DetachPrincipalPolicyError::InternalFailure(ref cause) => cause,DetachPrincipalPolicyError::Throttling(ref cause) => cause,DetachPrincipalPolicyError::InvalidRequest(ref cause) => cause,DetachPrincipalPolicyError::ServiceUnavailable(ref cause) => cause,DetachPrincipalPolicyError::ResourceNotFound(ref cause) => cause,DetachPrincipalPolicyError::Unauthorized(ref cause) => cause,DetachPrincipalPolicyError::Validation(ref cause) => cause,DetachPrincipalPolicyError::Credentials(ref err) => err.description(),DetachPrincipalPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachPrincipalPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3556,18 +3556,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DetachThingPrincipalError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3586,7 +3586,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DetachThingPrincipalError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => DetachThingPrincipalError::InvalidRequest(String::from(error_message)),"ThrottlingException" => DetachThingPrincipalError::Throttling(String::from(error_message)),"UnauthorizedException" => DetachThingPrincipalError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => DetachThingPrincipalError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => DetachThingPrincipalError::InternalFailure(String::from(error_message)),"ValidationException" => DetachThingPrincipalError::Validation(error_message.to_string()),_ => DetachThingPrincipalError::Unknown(String::from(body))
+                                    "InternalFailureException" => DetachThingPrincipalError::InternalFailure(String::from(error_message)),"ThrottlingException" => DetachThingPrincipalError::Throttling(String::from(error_message)),"InvalidRequestException" => DetachThingPrincipalError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => DetachThingPrincipalError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => DetachThingPrincipalError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => DetachThingPrincipalError::Unauthorized(String::from(error_message)),"ValidationException" => DetachThingPrincipalError::Validation(error_message.to_string()),_ => DetachThingPrincipalError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DetachThingPrincipalError::Unknown(String::from(body))
@@ -3617,7 +3617,7 @@ Unknown(String)
                 impl Error for DetachThingPrincipalError {
                     fn description(&self) -> &str {
                         match *self {
-                            DetachThingPrincipalError::ResourceNotFound(ref cause) => cause,DetachThingPrincipalError::InvalidRequest(ref cause) => cause,DetachThingPrincipalError::Throttling(ref cause) => cause,DetachThingPrincipalError::Unauthorized(ref cause) => cause,DetachThingPrincipalError::ServiceUnavailable(ref cause) => cause,DetachThingPrincipalError::InternalFailure(ref cause) => cause,DetachThingPrincipalError::Validation(ref cause) => cause,DetachThingPrincipalError::Credentials(ref err) => err.description(),DetachThingPrincipalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachThingPrincipalError::Unknown(ref cause) => cause
+                            DetachThingPrincipalError::InternalFailure(ref cause) => cause,DetachThingPrincipalError::Throttling(ref cause) => cause,DetachThingPrincipalError::InvalidRequest(ref cause) => cause,DetachThingPrincipalError::ServiceUnavailable(ref cause) => cause,DetachThingPrincipalError::ResourceNotFound(ref cause) => cause,DetachThingPrincipalError::Unauthorized(ref cause) => cause,DetachThingPrincipalError::Validation(ref cause) => cause,DetachThingPrincipalError::Credentials(ref err) => err.description(),DetachThingPrincipalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachThingPrincipalError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3818,18 +3818,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetPolicyError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3848,7 +3848,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => GetPolicyError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => GetPolicyError::InvalidRequest(String::from(error_message)),"ThrottlingException" => GetPolicyError::Throttling(String::from(error_message)),"UnauthorizedException" => GetPolicyError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => GetPolicyError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => GetPolicyError::InternalFailure(String::from(error_message)),"ValidationException" => GetPolicyError::Validation(error_message.to_string()),_ => GetPolicyError::Unknown(String::from(body))
+                                    "InternalFailureException" => GetPolicyError::InternalFailure(String::from(error_message)),"ThrottlingException" => GetPolicyError::Throttling(String::from(error_message)),"InvalidRequestException" => GetPolicyError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => GetPolicyError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => GetPolicyError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => GetPolicyError::Unauthorized(String::from(error_message)),"ValidationException" => GetPolicyError::Validation(error_message.to_string()),_ => GetPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetPolicyError::Unknown(String::from(body))
@@ -3879,7 +3879,7 @@ Unknown(String)
                 impl Error for GetPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetPolicyError::ResourceNotFound(ref cause) => cause,GetPolicyError::InvalidRequest(ref cause) => cause,GetPolicyError::Throttling(ref cause) => cause,GetPolicyError::Unauthorized(ref cause) => cause,GetPolicyError::ServiceUnavailable(ref cause) => cause,GetPolicyError::InternalFailure(ref cause) => cause,GetPolicyError::Validation(ref cause) => cause,GetPolicyError::Credentials(ref err) => err.description(),GetPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyError::Unknown(ref cause) => cause
+                            GetPolicyError::InternalFailure(ref cause) => cause,GetPolicyError::Throttling(ref cause) => cause,GetPolicyError::InvalidRequest(ref cause) => cause,GetPolicyError::ServiceUnavailable(ref cause) => cause,GetPolicyError::ResourceNotFound(ref cause) => cause,GetPolicyError::Unauthorized(ref cause) => cause,GetPolicyError::Validation(ref cause) => cause,GetPolicyError::Credentials(ref err) => err.description(),GetPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3887,18 +3887,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetPolicyVersionError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3917,7 +3917,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => GetPolicyVersionError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => GetPolicyVersionError::InvalidRequest(String::from(error_message)),"ThrottlingException" => GetPolicyVersionError::Throttling(String::from(error_message)),"UnauthorizedException" => GetPolicyVersionError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => GetPolicyVersionError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => GetPolicyVersionError::InternalFailure(String::from(error_message)),"ValidationException" => GetPolicyVersionError::Validation(error_message.to_string()),_ => GetPolicyVersionError::Unknown(String::from(body))
+                                    "InternalFailureException" => GetPolicyVersionError::InternalFailure(String::from(error_message)),"ThrottlingException" => GetPolicyVersionError::Throttling(String::from(error_message)),"InvalidRequestException" => GetPolicyVersionError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => GetPolicyVersionError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => GetPolicyVersionError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => GetPolicyVersionError::Unauthorized(String::from(error_message)),"ValidationException" => GetPolicyVersionError::Validation(error_message.to_string()),_ => GetPolicyVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetPolicyVersionError::Unknown(String::from(body))
@@ -3948,7 +3948,7 @@ Unknown(String)
                 impl Error for GetPolicyVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetPolicyVersionError::ResourceNotFound(ref cause) => cause,GetPolicyVersionError::InvalidRequest(ref cause) => cause,GetPolicyVersionError::Throttling(ref cause) => cause,GetPolicyVersionError::Unauthorized(ref cause) => cause,GetPolicyVersionError::ServiceUnavailable(ref cause) => cause,GetPolicyVersionError::InternalFailure(ref cause) => cause,GetPolicyVersionError::Validation(ref cause) => cause,GetPolicyVersionError::Credentials(ref err) => err.description(),GetPolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyVersionError::Unknown(ref cause) => cause
+                            GetPolicyVersionError::InternalFailure(ref cause) => cause,GetPolicyVersionError::Throttling(ref cause) => cause,GetPolicyVersionError::InvalidRequest(ref cause) => cause,GetPolicyVersionError::ServiceUnavailable(ref cause) => cause,GetPolicyVersionError::ResourceNotFound(ref cause) => cause,GetPolicyVersionError::Unauthorized(ref cause) => cause,GetPolicyVersionError::Validation(ref cause) => cause,GetPolicyVersionError::Credentials(ref err) => err.description(),GetPolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3956,16 +3956,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetRegistrationCodeError {
                     
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
 ///<p>The request is not valid.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3984,7 +3984,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ThrottlingException" => GetRegistrationCodeError::Throttling(String::from(error_message)),"UnauthorizedException" => GetRegistrationCodeError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => GetRegistrationCodeError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => GetRegistrationCodeError::InternalFailure(String::from(error_message)),"InvalidRequestException" => GetRegistrationCodeError::InvalidRequest(String::from(error_message)),"ValidationException" => GetRegistrationCodeError::Validation(error_message.to_string()),_ => GetRegistrationCodeError::Unknown(String::from(body))
+                                    "InternalFailureException" => GetRegistrationCodeError::InternalFailure(String::from(error_message)),"ThrottlingException" => GetRegistrationCodeError::Throttling(String::from(error_message)),"InvalidRequestException" => GetRegistrationCodeError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => GetRegistrationCodeError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => GetRegistrationCodeError::Unauthorized(String::from(error_message)),"ValidationException" => GetRegistrationCodeError::Validation(error_message.to_string()),_ => GetRegistrationCodeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetRegistrationCodeError::Unknown(String::from(body))
@@ -4015,7 +4015,7 @@ Unknown(String)
                 impl Error for GetRegistrationCodeError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetRegistrationCodeError::Throttling(ref cause) => cause,GetRegistrationCodeError::Unauthorized(ref cause) => cause,GetRegistrationCodeError::ServiceUnavailable(ref cause) => cause,GetRegistrationCodeError::InternalFailure(ref cause) => cause,GetRegistrationCodeError::InvalidRequest(ref cause) => cause,GetRegistrationCodeError::Validation(ref cause) => cause,GetRegistrationCodeError::Credentials(ref err) => err.description(),GetRegistrationCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetRegistrationCodeError::Unknown(ref cause) => cause
+                            GetRegistrationCodeError::InternalFailure(ref cause) => cause,GetRegistrationCodeError::Throttling(ref cause) => cause,GetRegistrationCodeError::InvalidRequest(ref cause) => cause,GetRegistrationCodeError::ServiceUnavailable(ref cause) => cause,GetRegistrationCodeError::Unauthorized(ref cause) => cause,GetRegistrationCodeError::Validation(ref cause) => cause,GetRegistrationCodeError::Credentials(ref err) => err.description(),GetRegistrationCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetRegistrationCodeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4088,16 +4088,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListCACertificatesError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4116,7 +4116,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListCACertificatesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListCACertificatesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListCACertificatesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListCACertificatesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListCACertificatesError::InternalFailure(String::from(error_message)),"ValidationException" => ListCACertificatesError::Validation(error_message.to_string()),_ => ListCACertificatesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListCACertificatesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListCACertificatesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListCACertificatesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListCACertificatesError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListCACertificatesError::Unauthorized(String::from(error_message)),"ValidationException" => ListCACertificatesError::Validation(error_message.to_string()),_ => ListCACertificatesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListCACertificatesError::Unknown(String::from(body))
@@ -4147,7 +4147,7 @@ Unknown(String)
                 impl Error for ListCACertificatesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListCACertificatesError::InvalidRequest(ref cause) => cause,ListCACertificatesError::Throttling(ref cause) => cause,ListCACertificatesError::Unauthorized(ref cause) => cause,ListCACertificatesError::ServiceUnavailable(ref cause) => cause,ListCACertificatesError::InternalFailure(ref cause) => cause,ListCACertificatesError::Validation(ref cause) => cause,ListCACertificatesError::Credentials(ref err) => err.description(),ListCACertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCACertificatesError::Unknown(ref cause) => cause
+                            ListCACertificatesError::InternalFailure(ref cause) => cause,ListCACertificatesError::Throttling(ref cause) => cause,ListCACertificatesError::InvalidRequest(ref cause) => cause,ListCACertificatesError::ServiceUnavailable(ref cause) => cause,ListCACertificatesError::Unauthorized(ref cause) => cause,ListCACertificatesError::Validation(ref cause) => cause,ListCACertificatesError::Credentials(ref err) => err.description(),ListCACertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCACertificatesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4155,16 +4155,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListCertificatesError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4183,7 +4183,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListCertificatesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListCertificatesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListCertificatesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListCertificatesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListCertificatesError::InternalFailure(String::from(error_message)),"ValidationException" => ListCertificatesError::Validation(error_message.to_string()),_ => ListCertificatesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListCertificatesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListCertificatesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListCertificatesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListCertificatesError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListCertificatesError::Unauthorized(String::from(error_message)),"ValidationException" => ListCertificatesError::Validation(error_message.to_string()),_ => ListCertificatesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListCertificatesError::Unknown(String::from(body))
@@ -4214,7 +4214,7 @@ Unknown(String)
                 impl Error for ListCertificatesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListCertificatesError::InvalidRequest(ref cause) => cause,ListCertificatesError::Throttling(ref cause) => cause,ListCertificatesError::Unauthorized(ref cause) => cause,ListCertificatesError::ServiceUnavailable(ref cause) => cause,ListCertificatesError::InternalFailure(ref cause) => cause,ListCertificatesError::Validation(ref cause) => cause,ListCertificatesError::Credentials(ref err) => err.description(),ListCertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCertificatesError::Unknown(ref cause) => cause
+                            ListCertificatesError::InternalFailure(ref cause) => cause,ListCertificatesError::Throttling(ref cause) => cause,ListCertificatesError::InvalidRequest(ref cause) => cause,ListCertificatesError::ServiceUnavailable(ref cause) => cause,ListCertificatesError::Unauthorized(ref cause) => cause,ListCertificatesError::Validation(ref cause) => cause,ListCertificatesError::Credentials(ref err) => err.description(),ListCertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCertificatesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4222,16 +4222,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListCertificatesByCAError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4250,7 +4250,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListCertificatesByCAError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListCertificatesByCAError::Throttling(String::from(error_message)),"UnauthorizedException" => ListCertificatesByCAError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListCertificatesByCAError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListCertificatesByCAError::InternalFailure(String::from(error_message)),"ValidationException" => ListCertificatesByCAError::Validation(error_message.to_string()),_ => ListCertificatesByCAError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListCertificatesByCAError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListCertificatesByCAError::Throttling(String::from(error_message)),"InvalidRequestException" => ListCertificatesByCAError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListCertificatesByCAError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListCertificatesByCAError::Unauthorized(String::from(error_message)),"ValidationException" => ListCertificatesByCAError::Validation(error_message.to_string()),_ => ListCertificatesByCAError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListCertificatesByCAError::Unknown(String::from(body))
@@ -4281,7 +4281,7 @@ Unknown(String)
                 impl Error for ListCertificatesByCAError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListCertificatesByCAError::InvalidRequest(ref cause) => cause,ListCertificatesByCAError::Throttling(ref cause) => cause,ListCertificatesByCAError::Unauthorized(ref cause) => cause,ListCertificatesByCAError::ServiceUnavailable(ref cause) => cause,ListCertificatesByCAError::InternalFailure(ref cause) => cause,ListCertificatesByCAError::Validation(ref cause) => cause,ListCertificatesByCAError::Credentials(ref err) => err.description(),ListCertificatesByCAError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCertificatesByCAError::Unknown(ref cause) => cause
+                            ListCertificatesByCAError::InternalFailure(ref cause) => cause,ListCertificatesByCAError::Throttling(ref cause) => cause,ListCertificatesByCAError::InvalidRequest(ref cause) => cause,ListCertificatesByCAError::ServiceUnavailable(ref cause) => cause,ListCertificatesByCAError::Unauthorized(ref cause) => cause,ListCertificatesByCAError::Validation(ref cause) => cause,ListCertificatesByCAError::Credentials(ref err) => err.description(),ListCertificatesByCAError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCertificatesByCAError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4289,16 +4289,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListOutgoingCertificatesError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4317,7 +4317,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListOutgoingCertificatesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListOutgoingCertificatesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListOutgoingCertificatesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListOutgoingCertificatesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListOutgoingCertificatesError::InternalFailure(String::from(error_message)),"ValidationException" => ListOutgoingCertificatesError::Validation(error_message.to_string()),_ => ListOutgoingCertificatesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListOutgoingCertificatesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListOutgoingCertificatesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListOutgoingCertificatesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListOutgoingCertificatesError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListOutgoingCertificatesError::Unauthorized(String::from(error_message)),"ValidationException" => ListOutgoingCertificatesError::Validation(error_message.to_string()),_ => ListOutgoingCertificatesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListOutgoingCertificatesError::Unknown(String::from(body))
@@ -4348,7 +4348,7 @@ Unknown(String)
                 impl Error for ListOutgoingCertificatesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListOutgoingCertificatesError::InvalidRequest(ref cause) => cause,ListOutgoingCertificatesError::Throttling(ref cause) => cause,ListOutgoingCertificatesError::Unauthorized(ref cause) => cause,ListOutgoingCertificatesError::ServiceUnavailable(ref cause) => cause,ListOutgoingCertificatesError::InternalFailure(ref cause) => cause,ListOutgoingCertificatesError::Validation(ref cause) => cause,ListOutgoingCertificatesError::Credentials(ref err) => err.description(),ListOutgoingCertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListOutgoingCertificatesError::Unknown(ref cause) => cause
+                            ListOutgoingCertificatesError::InternalFailure(ref cause) => cause,ListOutgoingCertificatesError::Throttling(ref cause) => cause,ListOutgoingCertificatesError::InvalidRequest(ref cause) => cause,ListOutgoingCertificatesError::ServiceUnavailable(ref cause) => cause,ListOutgoingCertificatesError::Unauthorized(ref cause) => cause,ListOutgoingCertificatesError::Validation(ref cause) => cause,ListOutgoingCertificatesError::Credentials(ref err) => err.description(),ListOutgoingCertificatesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListOutgoingCertificatesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4356,16 +4356,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListPoliciesError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4384,7 +4384,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListPoliciesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListPoliciesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListPoliciesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListPoliciesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListPoliciesError::InternalFailure(String::from(error_message)),"ValidationException" => ListPoliciesError::Validation(error_message.to_string()),_ => ListPoliciesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListPoliciesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListPoliciesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListPoliciesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListPoliciesError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListPoliciesError::Unauthorized(String::from(error_message)),"ValidationException" => ListPoliciesError::Validation(error_message.to_string()),_ => ListPoliciesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListPoliciesError::Unknown(String::from(body))
@@ -4415,7 +4415,7 @@ Unknown(String)
                 impl Error for ListPoliciesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListPoliciesError::InvalidRequest(ref cause) => cause,ListPoliciesError::Throttling(ref cause) => cause,ListPoliciesError::Unauthorized(ref cause) => cause,ListPoliciesError::ServiceUnavailable(ref cause) => cause,ListPoliciesError::InternalFailure(ref cause) => cause,ListPoliciesError::Validation(ref cause) => cause,ListPoliciesError::Credentials(ref err) => err.description(),ListPoliciesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPoliciesError::Unknown(ref cause) => cause
+                            ListPoliciesError::InternalFailure(ref cause) => cause,ListPoliciesError::Throttling(ref cause) => cause,ListPoliciesError::InvalidRequest(ref cause) => cause,ListPoliciesError::ServiceUnavailable(ref cause) => cause,ListPoliciesError::Unauthorized(ref cause) => cause,ListPoliciesError::Validation(ref cause) => cause,ListPoliciesError::Credentials(ref err) => err.description(),ListPoliciesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPoliciesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4423,18 +4423,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListPolicyPrincipalsError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4453,7 +4453,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => ListPolicyPrincipalsError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => ListPolicyPrincipalsError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListPolicyPrincipalsError::Throttling(String::from(error_message)),"UnauthorizedException" => ListPolicyPrincipalsError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListPolicyPrincipalsError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListPolicyPrincipalsError::InternalFailure(String::from(error_message)),"ValidationException" => ListPolicyPrincipalsError::Validation(error_message.to_string()),_ => ListPolicyPrincipalsError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListPolicyPrincipalsError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListPolicyPrincipalsError::Throttling(String::from(error_message)),"InvalidRequestException" => ListPolicyPrincipalsError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListPolicyPrincipalsError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => ListPolicyPrincipalsError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => ListPolicyPrincipalsError::Unauthorized(String::from(error_message)),"ValidationException" => ListPolicyPrincipalsError::Validation(error_message.to_string()),_ => ListPolicyPrincipalsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListPolicyPrincipalsError::Unknown(String::from(body))
@@ -4484,7 +4484,7 @@ Unknown(String)
                 impl Error for ListPolicyPrincipalsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListPolicyPrincipalsError::ResourceNotFound(ref cause) => cause,ListPolicyPrincipalsError::InvalidRequest(ref cause) => cause,ListPolicyPrincipalsError::Throttling(ref cause) => cause,ListPolicyPrincipalsError::Unauthorized(ref cause) => cause,ListPolicyPrincipalsError::ServiceUnavailable(ref cause) => cause,ListPolicyPrincipalsError::InternalFailure(ref cause) => cause,ListPolicyPrincipalsError::Validation(ref cause) => cause,ListPolicyPrincipalsError::Credentials(ref err) => err.description(),ListPolicyPrincipalsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPolicyPrincipalsError::Unknown(ref cause) => cause
+                            ListPolicyPrincipalsError::InternalFailure(ref cause) => cause,ListPolicyPrincipalsError::Throttling(ref cause) => cause,ListPolicyPrincipalsError::InvalidRequest(ref cause) => cause,ListPolicyPrincipalsError::ServiceUnavailable(ref cause) => cause,ListPolicyPrincipalsError::ResourceNotFound(ref cause) => cause,ListPolicyPrincipalsError::Unauthorized(ref cause) => cause,ListPolicyPrincipalsError::Validation(ref cause) => cause,ListPolicyPrincipalsError::Credentials(ref err) => err.description(),ListPolicyPrincipalsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPolicyPrincipalsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4492,18 +4492,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListPolicyVersionsError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4522,7 +4522,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => ListPolicyVersionsError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => ListPolicyVersionsError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListPolicyVersionsError::Throttling(String::from(error_message)),"UnauthorizedException" => ListPolicyVersionsError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListPolicyVersionsError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListPolicyVersionsError::InternalFailure(String::from(error_message)),"ValidationException" => ListPolicyVersionsError::Validation(error_message.to_string()),_ => ListPolicyVersionsError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListPolicyVersionsError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListPolicyVersionsError::Throttling(String::from(error_message)),"InvalidRequestException" => ListPolicyVersionsError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListPolicyVersionsError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => ListPolicyVersionsError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => ListPolicyVersionsError::Unauthorized(String::from(error_message)),"ValidationException" => ListPolicyVersionsError::Validation(error_message.to_string()),_ => ListPolicyVersionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListPolicyVersionsError::Unknown(String::from(body))
@@ -4553,7 +4553,7 @@ Unknown(String)
                 impl Error for ListPolicyVersionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListPolicyVersionsError::ResourceNotFound(ref cause) => cause,ListPolicyVersionsError::InvalidRequest(ref cause) => cause,ListPolicyVersionsError::Throttling(ref cause) => cause,ListPolicyVersionsError::Unauthorized(ref cause) => cause,ListPolicyVersionsError::ServiceUnavailable(ref cause) => cause,ListPolicyVersionsError::InternalFailure(ref cause) => cause,ListPolicyVersionsError::Validation(ref cause) => cause,ListPolicyVersionsError::Credentials(ref err) => err.description(),ListPolicyVersionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPolicyVersionsError::Unknown(ref cause) => cause
+                            ListPolicyVersionsError::InternalFailure(ref cause) => cause,ListPolicyVersionsError::Throttling(ref cause) => cause,ListPolicyVersionsError::InvalidRequest(ref cause) => cause,ListPolicyVersionsError::ServiceUnavailable(ref cause) => cause,ListPolicyVersionsError::ResourceNotFound(ref cause) => cause,ListPolicyVersionsError::Unauthorized(ref cause) => cause,ListPolicyVersionsError::Validation(ref cause) => cause,ListPolicyVersionsError::Credentials(ref err) => err.description(),ListPolicyVersionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPolicyVersionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4561,18 +4561,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListPrincipalPoliciesError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4591,7 +4591,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => ListPrincipalPoliciesError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => ListPrincipalPoliciesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListPrincipalPoliciesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListPrincipalPoliciesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListPrincipalPoliciesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListPrincipalPoliciesError::InternalFailure(String::from(error_message)),"ValidationException" => ListPrincipalPoliciesError::Validation(error_message.to_string()),_ => ListPrincipalPoliciesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListPrincipalPoliciesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListPrincipalPoliciesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListPrincipalPoliciesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListPrincipalPoliciesError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => ListPrincipalPoliciesError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => ListPrincipalPoliciesError::Unauthorized(String::from(error_message)),"ValidationException" => ListPrincipalPoliciesError::Validation(error_message.to_string()),_ => ListPrincipalPoliciesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListPrincipalPoliciesError::Unknown(String::from(body))
@@ -4622,7 +4622,7 @@ Unknown(String)
                 impl Error for ListPrincipalPoliciesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListPrincipalPoliciesError::ResourceNotFound(ref cause) => cause,ListPrincipalPoliciesError::InvalidRequest(ref cause) => cause,ListPrincipalPoliciesError::Throttling(ref cause) => cause,ListPrincipalPoliciesError::Unauthorized(ref cause) => cause,ListPrincipalPoliciesError::ServiceUnavailable(ref cause) => cause,ListPrincipalPoliciesError::InternalFailure(ref cause) => cause,ListPrincipalPoliciesError::Validation(ref cause) => cause,ListPrincipalPoliciesError::Credentials(ref err) => err.description(),ListPrincipalPoliciesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPrincipalPoliciesError::Unknown(ref cause) => cause
+                            ListPrincipalPoliciesError::InternalFailure(ref cause) => cause,ListPrincipalPoliciesError::Throttling(ref cause) => cause,ListPrincipalPoliciesError::InvalidRequest(ref cause) => cause,ListPrincipalPoliciesError::ServiceUnavailable(ref cause) => cause,ListPrincipalPoliciesError::ResourceNotFound(ref cause) => cause,ListPrincipalPoliciesError::Unauthorized(ref cause) => cause,ListPrincipalPoliciesError::Validation(ref cause) => cause,ListPrincipalPoliciesError::Credentials(ref err) => err.description(),ListPrincipalPoliciesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPrincipalPoliciesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4630,18 +4630,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListPrincipalThingsError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4660,7 +4660,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListPrincipalThingsError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListPrincipalThingsError::Throttling(String::from(error_message)),"UnauthorizedException" => ListPrincipalThingsError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListPrincipalThingsError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListPrincipalThingsError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => ListPrincipalThingsError::ResourceNotFound(String::from(error_message)),"ValidationException" => ListPrincipalThingsError::Validation(error_message.to_string()),_ => ListPrincipalThingsError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListPrincipalThingsError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListPrincipalThingsError::Throttling(String::from(error_message)),"InvalidRequestException" => ListPrincipalThingsError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListPrincipalThingsError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => ListPrincipalThingsError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => ListPrincipalThingsError::Unauthorized(String::from(error_message)),"ValidationException" => ListPrincipalThingsError::Validation(error_message.to_string()),_ => ListPrincipalThingsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListPrincipalThingsError::Unknown(String::from(body))
@@ -4691,7 +4691,7 @@ Unknown(String)
                 impl Error for ListPrincipalThingsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListPrincipalThingsError::InvalidRequest(ref cause) => cause,ListPrincipalThingsError::Throttling(ref cause) => cause,ListPrincipalThingsError::Unauthorized(ref cause) => cause,ListPrincipalThingsError::ServiceUnavailable(ref cause) => cause,ListPrincipalThingsError::InternalFailure(ref cause) => cause,ListPrincipalThingsError::ResourceNotFound(ref cause) => cause,ListPrincipalThingsError::Validation(ref cause) => cause,ListPrincipalThingsError::Credentials(ref err) => err.description(),ListPrincipalThingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPrincipalThingsError::Unknown(ref cause) => cause
+                            ListPrincipalThingsError::InternalFailure(ref cause) => cause,ListPrincipalThingsError::Throttling(ref cause) => cause,ListPrincipalThingsError::InvalidRequest(ref cause) => cause,ListPrincipalThingsError::ServiceUnavailable(ref cause) => cause,ListPrincipalThingsError::ResourceNotFound(ref cause) => cause,ListPrincipalThingsError::Unauthorized(ref cause) => cause,ListPrincipalThingsError::Validation(ref cause) => cause,ListPrincipalThingsError::Credentials(ref err) => err.description(),ListPrincipalThingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPrincipalThingsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4699,18 +4699,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListThingPrincipalsError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4729,7 +4729,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListThingPrincipalsError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListThingPrincipalsError::Throttling(String::from(error_message)),"UnauthorizedException" => ListThingPrincipalsError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListThingPrincipalsError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListThingPrincipalsError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => ListThingPrincipalsError::ResourceNotFound(String::from(error_message)),"ValidationException" => ListThingPrincipalsError::Validation(error_message.to_string()),_ => ListThingPrincipalsError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListThingPrincipalsError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListThingPrincipalsError::Throttling(String::from(error_message)),"InvalidRequestException" => ListThingPrincipalsError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListThingPrincipalsError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => ListThingPrincipalsError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => ListThingPrincipalsError::Unauthorized(String::from(error_message)),"ValidationException" => ListThingPrincipalsError::Validation(error_message.to_string()),_ => ListThingPrincipalsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListThingPrincipalsError::Unknown(String::from(body))
@@ -4760,7 +4760,7 @@ Unknown(String)
                 impl Error for ListThingPrincipalsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListThingPrincipalsError::InvalidRequest(ref cause) => cause,ListThingPrincipalsError::Throttling(ref cause) => cause,ListThingPrincipalsError::Unauthorized(ref cause) => cause,ListThingPrincipalsError::ServiceUnavailable(ref cause) => cause,ListThingPrincipalsError::InternalFailure(ref cause) => cause,ListThingPrincipalsError::ResourceNotFound(ref cause) => cause,ListThingPrincipalsError::Validation(ref cause) => cause,ListThingPrincipalsError::Credentials(ref err) => err.description(),ListThingPrincipalsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingPrincipalsError::Unknown(ref cause) => cause
+                            ListThingPrincipalsError::InternalFailure(ref cause) => cause,ListThingPrincipalsError::Throttling(ref cause) => cause,ListThingPrincipalsError::InvalidRequest(ref cause) => cause,ListThingPrincipalsError::ServiceUnavailable(ref cause) => cause,ListThingPrincipalsError::ResourceNotFound(ref cause) => cause,ListThingPrincipalsError::Unauthorized(ref cause) => cause,ListThingPrincipalsError::Validation(ref cause) => cause,ListThingPrincipalsError::Credentials(ref err) => err.description(),ListThingPrincipalsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingPrincipalsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4768,16 +4768,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListThingTypesError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4796,7 +4796,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListThingTypesError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListThingTypesError::Throttling(String::from(error_message)),"UnauthorizedException" => ListThingTypesError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListThingTypesError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListThingTypesError::InternalFailure(String::from(error_message)),"ValidationException" => ListThingTypesError::Validation(error_message.to_string()),_ => ListThingTypesError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListThingTypesError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListThingTypesError::Throttling(String::from(error_message)),"InvalidRequestException" => ListThingTypesError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListThingTypesError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListThingTypesError::Unauthorized(String::from(error_message)),"ValidationException" => ListThingTypesError::Validation(error_message.to_string()),_ => ListThingTypesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListThingTypesError::Unknown(String::from(body))
@@ -4827,7 +4827,7 @@ Unknown(String)
                 impl Error for ListThingTypesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListThingTypesError::InvalidRequest(ref cause) => cause,ListThingTypesError::Throttling(ref cause) => cause,ListThingTypesError::Unauthorized(ref cause) => cause,ListThingTypesError::ServiceUnavailable(ref cause) => cause,ListThingTypesError::InternalFailure(ref cause) => cause,ListThingTypesError::Validation(ref cause) => cause,ListThingTypesError::Credentials(ref err) => err.description(),ListThingTypesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingTypesError::Unknown(ref cause) => cause
+                            ListThingTypesError::InternalFailure(ref cause) => cause,ListThingTypesError::Throttling(ref cause) => cause,ListThingTypesError::InvalidRequest(ref cause) => cause,ListThingTypesError::ServiceUnavailable(ref cause) => cause,ListThingTypesError::Unauthorized(ref cause) => cause,ListThingTypesError::Validation(ref cause) => cause,ListThingTypesError::Credentials(ref err) => err.description(),ListThingTypesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingTypesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4835,16 +4835,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListThingsError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4863,7 +4863,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => ListThingsError::InvalidRequest(String::from(error_message)),"ThrottlingException" => ListThingsError::Throttling(String::from(error_message)),"UnauthorizedException" => ListThingsError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => ListThingsError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => ListThingsError::InternalFailure(String::from(error_message)),"ValidationException" => ListThingsError::Validation(error_message.to_string()),_ => ListThingsError::Unknown(String::from(body))
+                                    "InternalFailureException" => ListThingsError::InternalFailure(String::from(error_message)),"ThrottlingException" => ListThingsError::Throttling(String::from(error_message)),"InvalidRequestException" => ListThingsError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ListThingsError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ListThingsError::Unauthorized(String::from(error_message)),"ValidationException" => ListThingsError::Validation(error_message.to_string()),_ => ListThingsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListThingsError::Unknown(String::from(body))
@@ -4894,7 +4894,7 @@ Unknown(String)
                 impl Error for ListThingsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListThingsError::InvalidRequest(ref cause) => cause,ListThingsError::Throttling(ref cause) => cause,ListThingsError::Unauthorized(ref cause) => cause,ListThingsError::ServiceUnavailable(ref cause) => cause,ListThingsError::InternalFailure(ref cause) => cause,ListThingsError::Validation(ref cause) => cause,ListThingsError::Credentials(ref err) => err.description(),ListThingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingsError::Unknown(ref cause) => cause
+                            ListThingsError::InternalFailure(ref cause) => cause,ListThingsError::Throttling(ref cause) => cause,ListThingsError::InvalidRequest(ref cause) => cause,ListThingsError::ServiceUnavailable(ref cause) => cause,ListThingsError::Unauthorized(ref cause) => cause,ListThingsError::Validation(ref cause) => cause,ListThingsError::Credentials(ref err) => err.description(),ListThingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListThingsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4965,24 +4965,24 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterCACertificateError {
                     
-///<p>The resource already exists.</p>
-ResourceAlreadyExists(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
+///<p>The certificate is invalid.</p>
+CertificateValidation(String),
+///<p>The number of attached entities exceeds the limit.</p>
+LimitExceeded(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
 ///<p>The registration code is invalid.</p>
 RegistrationCodeValidation(String),
 ///<p>The request is not valid.</p>
 InvalidRequest(String),
-///<p>The certificate is invalid.</p>
-CertificateValidation(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>The number of attached entities exceeds the limit.</p>
-LimitExceeded(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The resource already exists.</p>
+ResourceAlreadyExists(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5001,7 +5001,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceAlreadyExistsException" => RegisterCACertificateError::ResourceAlreadyExists(String::from(error_message)),"RegistrationCodeValidationException" => RegisterCACertificateError::RegistrationCodeValidation(String::from(error_message)),"InvalidRequestException" => RegisterCACertificateError::InvalidRequest(String::from(error_message)),"CertificateValidationException" => RegisterCACertificateError::CertificateValidation(String::from(error_message)),"ThrottlingException" => RegisterCACertificateError::Throttling(String::from(error_message)),"LimitExceededException" => RegisterCACertificateError::LimitExceeded(String::from(error_message)),"UnauthorizedException" => RegisterCACertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => RegisterCACertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => RegisterCACertificateError::InternalFailure(String::from(error_message)),"ValidationException" => RegisterCACertificateError::Validation(error_message.to_string()),_ => RegisterCACertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => RegisterCACertificateError::InternalFailure(String::from(error_message)),"CertificateValidationException" => RegisterCACertificateError::CertificateValidation(String::from(error_message)),"LimitExceededException" => RegisterCACertificateError::LimitExceeded(String::from(error_message)),"ThrottlingException" => RegisterCACertificateError::Throttling(String::from(error_message)),"RegistrationCodeValidationException" => RegisterCACertificateError::RegistrationCodeValidation(String::from(error_message)),"InvalidRequestException" => RegisterCACertificateError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => RegisterCACertificateError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => RegisterCACertificateError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => RegisterCACertificateError::Unauthorized(String::from(error_message)),"ValidationException" => RegisterCACertificateError::Validation(error_message.to_string()),_ => RegisterCACertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterCACertificateError::Unknown(String::from(body))
@@ -5032,7 +5032,7 @@ Unknown(String)
                 impl Error for RegisterCACertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterCACertificateError::ResourceAlreadyExists(ref cause) => cause,RegisterCACertificateError::RegistrationCodeValidation(ref cause) => cause,RegisterCACertificateError::InvalidRequest(ref cause) => cause,RegisterCACertificateError::CertificateValidation(ref cause) => cause,RegisterCACertificateError::Throttling(ref cause) => cause,RegisterCACertificateError::LimitExceeded(ref cause) => cause,RegisterCACertificateError::Unauthorized(ref cause) => cause,RegisterCACertificateError::ServiceUnavailable(ref cause) => cause,RegisterCACertificateError::InternalFailure(ref cause) => cause,RegisterCACertificateError::Validation(ref cause) => cause,RegisterCACertificateError::Credentials(ref err) => err.description(),RegisterCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterCACertificateError::Unknown(ref cause) => cause
+                            RegisterCACertificateError::InternalFailure(ref cause) => cause,RegisterCACertificateError::CertificateValidation(ref cause) => cause,RegisterCACertificateError::LimitExceeded(ref cause) => cause,RegisterCACertificateError::Throttling(ref cause) => cause,RegisterCACertificateError::RegistrationCodeValidation(ref cause) => cause,RegisterCACertificateError::InvalidRequest(ref cause) => cause,RegisterCACertificateError::ResourceAlreadyExists(ref cause) => cause,RegisterCACertificateError::ServiceUnavailable(ref cause) => cause,RegisterCACertificateError::Unauthorized(ref cause) => cause,RegisterCACertificateError::Validation(ref cause) => cause,RegisterCACertificateError::Credentials(ref err) => err.description(),RegisterCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterCACertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5040,24 +5040,24 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterCertificateError {
                     
-///<p>The resource already exists.</p>
-ResourceAlreadyExists(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The certificate is invalid.</p>
 CertificateValidation(String),
 ///<p>The certificate operation is not allowed.</p>
 CertificateState(String),
-///<p>Unable to verify the CA certificate used to sign the device certificate you are attempting to register. This is happens when you have registered more than one CA certificate that has the same subject field and public key.</p>
-CertificateConflict(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The resource already exists.</p>
+ResourceAlreadyExists(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>Unable to verify the CA certificate used to sign the device certificate you are attempting to register. This is happens when you have registered more than one CA certificate that has the same subject field and public key.</p>
+CertificateConflict(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5076,7 +5076,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceAlreadyExistsException" => RegisterCertificateError::ResourceAlreadyExists(String::from(error_message)),"InvalidRequestException" => RegisterCertificateError::InvalidRequest(String::from(error_message)),"CertificateValidationException" => RegisterCertificateError::CertificateValidation(String::from(error_message)),"CertificateStateException" => RegisterCertificateError::CertificateState(String::from(error_message)),"CertificateConflictException" => RegisterCertificateError::CertificateConflict(String::from(error_message)),"ThrottlingException" => RegisterCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => RegisterCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => RegisterCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => RegisterCertificateError::InternalFailure(String::from(error_message)),"ValidationException" => RegisterCertificateError::Validation(error_message.to_string()),_ => RegisterCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => RegisterCertificateError::InternalFailure(String::from(error_message)),"CertificateValidationException" => RegisterCertificateError::CertificateValidation(String::from(error_message)),"CertificateStateException" => RegisterCertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => RegisterCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => RegisterCertificateError::InvalidRequest(String::from(error_message)),"ResourceAlreadyExistsException" => RegisterCertificateError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => RegisterCertificateError::ServiceUnavailable(String::from(error_message)),"CertificateConflictException" => RegisterCertificateError::CertificateConflict(String::from(error_message)),"UnauthorizedException" => RegisterCertificateError::Unauthorized(String::from(error_message)),"ValidationException" => RegisterCertificateError::Validation(error_message.to_string()),_ => RegisterCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterCertificateError::Unknown(String::from(body))
@@ -5107,7 +5107,7 @@ Unknown(String)
                 impl Error for RegisterCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterCertificateError::ResourceAlreadyExists(ref cause) => cause,RegisterCertificateError::InvalidRequest(ref cause) => cause,RegisterCertificateError::CertificateValidation(ref cause) => cause,RegisterCertificateError::CertificateState(ref cause) => cause,RegisterCertificateError::CertificateConflict(ref cause) => cause,RegisterCertificateError::Throttling(ref cause) => cause,RegisterCertificateError::Unauthorized(ref cause) => cause,RegisterCertificateError::ServiceUnavailable(ref cause) => cause,RegisterCertificateError::InternalFailure(ref cause) => cause,RegisterCertificateError::Validation(ref cause) => cause,RegisterCertificateError::Credentials(ref err) => err.description(),RegisterCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterCertificateError::Unknown(ref cause) => cause
+                            RegisterCertificateError::InternalFailure(ref cause) => cause,RegisterCertificateError::CertificateValidation(ref cause) => cause,RegisterCertificateError::CertificateState(ref cause) => cause,RegisterCertificateError::Throttling(ref cause) => cause,RegisterCertificateError::InvalidRequest(ref cause) => cause,RegisterCertificateError::ResourceAlreadyExists(ref cause) => cause,RegisterCertificateError::ServiceUnavailable(ref cause) => cause,RegisterCertificateError::CertificateConflict(ref cause) => cause,RegisterCertificateError::Unauthorized(ref cause) => cause,RegisterCertificateError::Validation(ref cause) => cause,RegisterCertificateError::Credentials(ref err) => err.description(),RegisterCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5115,20 +5115,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RejectCertificateTransferError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
-TransferAlreadyCompleted(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't revert the certificate transfer because the transfer is already complete.</p>
+TransferAlreadyCompleted(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5147,7 +5147,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => RejectCertificateTransferError::ResourceNotFound(String::from(error_message)),"TransferAlreadyCompletedException" => RejectCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"InvalidRequestException" => RejectCertificateTransferError::InvalidRequest(String::from(error_message)),"ThrottlingException" => RejectCertificateTransferError::Throttling(String::from(error_message)),"UnauthorizedException" => RejectCertificateTransferError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => RejectCertificateTransferError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => RejectCertificateTransferError::InternalFailure(String::from(error_message)),"ValidationException" => RejectCertificateTransferError::Validation(error_message.to_string()),_ => RejectCertificateTransferError::Unknown(String::from(body))
+                                    "InternalFailureException" => RejectCertificateTransferError::InternalFailure(String::from(error_message)),"ThrottlingException" => RejectCertificateTransferError::Throttling(String::from(error_message)),"InvalidRequestException" => RejectCertificateTransferError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => RejectCertificateTransferError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => RejectCertificateTransferError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => RejectCertificateTransferError::Unauthorized(String::from(error_message)),"TransferAlreadyCompletedException" => RejectCertificateTransferError::TransferAlreadyCompleted(String::from(error_message)),"ValidationException" => RejectCertificateTransferError::Validation(error_message.to_string()),_ => RejectCertificateTransferError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RejectCertificateTransferError::Unknown(String::from(body))
@@ -5178,7 +5178,7 @@ Unknown(String)
                 impl Error for RejectCertificateTransferError {
                     fn description(&self) -> &str {
                         match *self {
-                            RejectCertificateTransferError::ResourceNotFound(ref cause) => cause,RejectCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,RejectCertificateTransferError::InvalidRequest(ref cause) => cause,RejectCertificateTransferError::Throttling(ref cause) => cause,RejectCertificateTransferError::Unauthorized(ref cause) => cause,RejectCertificateTransferError::ServiceUnavailable(ref cause) => cause,RejectCertificateTransferError::InternalFailure(ref cause) => cause,RejectCertificateTransferError::Validation(ref cause) => cause,RejectCertificateTransferError::Credentials(ref err) => err.description(),RejectCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RejectCertificateTransferError::Unknown(ref cause) => cause
+                            RejectCertificateTransferError::InternalFailure(ref cause) => cause,RejectCertificateTransferError::Throttling(ref cause) => cause,RejectCertificateTransferError::InvalidRequest(ref cause) => cause,RejectCertificateTransferError::ServiceUnavailable(ref cause) => cause,RejectCertificateTransferError::ResourceNotFound(ref cause) => cause,RejectCertificateTransferError::Unauthorized(ref cause) => cause,RejectCertificateTransferError::TransferAlreadyCompleted(ref cause) => cause,RejectCertificateTransferError::Validation(ref cause) => cause,RejectCertificateTransferError::Credentials(ref err) => err.description(),RejectCertificateTransferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RejectCertificateTransferError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5186,10 +5186,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ReplaceTopicRuleError {
                     
-///<p>The Rule-SQL expression can't be parsed correctly.</p>
-SqlParse(String),
 ///<p>An unexpected error has occurred.</p>
 Internal(String),
+///<p>The Rule-SQL expression can't be parsed correctly.</p>
+SqlParse(String),
 ///<p>The request is not valid.</p>
 InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
@@ -5214,7 +5214,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "SqlParseException" => ReplaceTopicRuleError::SqlParse(String::from(error_message)),"InternalException" => ReplaceTopicRuleError::Internal(String::from(error_message)),"InvalidRequestException" => ReplaceTopicRuleError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ReplaceTopicRuleError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ReplaceTopicRuleError::Unauthorized(String::from(error_message)),"ValidationException" => ReplaceTopicRuleError::Validation(error_message.to_string()),_ => ReplaceTopicRuleError::Unknown(String::from(body))
+                                    "InternalException" => ReplaceTopicRuleError::Internal(String::from(error_message)),"SqlParseException" => ReplaceTopicRuleError::SqlParse(String::from(error_message)),"InvalidRequestException" => ReplaceTopicRuleError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => ReplaceTopicRuleError::ServiceUnavailable(String::from(error_message)),"UnauthorizedException" => ReplaceTopicRuleError::Unauthorized(String::from(error_message)),"ValidationException" => ReplaceTopicRuleError::Validation(error_message.to_string()),_ => ReplaceTopicRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ReplaceTopicRuleError::Unknown(String::from(body))
@@ -5245,7 +5245,7 @@ Unknown(String)
                 impl Error for ReplaceTopicRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            ReplaceTopicRuleError::SqlParse(ref cause) => cause,ReplaceTopicRuleError::Internal(ref cause) => cause,ReplaceTopicRuleError::InvalidRequest(ref cause) => cause,ReplaceTopicRuleError::ServiceUnavailable(ref cause) => cause,ReplaceTopicRuleError::Unauthorized(ref cause) => cause,ReplaceTopicRuleError::Validation(ref cause) => cause,ReplaceTopicRuleError::Credentials(ref err) => err.description(),ReplaceTopicRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReplaceTopicRuleError::Unknown(ref cause) => cause
+                            ReplaceTopicRuleError::Internal(ref cause) => cause,ReplaceTopicRuleError::SqlParse(ref cause) => cause,ReplaceTopicRuleError::InvalidRequest(ref cause) => cause,ReplaceTopicRuleError::ServiceUnavailable(ref cause) => cause,ReplaceTopicRuleError::Unauthorized(ref cause) => cause,ReplaceTopicRuleError::Validation(ref cause) => cause,ReplaceTopicRuleError::Credentials(ref err) => err.description(),ReplaceTopicRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReplaceTopicRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5253,18 +5253,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetDefaultPolicyVersionError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5283,7 +5283,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => SetDefaultPolicyVersionError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => SetDefaultPolicyVersionError::InvalidRequest(String::from(error_message)),"ThrottlingException" => SetDefaultPolicyVersionError::Throttling(String::from(error_message)),"UnauthorizedException" => SetDefaultPolicyVersionError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => SetDefaultPolicyVersionError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => SetDefaultPolicyVersionError::InternalFailure(String::from(error_message)),"ValidationException" => SetDefaultPolicyVersionError::Validation(error_message.to_string()),_ => SetDefaultPolicyVersionError::Unknown(String::from(body))
+                                    "InternalFailureException" => SetDefaultPolicyVersionError::InternalFailure(String::from(error_message)),"ThrottlingException" => SetDefaultPolicyVersionError::Throttling(String::from(error_message)),"InvalidRequestException" => SetDefaultPolicyVersionError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => SetDefaultPolicyVersionError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => SetDefaultPolicyVersionError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => SetDefaultPolicyVersionError::Unauthorized(String::from(error_message)),"ValidationException" => SetDefaultPolicyVersionError::Validation(error_message.to_string()),_ => SetDefaultPolicyVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SetDefaultPolicyVersionError::Unknown(String::from(body))
@@ -5314,7 +5314,7 @@ Unknown(String)
                 impl Error for SetDefaultPolicyVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetDefaultPolicyVersionError::ResourceNotFound(ref cause) => cause,SetDefaultPolicyVersionError::InvalidRequest(ref cause) => cause,SetDefaultPolicyVersionError::Throttling(ref cause) => cause,SetDefaultPolicyVersionError::Unauthorized(ref cause) => cause,SetDefaultPolicyVersionError::ServiceUnavailable(ref cause) => cause,SetDefaultPolicyVersionError::InternalFailure(ref cause) => cause,SetDefaultPolicyVersionError::Validation(ref cause) => cause,SetDefaultPolicyVersionError::Credentials(ref err) => err.description(),SetDefaultPolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetDefaultPolicyVersionError::Unknown(ref cause) => cause
+                            SetDefaultPolicyVersionError::InternalFailure(ref cause) => cause,SetDefaultPolicyVersionError::Throttling(ref cause) => cause,SetDefaultPolicyVersionError::InvalidRequest(ref cause) => cause,SetDefaultPolicyVersionError::ServiceUnavailable(ref cause) => cause,SetDefaultPolicyVersionError::ResourceNotFound(ref cause) => cause,SetDefaultPolicyVersionError::Unauthorized(ref cause) => cause,SetDefaultPolicyVersionError::Validation(ref cause) => cause,SetDefaultPolicyVersionError::Credentials(ref err) => err.description(),SetDefaultPolicyVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetDefaultPolicyVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5385,22 +5385,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum TransferCertificateError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The certificate operation is not allowed.</p>
 CertificateState(String),
-///<p>You can't transfer the certificate because authorization policies are still attached.</p>
-TransferConflict(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),
+///<p>You can't transfer the certificate because authorization policies are still attached.</p>
+TransferConflict(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5419,7 +5419,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => TransferCertificateError::InvalidRequest(String::from(error_message)),"ResourceNotFoundException" => TransferCertificateError::ResourceNotFound(String::from(error_message)),"CertificateStateException" => TransferCertificateError::CertificateState(String::from(error_message)),"TransferConflictException" => TransferCertificateError::TransferConflict(String::from(error_message)),"ThrottlingException" => TransferCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => TransferCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => TransferCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => TransferCertificateError::InternalFailure(String::from(error_message)),"ValidationException" => TransferCertificateError::Validation(error_message.to_string()),_ => TransferCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => TransferCertificateError::InternalFailure(String::from(error_message)),"CertificateStateException" => TransferCertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => TransferCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => TransferCertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => TransferCertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => TransferCertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => TransferCertificateError::Unauthorized(String::from(error_message)),"TransferConflictException" => TransferCertificateError::TransferConflict(String::from(error_message)),"ValidationException" => TransferCertificateError::Validation(error_message.to_string()),_ => TransferCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => TransferCertificateError::Unknown(String::from(body))
@@ -5450,7 +5450,7 @@ Unknown(String)
                 impl Error for TransferCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            TransferCertificateError::InvalidRequest(ref cause) => cause,TransferCertificateError::ResourceNotFound(ref cause) => cause,TransferCertificateError::CertificateState(ref cause) => cause,TransferCertificateError::TransferConflict(ref cause) => cause,TransferCertificateError::Throttling(ref cause) => cause,TransferCertificateError::Unauthorized(ref cause) => cause,TransferCertificateError::ServiceUnavailable(ref cause) => cause,TransferCertificateError::InternalFailure(ref cause) => cause,TransferCertificateError::Validation(ref cause) => cause,TransferCertificateError::Credentials(ref err) => err.description(),TransferCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TransferCertificateError::Unknown(ref cause) => cause
+                            TransferCertificateError::InternalFailure(ref cause) => cause,TransferCertificateError::CertificateState(ref cause) => cause,TransferCertificateError::Throttling(ref cause) => cause,TransferCertificateError::InvalidRequest(ref cause) => cause,TransferCertificateError::ServiceUnavailable(ref cause) => cause,TransferCertificateError::ResourceNotFound(ref cause) => cause,TransferCertificateError::Unauthorized(ref cause) => cause,TransferCertificateError::TransferConflict(ref cause) => cause,TransferCertificateError::Validation(ref cause) => cause,TransferCertificateError::Credentials(ref err) => err.description(),TransferCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TransferCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5458,18 +5458,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateCACertificateError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5488,7 +5488,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => UpdateCACertificateError::ResourceNotFound(String::from(error_message)),"InvalidRequestException" => UpdateCACertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => UpdateCACertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => UpdateCACertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => UpdateCACertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => UpdateCACertificateError::InternalFailure(String::from(error_message)),"ValidationException" => UpdateCACertificateError::Validation(error_message.to_string()),_ => UpdateCACertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => UpdateCACertificateError::InternalFailure(String::from(error_message)),"ThrottlingException" => UpdateCACertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => UpdateCACertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => UpdateCACertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => UpdateCACertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => UpdateCACertificateError::Unauthorized(String::from(error_message)),"ValidationException" => UpdateCACertificateError::Validation(error_message.to_string()),_ => UpdateCACertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateCACertificateError::Unknown(String::from(body))
@@ -5519,7 +5519,7 @@ Unknown(String)
                 impl Error for UpdateCACertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateCACertificateError::ResourceNotFound(ref cause) => cause,UpdateCACertificateError::InvalidRequest(ref cause) => cause,UpdateCACertificateError::Throttling(ref cause) => cause,UpdateCACertificateError::Unauthorized(ref cause) => cause,UpdateCACertificateError::ServiceUnavailable(ref cause) => cause,UpdateCACertificateError::InternalFailure(ref cause) => cause,UpdateCACertificateError::Validation(ref cause) => cause,UpdateCACertificateError::Credentials(ref err) => err.description(),UpdateCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateCACertificateError::Unknown(ref cause) => cause
+                            UpdateCACertificateError::InternalFailure(ref cause) => cause,UpdateCACertificateError::Throttling(ref cause) => cause,UpdateCACertificateError::InvalidRequest(ref cause) => cause,UpdateCACertificateError::ServiceUnavailable(ref cause) => cause,UpdateCACertificateError::ResourceNotFound(ref cause) => cause,UpdateCACertificateError::Unauthorized(ref cause) => cause,UpdateCACertificateError::Validation(ref cause) => cause,UpdateCACertificateError::Credentials(ref err) => err.description(),UpdateCACertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateCACertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5527,20 +5527,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateCertificateError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
+///<p>An unexpected error has occurred.</p>
+InternalFailure(String),
 ///<p>The certificate operation is not allowed.</p>
 CertificateState(String),
-///<p>The request is not valid.</p>
-InvalidRequest(String),
 ///<p>The rate exceeds the limit.</p>
 Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
 ///<p>The service is temporarily unavailable.</p>
 ServiceUnavailable(String),
-///<p>An unexpected error has occurred.</p>
-InternalFailure(String),/// An error occurred dispatching the HTTP request
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5559,7 +5559,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => UpdateCertificateError::ResourceNotFound(String::from(error_message)),"CertificateStateException" => UpdateCertificateError::CertificateState(String::from(error_message)),"InvalidRequestException" => UpdateCertificateError::InvalidRequest(String::from(error_message)),"ThrottlingException" => UpdateCertificateError::Throttling(String::from(error_message)),"UnauthorizedException" => UpdateCertificateError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => UpdateCertificateError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => UpdateCertificateError::InternalFailure(String::from(error_message)),"ValidationException" => UpdateCertificateError::Validation(error_message.to_string()),_ => UpdateCertificateError::Unknown(String::from(body))
+                                    "InternalFailureException" => UpdateCertificateError::InternalFailure(String::from(error_message)),"CertificateStateException" => UpdateCertificateError::CertificateState(String::from(error_message)),"ThrottlingException" => UpdateCertificateError::Throttling(String::from(error_message)),"InvalidRequestException" => UpdateCertificateError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => UpdateCertificateError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => UpdateCertificateError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => UpdateCertificateError::Unauthorized(String::from(error_message)),"ValidationException" => UpdateCertificateError::Validation(error_message.to_string()),_ => UpdateCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateCertificateError::Unknown(String::from(body))
@@ -5590,7 +5590,7 @@ Unknown(String)
                 impl Error for UpdateCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateCertificateError::ResourceNotFound(ref cause) => cause,UpdateCertificateError::CertificateState(ref cause) => cause,UpdateCertificateError::InvalidRequest(ref cause) => cause,UpdateCertificateError::Throttling(ref cause) => cause,UpdateCertificateError::Unauthorized(ref cause) => cause,UpdateCertificateError::ServiceUnavailable(ref cause) => cause,UpdateCertificateError::InternalFailure(ref cause) => cause,UpdateCertificateError::Validation(ref cause) => cause,UpdateCertificateError::Credentials(ref err) => err.description(),UpdateCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateCertificateError::Unknown(ref cause) => cause
+                            UpdateCertificateError::InternalFailure(ref cause) => cause,UpdateCertificateError::CertificateState(ref cause) => cause,UpdateCertificateError::Throttling(ref cause) => cause,UpdateCertificateError::InvalidRequest(ref cause) => cause,UpdateCertificateError::ServiceUnavailable(ref cause) => cause,UpdateCertificateError::ResourceNotFound(ref cause) => cause,UpdateCertificateError::Unauthorized(ref cause) => cause,UpdateCertificateError::Validation(ref cause) => cause,UpdateCertificateError::Credentials(ref err) => err.description(),UpdateCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5598,20 +5598,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateThingError {
                     
-///<p>The request is not valid.</p>
-InvalidRequest(String),
 ///<p>An exception thrown when the version of a thing passed to a command is different than the version specified with the --version parameter. </p>
 VersionConflict(String),
-///<p>The rate exceeds the limit.</p>
-Throttling(String),
-///<p>You are not authorized to perform this operation.</p>
-Unauthorized(String),
-///<p>The service is temporarily unavailable.</p>
-ServiceUnavailable(String),
 ///<p>An unexpected error has occurred.</p>
 InternalFailure(String),
+///<p>The rate exceeds the limit.</p>
+Throttling(String),
+///<p>The request is not valid.</p>
+InvalidRequest(String),
+///<p>The service is temporarily unavailable.</p>
+ServiceUnavailable(String),
 ///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>You are not authorized to perform this operation.</p>
+Unauthorized(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5630,7 +5630,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidRequestException" => UpdateThingError::InvalidRequest(String::from(error_message)),"VersionConflictException" => UpdateThingError::VersionConflict(String::from(error_message)),"ThrottlingException" => UpdateThingError::Throttling(String::from(error_message)),"UnauthorizedException" => UpdateThingError::Unauthorized(String::from(error_message)),"ServiceUnavailableException" => UpdateThingError::ServiceUnavailable(String::from(error_message)),"InternalFailureException" => UpdateThingError::InternalFailure(String::from(error_message)),"ResourceNotFoundException" => UpdateThingError::ResourceNotFound(String::from(error_message)),"ValidationException" => UpdateThingError::Validation(error_message.to_string()),_ => UpdateThingError::Unknown(String::from(body))
+                                    "VersionConflictException" => UpdateThingError::VersionConflict(String::from(error_message)),"InternalFailureException" => UpdateThingError::InternalFailure(String::from(error_message)),"ThrottlingException" => UpdateThingError::Throttling(String::from(error_message)),"InvalidRequestException" => UpdateThingError::InvalidRequest(String::from(error_message)),"ServiceUnavailableException" => UpdateThingError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => UpdateThingError::ResourceNotFound(String::from(error_message)),"UnauthorizedException" => UpdateThingError::Unauthorized(String::from(error_message)),"ValidationException" => UpdateThingError::Validation(error_message.to_string()),_ => UpdateThingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateThingError::Unknown(String::from(body))
@@ -5661,7 +5661,7 @@ Unknown(String)
                 impl Error for UpdateThingError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateThingError::InvalidRequest(ref cause) => cause,UpdateThingError::VersionConflict(ref cause) => cause,UpdateThingError::Throttling(ref cause) => cause,UpdateThingError::Unauthorized(ref cause) => cause,UpdateThingError::ServiceUnavailable(ref cause) => cause,UpdateThingError::InternalFailure(ref cause) => cause,UpdateThingError::ResourceNotFound(ref cause) => cause,UpdateThingError::Validation(ref cause) => cause,UpdateThingError::Credentials(ref err) => err.description(),UpdateThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateThingError::Unknown(ref cause) => cause
+                            UpdateThingError::VersionConflict(ref cause) => cause,UpdateThingError::InternalFailure(ref cause) => cause,UpdateThingError::Throttling(ref cause) => cause,UpdateThingError::InvalidRequest(ref cause) => cause,UpdateThingError::ServiceUnavailable(ref cause) => cause,UpdateThingError::ResourceNotFound(ref cause) => cause,UpdateThingError::Unauthorized(ref cause) => cause,UpdateThingError::Validation(ref cause) => cause,UpdateThingError::Credentials(ref err) => err.description(),UpdateThingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateThingError::Unknown(ref cause) => cause
                         }
                     }
                  }

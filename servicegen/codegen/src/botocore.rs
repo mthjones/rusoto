@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::Path;
@@ -154,7 +154,7 @@ pub struct Output {
     pub shape: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Error {
     pub documentation: Option<String>,
     pub error: Option<HttpError>,
@@ -169,7 +169,7 @@ impl Error {
     }
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 pub struct HttpError {
     pub code: Option<String>,
     #[serde(rename="httpStatusCode")]
@@ -338,7 +338,7 @@ pub struct Operation {
     pub documentation: Option<String>,
     #[serde(rename="documentationUrl")]
     pub documentation_url: Option<String>,
-    pub errors: Option<Vec<Error>>,
+    pub errors: Option<BTreeSet<Error>>,
     pub http: HttpRequest,
     pub input: Option<Input>,
     pub name: String,
@@ -359,8 +359,8 @@ impl<'a> Operation {
 
     // botocore duplicates errors in a few places
     // return a unique set
-    pub fn errors(&'a self) -> Vec<&'a Error> {
-        self.errors.as_ref().unwrap().iter().collect()
+    pub fn errors(&self) -> &BTreeSet<Error> {
+        self.errors.as_ref().unwrap()
     }
 }
 

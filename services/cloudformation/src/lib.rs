@@ -5342,12 +5342,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateStackError {
                     
-///<p>Quota for the resource has already been reached.</p>
-LimitExceeded(String),
 ///<p>Resource with the name requested already exists.</p>
 AlreadyExists(String),
 ///<p>The template contains resources with capabilities that were not specified in the Capabilities parameter.</p>
-InsufficientCapabilities(String),/// An error occurred dispatching the HTTP request
+InsufficientCapabilities(String),
+///<p>Quota for the resource has already been reached.</p>
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5364,7 +5364,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LimitExceededException" => CreateStackError::LimitExceeded(String::from(parsed_error.message)),"AlreadyExistsException" => CreateStackError::AlreadyExists(String::from(parsed_error.message)),"InsufficientCapabilitiesException" => CreateStackError::InsufficientCapabilities(String::from(parsed_error.message)),_ => CreateStackError::Unknown(String::from(body))
+                                    "AlreadyExistsException" => CreateStackError::AlreadyExists(String::from(parsed_error.message)),"InsufficientCapabilitiesException" => CreateStackError::InsufficientCapabilities(String::from(parsed_error.message)),"LimitExceededException" => CreateStackError::LimitExceeded(String::from(parsed_error.message)),_ => CreateStackError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateStackError::Unknown(body.to_string())
@@ -5396,7 +5396,7 @@ Unknown(String)
                 impl Error for CreateStackError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateStackError::LimitExceeded(ref cause) => cause,CreateStackError::AlreadyExists(ref cause) => cause,CreateStackError::InsufficientCapabilities(ref cause) => cause,CreateStackError::Validation(ref cause) => cause,CreateStackError::Credentials(ref err) => err.description(),CreateStackError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStackError::Unknown(ref cause) => cause
+                            CreateStackError::AlreadyExists(ref cause) => cause,CreateStackError::InsufficientCapabilities(ref cause) => cause,CreateStackError::LimitExceeded(ref cause) => cause,CreateStackError::Validation(ref cause) => cause,CreateStackError::Credentials(ref err) => err.description(),CreateStackError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStackError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5912,12 +5912,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ExecuteChangeSetError {
                     
-///<p>The specified change set cannot be used to update the stack. For example, the change set status might be <code>CREATE_IN_PROGRESS</code> or the stack status might be <code>UPDATE_IN_PROGRESS</code>.</p>
-InvalidChangeSetStatus(String),
 ///<p>The specified change set name or ID doesn't exit. To view valid change sets for a stack, use the <code>ListChangeSets</code> action.</p>
 ChangeSetNotFound(String),
 ///<p>The template contains resources with capabilities that were not specified in the Capabilities parameter.</p>
-InsufficientCapabilities(String),/// An error occurred dispatching the HTTP request
+InsufficientCapabilities(String),
+///<p>The specified change set cannot be used to update the stack. For example, the change set status might be <code>CREATE_IN_PROGRESS</code> or the stack status might be <code>UPDATE_IN_PROGRESS</code>.</p>
+InvalidChangeSetStatus(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5934,7 +5934,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidChangeSetStatusException" => ExecuteChangeSetError::InvalidChangeSetStatus(String::from(parsed_error.message)),"ChangeSetNotFoundException" => ExecuteChangeSetError::ChangeSetNotFound(String::from(parsed_error.message)),"InsufficientCapabilitiesException" => ExecuteChangeSetError::InsufficientCapabilities(String::from(parsed_error.message)),_ => ExecuteChangeSetError::Unknown(String::from(body))
+                                    "ChangeSetNotFoundException" => ExecuteChangeSetError::ChangeSetNotFound(String::from(parsed_error.message)),"InsufficientCapabilitiesException" => ExecuteChangeSetError::InsufficientCapabilities(String::from(parsed_error.message)),"InvalidChangeSetStatusException" => ExecuteChangeSetError::InvalidChangeSetStatus(String::from(parsed_error.message)),_ => ExecuteChangeSetError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ExecuteChangeSetError::Unknown(body.to_string())
@@ -5966,7 +5966,7 @@ Unknown(String)
                 impl Error for ExecuteChangeSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            ExecuteChangeSetError::InvalidChangeSetStatus(ref cause) => cause,ExecuteChangeSetError::ChangeSetNotFound(ref cause) => cause,ExecuteChangeSetError::InsufficientCapabilities(ref cause) => cause,ExecuteChangeSetError::Validation(ref cause) => cause,ExecuteChangeSetError::Credentials(ref err) => err.description(),ExecuteChangeSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ExecuteChangeSetError::Unknown(ref cause) => cause
+                            ExecuteChangeSetError::ChangeSetNotFound(ref cause) => cause,ExecuteChangeSetError::InsufficientCapabilities(ref cause) => cause,ExecuteChangeSetError::InvalidChangeSetStatus(ref cause) => cause,ExecuteChangeSetError::Validation(ref cause) => cause,ExecuteChangeSetError::Credentials(ref err) => err.description(),ExecuteChangeSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ExecuteChangeSetError::Unknown(ref cause) => cause
                         }
                     }
                  }

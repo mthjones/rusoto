@@ -651,14 +651,14 @@ pub type ValidationWarnings = Vec<ValidationWarning>;
                 #[derive(Debug, PartialEq)]
                 pub enum ActivatePipelineError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -677,7 +677,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => ActivatePipelineError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => ActivatePipelineError::PipelineDeleted(String::from(error_message)),"InternalServiceError" => ActivatePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ActivatePipelineError::InvalidRequest(String::from(error_message)),"ValidationException" => ActivatePipelineError::Validation(error_message.to_string()),_ => ActivatePipelineError::Unknown(String::from(body))
+                                    "InternalServiceError" => ActivatePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ActivatePipelineError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => ActivatePipelineError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => ActivatePipelineError::PipelineNotFound(String::from(error_message)),"ValidationException" => ActivatePipelineError::Validation(error_message.to_string()),_ => ActivatePipelineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ActivatePipelineError::Unknown(String::from(body))
@@ -708,7 +708,7 @@ Unknown(String)
                 impl Error for ActivatePipelineError {
                     fn description(&self) -> &str {
                         match *self {
-                            ActivatePipelineError::PipelineNotFound(ref cause) => cause,ActivatePipelineError::PipelineDeleted(ref cause) => cause,ActivatePipelineError::InternalServiceError(ref cause) => cause,ActivatePipelineError::InvalidRequest(ref cause) => cause,ActivatePipelineError::Validation(ref cause) => cause,ActivatePipelineError::Credentials(ref err) => err.description(),ActivatePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ActivatePipelineError::Unknown(ref cause) => cause
+                            ActivatePipelineError::InternalServiceError(ref cause) => cause,ActivatePipelineError::InvalidRequest(ref cause) => cause,ActivatePipelineError::PipelineDeleted(ref cause) => cause,ActivatePipelineError::PipelineNotFound(ref cause) => cause,ActivatePipelineError::Validation(ref cause) => cause,ActivatePipelineError::Credentials(ref err) => err.description(),ActivatePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ActivatePipelineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -720,10 +720,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -742,7 +742,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => AddTagsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => AddTagsError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => AddTagsError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => AddTagsError::PipelineDeleted(String::from(error_message)),"ValidationException" => AddTagsError::Validation(error_message.to_string()),_ => AddTagsError::Unknown(String::from(body))
+                                    "InternalServiceError" => AddTagsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => AddTagsError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => AddTagsError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => AddTagsError::PipelineNotFound(String::from(error_message)),"ValidationException" => AddTagsError::Validation(error_message.to_string()),_ => AddTagsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddTagsError::Unknown(String::from(body))
@@ -773,7 +773,7 @@ Unknown(String)
                 impl Error for AddTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsError::InternalServiceError(ref cause) => cause,AddTagsError::InvalidRequest(ref cause) => cause,AddTagsError::PipelineNotFound(ref cause) => cause,AddTagsError::PipelineDeleted(ref cause) => cause,AddTagsError::Validation(ref cause) => cause,AddTagsError::Credentials(ref err) => err.description(),AddTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsError::Unknown(ref cause) => cause
+                            AddTagsError::InternalServiceError(ref cause) => cause,AddTagsError::InvalidRequest(ref cause) => cause,AddTagsError::PipelineDeleted(ref cause) => cause,AddTagsError::PipelineNotFound(ref cause) => cause,AddTagsError::Validation(ref cause) => cause,AddTagsError::Credentials(ref err) => err.description(),AddTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -842,14 +842,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeactivatePipelineError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -868,7 +868,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => DeactivatePipelineError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => DeactivatePipelineError::PipelineDeleted(String::from(error_message)),"InternalServiceError" => DeactivatePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DeactivatePipelineError::InvalidRequest(String::from(error_message)),"ValidationException" => DeactivatePipelineError::Validation(error_message.to_string()),_ => DeactivatePipelineError::Unknown(String::from(body))
+                                    "InternalServiceError" => DeactivatePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DeactivatePipelineError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => DeactivatePipelineError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => DeactivatePipelineError::PipelineNotFound(String::from(error_message)),"ValidationException" => DeactivatePipelineError::Validation(error_message.to_string()),_ => DeactivatePipelineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeactivatePipelineError::Unknown(String::from(body))
@@ -899,7 +899,7 @@ Unknown(String)
                 impl Error for DeactivatePipelineError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeactivatePipelineError::PipelineNotFound(ref cause) => cause,DeactivatePipelineError::PipelineDeleted(ref cause) => cause,DeactivatePipelineError::InternalServiceError(ref cause) => cause,DeactivatePipelineError::InvalidRequest(ref cause) => cause,DeactivatePipelineError::Validation(ref cause) => cause,DeactivatePipelineError::Credentials(ref err) => err.description(),DeactivatePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeactivatePipelineError::Unknown(ref cause) => cause
+                            DeactivatePipelineError::InternalServiceError(ref cause) => cause,DeactivatePipelineError::InvalidRequest(ref cause) => cause,DeactivatePipelineError::PipelineDeleted(ref cause) => cause,DeactivatePipelineError::PipelineNotFound(ref cause) => cause,DeactivatePipelineError::Validation(ref cause) => cause,DeactivatePipelineError::Credentials(ref err) => err.description(),DeactivatePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeactivatePipelineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -907,12 +907,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeletePipelineError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -931,7 +931,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => DeletePipelineError::PipelineNotFound(String::from(error_message)),"InternalServiceError" => DeletePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DeletePipelineError::InvalidRequest(String::from(error_message)),"ValidationException" => DeletePipelineError::Validation(error_message.to_string()),_ => DeletePipelineError::Unknown(String::from(body))
+                                    "InternalServiceError" => DeletePipelineError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DeletePipelineError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => DeletePipelineError::PipelineNotFound(String::from(error_message)),"ValidationException" => DeletePipelineError::Validation(error_message.to_string()),_ => DeletePipelineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeletePipelineError::Unknown(String::from(body))
@@ -962,7 +962,7 @@ Unknown(String)
                 impl Error for DeletePipelineError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeletePipelineError::PipelineNotFound(ref cause) => cause,DeletePipelineError::InternalServiceError(ref cause) => cause,DeletePipelineError::InvalidRequest(ref cause) => cause,DeletePipelineError::Validation(ref cause) => cause,DeletePipelineError::Credentials(ref err) => err.description(),DeletePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePipelineError::Unknown(ref cause) => cause
+                            DeletePipelineError::InternalServiceError(ref cause) => cause,DeletePipelineError::InvalidRequest(ref cause) => cause,DeletePipelineError::PipelineNotFound(ref cause) => cause,DeletePipelineError::Validation(ref cause) => cause,DeletePipelineError::Credentials(ref err) => err.description(),DeletePipelineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePipelineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -974,10 +974,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -996,7 +996,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => DescribeObjectsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DescribeObjectsError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => DescribeObjectsError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => DescribeObjectsError::PipelineDeleted(String::from(error_message)),"ValidationException" => DescribeObjectsError::Validation(error_message.to_string()),_ => DescribeObjectsError::Unknown(String::from(body))
+                                    "InternalServiceError" => DescribeObjectsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DescribeObjectsError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => DescribeObjectsError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => DescribeObjectsError::PipelineNotFound(String::from(error_message)),"ValidationException" => DescribeObjectsError::Validation(error_message.to_string()),_ => DescribeObjectsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeObjectsError::Unknown(String::from(body))
@@ -1027,7 +1027,7 @@ Unknown(String)
                 impl Error for DescribeObjectsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeObjectsError::InternalServiceError(ref cause) => cause,DescribeObjectsError::InvalidRequest(ref cause) => cause,DescribeObjectsError::PipelineNotFound(ref cause) => cause,DescribeObjectsError::PipelineDeleted(ref cause) => cause,DescribeObjectsError::Validation(ref cause) => cause,DescribeObjectsError::Credentials(ref err) => err.description(),DescribeObjectsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeObjectsError::Unknown(ref cause) => cause
+                            DescribeObjectsError::InternalServiceError(ref cause) => cause,DescribeObjectsError::InvalidRequest(ref cause) => cause,DescribeObjectsError::PipelineDeleted(ref cause) => cause,DescribeObjectsError::PipelineNotFound(ref cause) => cause,DescribeObjectsError::Validation(ref cause) => cause,DescribeObjectsError::Credentials(ref err) => err.description(),DescribeObjectsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeObjectsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1035,14 +1035,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribePipelinesError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1061,7 +1061,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => DescribePipelinesError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => DescribePipelinesError::PipelineDeleted(String::from(error_message)),"InternalServiceError" => DescribePipelinesError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DescribePipelinesError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribePipelinesError::Validation(error_message.to_string()),_ => DescribePipelinesError::Unknown(String::from(body))
+                                    "InternalServiceError" => DescribePipelinesError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => DescribePipelinesError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => DescribePipelinesError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => DescribePipelinesError::PipelineNotFound(String::from(error_message)),"ValidationException" => DescribePipelinesError::Validation(error_message.to_string()),_ => DescribePipelinesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribePipelinesError::Unknown(String::from(body))
@@ -1092,7 +1092,7 @@ Unknown(String)
                 impl Error for DescribePipelinesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribePipelinesError::PipelineNotFound(ref cause) => cause,DescribePipelinesError::PipelineDeleted(ref cause) => cause,DescribePipelinesError::InternalServiceError(ref cause) => cause,DescribePipelinesError::InvalidRequest(ref cause) => cause,DescribePipelinesError::Validation(ref cause) => cause,DescribePipelinesError::Credentials(ref err) => err.description(),DescribePipelinesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribePipelinesError::Unknown(ref cause) => cause
+                            DescribePipelinesError::InternalServiceError(ref cause) => cause,DescribePipelinesError::InvalidRequest(ref cause) => cause,DescribePipelinesError::PipelineDeleted(ref cause) => cause,DescribePipelinesError::PipelineNotFound(ref cause) => cause,DescribePipelinesError::Validation(ref cause) => cause,DescribePipelinesError::Credentials(ref err) => err.description(),DescribePipelinesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribePipelinesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1102,14 +1102,14 @@ Unknown(String)
                     
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
-///<p>The specified task was not found. </p>
-TaskNotFound(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
 ///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
 PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+///<p>The specified task was not found. </p>
+TaskNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1128,7 +1128,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => EvaluateExpressionError::InternalServiceError(String::from(error_message)),"TaskNotFoundException" => EvaluateExpressionError::TaskNotFound(String::from(error_message)),"InvalidRequestException" => EvaluateExpressionError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => EvaluateExpressionError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => EvaluateExpressionError::PipelineDeleted(String::from(error_message)),"ValidationException" => EvaluateExpressionError::Validation(error_message.to_string()),_ => EvaluateExpressionError::Unknown(String::from(body))
+                                    "InternalServiceError" => EvaluateExpressionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => EvaluateExpressionError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => EvaluateExpressionError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => EvaluateExpressionError::PipelineNotFound(String::from(error_message)),"TaskNotFoundException" => EvaluateExpressionError::TaskNotFound(String::from(error_message)),"ValidationException" => EvaluateExpressionError::Validation(error_message.to_string()),_ => EvaluateExpressionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => EvaluateExpressionError::Unknown(String::from(body))
@@ -1159,7 +1159,7 @@ Unknown(String)
                 impl Error for EvaluateExpressionError {
                     fn description(&self) -> &str {
                         match *self {
-                            EvaluateExpressionError::InternalServiceError(ref cause) => cause,EvaluateExpressionError::TaskNotFound(ref cause) => cause,EvaluateExpressionError::InvalidRequest(ref cause) => cause,EvaluateExpressionError::PipelineNotFound(ref cause) => cause,EvaluateExpressionError::PipelineDeleted(ref cause) => cause,EvaluateExpressionError::Validation(ref cause) => cause,EvaluateExpressionError::Credentials(ref err) => err.description(),EvaluateExpressionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EvaluateExpressionError::Unknown(ref cause) => cause
+                            EvaluateExpressionError::InternalServiceError(ref cause) => cause,EvaluateExpressionError::InvalidRequest(ref cause) => cause,EvaluateExpressionError::PipelineDeleted(ref cause) => cause,EvaluateExpressionError::PipelineNotFound(ref cause) => cause,EvaluateExpressionError::TaskNotFound(ref cause) => cause,EvaluateExpressionError::Validation(ref cause) => cause,EvaluateExpressionError::Credentials(ref err) => err.description(),EvaluateExpressionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EvaluateExpressionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1171,10 +1171,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1193,7 +1193,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => GetPipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => GetPipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => GetPipelineDefinitionError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => GetPipelineDefinitionError::PipelineDeleted(String::from(error_message)),"ValidationException" => GetPipelineDefinitionError::Validation(error_message.to_string()),_ => GetPipelineDefinitionError::Unknown(String::from(body))
+                                    "InternalServiceError" => GetPipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => GetPipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => GetPipelineDefinitionError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => GetPipelineDefinitionError::PipelineNotFound(String::from(error_message)),"ValidationException" => GetPipelineDefinitionError::Validation(error_message.to_string()),_ => GetPipelineDefinitionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetPipelineDefinitionError::Unknown(String::from(body))
@@ -1224,7 +1224,7 @@ Unknown(String)
                 impl Error for GetPipelineDefinitionError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetPipelineDefinitionError::InternalServiceError(ref cause) => cause,GetPipelineDefinitionError::InvalidRequest(ref cause) => cause,GetPipelineDefinitionError::PipelineNotFound(ref cause) => cause,GetPipelineDefinitionError::PipelineDeleted(ref cause) => cause,GetPipelineDefinitionError::Validation(ref cause) => cause,GetPipelineDefinitionError::Credentials(ref err) => err.description(),GetPipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPipelineDefinitionError::Unknown(ref cause) => cause
+                            GetPipelineDefinitionError::InternalServiceError(ref cause) => cause,GetPipelineDefinitionError::InvalidRequest(ref cause) => cause,GetPipelineDefinitionError::PipelineDeleted(ref cause) => cause,GetPipelineDefinitionError::PipelineNotFound(ref cause) => cause,GetPipelineDefinitionError::Validation(ref cause) => cause,GetPipelineDefinitionError::Credentials(ref err) => err.description(),GetPipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPipelineDefinitionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1360,10 +1360,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1382,7 +1382,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => PutPipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => PutPipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => PutPipelineDefinitionError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => PutPipelineDefinitionError::PipelineDeleted(String::from(error_message)),"ValidationException" => PutPipelineDefinitionError::Validation(error_message.to_string()),_ => PutPipelineDefinitionError::Unknown(String::from(body))
+                                    "InternalServiceError" => PutPipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => PutPipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => PutPipelineDefinitionError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => PutPipelineDefinitionError::PipelineNotFound(String::from(error_message)),"ValidationException" => PutPipelineDefinitionError::Validation(error_message.to_string()),_ => PutPipelineDefinitionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutPipelineDefinitionError::Unknown(String::from(body))
@@ -1413,7 +1413,7 @@ Unknown(String)
                 impl Error for PutPipelineDefinitionError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutPipelineDefinitionError::InternalServiceError(ref cause) => cause,PutPipelineDefinitionError::InvalidRequest(ref cause) => cause,PutPipelineDefinitionError::PipelineNotFound(ref cause) => cause,PutPipelineDefinitionError::PipelineDeleted(ref cause) => cause,PutPipelineDefinitionError::Validation(ref cause) => cause,PutPipelineDefinitionError::Credentials(ref err) => err.description(),PutPipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutPipelineDefinitionError::Unknown(ref cause) => cause
+                            PutPipelineDefinitionError::InternalServiceError(ref cause) => cause,PutPipelineDefinitionError::InvalidRequest(ref cause) => cause,PutPipelineDefinitionError::PipelineDeleted(ref cause) => cause,PutPipelineDefinitionError::PipelineNotFound(ref cause) => cause,PutPipelineDefinitionError::Validation(ref cause) => cause,PutPipelineDefinitionError::Credentials(ref err) => err.description(),PutPipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutPipelineDefinitionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1421,14 +1421,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum QueryObjectsError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1447,7 +1447,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => QueryObjectsError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => QueryObjectsError::PipelineDeleted(String::from(error_message)),"InternalServiceError" => QueryObjectsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => QueryObjectsError::InvalidRequest(String::from(error_message)),"ValidationException" => QueryObjectsError::Validation(error_message.to_string()),_ => QueryObjectsError::Unknown(String::from(body))
+                                    "InternalServiceError" => QueryObjectsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => QueryObjectsError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => QueryObjectsError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => QueryObjectsError::PipelineNotFound(String::from(error_message)),"ValidationException" => QueryObjectsError::Validation(error_message.to_string()),_ => QueryObjectsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => QueryObjectsError::Unknown(String::from(body))
@@ -1478,7 +1478,7 @@ Unknown(String)
                 impl Error for QueryObjectsError {
                     fn description(&self) -> &str {
                         match *self {
-                            QueryObjectsError::PipelineNotFound(ref cause) => cause,QueryObjectsError::PipelineDeleted(ref cause) => cause,QueryObjectsError::InternalServiceError(ref cause) => cause,QueryObjectsError::InvalidRequest(ref cause) => cause,QueryObjectsError::Validation(ref cause) => cause,QueryObjectsError::Credentials(ref err) => err.description(),QueryObjectsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),QueryObjectsError::Unknown(ref cause) => cause
+                            QueryObjectsError::InternalServiceError(ref cause) => cause,QueryObjectsError::InvalidRequest(ref cause) => cause,QueryObjectsError::PipelineDeleted(ref cause) => cause,QueryObjectsError::PipelineNotFound(ref cause) => cause,QueryObjectsError::Validation(ref cause) => cause,QueryObjectsError::Credentials(ref err) => err.description(),QueryObjectsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),QueryObjectsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1490,10 +1490,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1512,7 +1512,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => RemoveTagsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => RemoveTagsError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => RemoveTagsError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => RemoveTagsError::PipelineDeleted(String::from(error_message)),"ValidationException" => RemoveTagsError::Validation(error_message.to_string()),_ => RemoveTagsError::Unknown(String::from(body))
+                                    "InternalServiceError" => RemoveTagsError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => RemoveTagsError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => RemoveTagsError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => RemoveTagsError::PipelineNotFound(String::from(error_message)),"ValidationException" => RemoveTagsError::Validation(error_message.to_string()),_ => RemoveTagsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemoveTagsError::Unknown(String::from(body))
@@ -1543,7 +1543,7 @@ Unknown(String)
                 impl Error for RemoveTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTagsError::InternalServiceError(ref cause) => cause,RemoveTagsError::InvalidRequest(ref cause) => cause,RemoveTagsError::PipelineNotFound(ref cause) => cause,RemoveTagsError::PipelineDeleted(ref cause) => cause,RemoveTagsError::Validation(ref cause) => cause,RemoveTagsError::Credentials(ref err) => err.description(),RemoveTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsError::Unknown(ref cause) => cause
+                            RemoveTagsError::InternalServiceError(ref cause) => cause,RemoveTagsError::InvalidRequest(ref cause) => cause,RemoveTagsError::PipelineDeleted(ref cause) => cause,RemoveTagsError::PipelineNotFound(ref cause) => cause,RemoveTagsError::Validation(ref cause) => cause,RemoveTagsError::Credentials(ref err) => err.description(),RemoveTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1555,12 +1555,12 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified task was not found. </p>
-TaskNotFound(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
 ///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
 PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+///<p>The specified task was not found. </p>
+TaskNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1579,7 +1579,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => ReportTaskProgressError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ReportTaskProgressError::InvalidRequest(String::from(error_message)),"TaskNotFoundException" => ReportTaskProgressError::TaskNotFound(String::from(error_message)),"PipelineNotFoundException" => ReportTaskProgressError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => ReportTaskProgressError::PipelineDeleted(String::from(error_message)),"ValidationException" => ReportTaskProgressError::Validation(error_message.to_string()),_ => ReportTaskProgressError::Unknown(String::from(body))
+                                    "InternalServiceError" => ReportTaskProgressError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ReportTaskProgressError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => ReportTaskProgressError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => ReportTaskProgressError::PipelineNotFound(String::from(error_message)),"TaskNotFoundException" => ReportTaskProgressError::TaskNotFound(String::from(error_message)),"ValidationException" => ReportTaskProgressError::Validation(error_message.to_string()),_ => ReportTaskProgressError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ReportTaskProgressError::Unknown(String::from(body))
@@ -1610,7 +1610,7 @@ Unknown(String)
                 impl Error for ReportTaskProgressError {
                     fn description(&self) -> &str {
                         match *self {
-                            ReportTaskProgressError::InternalServiceError(ref cause) => cause,ReportTaskProgressError::InvalidRequest(ref cause) => cause,ReportTaskProgressError::TaskNotFound(ref cause) => cause,ReportTaskProgressError::PipelineNotFound(ref cause) => cause,ReportTaskProgressError::PipelineDeleted(ref cause) => cause,ReportTaskProgressError::Validation(ref cause) => cause,ReportTaskProgressError::Credentials(ref err) => err.description(),ReportTaskProgressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReportTaskProgressError::Unknown(ref cause) => cause
+                            ReportTaskProgressError::InternalServiceError(ref cause) => cause,ReportTaskProgressError::InvalidRequest(ref cause) => cause,ReportTaskProgressError::PipelineDeleted(ref cause) => cause,ReportTaskProgressError::PipelineNotFound(ref cause) => cause,ReportTaskProgressError::TaskNotFound(ref cause) => cause,ReportTaskProgressError::Validation(ref cause) => cause,ReportTaskProgressError::Credentials(ref err) => err.description(),ReportTaskProgressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReportTaskProgressError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1679,14 +1679,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetStatusError {
                     
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
-InvalidRequest(String),/// An error occurred dispatching the HTTP request
+InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1705,7 +1705,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "PipelineNotFoundException" => SetStatusError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => SetStatusError::PipelineDeleted(String::from(error_message)),"InternalServiceError" => SetStatusError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => SetStatusError::InvalidRequest(String::from(error_message)),"ValidationException" => SetStatusError::Validation(error_message.to_string()),_ => SetStatusError::Unknown(String::from(body))
+                                    "InternalServiceError" => SetStatusError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => SetStatusError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => SetStatusError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => SetStatusError::PipelineNotFound(String::from(error_message)),"ValidationException" => SetStatusError::Validation(error_message.to_string()),_ => SetStatusError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SetStatusError::Unknown(String::from(body))
@@ -1736,7 +1736,7 @@ Unknown(String)
                 impl Error for SetStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetStatusError::PipelineNotFound(ref cause) => cause,SetStatusError::PipelineDeleted(ref cause) => cause,SetStatusError::InternalServiceError(ref cause) => cause,SetStatusError::InvalidRequest(ref cause) => cause,SetStatusError::Validation(ref cause) => cause,SetStatusError::Credentials(ref err) => err.description(),SetStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetStatusError::Unknown(ref cause) => cause
+                            SetStatusError::InternalServiceError(ref cause) => cause,SetStatusError::InvalidRequest(ref cause) => cause,SetStatusError::PipelineDeleted(ref cause) => cause,SetStatusError::PipelineNotFound(ref cause) => cause,SetStatusError::Validation(ref cause) => cause,SetStatusError::Credentials(ref err) => err.description(),SetStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1746,14 +1746,14 @@ Unknown(String)
                     
 ///<p>An internal service error occurred.</p>
 InternalServiceError(String),
-///<p>The specified task was not found. </p>
-TaskNotFound(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
+///<p>The specified pipeline has been deleted.</p>
+PipelineDeleted(String),
 ///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
 PipelineNotFound(String),
-///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+///<p>The specified task was not found. </p>
+TaskNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1772,7 +1772,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => SetTaskStatusError::InternalServiceError(String::from(error_message)),"TaskNotFoundException" => SetTaskStatusError::TaskNotFound(String::from(error_message)),"InvalidRequestException" => SetTaskStatusError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => SetTaskStatusError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => SetTaskStatusError::PipelineDeleted(String::from(error_message)),"ValidationException" => SetTaskStatusError::Validation(error_message.to_string()),_ => SetTaskStatusError::Unknown(String::from(body))
+                                    "InternalServiceError" => SetTaskStatusError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => SetTaskStatusError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => SetTaskStatusError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => SetTaskStatusError::PipelineNotFound(String::from(error_message)),"TaskNotFoundException" => SetTaskStatusError::TaskNotFound(String::from(error_message)),"ValidationException" => SetTaskStatusError::Validation(error_message.to_string()),_ => SetTaskStatusError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SetTaskStatusError::Unknown(String::from(body))
@@ -1803,7 +1803,7 @@ Unknown(String)
                 impl Error for SetTaskStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetTaskStatusError::InternalServiceError(ref cause) => cause,SetTaskStatusError::TaskNotFound(ref cause) => cause,SetTaskStatusError::InvalidRequest(ref cause) => cause,SetTaskStatusError::PipelineNotFound(ref cause) => cause,SetTaskStatusError::PipelineDeleted(ref cause) => cause,SetTaskStatusError::Validation(ref cause) => cause,SetTaskStatusError::Credentials(ref err) => err.description(),SetTaskStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetTaskStatusError::Unknown(ref cause) => cause
+                            SetTaskStatusError::InternalServiceError(ref cause) => cause,SetTaskStatusError::InvalidRequest(ref cause) => cause,SetTaskStatusError::PipelineDeleted(ref cause) => cause,SetTaskStatusError::PipelineNotFound(ref cause) => cause,SetTaskStatusError::TaskNotFound(ref cause) => cause,SetTaskStatusError::Validation(ref cause) => cause,SetTaskStatusError::Credentials(ref err) => err.description(),SetTaskStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetTaskStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1815,10 +1815,10 @@ Unknown(String)
 InternalServiceError(String),
 ///<p>The request was not valid. Verify that your request was properly formatted, that the signature was generated with the correct credentials, and that you haven't exceeded any of the service limits for your account.</p>
 InvalidRequest(String),
-///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
-PipelineNotFound(String),
 ///<p>The specified pipeline has been deleted.</p>
-PipelineDeleted(String),/// An error occurred dispatching the HTTP request
+PipelineDeleted(String),
+///<p>The specified pipeline was not found. Verify that you used the correct user and account identifiers.</p>
+PipelineNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1837,7 +1837,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServiceError" => ValidatePipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ValidatePipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineNotFoundException" => ValidatePipelineDefinitionError::PipelineNotFound(String::from(error_message)),"PipelineDeletedException" => ValidatePipelineDefinitionError::PipelineDeleted(String::from(error_message)),"ValidationException" => ValidatePipelineDefinitionError::Validation(error_message.to_string()),_ => ValidatePipelineDefinitionError::Unknown(String::from(body))
+                                    "InternalServiceError" => ValidatePipelineDefinitionError::InternalServiceError(String::from(error_message)),"InvalidRequestException" => ValidatePipelineDefinitionError::InvalidRequest(String::from(error_message)),"PipelineDeletedException" => ValidatePipelineDefinitionError::PipelineDeleted(String::from(error_message)),"PipelineNotFoundException" => ValidatePipelineDefinitionError::PipelineNotFound(String::from(error_message)),"ValidationException" => ValidatePipelineDefinitionError::Validation(error_message.to_string()),_ => ValidatePipelineDefinitionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ValidatePipelineDefinitionError::Unknown(String::from(body))
@@ -1868,7 +1868,7 @@ Unknown(String)
                 impl Error for ValidatePipelineDefinitionError {
                     fn description(&self) -> &str {
                         match *self {
-                            ValidatePipelineDefinitionError::InternalServiceError(ref cause) => cause,ValidatePipelineDefinitionError::InvalidRequest(ref cause) => cause,ValidatePipelineDefinitionError::PipelineNotFound(ref cause) => cause,ValidatePipelineDefinitionError::PipelineDeleted(ref cause) => cause,ValidatePipelineDefinitionError::Validation(ref cause) => cause,ValidatePipelineDefinitionError::Credentials(ref err) => err.description(),ValidatePipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ValidatePipelineDefinitionError::Unknown(ref cause) => cause
+                            ValidatePipelineDefinitionError::InternalServiceError(ref cause) => cause,ValidatePipelineDefinitionError::InvalidRequest(ref cause) => cause,ValidatePipelineDefinitionError::PipelineDeleted(ref cause) => cause,ValidatePipelineDefinitionError::PipelineNotFound(ref cause) => cause,ValidatePipelineDefinitionError::Validation(ref cause) => cause,ValidatePipelineDefinitionError::Credentials(ref err) => err.description(),ValidatePipelineDefinitionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ValidatePipelineDefinitionError::Unknown(ref cause) => cause
                         }
                     }
                  }

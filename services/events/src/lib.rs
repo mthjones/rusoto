@@ -403,10 +403,10 @@ pub result: Option<Boolean>,
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteRuleError {
                     
-///<p>This exception occurs if there is concurrent modification on rule or target.</p>
-ConcurrentModification(String),
 ///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+Internal(String),
+///<p>This exception occurs if there is concurrent modification on rule or target.</p>
+ConcurrentModification(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -425,7 +425,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ConcurrentModificationException" => DeleteRuleError::ConcurrentModification(String::from(error_message)),"InternalException" => DeleteRuleError::Internal(String::from(error_message)),"ValidationException" => DeleteRuleError::Validation(error_message.to_string()),_ => DeleteRuleError::Unknown(String::from(body))
+                                    "InternalException" => DeleteRuleError::Internal(String::from(error_message)),"ConcurrentModificationException" => DeleteRuleError::ConcurrentModification(String::from(error_message)),"ValidationException" => DeleteRuleError::Validation(error_message.to_string()),_ => DeleteRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteRuleError::Unknown(String::from(body))
@@ -456,7 +456,7 @@ Unknown(String)
                 impl Error for DeleteRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRuleError::ConcurrentModification(ref cause) => cause,DeleteRuleError::Internal(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
+                            DeleteRuleError::Internal(ref cause) => cause,DeleteRuleError::ConcurrentModification(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -527,10 +527,10 @@ Unknown(String)
                     
 ///<p>The rule does not exist.</p>
 ResourceNotFound(String),
-///<p>This exception occurs if there is concurrent modification on rule or target.</p>
-ConcurrentModification(String),
 ///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+Internal(String),
+///<p>This exception occurs if there is concurrent modification on rule or target.</p>
+ConcurrentModification(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -549,7 +549,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DisableRuleError::ResourceNotFound(String::from(error_message)),"ConcurrentModificationException" => DisableRuleError::ConcurrentModification(String::from(error_message)),"InternalException" => DisableRuleError::Internal(String::from(error_message)),"ValidationException" => DisableRuleError::Validation(error_message.to_string()),_ => DisableRuleError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => DisableRuleError::ResourceNotFound(String::from(error_message)),"InternalException" => DisableRuleError::Internal(String::from(error_message)),"ConcurrentModificationException" => DisableRuleError::ConcurrentModification(String::from(error_message)),"ValidationException" => DisableRuleError::Validation(error_message.to_string()),_ => DisableRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DisableRuleError::Unknown(String::from(body))
@@ -580,7 +580,7 @@ Unknown(String)
                 impl Error for DisableRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DisableRuleError::ResourceNotFound(ref cause) => cause,DisableRuleError::ConcurrentModification(ref cause) => cause,DisableRuleError::Internal(ref cause) => cause,DisableRuleError::Validation(ref cause) => cause,DisableRuleError::Credentials(ref err) => err.description(),DisableRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableRuleError::Unknown(ref cause) => cause
+                            DisableRuleError::ResourceNotFound(ref cause) => cause,DisableRuleError::Internal(ref cause) => cause,DisableRuleError::ConcurrentModification(ref cause) => cause,DisableRuleError::Validation(ref cause) => cause,DisableRuleError::Credentials(ref err) => err.description(),DisableRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -590,10 +590,10 @@ Unknown(String)
                     
 ///<p>The rule does not exist.</p>
 ResourceNotFound(String),
-///<p>This exception occurs if there is concurrent modification on rule or target.</p>
-ConcurrentModification(String),
 ///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+Internal(String),
+///<p>This exception occurs if there is concurrent modification on rule or target.</p>
+ConcurrentModification(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -612,7 +612,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => EnableRuleError::ResourceNotFound(String::from(error_message)),"ConcurrentModificationException" => EnableRuleError::ConcurrentModification(String::from(error_message)),"InternalException" => EnableRuleError::Internal(String::from(error_message)),"ValidationException" => EnableRuleError::Validation(error_message.to_string()),_ => EnableRuleError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => EnableRuleError::ResourceNotFound(String::from(error_message)),"InternalException" => EnableRuleError::Internal(String::from(error_message)),"ConcurrentModificationException" => EnableRuleError::ConcurrentModification(String::from(error_message)),"ValidationException" => EnableRuleError::Validation(error_message.to_string()),_ => EnableRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => EnableRuleError::Unknown(String::from(body))
@@ -643,7 +643,7 @@ Unknown(String)
                 impl Error for EnableRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            EnableRuleError::ResourceNotFound(ref cause) => cause,EnableRuleError::ConcurrentModification(ref cause) => cause,EnableRuleError::Internal(ref cause) => cause,EnableRuleError::Validation(ref cause) => cause,EnableRuleError::Credentials(ref err) => err.description(),EnableRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableRuleError::Unknown(ref cause) => cause
+                            EnableRuleError::ResourceNotFound(ref cause) => cause,EnableRuleError::Internal(ref cause) => cause,EnableRuleError::ConcurrentModification(ref cause) => cause,EnableRuleError::Validation(ref cause) => cause,EnableRuleError::Credentials(ref err) => err.description(),EnableRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -891,12 +891,12 @@ Unknown(String)
                     
 ///<p>The event pattern is invalid.</p>
 InvalidEventPattern(String),
-///<p>This exception occurs if you try to create more rules or add more targets to a rule than allowed by default.</p>
-LimitExceeded(String),
+///<p>This exception occurs due to unexpected causes.</p>
+Internal(String),
 ///<p>This exception occurs if there is concurrent modification on rule or target.</p>
 ConcurrentModification(String),
-///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+///<p>This exception occurs if you try to create more rules or add more targets to a rule than allowed by default.</p>
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -915,7 +915,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidEventPatternException" => PutRuleError::InvalidEventPattern(String::from(error_message)),"LimitExceededException" => PutRuleError::LimitExceeded(String::from(error_message)),"ConcurrentModificationException" => PutRuleError::ConcurrentModification(String::from(error_message)),"InternalException" => PutRuleError::Internal(String::from(error_message)),"ValidationException" => PutRuleError::Validation(error_message.to_string()),_ => PutRuleError::Unknown(String::from(body))
+                                    "InvalidEventPatternException" => PutRuleError::InvalidEventPattern(String::from(error_message)),"InternalException" => PutRuleError::Internal(String::from(error_message)),"ConcurrentModificationException" => PutRuleError::ConcurrentModification(String::from(error_message)),"LimitExceededException" => PutRuleError::LimitExceeded(String::from(error_message)),"ValidationException" => PutRuleError::Validation(error_message.to_string()),_ => PutRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutRuleError::Unknown(String::from(body))
@@ -946,7 +946,7 @@ Unknown(String)
                 impl Error for PutRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutRuleError::InvalidEventPattern(ref cause) => cause,PutRuleError::LimitExceeded(ref cause) => cause,PutRuleError::ConcurrentModification(ref cause) => cause,PutRuleError::Internal(ref cause) => cause,PutRuleError::Validation(ref cause) => cause,PutRuleError::Credentials(ref err) => err.description(),PutRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRuleError::Unknown(ref cause) => cause
+                            PutRuleError::InvalidEventPattern(ref cause) => cause,PutRuleError::Internal(ref cause) => cause,PutRuleError::ConcurrentModification(ref cause) => cause,PutRuleError::LimitExceeded(ref cause) => cause,PutRuleError::Validation(ref cause) => cause,PutRuleError::Credentials(ref err) => err.description(),PutRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -956,12 +956,12 @@ Unknown(String)
                     
 ///<p>The rule does not exist.</p>
 ResourceNotFound(String),
+///<p>This exception occurs due to unexpected causes.</p>
+Internal(String),
 ///<p>This exception occurs if there is concurrent modification on rule or target.</p>
 ConcurrentModification(String),
 ///<p>This exception occurs if you try to create more rules or add more targets to a rule than allowed by default.</p>
-LimitExceeded(String),
-///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -980,7 +980,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => PutTargetsError::ResourceNotFound(String::from(error_message)),"ConcurrentModificationException" => PutTargetsError::ConcurrentModification(String::from(error_message)),"LimitExceededException" => PutTargetsError::LimitExceeded(String::from(error_message)),"InternalException" => PutTargetsError::Internal(String::from(error_message)),"ValidationException" => PutTargetsError::Validation(error_message.to_string()),_ => PutTargetsError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => PutTargetsError::ResourceNotFound(String::from(error_message)),"InternalException" => PutTargetsError::Internal(String::from(error_message)),"ConcurrentModificationException" => PutTargetsError::ConcurrentModification(String::from(error_message)),"LimitExceededException" => PutTargetsError::LimitExceeded(String::from(error_message)),"ValidationException" => PutTargetsError::Validation(error_message.to_string()),_ => PutTargetsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutTargetsError::Unknown(String::from(body))
@@ -1011,7 +1011,7 @@ Unknown(String)
                 impl Error for PutTargetsError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutTargetsError::ResourceNotFound(ref cause) => cause,PutTargetsError::ConcurrentModification(ref cause) => cause,PutTargetsError::LimitExceeded(ref cause) => cause,PutTargetsError::Internal(ref cause) => cause,PutTargetsError::Validation(ref cause) => cause,PutTargetsError::Credentials(ref err) => err.description(),PutTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutTargetsError::Unknown(ref cause) => cause
+                            PutTargetsError::ResourceNotFound(ref cause) => cause,PutTargetsError::Internal(ref cause) => cause,PutTargetsError::ConcurrentModification(ref cause) => cause,PutTargetsError::LimitExceeded(ref cause) => cause,PutTargetsError::Validation(ref cause) => cause,PutTargetsError::Credentials(ref err) => err.description(),PutTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutTargetsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1021,10 +1021,10 @@ Unknown(String)
                     
 ///<p>The rule does not exist.</p>
 ResourceNotFound(String),
-///<p>This exception occurs if there is concurrent modification on rule or target.</p>
-ConcurrentModification(String),
 ///<p>This exception occurs due to unexpected causes.</p>
-Internal(String),/// An error occurred dispatching the HTTP request
+Internal(String),
+///<p>This exception occurs if there is concurrent modification on rule or target.</p>
+ConcurrentModification(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1043,7 +1043,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => RemoveTargetsError::ResourceNotFound(String::from(error_message)),"ConcurrentModificationException" => RemoveTargetsError::ConcurrentModification(String::from(error_message)),"InternalException" => RemoveTargetsError::Internal(String::from(error_message)),"ValidationException" => RemoveTargetsError::Validation(error_message.to_string()),_ => RemoveTargetsError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => RemoveTargetsError::ResourceNotFound(String::from(error_message)),"InternalException" => RemoveTargetsError::Internal(String::from(error_message)),"ConcurrentModificationException" => RemoveTargetsError::ConcurrentModification(String::from(error_message)),"ValidationException" => RemoveTargetsError::Validation(error_message.to_string()),_ => RemoveTargetsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemoveTargetsError::Unknown(String::from(body))
@@ -1074,7 +1074,7 @@ Unknown(String)
                 impl Error for RemoveTargetsError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTargetsError::ResourceNotFound(ref cause) => cause,RemoveTargetsError::ConcurrentModification(ref cause) => cause,RemoveTargetsError::Internal(ref cause) => cause,RemoveTargetsError::Validation(ref cause) => cause,RemoveTargetsError::Credentials(ref err) => err.description(),RemoveTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTargetsError::Unknown(ref cause) => cause
+                            RemoveTargetsError::ResourceNotFound(ref cause) => cause,RemoveTargetsError::Internal(ref cause) => cause,RemoveTargetsError::ConcurrentModification(ref cause) => cause,RemoveTargetsError::Validation(ref cause) => cause,RemoveTargetsError::Credentials(ref err) => err.description(),RemoveTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTargetsError::Unknown(ref cause) => cause
                         }
                     }
                  }

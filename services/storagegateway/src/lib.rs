@@ -1783,10 +1783,10 @@ pub target_arn: Option<TargetARN>,
                 #[derive(Debug, PartialEq)]
                 pub enum ActivateGatewayError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1805,7 +1805,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ActivateGatewayError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ActivateGatewayError::InternalServerError(String::from(error_message)),"ValidationException" => ActivateGatewayError::Validation(error_message.to_string()),_ => ActivateGatewayError::Unknown(String::from(body))
+                                    "InternalServerError" => ActivateGatewayError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ActivateGatewayError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ActivateGatewayError::Validation(error_message.to_string()),_ => ActivateGatewayError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ActivateGatewayError::Unknown(String::from(body))
@@ -1836,7 +1836,7 @@ Unknown(String)
                 impl Error for ActivateGatewayError {
                     fn description(&self) -> &str {
                         match *self {
-                            ActivateGatewayError::InvalidGatewayRequest(ref cause) => cause,ActivateGatewayError::InternalServerError(ref cause) => cause,ActivateGatewayError::Validation(ref cause) => cause,ActivateGatewayError::Credentials(ref err) => err.description(),ActivateGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ActivateGatewayError::Unknown(ref cause) => cause
+                            ActivateGatewayError::InternalServerError(ref cause) => cause,ActivateGatewayError::InvalidGatewayRequest(ref cause) => cause,ActivateGatewayError::Validation(ref cause) => cause,ActivateGatewayError::Credentials(ref err) => err.description(),ActivateGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ActivateGatewayError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1844,10 +1844,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AddCacheError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1866,7 +1866,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => AddCacheError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => AddCacheError::InternalServerError(String::from(error_message)),"ValidationException" => AddCacheError::Validation(error_message.to_string()),_ => AddCacheError::Unknown(String::from(body))
+                                    "InternalServerError" => AddCacheError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => AddCacheError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => AddCacheError::Validation(error_message.to_string()),_ => AddCacheError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddCacheError::Unknown(String::from(body))
@@ -1897,7 +1897,7 @@ Unknown(String)
                 impl Error for AddCacheError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddCacheError::InvalidGatewayRequest(ref cause) => cause,AddCacheError::InternalServerError(ref cause) => cause,AddCacheError::Validation(ref cause) => cause,AddCacheError::Credentials(ref err) => err.description(),AddCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddCacheError::Unknown(ref cause) => cause
+                            AddCacheError::InternalServerError(ref cause) => cause,AddCacheError::InvalidGatewayRequest(ref cause) => cause,AddCacheError::Validation(ref cause) => cause,AddCacheError::Credentials(ref err) => err.description(),AddCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddCacheError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1905,10 +1905,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AddTagsToResourceError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1927,7 +1927,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => AddTagsToResourceError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => AddTagsToResourceError::InternalServerError(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => AddTagsToResourceError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => AddTagsToResourceError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddTagsToResourceError::Unknown(String::from(body))
@@ -1958,7 +1958,7 @@ Unknown(String)
                 impl Error for AddTagsToResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsToResourceError::InvalidGatewayRequest(ref cause) => cause,AddTagsToResourceError::InternalServerError(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
+                            AddTagsToResourceError::InternalServerError(ref cause) => cause,AddTagsToResourceError::InvalidGatewayRequest(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1966,10 +1966,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AddUploadBufferError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1988,7 +1988,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => AddUploadBufferError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => AddUploadBufferError::InternalServerError(String::from(error_message)),"ValidationException" => AddUploadBufferError::Validation(error_message.to_string()),_ => AddUploadBufferError::Unknown(String::from(body))
+                                    "InternalServerError" => AddUploadBufferError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => AddUploadBufferError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => AddUploadBufferError::Validation(error_message.to_string()),_ => AddUploadBufferError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddUploadBufferError::Unknown(String::from(body))
@@ -2019,7 +2019,7 @@ Unknown(String)
                 impl Error for AddUploadBufferError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddUploadBufferError::InvalidGatewayRequest(ref cause) => cause,AddUploadBufferError::InternalServerError(ref cause) => cause,AddUploadBufferError::Validation(ref cause) => cause,AddUploadBufferError::Credentials(ref err) => err.description(),AddUploadBufferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddUploadBufferError::Unknown(ref cause) => cause
+                            AddUploadBufferError::InternalServerError(ref cause) => cause,AddUploadBufferError::InvalidGatewayRequest(ref cause) => cause,AddUploadBufferError::Validation(ref cause) => cause,AddUploadBufferError::Credentials(ref err) => err.description(),AddUploadBufferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddUploadBufferError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2027,10 +2027,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AddWorkingStorageError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2049,7 +2049,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => AddWorkingStorageError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => AddWorkingStorageError::InternalServerError(String::from(error_message)),"ValidationException" => AddWorkingStorageError::Validation(error_message.to_string()),_ => AddWorkingStorageError::Unknown(String::from(body))
+                                    "InternalServerError" => AddWorkingStorageError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => AddWorkingStorageError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => AddWorkingStorageError::Validation(error_message.to_string()),_ => AddWorkingStorageError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddWorkingStorageError::Unknown(String::from(body))
@@ -2080,7 +2080,7 @@ Unknown(String)
                 impl Error for AddWorkingStorageError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddWorkingStorageError::InvalidGatewayRequest(ref cause) => cause,AddWorkingStorageError::InternalServerError(ref cause) => cause,AddWorkingStorageError::Validation(ref cause) => cause,AddWorkingStorageError::Credentials(ref err) => err.description(),AddWorkingStorageError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddWorkingStorageError::Unknown(ref cause) => cause
+                            AddWorkingStorageError::InternalServerError(ref cause) => cause,AddWorkingStorageError::InvalidGatewayRequest(ref cause) => cause,AddWorkingStorageError::Validation(ref cause) => cause,AddWorkingStorageError::Credentials(ref err) => err.description(),AddWorkingStorageError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddWorkingStorageError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2088,10 +2088,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CancelArchivalError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2110,7 +2110,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CancelArchivalError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CancelArchivalError::InternalServerError(String::from(error_message)),"ValidationException" => CancelArchivalError::Validation(error_message.to_string()),_ => CancelArchivalError::Unknown(String::from(body))
+                                    "InternalServerError" => CancelArchivalError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CancelArchivalError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CancelArchivalError::Validation(error_message.to_string()),_ => CancelArchivalError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CancelArchivalError::Unknown(String::from(body))
@@ -2141,7 +2141,7 @@ Unknown(String)
                 impl Error for CancelArchivalError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelArchivalError::InvalidGatewayRequest(ref cause) => cause,CancelArchivalError::InternalServerError(ref cause) => cause,CancelArchivalError::Validation(ref cause) => cause,CancelArchivalError::Credentials(ref err) => err.description(),CancelArchivalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelArchivalError::Unknown(ref cause) => cause
+                            CancelArchivalError::InternalServerError(ref cause) => cause,CancelArchivalError::InvalidGatewayRequest(ref cause) => cause,CancelArchivalError::Validation(ref cause) => cause,CancelArchivalError::Credentials(ref err) => err.description(),CancelArchivalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelArchivalError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2149,10 +2149,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CancelRetrievalError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2171,7 +2171,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CancelRetrievalError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CancelRetrievalError::InternalServerError(String::from(error_message)),"ValidationException" => CancelRetrievalError::Validation(error_message.to_string()),_ => CancelRetrievalError::Unknown(String::from(body))
+                                    "InternalServerError" => CancelRetrievalError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CancelRetrievalError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CancelRetrievalError::Validation(error_message.to_string()),_ => CancelRetrievalError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CancelRetrievalError::Unknown(String::from(body))
@@ -2202,7 +2202,7 @@ Unknown(String)
                 impl Error for CancelRetrievalError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelRetrievalError::InvalidGatewayRequest(ref cause) => cause,CancelRetrievalError::InternalServerError(ref cause) => cause,CancelRetrievalError::Validation(ref cause) => cause,CancelRetrievalError::Credentials(ref err) => err.description(),CancelRetrievalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelRetrievalError::Unknown(ref cause) => cause
+                            CancelRetrievalError::InternalServerError(ref cause) => cause,CancelRetrievalError::InvalidGatewayRequest(ref cause) => cause,CancelRetrievalError::Validation(ref cause) => cause,CancelRetrievalError::Credentials(ref err) => err.description(),CancelRetrievalError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelRetrievalError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2210,10 +2210,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateCachediSCSIVolumeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2232,7 +2232,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateCachediSCSIVolumeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateCachediSCSIVolumeError::InternalServerError(String::from(error_message)),"ValidationException" => CreateCachediSCSIVolumeError::Validation(error_message.to_string()),_ => CreateCachediSCSIVolumeError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateCachediSCSIVolumeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateCachediSCSIVolumeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CreateCachediSCSIVolumeError::Validation(error_message.to_string()),_ => CreateCachediSCSIVolumeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateCachediSCSIVolumeError::Unknown(String::from(body))
@@ -2263,7 +2263,7 @@ Unknown(String)
                 impl Error for CreateCachediSCSIVolumeError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateCachediSCSIVolumeError::InvalidGatewayRequest(ref cause) => cause,CreateCachediSCSIVolumeError::InternalServerError(ref cause) => cause,CreateCachediSCSIVolumeError::Validation(ref cause) => cause,CreateCachediSCSIVolumeError::Credentials(ref err) => err.description(),CreateCachediSCSIVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateCachediSCSIVolumeError::Unknown(ref cause) => cause
+                            CreateCachediSCSIVolumeError::InternalServerError(ref cause) => cause,CreateCachediSCSIVolumeError::InvalidGatewayRequest(ref cause) => cause,CreateCachediSCSIVolumeError::Validation(ref cause) => cause,CreateCachediSCSIVolumeError::Credentials(ref err) => err.description(),CreateCachediSCSIVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateCachediSCSIVolumeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2271,10 +2271,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateNFSFileShareError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2293,7 +2293,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateNFSFileShareError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateNFSFileShareError::InternalServerError(String::from(error_message)),"ValidationException" => CreateNFSFileShareError::Validation(error_message.to_string()),_ => CreateNFSFileShareError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateNFSFileShareError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateNFSFileShareError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CreateNFSFileShareError::Validation(error_message.to_string()),_ => CreateNFSFileShareError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateNFSFileShareError::Unknown(String::from(body))
@@ -2324,7 +2324,7 @@ Unknown(String)
                 impl Error for CreateNFSFileShareError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateNFSFileShareError::InvalidGatewayRequest(ref cause) => cause,CreateNFSFileShareError::InternalServerError(ref cause) => cause,CreateNFSFileShareError::Validation(ref cause) => cause,CreateNFSFileShareError::Credentials(ref err) => err.description(),CreateNFSFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateNFSFileShareError::Unknown(ref cause) => cause
+                            CreateNFSFileShareError::InternalServerError(ref cause) => cause,CreateNFSFileShareError::InvalidGatewayRequest(ref cause) => cause,CreateNFSFileShareError::Validation(ref cause) => cause,CreateNFSFileShareError::Credentials(ref err) => err.description(),CreateNFSFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateNFSFileShareError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2332,10 +2332,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateSnapshotError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
 InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred because the service is unavailable. For more information, see the error and message fields.</p>
 ServiceUnavailableError(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2356,7 +2356,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateSnapshotError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateSnapshotError::InternalServerError(String::from(error_message)),"ServiceUnavailableError" => CreateSnapshotError::ServiceUnavailableError(String::from(error_message)),"ValidationException" => CreateSnapshotError::Validation(error_message.to_string()),_ => CreateSnapshotError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateSnapshotError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateSnapshotError::InvalidGatewayRequest(String::from(error_message)),"ServiceUnavailableError" => CreateSnapshotError::ServiceUnavailableError(String::from(error_message)),"ValidationException" => CreateSnapshotError::Validation(error_message.to_string()),_ => CreateSnapshotError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateSnapshotError::Unknown(String::from(body))
@@ -2387,7 +2387,7 @@ Unknown(String)
                 impl Error for CreateSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateSnapshotError::InvalidGatewayRequest(ref cause) => cause,CreateSnapshotError::InternalServerError(ref cause) => cause,CreateSnapshotError::ServiceUnavailableError(ref cause) => cause,CreateSnapshotError::Validation(ref cause) => cause,CreateSnapshotError::Credentials(ref err) => err.description(),CreateSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotError::Unknown(ref cause) => cause
+                            CreateSnapshotError::InternalServerError(ref cause) => cause,CreateSnapshotError::InvalidGatewayRequest(ref cause) => cause,CreateSnapshotError::ServiceUnavailableError(ref cause) => cause,CreateSnapshotError::Validation(ref cause) => cause,CreateSnapshotError::Credentials(ref err) => err.description(),CreateSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2395,10 +2395,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateSnapshotFromVolumeRecoveryPointError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
 InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred because the service is unavailable. For more information, see the error and message fields.</p>
 ServiceUnavailableError(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2419,7 +2419,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateSnapshotFromVolumeRecoveryPointError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateSnapshotFromVolumeRecoveryPointError::InternalServerError(String::from(error_message)),"ServiceUnavailableError" => CreateSnapshotFromVolumeRecoveryPointError::ServiceUnavailableError(String::from(error_message)),"ValidationException" => CreateSnapshotFromVolumeRecoveryPointError::Validation(error_message.to_string()),_ => CreateSnapshotFromVolumeRecoveryPointError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateSnapshotFromVolumeRecoveryPointError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateSnapshotFromVolumeRecoveryPointError::InvalidGatewayRequest(String::from(error_message)),"ServiceUnavailableError" => CreateSnapshotFromVolumeRecoveryPointError::ServiceUnavailableError(String::from(error_message)),"ValidationException" => CreateSnapshotFromVolumeRecoveryPointError::Validation(error_message.to_string()),_ => CreateSnapshotFromVolumeRecoveryPointError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateSnapshotFromVolumeRecoveryPointError::Unknown(String::from(body))
@@ -2450,7 +2450,7 @@ Unknown(String)
                 impl Error for CreateSnapshotFromVolumeRecoveryPointError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateSnapshotFromVolumeRecoveryPointError::InvalidGatewayRequest(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::InternalServerError(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::ServiceUnavailableError(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::Validation(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::Credentials(ref err) => err.description(),CreateSnapshotFromVolumeRecoveryPointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotFromVolumeRecoveryPointError::Unknown(ref cause) => cause
+                            CreateSnapshotFromVolumeRecoveryPointError::InternalServerError(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::InvalidGatewayRequest(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::ServiceUnavailableError(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::Validation(ref cause) => cause,CreateSnapshotFromVolumeRecoveryPointError::Credentials(ref err) => err.description(),CreateSnapshotFromVolumeRecoveryPointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotFromVolumeRecoveryPointError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2458,10 +2458,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateStorediSCSIVolumeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2480,7 +2480,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateStorediSCSIVolumeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateStorediSCSIVolumeError::InternalServerError(String::from(error_message)),"ValidationException" => CreateStorediSCSIVolumeError::Validation(error_message.to_string()),_ => CreateStorediSCSIVolumeError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateStorediSCSIVolumeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateStorediSCSIVolumeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CreateStorediSCSIVolumeError::Validation(error_message.to_string()),_ => CreateStorediSCSIVolumeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateStorediSCSIVolumeError::Unknown(String::from(body))
@@ -2511,7 +2511,7 @@ Unknown(String)
                 impl Error for CreateStorediSCSIVolumeError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateStorediSCSIVolumeError::InvalidGatewayRequest(ref cause) => cause,CreateStorediSCSIVolumeError::InternalServerError(ref cause) => cause,CreateStorediSCSIVolumeError::Validation(ref cause) => cause,CreateStorediSCSIVolumeError::Credentials(ref err) => err.description(),CreateStorediSCSIVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStorediSCSIVolumeError::Unknown(ref cause) => cause
+                            CreateStorediSCSIVolumeError::InternalServerError(ref cause) => cause,CreateStorediSCSIVolumeError::InvalidGatewayRequest(ref cause) => cause,CreateStorediSCSIVolumeError::Validation(ref cause) => cause,CreateStorediSCSIVolumeError::Credentials(ref err) => err.description(),CreateStorediSCSIVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStorediSCSIVolumeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2519,10 +2519,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTapeWithBarcodeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2541,7 +2541,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateTapeWithBarcodeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateTapeWithBarcodeError::InternalServerError(String::from(error_message)),"ValidationException" => CreateTapeWithBarcodeError::Validation(error_message.to_string()),_ => CreateTapeWithBarcodeError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateTapeWithBarcodeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateTapeWithBarcodeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CreateTapeWithBarcodeError::Validation(error_message.to_string()),_ => CreateTapeWithBarcodeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateTapeWithBarcodeError::Unknown(String::from(body))
@@ -2572,7 +2572,7 @@ Unknown(String)
                 impl Error for CreateTapeWithBarcodeError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTapeWithBarcodeError::InvalidGatewayRequest(ref cause) => cause,CreateTapeWithBarcodeError::InternalServerError(ref cause) => cause,CreateTapeWithBarcodeError::Validation(ref cause) => cause,CreateTapeWithBarcodeError::Credentials(ref err) => err.description(),CreateTapeWithBarcodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTapeWithBarcodeError::Unknown(ref cause) => cause
+                            CreateTapeWithBarcodeError::InternalServerError(ref cause) => cause,CreateTapeWithBarcodeError::InvalidGatewayRequest(ref cause) => cause,CreateTapeWithBarcodeError::Validation(ref cause) => cause,CreateTapeWithBarcodeError::Credentials(ref err) => err.description(),CreateTapeWithBarcodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTapeWithBarcodeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2580,10 +2580,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTapesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2602,7 +2602,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => CreateTapesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => CreateTapesError::InternalServerError(String::from(error_message)),"ValidationException" => CreateTapesError::Validation(error_message.to_string()),_ => CreateTapesError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateTapesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => CreateTapesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => CreateTapesError::Validation(error_message.to_string()),_ => CreateTapesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateTapesError::Unknown(String::from(body))
@@ -2633,7 +2633,7 @@ Unknown(String)
                 impl Error for CreateTapesError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTapesError::InvalidGatewayRequest(ref cause) => cause,CreateTapesError::InternalServerError(ref cause) => cause,CreateTapesError::Validation(ref cause) => cause,CreateTapesError::Credentials(ref err) => err.description(),CreateTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTapesError::Unknown(ref cause) => cause
+                            CreateTapesError::InternalServerError(ref cause) => cause,CreateTapesError::InvalidGatewayRequest(ref cause) => cause,CreateTapesError::Validation(ref cause) => cause,CreateTapesError::Credentials(ref err) => err.description(),CreateTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTapesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2641,10 +2641,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteBandwidthRateLimitError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2663,7 +2663,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteBandwidthRateLimitError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteBandwidthRateLimitError::Validation(error_message.to_string()),_ => DeleteBandwidthRateLimitError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteBandwidthRateLimitError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteBandwidthRateLimitError::Validation(error_message.to_string()),_ => DeleteBandwidthRateLimitError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteBandwidthRateLimitError::Unknown(String::from(body))
@@ -2694,7 +2694,7 @@ Unknown(String)
                 impl Error for DeleteBandwidthRateLimitError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,DeleteBandwidthRateLimitError::InternalServerError(ref cause) => cause,DeleteBandwidthRateLimitError::Validation(ref cause) => cause,DeleteBandwidthRateLimitError::Credentials(ref err) => err.description(),DeleteBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteBandwidthRateLimitError::Unknown(ref cause) => cause
+                            DeleteBandwidthRateLimitError::InternalServerError(ref cause) => cause,DeleteBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,DeleteBandwidthRateLimitError::Validation(ref cause) => cause,DeleteBandwidthRateLimitError::Credentials(ref err) => err.description(),DeleteBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteBandwidthRateLimitError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2702,10 +2702,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteChapCredentialsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2724,7 +2724,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteChapCredentialsError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteChapCredentialsError::Validation(error_message.to_string()),_ => DeleteChapCredentialsError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteChapCredentialsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteChapCredentialsError::Validation(error_message.to_string()),_ => DeleteChapCredentialsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteChapCredentialsError::Unknown(String::from(body))
@@ -2755,7 +2755,7 @@ Unknown(String)
                 impl Error for DeleteChapCredentialsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,DeleteChapCredentialsError::InternalServerError(ref cause) => cause,DeleteChapCredentialsError::Validation(ref cause) => cause,DeleteChapCredentialsError::Credentials(ref err) => err.description(),DeleteChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteChapCredentialsError::Unknown(ref cause) => cause
+                            DeleteChapCredentialsError::InternalServerError(ref cause) => cause,DeleteChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,DeleteChapCredentialsError::Validation(ref cause) => cause,DeleteChapCredentialsError::Credentials(ref err) => err.description(),DeleteChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteChapCredentialsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2763,10 +2763,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteFileShareError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2785,7 +2785,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteFileShareError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteFileShareError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteFileShareError::Validation(error_message.to_string()),_ => DeleteFileShareError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteFileShareError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteFileShareError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteFileShareError::Validation(error_message.to_string()),_ => DeleteFileShareError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteFileShareError::Unknown(String::from(body))
@@ -2816,7 +2816,7 @@ Unknown(String)
                 impl Error for DeleteFileShareError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteFileShareError::InvalidGatewayRequest(ref cause) => cause,DeleteFileShareError::InternalServerError(ref cause) => cause,DeleteFileShareError::Validation(ref cause) => cause,DeleteFileShareError::Credentials(ref err) => err.description(),DeleteFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteFileShareError::Unknown(ref cause) => cause
+                            DeleteFileShareError::InternalServerError(ref cause) => cause,DeleteFileShareError::InvalidGatewayRequest(ref cause) => cause,DeleteFileShareError::Validation(ref cause) => cause,DeleteFileShareError::Credentials(ref err) => err.description(),DeleteFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteFileShareError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2824,10 +2824,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteGatewayError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2846,7 +2846,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteGatewayError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteGatewayError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteGatewayError::Validation(error_message.to_string()),_ => DeleteGatewayError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteGatewayError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteGatewayError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteGatewayError::Validation(error_message.to_string()),_ => DeleteGatewayError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteGatewayError::Unknown(String::from(body))
@@ -2877,7 +2877,7 @@ Unknown(String)
                 impl Error for DeleteGatewayError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteGatewayError::InvalidGatewayRequest(ref cause) => cause,DeleteGatewayError::InternalServerError(ref cause) => cause,DeleteGatewayError::Validation(ref cause) => cause,DeleteGatewayError::Credentials(ref err) => err.description(),DeleteGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteGatewayError::Unknown(ref cause) => cause
+                            DeleteGatewayError::InternalServerError(ref cause) => cause,DeleteGatewayError::InvalidGatewayRequest(ref cause) => cause,DeleteGatewayError::Validation(ref cause) => cause,DeleteGatewayError::Credentials(ref err) => err.description(),DeleteGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteGatewayError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2885,10 +2885,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteSnapshotScheduleError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2907,7 +2907,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteSnapshotScheduleError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteSnapshotScheduleError::Validation(error_message.to_string()),_ => DeleteSnapshotScheduleError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteSnapshotScheduleError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteSnapshotScheduleError::Validation(error_message.to_string()),_ => DeleteSnapshotScheduleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteSnapshotScheduleError::Unknown(String::from(body))
@@ -2938,7 +2938,7 @@ Unknown(String)
                 impl Error for DeleteSnapshotScheduleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,DeleteSnapshotScheduleError::InternalServerError(ref cause) => cause,DeleteSnapshotScheduleError::Validation(ref cause) => cause,DeleteSnapshotScheduleError::Credentials(ref err) => err.description(),DeleteSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSnapshotScheduleError::Unknown(ref cause) => cause
+                            DeleteSnapshotScheduleError::InternalServerError(ref cause) => cause,DeleteSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,DeleteSnapshotScheduleError::Validation(ref cause) => cause,DeleteSnapshotScheduleError::Credentials(ref err) => err.description(),DeleteSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSnapshotScheduleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2946,10 +2946,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteTapeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2968,7 +2968,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteTapeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteTapeError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteTapeError::Validation(error_message.to_string()),_ => DeleteTapeError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteTapeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteTapeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteTapeError::Validation(error_message.to_string()),_ => DeleteTapeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteTapeError::Unknown(String::from(body))
@@ -2999,7 +2999,7 @@ Unknown(String)
                 impl Error for DeleteTapeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteTapeError::InvalidGatewayRequest(ref cause) => cause,DeleteTapeError::InternalServerError(ref cause) => cause,DeleteTapeError::Validation(ref cause) => cause,DeleteTapeError::Credentials(ref err) => err.description(),DeleteTapeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTapeError::Unknown(ref cause) => cause
+                            DeleteTapeError::InternalServerError(ref cause) => cause,DeleteTapeError::InvalidGatewayRequest(ref cause) => cause,DeleteTapeError::Validation(ref cause) => cause,DeleteTapeError::Credentials(ref err) => err.description(),DeleteTapeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTapeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3007,10 +3007,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteTapeArchiveError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3029,7 +3029,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteTapeArchiveError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteTapeArchiveError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteTapeArchiveError::Validation(error_message.to_string()),_ => DeleteTapeArchiveError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteTapeArchiveError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteTapeArchiveError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteTapeArchiveError::Validation(error_message.to_string()),_ => DeleteTapeArchiveError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteTapeArchiveError::Unknown(String::from(body))
@@ -3060,7 +3060,7 @@ Unknown(String)
                 impl Error for DeleteTapeArchiveError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteTapeArchiveError::InvalidGatewayRequest(ref cause) => cause,DeleteTapeArchiveError::InternalServerError(ref cause) => cause,DeleteTapeArchiveError::Validation(ref cause) => cause,DeleteTapeArchiveError::Credentials(ref err) => err.description(),DeleteTapeArchiveError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTapeArchiveError::Unknown(ref cause) => cause
+                            DeleteTapeArchiveError::InternalServerError(ref cause) => cause,DeleteTapeArchiveError::InvalidGatewayRequest(ref cause) => cause,DeleteTapeArchiveError::Validation(ref cause) => cause,DeleteTapeArchiveError::Credentials(ref err) => err.description(),DeleteTapeArchiveError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTapeArchiveError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3068,10 +3068,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteVolumeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3090,7 +3090,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DeleteVolumeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DeleteVolumeError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteVolumeError::Validation(error_message.to_string()),_ => DeleteVolumeError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteVolumeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DeleteVolumeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DeleteVolumeError::Validation(error_message.to_string()),_ => DeleteVolumeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteVolumeError::Unknown(String::from(body))
@@ -3121,7 +3121,7 @@ Unknown(String)
                 impl Error for DeleteVolumeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteVolumeError::InvalidGatewayRequest(ref cause) => cause,DeleteVolumeError::InternalServerError(ref cause) => cause,DeleteVolumeError::Validation(ref cause) => cause,DeleteVolumeError::Credentials(ref err) => err.description(),DeleteVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteVolumeError::Unknown(ref cause) => cause
+                            DeleteVolumeError::InternalServerError(ref cause) => cause,DeleteVolumeError::InvalidGatewayRequest(ref cause) => cause,DeleteVolumeError::Validation(ref cause) => cause,DeleteVolumeError::Credentials(ref err) => err.description(),DeleteVolumeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteVolumeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3129,10 +3129,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeBandwidthRateLimitError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3151,7 +3151,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeBandwidthRateLimitError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeBandwidthRateLimitError::Validation(error_message.to_string()),_ => DescribeBandwidthRateLimitError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeBandwidthRateLimitError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeBandwidthRateLimitError::Validation(error_message.to_string()),_ => DescribeBandwidthRateLimitError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeBandwidthRateLimitError::Unknown(String::from(body))
@@ -3182,7 +3182,7 @@ Unknown(String)
                 impl Error for DescribeBandwidthRateLimitError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,DescribeBandwidthRateLimitError::InternalServerError(ref cause) => cause,DescribeBandwidthRateLimitError::Validation(ref cause) => cause,DescribeBandwidthRateLimitError::Credentials(ref err) => err.description(),DescribeBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeBandwidthRateLimitError::Unknown(ref cause) => cause
+                            DescribeBandwidthRateLimitError::InternalServerError(ref cause) => cause,DescribeBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,DescribeBandwidthRateLimitError::Validation(ref cause) => cause,DescribeBandwidthRateLimitError::Credentials(ref err) => err.description(),DescribeBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeBandwidthRateLimitError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3190,10 +3190,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeCacheError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3212,7 +3212,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeCacheError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeCacheError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeCacheError::Validation(error_message.to_string()),_ => DescribeCacheError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeCacheError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeCacheError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeCacheError::Validation(error_message.to_string()),_ => DescribeCacheError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeCacheError::Unknown(String::from(body))
@@ -3243,7 +3243,7 @@ Unknown(String)
                 impl Error for DescribeCacheError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeCacheError::InvalidGatewayRequest(ref cause) => cause,DescribeCacheError::InternalServerError(ref cause) => cause,DescribeCacheError::Validation(ref cause) => cause,DescribeCacheError::Credentials(ref err) => err.description(),DescribeCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCacheError::Unknown(ref cause) => cause
+                            DescribeCacheError::InternalServerError(ref cause) => cause,DescribeCacheError::InvalidGatewayRequest(ref cause) => cause,DescribeCacheError::Validation(ref cause) => cause,DescribeCacheError::Credentials(ref err) => err.description(),DescribeCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCacheError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3251,10 +3251,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeCachediSCSIVolumesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3273,7 +3273,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeCachediSCSIVolumesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeCachediSCSIVolumesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeCachediSCSIVolumesError::Validation(error_message.to_string()),_ => DescribeCachediSCSIVolumesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeCachediSCSIVolumesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeCachediSCSIVolumesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeCachediSCSIVolumesError::Validation(error_message.to_string()),_ => DescribeCachediSCSIVolumesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeCachediSCSIVolumesError::Unknown(String::from(body))
@@ -3304,7 +3304,7 @@ Unknown(String)
                 impl Error for DescribeCachediSCSIVolumesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeCachediSCSIVolumesError::InvalidGatewayRequest(ref cause) => cause,DescribeCachediSCSIVolumesError::InternalServerError(ref cause) => cause,DescribeCachediSCSIVolumesError::Validation(ref cause) => cause,DescribeCachediSCSIVolumesError::Credentials(ref err) => err.description(),DescribeCachediSCSIVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCachediSCSIVolumesError::Unknown(ref cause) => cause
+                            DescribeCachediSCSIVolumesError::InternalServerError(ref cause) => cause,DescribeCachediSCSIVolumesError::InvalidGatewayRequest(ref cause) => cause,DescribeCachediSCSIVolumesError::Validation(ref cause) => cause,DescribeCachediSCSIVolumesError::Credentials(ref err) => err.description(),DescribeCachediSCSIVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCachediSCSIVolumesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3312,10 +3312,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeChapCredentialsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3334,7 +3334,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeChapCredentialsError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeChapCredentialsError::Validation(error_message.to_string()),_ => DescribeChapCredentialsError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeChapCredentialsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeChapCredentialsError::Validation(error_message.to_string()),_ => DescribeChapCredentialsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeChapCredentialsError::Unknown(String::from(body))
@@ -3365,7 +3365,7 @@ Unknown(String)
                 impl Error for DescribeChapCredentialsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,DescribeChapCredentialsError::InternalServerError(ref cause) => cause,DescribeChapCredentialsError::Validation(ref cause) => cause,DescribeChapCredentialsError::Credentials(ref err) => err.description(),DescribeChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeChapCredentialsError::Unknown(ref cause) => cause
+                            DescribeChapCredentialsError::InternalServerError(ref cause) => cause,DescribeChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,DescribeChapCredentialsError::Validation(ref cause) => cause,DescribeChapCredentialsError::Credentials(ref err) => err.description(),DescribeChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeChapCredentialsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3373,10 +3373,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeGatewayInformationError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3395,7 +3395,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeGatewayInformationError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeGatewayInformationError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeGatewayInformationError::Validation(error_message.to_string()),_ => DescribeGatewayInformationError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeGatewayInformationError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeGatewayInformationError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeGatewayInformationError::Validation(error_message.to_string()),_ => DescribeGatewayInformationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeGatewayInformationError::Unknown(String::from(body))
@@ -3426,7 +3426,7 @@ Unknown(String)
                 impl Error for DescribeGatewayInformationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeGatewayInformationError::InvalidGatewayRequest(ref cause) => cause,DescribeGatewayInformationError::InternalServerError(ref cause) => cause,DescribeGatewayInformationError::Validation(ref cause) => cause,DescribeGatewayInformationError::Credentials(ref err) => err.description(),DescribeGatewayInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeGatewayInformationError::Unknown(ref cause) => cause
+                            DescribeGatewayInformationError::InternalServerError(ref cause) => cause,DescribeGatewayInformationError::InvalidGatewayRequest(ref cause) => cause,DescribeGatewayInformationError::Validation(ref cause) => cause,DescribeGatewayInformationError::Credentials(ref err) => err.description(),DescribeGatewayInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeGatewayInformationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3434,10 +3434,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeMaintenanceStartTimeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3456,7 +3456,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeMaintenanceStartTimeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeMaintenanceStartTimeError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeMaintenanceStartTimeError::Validation(error_message.to_string()),_ => DescribeMaintenanceStartTimeError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeMaintenanceStartTimeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeMaintenanceStartTimeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeMaintenanceStartTimeError::Validation(error_message.to_string()),_ => DescribeMaintenanceStartTimeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeMaintenanceStartTimeError::Unknown(String::from(body))
@@ -3487,7 +3487,7 @@ Unknown(String)
                 impl Error for DescribeMaintenanceStartTimeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeMaintenanceStartTimeError::InvalidGatewayRequest(ref cause) => cause,DescribeMaintenanceStartTimeError::InternalServerError(ref cause) => cause,DescribeMaintenanceStartTimeError::Validation(ref cause) => cause,DescribeMaintenanceStartTimeError::Credentials(ref err) => err.description(),DescribeMaintenanceStartTimeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeMaintenanceStartTimeError::Unknown(ref cause) => cause
+                            DescribeMaintenanceStartTimeError::InternalServerError(ref cause) => cause,DescribeMaintenanceStartTimeError::InvalidGatewayRequest(ref cause) => cause,DescribeMaintenanceStartTimeError::Validation(ref cause) => cause,DescribeMaintenanceStartTimeError::Credentials(ref err) => err.description(),DescribeMaintenanceStartTimeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeMaintenanceStartTimeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3495,10 +3495,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeNFSFileSharesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3517,7 +3517,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeNFSFileSharesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeNFSFileSharesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeNFSFileSharesError::Validation(error_message.to_string()),_ => DescribeNFSFileSharesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeNFSFileSharesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeNFSFileSharesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeNFSFileSharesError::Validation(error_message.to_string()),_ => DescribeNFSFileSharesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeNFSFileSharesError::Unknown(String::from(body))
@@ -3548,7 +3548,7 @@ Unknown(String)
                 impl Error for DescribeNFSFileSharesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeNFSFileSharesError::InvalidGatewayRequest(ref cause) => cause,DescribeNFSFileSharesError::InternalServerError(ref cause) => cause,DescribeNFSFileSharesError::Validation(ref cause) => cause,DescribeNFSFileSharesError::Credentials(ref err) => err.description(),DescribeNFSFileSharesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeNFSFileSharesError::Unknown(ref cause) => cause
+                            DescribeNFSFileSharesError::InternalServerError(ref cause) => cause,DescribeNFSFileSharesError::InvalidGatewayRequest(ref cause) => cause,DescribeNFSFileSharesError::Validation(ref cause) => cause,DescribeNFSFileSharesError::Credentials(ref err) => err.description(),DescribeNFSFileSharesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeNFSFileSharesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3556,10 +3556,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeSnapshotScheduleError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3578,7 +3578,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeSnapshotScheduleError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeSnapshotScheduleError::Validation(error_message.to_string()),_ => DescribeSnapshotScheduleError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeSnapshotScheduleError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeSnapshotScheduleError::Validation(error_message.to_string()),_ => DescribeSnapshotScheduleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeSnapshotScheduleError::Unknown(String::from(body))
@@ -3609,7 +3609,7 @@ Unknown(String)
                 impl Error for DescribeSnapshotScheduleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,DescribeSnapshotScheduleError::InternalServerError(ref cause) => cause,DescribeSnapshotScheduleError::Validation(ref cause) => cause,DescribeSnapshotScheduleError::Credentials(ref err) => err.description(),DescribeSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeSnapshotScheduleError::Unknown(ref cause) => cause
+                            DescribeSnapshotScheduleError::InternalServerError(ref cause) => cause,DescribeSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,DescribeSnapshotScheduleError::Validation(ref cause) => cause,DescribeSnapshotScheduleError::Credentials(ref err) => err.description(),DescribeSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeSnapshotScheduleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3617,10 +3617,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeStorediSCSIVolumesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3639,7 +3639,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeStorediSCSIVolumesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeStorediSCSIVolumesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeStorediSCSIVolumesError::Validation(error_message.to_string()),_ => DescribeStorediSCSIVolumesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeStorediSCSIVolumesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeStorediSCSIVolumesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeStorediSCSIVolumesError::Validation(error_message.to_string()),_ => DescribeStorediSCSIVolumesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeStorediSCSIVolumesError::Unknown(String::from(body))
@@ -3670,7 +3670,7 @@ Unknown(String)
                 impl Error for DescribeStorediSCSIVolumesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeStorediSCSIVolumesError::InvalidGatewayRequest(ref cause) => cause,DescribeStorediSCSIVolumesError::InternalServerError(ref cause) => cause,DescribeStorediSCSIVolumesError::Validation(ref cause) => cause,DescribeStorediSCSIVolumesError::Credentials(ref err) => err.description(),DescribeStorediSCSIVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeStorediSCSIVolumesError::Unknown(ref cause) => cause
+                            DescribeStorediSCSIVolumesError::InternalServerError(ref cause) => cause,DescribeStorediSCSIVolumesError::InvalidGatewayRequest(ref cause) => cause,DescribeStorediSCSIVolumesError::Validation(ref cause) => cause,DescribeStorediSCSIVolumesError::Credentials(ref err) => err.description(),DescribeStorediSCSIVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeStorediSCSIVolumesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3678,10 +3678,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTapeArchivesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3700,7 +3700,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeTapeArchivesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeTapeArchivesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeTapeArchivesError::Validation(error_message.to_string()),_ => DescribeTapeArchivesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeTapeArchivesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeTapeArchivesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeTapeArchivesError::Validation(error_message.to_string()),_ => DescribeTapeArchivesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeTapeArchivesError::Unknown(String::from(body))
@@ -3731,7 +3731,7 @@ Unknown(String)
                 impl Error for DescribeTapeArchivesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTapeArchivesError::InvalidGatewayRequest(ref cause) => cause,DescribeTapeArchivesError::InternalServerError(ref cause) => cause,DescribeTapeArchivesError::Validation(ref cause) => cause,DescribeTapeArchivesError::Credentials(ref err) => err.description(),DescribeTapeArchivesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapeArchivesError::Unknown(ref cause) => cause
+                            DescribeTapeArchivesError::InternalServerError(ref cause) => cause,DescribeTapeArchivesError::InvalidGatewayRequest(ref cause) => cause,DescribeTapeArchivesError::Validation(ref cause) => cause,DescribeTapeArchivesError::Credentials(ref err) => err.description(),DescribeTapeArchivesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapeArchivesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3739,10 +3739,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTapeRecoveryPointsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3761,7 +3761,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeTapeRecoveryPointsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeTapeRecoveryPointsError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeTapeRecoveryPointsError::Validation(error_message.to_string()),_ => DescribeTapeRecoveryPointsError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeTapeRecoveryPointsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeTapeRecoveryPointsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeTapeRecoveryPointsError::Validation(error_message.to_string()),_ => DescribeTapeRecoveryPointsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeTapeRecoveryPointsError::Unknown(String::from(body))
@@ -3792,7 +3792,7 @@ Unknown(String)
                 impl Error for DescribeTapeRecoveryPointsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTapeRecoveryPointsError::InvalidGatewayRequest(ref cause) => cause,DescribeTapeRecoveryPointsError::InternalServerError(ref cause) => cause,DescribeTapeRecoveryPointsError::Validation(ref cause) => cause,DescribeTapeRecoveryPointsError::Credentials(ref err) => err.description(),DescribeTapeRecoveryPointsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapeRecoveryPointsError::Unknown(ref cause) => cause
+                            DescribeTapeRecoveryPointsError::InternalServerError(ref cause) => cause,DescribeTapeRecoveryPointsError::InvalidGatewayRequest(ref cause) => cause,DescribeTapeRecoveryPointsError::Validation(ref cause) => cause,DescribeTapeRecoveryPointsError::Credentials(ref err) => err.description(),DescribeTapeRecoveryPointsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapeRecoveryPointsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3800,10 +3800,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTapesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3822,7 +3822,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeTapesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeTapesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeTapesError::Validation(error_message.to_string()),_ => DescribeTapesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeTapesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeTapesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeTapesError::Validation(error_message.to_string()),_ => DescribeTapesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeTapesError::Unknown(String::from(body))
@@ -3853,7 +3853,7 @@ Unknown(String)
                 impl Error for DescribeTapesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTapesError::InvalidGatewayRequest(ref cause) => cause,DescribeTapesError::InternalServerError(ref cause) => cause,DescribeTapesError::Validation(ref cause) => cause,DescribeTapesError::Credentials(ref err) => err.description(),DescribeTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapesError::Unknown(ref cause) => cause
+                            DescribeTapesError::InternalServerError(ref cause) => cause,DescribeTapesError::InvalidGatewayRequest(ref cause) => cause,DescribeTapesError::Validation(ref cause) => cause,DescribeTapesError::Credentials(ref err) => err.description(),DescribeTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTapesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3861,10 +3861,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeUploadBufferError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3883,7 +3883,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeUploadBufferError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeUploadBufferError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeUploadBufferError::Validation(error_message.to_string()),_ => DescribeUploadBufferError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeUploadBufferError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeUploadBufferError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeUploadBufferError::Validation(error_message.to_string()),_ => DescribeUploadBufferError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeUploadBufferError::Unknown(String::from(body))
@@ -3914,7 +3914,7 @@ Unknown(String)
                 impl Error for DescribeUploadBufferError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeUploadBufferError::InvalidGatewayRequest(ref cause) => cause,DescribeUploadBufferError::InternalServerError(ref cause) => cause,DescribeUploadBufferError::Validation(ref cause) => cause,DescribeUploadBufferError::Credentials(ref err) => err.description(),DescribeUploadBufferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeUploadBufferError::Unknown(ref cause) => cause
+                            DescribeUploadBufferError::InternalServerError(ref cause) => cause,DescribeUploadBufferError::InvalidGatewayRequest(ref cause) => cause,DescribeUploadBufferError::Validation(ref cause) => cause,DescribeUploadBufferError::Credentials(ref err) => err.description(),DescribeUploadBufferError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeUploadBufferError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3922,10 +3922,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeVTLDevicesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3944,7 +3944,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeVTLDevicesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeVTLDevicesError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeVTLDevicesError::Validation(error_message.to_string()),_ => DescribeVTLDevicesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeVTLDevicesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeVTLDevicesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeVTLDevicesError::Validation(error_message.to_string()),_ => DescribeVTLDevicesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeVTLDevicesError::Unknown(String::from(body))
@@ -3975,7 +3975,7 @@ Unknown(String)
                 impl Error for DescribeVTLDevicesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeVTLDevicesError::InvalidGatewayRequest(ref cause) => cause,DescribeVTLDevicesError::InternalServerError(ref cause) => cause,DescribeVTLDevicesError::Validation(ref cause) => cause,DescribeVTLDevicesError::Credentials(ref err) => err.description(),DescribeVTLDevicesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeVTLDevicesError::Unknown(ref cause) => cause
+                            DescribeVTLDevicesError::InternalServerError(ref cause) => cause,DescribeVTLDevicesError::InvalidGatewayRequest(ref cause) => cause,DescribeVTLDevicesError::Validation(ref cause) => cause,DescribeVTLDevicesError::Credentials(ref err) => err.description(),DescribeVTLDevicesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeVTLDevicesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3983,10 +3983,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeWorkingStorageError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4005,7 +4005,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DescribeWorkingStorageError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DescribeWorkingStorageError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeWorkingStorageError::Validation(error_message.to_string()),_ => DescribeWorkingStorageError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeWorkingStorageError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DescribeWorkingStorageError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DescribeWorkingStorageError::Validation(error_message.to_string()),_ => DescribeWorkingStorageError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeWorkingStorageError::Unknown(String::from(body))
@@ -4036,7 +4036,7 @@ Unknown(String)
                 impl Error for DescribeWorkingStorageError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeWorkingStorageError::InvalidGatewayRequest(ref cause) => cause,DescribeWorkingStorageError::InternalServerError(ref cause) => cause,DescribeWorkingStorageError::Validation(ref cause) => cause,DescribeWorkingStorageError::Credentials(ref err) => err.description(),DescribeWorkingStorageError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkingStorageError::Unknown(ref cause) => cause
+                            DescribeWorkingStorageError::InternalServerError(ref cause) => cause,DescribeWorkingStorageError::InvalidGatewayRequest(ref cause) => cause,DescribeWorkingStorageError::Validation(ref cause) => cause,DescribeWorkingStorageError::Credentials(ref err) => err.description(),DescribeWorkingStorageError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkingStorageError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4044,10 +4044,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DisableGatewayError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4066,7 +4066,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => DisableGatewayError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => DisableGatewayError::InternalServerError(String::from(error_message)),"ValidationException" => DisableGatewayError::Validation(error_message.to_string()),_ => DisableGatewayError::Unknown(String::from(body))
+                                    "InternalServerError" => DisableGatewayError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => DisableGatewayError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => DisableGatewayError::Validation(error_message.to_string()),_ => DisableGatewayError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DisableGatewayError::Unknown(String::from(body))
@@ -4097,7 +4097,7 @@ Unknown(String)
                 impl Error for DisableGatewayError {
                     fn description(&self) -> &str {
                         match *self {
-                            DisableGatewayError::InvalidGatewayRequest(ref cause) => cause,DisableGatewayError::InternalServerError(ref cause) => cause,DisableGatewayError::Validation(ref cause) => cause,DisableGatewayError::Credentials(ref err) => err.description(),DisableGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableGatewayError::Unknown(ref cause) => cause
+                            DisableGatewayError::InternalServerError(ref cause) => cause,DisableGatewayError::InvalidGatewayRequest(ref cause) => cause,DisableGatewayError::Validation(ref cause) => cause,DisableGatewayError::Credentials(ref err) => err.description(),DisableGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableGatewayError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4105,10 +4105,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListFileSharesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4127,7 +4127,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListFileSharesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListFileSharesError::InternalServerError(String::from(error_message)),"ValidationException" => ListFileSharesError::Validation(error_message.to_string()),_ => ListFileSharesError::Unknown(String::from(body))
+                                    "InternalServerError" => ListFileSharesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListFileSharesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListFileSharesError::Validation(error_message.to_string()),_ => ListFileSharesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListFileSharesError::Unknown(String::from(body))
@@ -4158,7 +4158,7 @@ Unknown(String)
                 impl Error for ListFileSharesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListFileSharesError::InvalidGatewayRequest(ref cause) => cause,ListFileSharesError::InternalServerError(ref cause) => cause,ListFileSharesError::Validation(ref cause) => cause,ListFileSharesError::Credentials(ref err) => err.description(),ListFileSharesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListFileSharesError::Unknown(ref cause) => cause
+                            ListFileSharesError::InternalServerError(ref cause) => cause,ListFileSharesError::InvalidGatewayRequest(ref cause) => cause,ListFileSharesError::Validation(ref cause) => cause,ListFileSharesError::Credentials(ref err) => err.description(),ListFileSharesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListFileSharesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4166,10 +4166,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListGatewaysError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4188,7 +4188,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListGatewaysError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListGatewaysError::InternalServerError(String::from(error_message)),"ValidationException" => ListGatewaysError::Validation(error_message.to_string()),_ => ListGatewaysError::Unknown(String::from(body))
+                                    "InternalServerError" => ListGatewaysError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListGatewaysError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListGatewaysError::Validation(error_message.to_string()),_ => ListGatewaysError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListGatewaysError::Unknown(String::from(body))
@@ -4219,7 +4219,7 @@ Unknown(String)
                 impl Error for ListGatewaysError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListGatewaysError::InvalidGatewayRequest(ref cause) => cause,ListGatewaysError::InternalServerError(ref cause) => cause,ListGatewaysError::Validation(ref cause) => cause,ListGatewaysError::Credentials(ref err) => err.description(),ListGatewaysError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListGatewaysError::Unknown(ref cause) => cause
+                            ListGatewaysError::InternalServerError(ref cause) => cause,ListGatewaysError::InvalidGatewayRequest(ref cause) => cause,ListGatewaysError::Validation(ref cause) => cause,ListGatewaysError::Credentials(ref err) => err.description(),ListGatewaysError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListGatewaysError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4227,10 +4227,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListLocalDisksError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4249,7 +4249,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListLocalDisksError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListLocalDisksError::InternalServerError(String::from(error_message)),"ValidationException" => ListLocalDisksError::Validation(error_message.to_string()),_ => ListLocalDisksError::Unknown(String::from(body))
+                                    "InternalServerError" => ListLocalDisksError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListLocalDisksError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListLocalDisksError::Validation(error_message.to_string()),_ => ListLocalDisksError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListLocalDisksError::Unknown(String::from(body))
@@ -4280,7 +4280,7 @@ Unknown(String)
                 impl Error for ListLocalDisksError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListLocalDisksError::InvalidGatewayRequest(ref cause) => cause,ListLocalDisksError::InternalServerError(ref cause) => cause,ListLocalDisksError::Validation(ref cause) => cause,ListLocalDisksError::Credentials(ref err) => err.description(),ListLocalDisksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListLocalDisksError::Unknown(ref cause) => cause
+                            ListLocalDisksError::InternalServerError(ref cause) => cause,ListLocalDisksError::InvalidGatewayRequest(ref cause) => cause,ListLocalDisksError::Validation(ref cause) => cause,ListLocalDisksError::Credentials(ref err) => err.description(),ListLocalDisksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListLocalDisksError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4288,10 +4288,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListTagsForResourceError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4310,7 +4310,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListTagsForResourceError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListTagsForResourceError::InternalServerError(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => ListTagsForResourceError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListTagsForResourceError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListTagsForResourceError::Unknown(String::from(body))
@@ -4341,7 +4341,7 @@ Unknown(String)
                 impl Error for ListTagsForResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListTagsForResourceError::InvalidGatewayRequest(ref cause) => cause,ListTagsForResourceError::InternalServerError(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
+                            ListTagsForResourceError::InternalServerError(ref cause) => cause,ListTagsForResourceError::InvalidGatewayRequest(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4349,10 +4349,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListTapesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4371,7 +4371,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListTapesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListTapesError::InternalServerError(String::from(error_message)),"ValidationException" => ListTapesError::Validation(error_message.to_string()),_ => ListTapesError::Unknown(String::from(body))
+                                    "InternalServerError" => ListTapesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListTapesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListTapesError::Validation(error_message.to_string()),_ => ListTapesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListTapesError::Unknown(String::from(body))
@@ -4402,7 +4402,7 @@ Unknown(String)
                 impl Error for ListTapesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListTapesError::InvalidGatewayRequest(ref cause) => cause,ListTapesError::InternalServerError(ref cause) => cause,ListTapesError::Validation(ref cause) => cause,ListTapesError::Credentials(ref err) => err.description(),ListTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTapesError::Unknown(ref cause) => cause
+                            ListTapesError::InternalServerError(ref cause) => cause,ListTapesError::InvalidGatewayRequest(ref cause) => cause,ListTapesError::Validation(ref cause) => cause,ListTapesError::Credentials(ref err) => err.description(),ListTapesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTapesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4410,10 +4410,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListVolumeInitiatorsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4432,7 +4432,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListVolumeInitiatorsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListVolumeInitiatorsError::InternalServerError(String::from(error_message)),"ValidationException" => ListVolumeInitiatorsError::Validation(error_message.to_string()),_ => ListVolumeInitiatorsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListVolumeInitiatorsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListVolumeInitiatorsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListVolumeInitiatorsError::Validation(error_message.to_string()),_ => ListVolumeInitiatorsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListVolumeInitiatorsError::Unknown(String::from(body))
@@ -4463,7 +4463,7 @@ Unknown(String)
                 impl Error for ListVolumeInitiatorsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListVolumeInitiatorsError::InvalidGatewayRequest(ref cause) => cause,ListVolumeInitiatorsError::InternalServerError(ref cause) => cause,ListVolumeInitiatorsError::Validation(ref cause) => cause,ListVolumeInitiatorsError::Credentials(ref err) => err.description(),ListVolumeInitiatorsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumeInitiatorsError::Unknown(ref cause) => cause
+                            ListVolumeInitiatorsError::InternalServerError(ref cause) => cause,ListVolumeInitiatorsError::InvalidGatewayRequest(ref cause) => cause,ListVolumeInitiatorsError::Validation(ref cause) => cause,ListVolumeInitiatorsError::Credentials(ref err) => err.description(),ListVolumeInitiatorsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumeInitiatorsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4471,10 +4471,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListVolumeRecoveryPointsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4493,7 +4493,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListVolumeRecoveryPointsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListVolumeRecoveryPointsError::InternalServerError(String::from(error_message)),"ValidationException" => ListVolumeRecoveryPointsError::Validation(error_message.to_string()),_ => ListVolumeRecoveryPointsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListVolumeRecoveryPointsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListVolumeRecoveryPointsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListVolumeRecoveryPointsError::Validation(error_message.to_string()),_ => ListVolumeRecoveryPointsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListVolumeRecoveryPointsError::Unknown(String::from(body))
@@ -4524,7 +4524,7 @@ Unknown(String)
                 impl Error for ListVolumeRecoveryPointsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListVolumeRecoveryPointsError::InvalidGatewayRequest(ref cause) => cause,ListVolumeRecoveryPointsError::InternalServerError(ref cause) => cause,ListVolumeRecoveryPointsError::Validation(ref cause) => cause,ListVolumeRecoveryPointsError::Credentials(ref err) => err.description(),ListVolumeRecoveryPointsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumeRecoveryPointsError::Unknown(ref cause) => cause
+                            ListVolumeRecoveryPointsError::InternalServerError(ref cause) => cause,ListVolumeRecoveryPointsError::InvalidGatewayRequest(ref cause) => cause,ListVolumeRecoveryPointsError::Validation(ref cause) => cause,ListVolumeRecoveryPointsError::Credentials(ref err) => err.description(),ListVolumeRecoveryPointsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumeRecoveryPointsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4532,10 +4532,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListVolumesError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4554,7 +4554,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ListVolumesError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ListVolumesError::InternalServerError(String::from(error_message)),"ValidationException" => ListVolumesError::Validation(error_message.to_string()),_ => ListVolumesError::Unknown(String::from(body))
+                                    "InternalServerError" => ListVolumesError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ListVolumesError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ListVolumesError::Validation(error_message.to_string()),_ => ListVolumesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListVolumesError::Unknown(String::from(body))
@@ -4585,7 +4585,7 @@ Unknown(String)
                 impl Error for ListVolumesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListVolumesError::InvalidGatewayRequest(ref cause) => cause,ListVolumesError::InternalServerError(ref cause) => cause,ListVolumesError::Validation(ref cause) => cause,ListVolumesError::Credentials(ref err) => err.description(),ListVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumesError::Unknown(ref cause) => cause
+                            ListVolumesError::InternalServerError(ref cause) => cause,ListVolumesError::InvalidGatewayRequest(ref cause) => cause,ListVolumesError::Validation(ref cause) => cause,ListVolumesError::Credentials(ref err) => err.description(),ListVolumesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVolumesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4593,10 +4593,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RemoveTagsFromResourceError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4615,7 +4615,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => RemoveTagsFromResourceError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => RemoveTagsFromResourceError::InternalServerError(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => RemoveTagsFromResourceError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => RemoveTagsFromResourceError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemoveTagsFromResourceError::Unknown(String::from(body))
@@ -4646,7 +4646,7 @@ Unknown(String)
                 impl Error for RemoveTagsFromResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTagsFromResourceError::InvalidGatewayRequest(ref cause) => cause,RemoveTagsFromResourceError::InternalServerError(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
+                            RemoveTagsFromResourceError::InternalServerError(ref cause) => cause,RemoveTagsFromResourceError::InvalidGatewayRequest(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4654,10 +4654,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ResetCacheError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4676,7 +4676,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ResetCacheError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ResetCacheError::InternalServerError(String::from(error_message)),"ValidationException" => ResetCacheError::Validation(error_message.to_string()),_ => ResetCacheError::Unknown(String::from(body))
+                                    "InternalServerError" => ResetCacheError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ResetCacheError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ResetCacheError::Validation(error_message.to_string()),_ => ResetCacheError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ResetCacheError::Unknown(String::from(body))
@@ -4707,7 +4707,7 @@ Unknown(String)
                 impl Error for ResetCacheError {
                     fn description(&self) -> &str {
                         match *self {
-                            ResetCacheError::InvalidGatewayRequest(ref cause) => cause,ResetCacheError::InternalServerError(ref cause) => cause,ResetCacheError::Validation(ref cause) => cause,ResetCacheError::Credentials(ref err) => err.description(),ResetCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResetCacheError::Unknown(ref cause) => cause
+                            ResetCacheError::InternalServerError(ref cause) => cause,ResetCacheError::InvalidGatewayRequest(ref cause) => cause,ResetCacheError::Validation(ref cause) => cause,ResetCacheError::Credentials(ref err) => err.description(),ResetCacheError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResetCacheError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4715,10 +4715,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RetrieveTapeArchiveError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4737,7 +4737,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => RetrieveTapeArchiveError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => RetrieveTapeArchiveError::InternalServerError(String::from(error_message)),"ValidationException" => RetrieveTapeArchiveError::Validation(error_message.to_string()),_ => RetrieveTapeArchiveError::Unknown(String::from(body))
+                                    "InternalServerError" => RetrieveTapeArchiveError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => RetrieveTapeArchiveError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => RetrieveTapeArchiveError::Validation(error_message.to_string()),_ => RetrieveTapeArchiveError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RetrieveTapeArchiveError::Unknown(String::from(body))
@@ -4768,7 +4768,7 @@ Unknown(String)
                 impl Error for RetrieveTapeArchiveError {
                     fn description(&self) -> &str {
                         match *self {
-                            RetrieveTapeArchiveError::InvalidGatewayRequest(ref cause) => cause,RetrieveTapeArchiveError::InternalServerError(ref cause) => cause,RetrieveTapeArchiveError::Validation(ref cause) => cause,RetrieveTapeArchiveError::Credentials(ref err) => err.description(),RetrieveTapeArchiveError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RetrieveTapeArchiveError::Unknown(ref cause) => cause
+                            RetrieveTapeArchiveError::InternalServerError(ref cause) => cause,RetrieveTapeArchiveError::InvalidGatewayRequest(ref cause) => cause,RetrieveTapeArchiveError::Validation(ref cause) => cause,RetrieveTapeArchiveError::Credentials(ref err) => err.description(),RetrieveTapeArchiveError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RetrieveTapeArchiveError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4776,10 +4776,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RetrieveTapeRecoveryPointError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4798,7 +4798,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => RetrieveTapeRecoveryPointError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => RetrieveTapeRecoveryPointError::InternalServerError(String::from(error_message)),"ValidationException" => RetrieveTapeRecoveryPointError::Validation(error_message.to_string()),_ => RetrieveTapeRecoveryPointError::Unknown(String::from(body))
+                                    "InternalServerError" => RetrieveTapeRecoveryPointError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => RetrieveTapeRecoveryPointError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => RetrieveTapeRecoveryPointError::Validation(error_message.to_string()),_ => RetrieveTapeRecoveryPointError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RetrieveTapeRecoveryPointError::Unknown(String::from(body))
@@ -4829,7 +4829,7 @@ Unknown(String)
                 impl Error for RetrieveTapeRecoveryPointError {
                     fn description(&self) -> &str {
                         match *self {
-                            RetrieveTapeRecoveryPointError::InvalidGatewayRequest(ref cause) => cause,RetrieveTapeRecoveryPointError::InternalServerError(ref cause) => cause,RetrieveTapeRecoveryPointError::Validation(ref cause) => cause,RetrieveTapeRecoveryPointError::Credentials(ref err) => err.description(),RetrieveTapeRecoveryPointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RetrieveTapeRecoveryPointError::Unknown(ref cause) => cause
+                            RetrieveTapeRecoveryPointError::InternalServerError(ref cause) => cause,RetrieveTapeRecoveryPointError::InvalidGatewayRequest(ref cause) => cause,RetrieveTapeRecoveryPointError::Validation(ref cause) => cause,RetrieveTapeRecoveryPointError::Credentials(ref err) => err.description(),RetrieveTapeRecoveryPointError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RetrieveTapeRecoveryPointError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4837,10 +4837,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetLocalConsolePasswordError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4859,7 +4859,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => SetLocalConsolePasswordError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => SetLocalConsolePasswordError::InternalServerError(String::from(error_message)),"ValidationException" => SetLocalConsolePasswordError::Validation(error_message.to_string()),_ => SetLocalConsolePasswordError::Unknown(String::from(body))
+                                    "InternalServerError" => SetLocalConsolePasswordError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => SetLocalConsolePasswordError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => SetLocalConsolePasswordError::Validation(error_message.to_string()),_ => SetLocalConsolePasswordError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SetLocalConsolePasswordError::Unknown(String::from(body))
@@ -4890,7 +4890,7 @@ Unknown(String)
                 impl Error for SetLocalConsolePasswordError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetLocalConsolePasswordError::InvalidGatewayRequest(ref cause) => cause,SetLocalConsolePasswordError::InternalServerError(ref cause) => cause,SetLocalConsolePasswordError::Validation(ref cause) => cause,SetLocalConsolePasswordError::Credentials(ref err) => err.description(),SetLocalConsolePasswordError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetLocalConsolePasswordError::Unknown(ref cause) => cause
+                            SetLocalConsolePasswordError::InternalServerError(ref cause) => cause,SetLocalConsolePasswordError::InvalidGatewayRequest(ref cause) => cause,SetLocalConsolePasswordError::Validation(ref cause) => cause,SetLocalConsolePasswordError::Credentials(ref err) => err.description(),SetLocalConsolePasswordError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetLocalConsolePasswordError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4898,10 +4898,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ShutdownGatewayError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4920,7 +4920,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => ShutdownGatewayError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => ShutdownGatewayError::InternalServerError(String::from(error_message)),"ValidationException" => ShutdownGatewayError::Validation(error_message.to_string()),_ => ShutdownGatewayError::Unknown(String::from(body))
+                                    "InternalServerError" => ShutdownGatewayError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => ShutdownGatewayError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => ShutdownGatewayError::Validation(error_message.to_string()),_ => ShutdownGatewayError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ShutdownGatewayError::Unknown(String::from(body))
@@ -4951,7 +4951,7 @@ Unknown(String)
                 impl Error for ShutdownGatewayError {
                     fn description(&self) -> &str {
                         match *self {
-                            ShutdownGatewayError::InvalidGatewayRequest(ref cause) => cause,ShutdownGatewayError::InternalServerError(ref cause) => cause,ShutdownGatewayError::Validation(ref cause) => cause,ShutdownGatewayError::Credentials(ref err) => err.description(),ShutdownGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ShutdownGatewayError::Unknown(ref cause) => cause
+                            ShutdownGatewayError::InternalServerError(ref cause) => cause,ShutdownGatewayError::InvalidGatewayRequest(ref cause) => cause,ShutdownGatewayError::Validation(ref cause) => cause,ShutdownGatewayError::Credentials(ref err) => err.description(),ShutdownGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ShutdownGatewayError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4959,10 +4959,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum StartGatewayError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4981,7 +4981,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => StartGatewayError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => StartGatewayError::InternalServerError(String::from(error_message)),"ValidationException" => StartGatewayError::Validation(error_message.to_string()),_ => StartGatewayError::Unknown(String::from(body))
+                                    "InternalServerError" => StartGatewayError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => StartGatewayError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => StartGatewayError::Validation(error_message.to_string()),_ => StartGatewayError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => StartGatewayError::Unknown(String::from(body))
@@ -5012,7 +5012,7 @@ Unknown(String)
                 impl Error for StartGatewayError {
                     fn description(&self) -> &str {
                         match *self {
-                            StartGatewayError::InvalidGatewayRequest(ref cause) => cause,StartGatewayError::InternalServerError(ref cause) => cause,StartGatewayError::Validation(ref cause) => cause,StartGatewayError::Credentials(ref err) => err.description(),StartGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartGatewayError::Unknown(ref cause) => cause
+                            StartGatewayError::InternalServerError(ref cause) => cause,StartGatewayError::InvalidGatewayRequest(ref cause) => cause,StartGatewayError::Validation(ref cause) => cause,StartGatewayError::Credentials(ref err) => err.description(),StartGatewayError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartGatewayError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5020,10 +5020,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateBandwidthRateLimitError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5042,7 +5042,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateBandwidthRateLimitError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateBandwidthRateLimitError::Validation(error_message.to_string()),_ => UpdateBandwidthRateLimitError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateBandwidthRateLimitError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateBandwidthRateLimitError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateBandwidthRateLimitError::Validation(error_message.to_string()),_ => UpdateBandwidthRateLimitError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateBandwidthRateLimitError::Unknown(String::from(body))
@@ -5073,7 +5073,7 @@ Unknown(String)
                 impl Error for UpdateBandwidthRateLimitError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,UpdateBandwidthRateLimitError::InternalServerError(ref cause) => cause,UpdateBandwidthRateLimitError::Validation(ref cause) => cause,UpdateBandwidthRateLimitError::Credentials(ref err) => err.description(),UpdateBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateBandwidthRateLimitError::Unknown(ref cause) => cause
+                            UpdateBandwidthRateLimitError::InternalServerError(ref cause) => cause,UpdateBandwidthRateLimitError::InvalidGatewayRequest(ref cause) => cause,UpdateBandwidthRateLimitError::Validation(ref cause) => cause,UpdateBandwidthRateLimitError::Credentials(ref err) => err.description(),UpdateBandwidthRateLimitError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateBandwidthRateLimitError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5081,10 +5081,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateChapCredentialsError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5103,7 +5103,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateChapCredentialsError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateChapCredentialsError::Validation(error_message.to_string()),_ => UpdateChapCredentialsError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateChapCredentialsError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateChapCredentialsError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateChapCredentialsError::Validation(error_message.to_string()),_ => UpdateChapCredentialsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateChapCredentialsError::Unknown(String::from(body))
@@ -5134,7 +5134,7 @@ Unknown(String)
                 impl Error for UpdateChapCredentialsError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,UpdateChapCredentialsError::InternalServerError(ref cause) => cause,UpdateChapCredentialsError::Validation(ref cause) => cause,UpdateChapCredentialsError::Credentials(ref err) => err.description(),UpdateChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateChapCredentialsError::Unknown(ref cause) => cause
+                            UpdateChapCredentialsError::InternalServerError(ref cause) => cause,UpdateChapCredentialsError::InvalidGatewayRequest(ref cause) => cause,UpdateChapCredentialsError::Validation(ref cause) => cause,UpdateChapCredentialsError::Credentials(ref err) => err.description(),UpdateChapCredentialsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateChapCredentialsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5142,10 +5142,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateGatewayInformationError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5164,7 +5164,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateGatewayInformationError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateGatewayInformationError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateGatewayInformationError::Validation(error_message.to_string()),_ => UpdateGatewayInformationError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateGatewayInformationError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateGatewayInformationError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateGatewayInformationError::Validation(error_message.to_string()),_ => UpdateGatewayInformationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateGatewayInformationError::Unknown(String::from(body))
@@ -5195,7 +5195,7 @@ Unknown(String)
                 impl Error for UpdateGatewayInformationError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateGatewayInformationError::InvalidGatewayRequest(ref cause) => cause,UpdateGatewayInformationError::InternalServerError(ref cause) => cause,UpdateGatewayInformationError::Validation(ref cause) => cause,UpdateGatewayInformationError::Credentials(ref err) => err.description(),UpdateGatewayInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateGatewayInformationError::Unknown(ref cause) => cause
+                            UpdateGatewayInformationError::InternalServerError(ref cause) => cause,UpdateGatewayInformationError::InvalidGatewayRequest(ref cause) => cause,UpdateGatewayInformationError::Validation(ref cause) => cause,UpdateGatewayInformationError::Credentials(ref err) => err.description(),UpdateGatewayInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateGatewayInformationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5203,10 +5203,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateGatewaySoftwareNowError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5225,7 +5225,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateGatewaySoftwareNowError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateGatewaySoftwareNowError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateGatewaySoftwareNowError::Validation(error_message.to_string()),_ => UpdateGatewaySoftwareNowError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateGatewaySoftwareNowError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateGatewaySoftwareNowError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateGatewaySoftwareNowError::Validation(error_message.to_string()),_ => UpdateGatewaySoftwareNowError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateGatewaySoftwareNowError::Unknown(String::from(body))
@@ -5256,7 +5256,7 @@ Unknown(String)
                 impl Error for UpdateGatewaySoftwareNowError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateGatewaySoftwareNowError::InvalidGatewayRequest(ref cause) => cause,UpdateGatewaySoftwareNowError::InternalServerError(ref cause) => cause,UpdateGatewaySoftwareNowError::Validation(ref cause) => cause,UpdateGatewaySoftwareNowError::Credentials(ref err) => err.description(),UpdateGatewaySoftwareNowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateGatewaySoftwareNowError::Unknown(ref cause) => cause
+                            UpdateGatewaySoftwareNowError::InternalServerError(ref cause) => cause,UpdateGatewaySoftwareNowError::InvalidGatewayRequest(ref cause) => cause,UpdateGatewaySoftwareNowError::Validation(ref cause) => cause,UpdateGatewaySoftwareNowError::Credentials(ref err) => err.description(),UpdateGatewaySoftwareNowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateGatewaySoftwareNowError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5264,10 +5264,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateMaintenanceStartTimeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5286,7 +5286,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateMaintenanceStartTimeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateMaintenanceStartTimeError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateMaintenanceStartTimeError::Validation(error_message.to_string()),_ => UpdateMaintenanceStartTimeError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateMaintenanceStartTimeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateMaintenanceStartTimeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateMaintenanceStartTimeError::Validation(error_message.to_string()),_ => UpdateMaintenanceStartTimeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateMaintenanceStartTimeError::Unknown(String::from(body))
@@ -5317,7 +5317,7 @@ Unknown(String)
                 impl Error for UpdateMaintenanceStartTimeError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateMaintenanceStartTimeError::InvalidGatewayRequest(ref cause) => cause,UpdateMaintenanceStartTimeError::InternalServerError(ref cause) => cause,UpdateMaintenanceStartTimeError::Validation(ref cause) => cause,UpdateMaintenanceStartTimeError::Credentials(ref err) => err.description(),UpdateMaintenanceStartTimeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateMaintenanceStartTimeError::Unknown(ref cause) => cause
+                            UpdateMaintenanceStartTimeError::InternalServerError(ref cause) => cause,UpdateMaintenanceStartTimeError::InvalidGatewayRequest(ref cause) => cause,UpdateMaintenanceStartTimeError::Validation(ref cause) => cause,UpdateMaintenanceStartTimeError::Credentials(ref err) => err.description(),UpdateMaintenanceStartTimeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateMaintenanceStartTimeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5325,10 +5325,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateNFSFileShareError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5347,7 +5347,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateNFSFileShareError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateNFSFileShareError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateNFSFileShareError::Validation(error_message.to_string()),_ => UpdateNFSFileShareError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateNFSFileShareError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateNFSFileShareError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateNFSFileShareError::Validation(error_message.to_string()),_ => UpdateNFSFileShareError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateNFSFileShareError::Unknown(String::from(body))
@@ -5378,7 +5378,7 @@ Unknown(String)
                 impl Error for UpdateNFSFileShareError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateNFSFileShareError::InvalidGatewayRequest(ref cause) => cause,UpdateNFSFileShareError::InternalServerError(ref cause) => cause,UpdateNFSFileShareError::Validation(ref cause) => cause,UpdateNFSFileShareError::Credentials(ref err) => err.description(),UpdateNFSFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateNFSFileShareError::Unknown(ref cause) => cause
+                            UpdateNFSFileShareError::InternalServerError(ref cause) => cause,UpdateNFSFileShareError::InvalidGatewayRequest(ref cause) => cause,UpdateNFSFileShareError::Validation(ref cause) => cause,UpdateNFSFileShareError::Credentials(ref err) => err.description(),UpdateNFSFileShareError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateNFSFileShareError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5386,10 +5386,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateSnapshotScheduleError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5408,7 +5408,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateSnapshotScheduleError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateSnapshotScheduleError::Validation(error_message.to_string()),_ => UpdateSnapshotScheduleError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateSnapshotScheduleError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateSnapshotScheduleError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateSnapshotScheduleError::Validation(error_message.to_string()),_ => UpdateSnapshotScheduleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateSnapshotScheduleError::Unknown(String::from(body))
@@ -5439,7 +5439,7 @@ Unknown(String)
                 impl Error for UpdateSnapshotScheduleError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,UpdateSnapshotScheduleError::InternalServerError(ref cause) => cause,UpdateSnapshotScheduleError::Validation(ref cause) => cause,UpdateSnapshotScheduleError::Credentials(ref err) => err.description(),UpdateSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSnapshotScheduleError::Unknown(ref cause) => cause
+                            UpdateSnapshotScheduleError::InternalServerError(ref cause) => cause,UpdateSnapshotScheduleError::InvalidGatewayRequest(ref cause) => cause,UpdateSnapshotScheduleError::Validation(ref cause) => cause,UpdateSnapshotScheduleError::Credentials(ref err) => err.description(),UpdateSnapshotScheduleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSnapshotScheduleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5447,10 +5447,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateVTLDeviceTypeError {
                     
-///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
-InvalidGatewayRequest(String),
 ///<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>
+InvalidGatewayRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5469,7 +5469,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidGatewayRequestException" => UpdateVTLDeviceTypeError::InvalidGatewayRequest(String::from(error_message)),"InternalServerError" => UpdateVTLDeviceTypeError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateVTLDeviceTypeError::Validation(error_message.to_string()),_ => UpdateVTLDeviceTypeError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateVTLDeviceTypeError::InternalServerError(String::from(error_message)),"InvalidGatewayRequestException" => UpdateVTLDeviceTypeError::InvalidGatewayRequest(String::from(error_message)),"ValidationException" => UpdateVTLDeviceTypeError::Validation(error_message.to_string()),_ => UpdateVTLDeviceTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateVTLDeviceTypeError::Unknown(String::from(body))
@@ -5500,7 +5500,7 @@ Unknown(String)
                 impl Error for UpdateVTLDeviceTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateVTLDeviceTypeError::InvalidGatewayRequest(ref cause) => cause,UpdateVTLDeviceTypeError::InternalServerError(ref cause) => cause,UpdateVTLDeviceTypeError::Validation(ref cause) => cause,UpdateVTLDeviceTypeError::Credentials(ref err) => err.description(),UpdateVTLDeviceTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateVTLDeviceTypeError::Unknown(ref cause) => cause
+                            UpdateVTLDeviceTypeError::InternalServerError(ref cause) => cause,UpdateVTLDeviceTypeError::InvalidGatewayRequest(ref cause) => cause,UpdateVTLDeviceTypeError::Validation(ref cause) => cause,UpdateVTLDeviceTypeError::Credentials(ref err) => err.description(),UpdateVTLDeviceTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateVTLDeviceTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }

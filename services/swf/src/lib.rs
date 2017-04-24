@@ -2443,10 +2443,10 @@ pub type_infos: WorkflowTypeInfoList,
                 #[derive(Debug, PartialEq)]
                 pub enum CountClosedWorkflowExecutionsError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2465,7 +2465,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => CountClosedWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => CountClosedWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => CountClosedWorkflowExecutionsError::Validation(error_message.to_string()),_ => CountClosedWorkflowExecutionsError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => CountClosedWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => CountClosedWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"ValidationException" => CountClosedWorkflowExecutionsError::Validation(error_message.to_string()),_ => CountClosedWorkflowExecutionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CountClosedWorkflowExecutionsError::Unknown(String::from(body))
@@ -2496,7 +2496,7 @@ Unknown(String)
                 impl Error for CountClosedWorkflowExecutionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            CountClosedWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,CountClosedWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,CountClosedWorkflowExecutionsError::Validation(ref cause) => cause,CountClosedWorkflowExecutionsError::Credentials(ref err) => err.description(),CountClosedWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountClosedWorkflowExecutionsError::Unknown(ref cause) => cause
+                            CountClosedWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,CountClosedWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,CountClosedWorkflowExecutionsError::Validation(ref cause) => cause,CountClosedWorkflowExecutionsError::Credentials(ref err) => err.description(),CountClosedWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountClosedWorkflowExecutionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2504,10 +2504,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CountOpenWorkflowExecutionsError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2526,7 +2526,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => CountOpenWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => CountOpenWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => CountOpenWorkflowExecutionsError::Validation(error_message.to_string()),_ => CountOpenWorkflowExecutionsError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => CountOpenWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => CountOpenWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"ValidationException" => CountOpenWorkflowExecutionsError::Validation(error_message.to_string()),_ => CountOpenWorkflowExecutionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CountOpenWorkflowExecutionsError::Unknown(String::from(body))
@@ -2557,7 +2557,7 @@ Unknown(String)
                 impl Error for CountOpenWorkflowExecutionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            CountOpenWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,CountOpenWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,CountOpenWorkflowExecutionsError::Validation(ref cause) => cause,CountOpenWorkflowExecutionsError::Credentials(ref err) => err.description(),CountOpenWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountOpenWorkflowExecutionsError::Unknown(ref cause) => cause
+                            CountOpenWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,CountOpenWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,CountOpenWorkflowExecutionsError::Validation(ref cause) => cause,CountOpenWorkflowExecutionsError::Credentials(ref err) => err.description(),CountOpenWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountOpenWorkflowExecutionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2565,10 +2565,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CountPendingActivityTasksError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2587,7 +2587,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => CountPendingActivityTasksError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => CountPendingActivityTasksError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => CountPendingActivityTasksError::Validation(error_message.to_string()),_ => CountPendingActivityTasksError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => CountPendingActivityTasksError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => CountPendingActivityTasksError::UnknownResourceFault(String::from(error_message)),"ValidationException" => CountPendingActivityTasksError::Validation(error_message.to_string()),_ => CountPendingActivityTasksError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CountPendingActivityTasksError::Unknown(String::from(body))
@@ -2618,7 +2618,7 @@ Unknown(String)
                 impl Error for CountPendingActivityTasksError {
                     fn description(&self) -> &str {
                         match *self {
-                            CountPendingActivityTasksError::UnknownResourceFault(ref cause) => cause,CountPendingActivityTasksError::OperationNotPermittedFault(ref cause) => cause,CountPendingActivityTasksError::Validation(ref cause) => cause,CountPendingActivityTasksError::Credentials(ref err) => err.description(),CountPendingActivityTasksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountPendingActivityTasksError::Unknown(ref cause) => cause
+                            CountPendingActivityTasksError::OperationNotPermittedFault(ref cause) => cause,CountPendingActivityTasksError::UnknownResourceFault(ref cause) => cause,CountPendingActivityTasksError::Validation(ref cause) => cause,CountPendingActivityTasksError::Credentials(ref err) => err.description(),CountPendingActivityTasksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountPendingActivityTasksError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2626,10 +2626,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CountPendingDecisionTasksError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2648,7 +2648,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => CountPendingDecisionTasksError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => CountPendingDecisionTasksError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => CountPendingDecisionTasksError::Validation(error_message.to_string()),_ => CountPendingDecisionTasksError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => CountPendingDecisionTasksError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => CountPendingDecisionTasksError::UnknownResourceFault(String::from(error_message)),"ValidationException" => CountPendingDecisionTasksError::Validation(error_message.to_string()),_ => CountPendingDecisionTasksError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CountPendingDecisionTasksError::Unknown(String::from(body))
@@ -2679,7 +2679,7 @@ Unknown(String)
                 impl Error for CountPendingDecisionTasksError {
                     fn description(&self) -> &str {
                         match *self {
-                            CountPendingDecisionTasksError::UnknownResourceFault(ref cause) => cause,CountPendingDecisionTasksError::OperationNotPermittedFault(ref cause) => cause,CountPendingDecisionTasksError::Validation(ref cause) => cause,CountPendingDecisionTasksError::Credentials(ref err) => err.description(),CountPendingDecisionTasksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountPendingDecisionTasksError::Unknown(ref cause) => cause
+                            CountPendingDecisionTasksError::OperationNotPermittedFault(ref cause) => cause,CountPendingDecisionTasksError::UnknownResourceFault(ref cause) => cause,CountPendingDecisionTasksError::Validation(ref cause) => cause,CountPendingDecisionTasksError::Credentials(ref err) => err.description(),CountPendingDecisionTasksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CountPendingDecisionTasksError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2687,12 +2687,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeprecateActivityTypeError {
                     
+///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
+OperationNotPermittedFault(String),
 ///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
 UnknownResourceFault(String),
 ///<p>Returned when the specified activity or workflow type was already deprecated.</p>
-TypeDeprecatedFault(String),
-///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+TypeDeprecatedFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2711,7 +2711,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DeprecateActivityTypeError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => DeprecateActivityTypeError::TypeDeprecatedFault(String::from(error_message)),"OperationNotPermittedFault" => DeprecateActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DeprecateActivityTypeError::Validation(error_message.to_string()),_ => DeprecateActivityTypeError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DeprecateActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DeprecateActivityTypeError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => DeprecateActivityTypeError::TypeDeprecatedFault(String::from(error_message)),"ValidationException" => DeprecateActivityTypeError::Validation(error_message.to_string()),_ => DeprecateActivityTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeprecateActivityTypeError::Unknown(String::from(body))
@@ -2742,7 +2742,7 @@ Unknown(String)
                 impl Error for DeprecateActivityTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeprecateActivityTypeError::UnknownResourceFault(ref cause) => cause,DeprecateActivityTypeError::TypeDeprecatedFault(ref cause) => cause,DeprecateActivityTypeError::OperationNotPermittedFault(ref cause) => cause,DeprecateActivityTypeError::Validation(ref cause) => cause,DeprecateActivityTypeError::Credentials(ref err) => err.description(),DeprecateActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateActivityTypeError::Unknown(ref cause) => cause
+                            DeprecateActivityTypeError::OperationNotPermittedFault(ref cause) => cause,DeprecateActivityTypeError::UnknownResourceFault(ref cause) => cause,DeprecateActivityTypeError::TypeDeprecatedFault(ref cause) => cause,DeprecateActivityTypeError::Validation(ref cause) => cause,DeprecateActivityTypeError::Credentials(ref err) => err.description(),DeprecateActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateActivityTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2750,12 +2750,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeprecateDomainError {
                     
+///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
+OperationNotPermittedFault(String),
 ///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
 UnknownResourceFault(String),
 ///<p>Returned when the specified domain has been deprecated.</p>
-DomainDeprecatedFault(String),
-///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+DomainDeprecatedFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2774,7 +2774,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DeprecateDomainError::UnknownResourceFault(String::from(error_message)),"DomainDeprecatedFault" => DeprecateDomainError::DomainDeprecatedFault(String::from(error_message)),"OperationNotPermittedFault" => DeprecateDomainError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DeprecateDomainError::Validation(error_message.to_string()),_ => DeprecateDomainError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DeprecateDomainError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DeprecateDomainError::UnknownResourceFault(String::from(error_message)),"DomainDeprecatedFault" => DeprecateDomainError::DomainDeprecatedFault(String::from(error_message)),"ValidationException" => DeprecateDomainError::Validation(error_message.to_string()),_ => DeprecateDomainError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeprecateDomainError::Unknown(String::from(body))
@@ -2805,7 +2805,7 @@ Unknown(String)
                 impl Error for DeprecateDomainError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeprecateDomainError::UnknownResourceFault(ref cause) => cause,DeprecateDomainError::DomainDeprecatedFault(ref cause) => cause,DeprecateDomainError::OperationNotPermittedFault(ref cause) => cause,DeprecateDomainError::Validation(ref cause) => cause,DeprecateDomainError::Credentials(ref err) => err.description(),DeprecateDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateDomainError::Unknown(ref cause) => cause
+                            DeprecateDomainError::OperationNotPermittedFault(ref cause) => cause,DeprecateDomainError::UnknownResourceFault(ref cause) => cause,DeprecateDomainError::DomainDeprecatedFault(ref cause) => cause,DeprecateDomainError::Validation(ref cause) => cause,DeprecateDomainError::Credentials(ref err) => err.description(),DeprecateDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateDomainError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2813,12 +2813,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeprecateWorkflowTypeError {
                     
+///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
+OperationNotPermittedFault(String),
 ///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
 UnknownResourceFault(String),
 ///<p>Returned when the specified activity or workflow type was already deprecated.</p>
-TypeDeprecatedFault(String),
-///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+TypeDeprecatedFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2837,7 +2837,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DeprecateWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => DeprecateWorkflowTypeError::TypeDeprecatedFault(String::from(error_message)),"OperationNotPermittedFault" => DeprecateWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DeprecateWorkflowTypeError::Validation(error_message.to_string()),_ => DeprecateWorkflowTypeError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DeprecateWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DeprecateWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => DeprecateWorkflowTypeError::TypeDeprecatedFault(String::from(error_message)),"ValidationException" => DeprecateWorkflowTypeError::Validation(error_message.to_string()),_ => DeprecateWorkflowTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeprecateWorkflowTypeError::Unknown(String::from(body))
@@ -2868,7 +2868,7 @@ Unknown(String)
                 impl Error for DeprecateWorkflowTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeprecateWorkflowTypeError::UnknownResourceFault(ref cause) => cause,DeprecateWorkflowTypeError::TypeDeprecatedFault(ref cause) => cause,DeprecateWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,DeprecateWorkflowTypeError::Validation(ref cause) => cause,DeprecateWorkflowTypeError::Credentials(ref err) => err.description(),DeprecateWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateWorkflowTypeError::Unknown(ref cause) => cause
+                            DeprecateWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,DeprecateWorkflowTypeError::UnknownResourceFault(ref cause) => cause,DeprecateWorkflowTypeError::TypeDeprecatedFault(ref cause) => cause,DeprecateWorkflowTypeError::Validation(ref cause) => cause,DeprecateWorkflowTypeError::Credentials(ref err) => err.description(),DeprecateWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeprecateWorkflowTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2876,10 +2876,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeActivityTypeError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2898,7 +2898,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DescribeActivityTypeError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => DescribeActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DescribeActivityTypeError::Validation(error_message.to_string()),_ => DescribeActivityTypeError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DescribeActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DescribeActivityTypeError::UnknownResourceFault(String::from(error_message)),"ValidationException" => DescribeActivityTypeError::Validation(error_message.to_string()),_ => DescribeActivityTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeActivityTypeError::Unknown(String::from(body))
@@ -2929,7 +2929,7 @@ Unknown(String)
                 impl Error for DescribeActivityTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeActivityTypeError::UnknownResourceFault(ref cause) => cause,DescribeActivityTypeError::OperationNotPermittedFault(ref cause) => cause,DescribeActivityTypeError::Validation(ref cause) => cause,DescribeActivityTypeError::Credentials(ref err) => err.description(),DescribeActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeActivityTypeError::Unknown(ref cause) => cause
+                            DescribeActivityTypeError::OperationNotPermittedFault(ref cause) => cause,DescribeActivityTypeError::UnknownResourceFault(ref cause) => cause,DescribeActivityTypeError::Validation(ref cause) => cause,DescribeActivityTypeError::Credentials(ref err) => err.description(),DescribeActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeActivityTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2937,10 +2937,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeDomainError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2959,7 +2959,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DescribeDomainError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => DescribeDomainError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DescribeDomainError::Validation(error_message.to_string()),_ => DescribeDomainError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DescribeDomainError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DescribeDomainError::UnknownResourceFault(String::from(error_message)),"ValidationException" => DescribeDomainError::Validation(error_message.to_string()),_ => DescribeDomainError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeDomainError::Unknown(String::from(body))
@@ -2990,7 +2990,7 @@ Unknown(String)
                 impl Error for DescribeDomainError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeDomainError::UnknownResourceFault(ref cause) => cause,DescribeDomainError::OperationNotPermittedFault(ref cause) => cause,DescribeDomainError::Validation(ref cause) => cause,DescribeDomainError::Credentials(ref err) => err.description(),DescribeDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeDomainError::Unknown(ref cause) => cause
+                            DescribeDomainError::OperationNotPermittedFault(ref cause) => cause,DescribeDomainError::UnknownResourceFault(ref cause) => cause,DescribeDomainError::Validation(ref cause) => cause,DescribeDomainError::Credentials(ref err) => err.description(),DescribeDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeDomainError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2998,10 +2998,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeWorkflowExecutionError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3020,7 +3020,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DescribeWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => DescribeWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DescribeWorkflowExecutionError::Validation(error_message.to_string()),_ => DescribeWorkflowExecutionError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DescribeWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DescribeWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"ValidationException" => DescribeWorkflowExecutionError::Validation(error_message.to_string()),_ => DescribeWorkflowExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeWorkflowExecutionError::Unknown(String::from(body))
@@ -3051,7 +3051,7 @@ Unknown(String)
                 impl Error for DescribeWorkflowExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,DescribeWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,DescribeWorkflowExecutionError::Validation(ref cause) => cause,DescribeWorkflowExecutionError::Credentials(ref err) => err.description(),DescribeWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkflowExecutionError::Unknown(ref cause) => cause
+                            DescribeWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,DescribeWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,DescribeWorkflowExecutionError::Validation(ref cause) => cause,DescribeWorkflowExecutionError::Credentials(ref err) => err.description(),DescribeWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkflowExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3059,10 +3059,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeWorkflowTypeError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3081,7 +3081,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => DescribeWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => DescribeWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => DescribeWorkflowTypeError::Validation(error_message.to_string()),_ => DescribeWorkflowTypeError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => DescribeWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => DescribeWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"ValidationException" => DescribeWorkflowTypeError::Validation(error_message.to_string()),_ => DescribeWorkflowTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeWorkflowTypeError::Unknown(String::from(body))
@@ -3112,7 +3112,7 @@ Unknown(String)
                 impl Error for DescribeWorkflowTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeWorkflowTypeError::UnknownResourceFault(ref cause) => cause,DescribeWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,DescribeWorkflowTypeError::Validation(ref cause) => cause,DescribeWorkflowTypeError::Credentials(ref err) => err.description(),DescribeWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkflowTypeError::Unknown(ref cause) => cause
+                            DescribeWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,DescribeWorkflowTypeError::UnknownResourceFault(ref cause) => cause,DescribeWorkflowTypeError::Validation(ref cause) => cause,DescribeWorkflowTypeError::Credentials(ref err) => err.description(),DescribeWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeWorkflowTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3120,10 +3120,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetWorkflowExecutionHistoryError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3142,7 +3142,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => GetWorkflowExecutionHistoryError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => GetWorkflowExecutionHistoryError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => GetWorkflowExecutionHistoryError::Validation(error_message.to_string()),_ => GetWorkflowExecutionHistoryError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => GetWorkflowExecutionHistoryError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => GetWorkflowExecutionHistoryError::UnknownResourceFault(String::from(error_message)),"ValidationException" => GetWorkflowExecutionHistoryError::Validation(error_message.to_string()),_ => GetWorkflowExecutionHistoryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetWorkflowExecutionHistoryError::Unknown(String::from(body))
@@ -3173,7 +3173,7 @@ Unknown(String)
                 impl Error for GetWorkflowExecutionHistoryError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetWorkflowExecutionHistoryError::UnknownResourceFault(ref cause) => cause,GetWorkflowExecutionHistoryError::OperationNotPermittedFault(ref cause) => cause,GetWorkflowExecutionHistoryError::Validation(ref cause) => cause,GetWorkflowExecutionHistoryError::Credentials(ref err) => err.description(),GetWorkflowExecutionHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetWorkflowExecutionHistoryError::Unknown(ref cause) => cause
+                            GetWorkflowExecutionHistoryError::OperationNotPermittedFault(ref cause) => cause,GetWorkflowExecutionHistoryError::UnknownResourceFault(ref cause) => cause,GetWorkflowExecutionHistoryError::Validation(ref cause) => cause,GetWorkflowExecutionHistoryError::Credentials(ref err) => err.description(),GetWorkflowExecutionHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetWorkflowExecutionHistoryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3242,10 +3242,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListClosedWorkflowExecutionsError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3264,7 +3264,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => ListClosedWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => ListClosedWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => ListClosedWorkflowExecutionsError::Validation(error_message.to_string()),_ => ListClosedWorkflowExecutionsError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => ListClosedWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => ListClosedWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"ValidationException" => ListClosedWorkflowExecutionsError::Validation(error_message.to_string()),_ => ListClosedWorkflowExecutionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListClosedWorkflowExecutionsError::Unknown(String::from(body))
@@ -3295,7 +3295,7 @@ Unknown(String)
                 impl Error for ListClosedWorkflowExecutionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListClosedWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,ListClosedWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,ListClosedWorkflowExecutionsError::Validation(ref cause) => cause,ListClosedWorkflowExecutionsError::Credentials(ref err) => err.description(),ListClosedWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListClosedWorkflowExecutionsError::Unknown(ref cause) => cause
+                            ListClosedWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,ListClosedWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,ListClosedWorkflowExecutionsError::Validation(ref cause) => cause,ListClosedWorkflowExecutionsError::Credentials(ref err) => err.description(),ListClosedWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListClosedWorkflowExecutionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3362,10 +3362,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListOpenWorkflowExecutionsError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3384,7 +3384,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => ListOpenWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => ListOpenWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => ListOpenWorkflowExecutionsError::Validation(error_message.to_string()),_ => ListOpenWorkflowExecutionsError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => ListOpenWorkflowExecutionsError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => ListOpenWorkflowExecutionsError::UnknownResourceFault(String::from(error_message)),"ValidationException" => ListOpenWorkflowExecutionsError::Validation(error_message.to_string()),_ => ListOpenWorkflowExecutionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListOpenWorkflowExecutionsError::Unknown(String::from(body))
@@ -3415,7 +3415,7 @@ Unknown(String)
                 impl Error for ListOpenWorkflowExecutionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListOpenWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,ListOpenWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,ListOpenWorkflowExecutionsError::Validation(ref cause) => cause,ListOpenWorkflowExecutionsError::Credentials(ref err) => err.description(),ListOpenWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListOpenWorkflowExecutionsError::Unknown(ref cause) => cause
+                            ListOpenWorkflowExecutionsError::OperationNotPermittedFault(ref cause) => cause,ListOpenWorkflowExecutionsError::UnknownResourceFault(ref cause) => cause,ListOpenWorkflowExecutionsError::Validation(ref cause) => cause,ListOpenWorkflowExecutionsError::Credentials(ref err) => err.description(),ListOpenWorkflowExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListOpenWorkflowExecutionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3484,12 +3484,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PollForActivityTaskError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
+///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
+LimitExceededFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
 OperationNotPermittedFault(String),
-///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
-LimitExceededFault(String),/// An error occurred dispatching the HTTP request
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3508,7 +3508,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => PollForActivityTaskError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => PollForActivityTaskError::OperationNotPermittedFault(String::from(error_message)),"LimitExceededFault" => PollForActivityTaskError::LimitExceededFault(String::from(error_message)),"ValidationException" => PollForActivityTaskError::Validation(error_message.to_string()),_ => PollForActivityTaskError::Unknown(String::from(body))
+                                    "LimitExceededFault" => PollForActivityTaskError::LimitExceededFault(String::from(error_message)),"OperationNotPermittedFault" => PollForActivityTaskError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => PollForActivityTaskError::UnknownResourceFault(String::from(error_message)),"ValidationException" => PollForActivityTaskError::Validation(error_message.to_string()),_ => PollForActivityTaskError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PollForActivityTaskError::Unknown(String::from(body))
@@ -3539,7 +3539,7 @@ Unknown(String)
                 impl Error for PollForActivityTaskError {
                     fn description(&self) -> &str {
                         match *self {
-                            PollForActivityTaskError::UnknownResourceFault(ref cause) => cause,PollForActivityTaskError::OperationNotPermittedFault(ref cause) => cause,PollForActivityTaskError::LimitExceededFault(ref cause) => cause,PollForActivityTaskError::Validation(ref cause) => cause,PollForActivityTaskError::Credentials(ref err) => err.description(),PollForActivityTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PollForActivityTaskError::Unknown(ref cause) => cause
+                            PollForActivityTaskError::LimitExceededFault(ref cause) => cause,PollForActivityTaskError::OperationNotPermittedFault(ref cause) => cause,PollForActivityTaskError::UnknownResourceFault(ref cause) => cause,PollForActivityTaskError::Validation(ref cause) => cause,PollForActivityTaskError::Credentials(ref err) => err.description(),PollForActivityTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PollForActivityTaskError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3547,12 +3547,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PollForDecisionTaskError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
+///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
+LimitExceededFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
 OperationNotPermittedFault(String),
-///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
-LimitExceededFault(String),/// An error occurred dispatching the HTTP request
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3571,7 +3571,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => PollForDecisionTaskError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => PollForDecisionTaskError::OperationNotPermittedFault(String::from(error_message)),"LimitExceededFault" => PollForDecisionTaskError::LimitExceededFault(String::from(error_message)),"ValidationException" => PollForDecisionTaskError::Validation(error_message.to_string()),_ => PollForDecisionTaskError::Unknown(String::from(body))
+                                    "LimitExceededFault" => PollForDecisionTaskError::LimitExceededFault(String::from(error_message)),"OperationNotPermittedFault" => PollForDecisionTaskError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => PollForDecisionTaskError::UnknownResourceFault(String::from(error_message)),"ValidationException" => PollForDecisionTaskError::Validation(error_message.to_string()),_ => PollForDecisionTaskError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PollForDecisionTaskError::Unknown(String::from(body))
@@ -3602,7 +3602,7 @@ Unknown(String)
                 impl Error for PollForDecisionTaskError {
                     fn description(&self) -> &str {
                         match *self {
-                            PollForDecisionTaskError::UnknownResourceFault(ref cause) => cause,PollForDecisionTaskError::OperationNotPermittedFault(ref cause) => cause,PollForDecisionTaskError::LimitExceededFault(ref cause) => cause,PollForDecisionTaskError::Validation(ref cause) => cause,PollForDecisionTaskError::Credentials(ref err) => err.description(),PollForDecisionTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PollForDecisionTaskError::Unknown(ref cause) => cause
+                            PollForDecisionTaskError::LimitExceededFault(ref cause) => cause,PollForDecisionTaskError::OperationNotPermittedFault(ref cause) => cause,PollForDecisionTaskError::UnknownResourceFault(ref cause) => cause,PollForDecisionTaskError::Validation(ref cause) => cause,PollForDecisionTaskError::Credentials(ref err) => err.description(),PollForDecisionTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PollForDecisionTaskError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3610,10 +3610,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RecordActivityTaskHeartbeatError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3632,7 +3632,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RecordActivityTaskHeartbeatError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RecordActivityTaskHeartbeatError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RecordActivityTaskHeartbeatError::Validation(error_message.to_string()),_ => RecordActivityTaskHeartbeatError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RecordActivityTaskHeartbeatError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RecordActivityTaskHeartbeatError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RecordActivityTaskHeartbeatError::Validation(error_message.to_string()),_ => RecordActivityTaskHeartbeatError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RecordActivityTaskHeartbeatError::Unknown(String::from(body))
@@ -3663,7 +3663,7 @@ Unknown(String)
                 impl Error for RecordActivityTaskHeartbeatError {
                     fn description(&self) -> &str {
                         match *self {
-                            RecordActivityTaskHeartbeatError::UnknownResourceFault(ref cause) => cause,RecordActivityTaskHeartbeatError::OperationNotPermittedFault(ref cause) => cause,RecordActivityTaskHeartbeatError::Validation(ref cause) => cause,RecordActivityTaskHeartbeatError::Credentials(ref err) => err.description(),RecordActivityTaskHeartbeatError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RecordActivityTaskHeartbeatError::Unknown(ref cause) => cause
+                            RecordActivityTaskHeartbeatError::OperationNotPermittedFault(ref cause) => cause,RecordActivityTaskHeartbeatError::UnknownResourceFault(ref cause) => cause,RecordActivityTaskHeartbeatError::Validation(ref cause) => cause,RecordActivityTaskHeartbeatError::Credentials(ref err) => err.description(),RecordActivityTaskHeartbeatError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RecordActivityTaskHeartbeatError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3671,14 +3671,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterActivityTypeError {
                     
-///<p>Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.</p>
-TypeAlreadyExistsFault(String),
 ///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
 LimitExceededFault(String),
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
+///<p>Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.</p>
+TypeAlreadyExistsFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3697,7 +3697,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "TypeAlreadyExistsFault" => RegisterActivityTypeError::TypeAlreadyExistsFault(String::from(error_message)),"LimitExceededFault" => RegisterActivityTypeError::LimitExceededFault(String::from(error_message)),"UnknownResourceFault" => RegisterActivityTypeError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RegisterActivityTypeError::Validation(error_message.to_string()),_ => RegisterActivityTypeError::Unknown(String::from(body))
+                                    "LimitExceededFault" => RegisterActivityTypeError::LimitExceededFault(String::from(error_message)),"TypeAlreadyExistsFault" => RegisterActivityTypeError::TypeAlreadyExistsFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterActivityTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RegisterActivityTypeError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RegisterActivityTypeError::Validation(error_message.to_string()),_ => RegisterActivityTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterActivityTypeError::Unknown(String::from(body))
@@ -3728,7 +3728,7 @@ Unknown(String)
                 impl Error for RegisterActivityTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterActivityTypeError::TypeAlreadyExistsFault(ref cause) => cause,RegisterActivityTypeError::LimitExceededFault(ref cause) => cause,RegisterActivityTypeError::UnknownResourceFault(ref cause) => cause,RegisterActivityTypeError::OperationNotPermittedFault(ref cause) => cause,RegisterActivityTypeError::Validation(ref cause) => cause,RegisterActivityTypeError::Credentials(ref err) => err.description(),RegisterActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterActivityTypeError::Unknown(ref cause) => cause
+                            RegisterActivityTypeError::LimitExceededFault(ref cause) => cause,RegisterActivityTypeError::TypeAlreadyExistsFault(ref cause) => cause,RegisterActivityTypeError::OperationNotPermittedFault(ref cause) => cause,RegisterActivityTypeError::UnknownResourceFault(ref cause) => cause,RegisterActivityTypeError::Validation(ref cause) => cause,RegisterActivityTypeError::Credentials(ref err) => err.description(),RegisterActivityTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterActivityTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3736,10 +3736,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterDomainError {
                     
-///<p>Returned if the specified domain already exists. You will get this fault even if the existing domain is in deprecated status.</p>
-DomainAlreadyExistsFault(String),
 ///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
 LimitExceededFault(String),
+///<p>Returned if the specified domain already exists. You will get this fault even if the existing domain is in deprecated status.</p>
+DomainAlreadyExistsFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
 OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -3760,7 +3760,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DomainAlreadyExistsFault" => RegisterDomainError::DomainAlreadyExistsFault(String::from(error_message)),"LimitExceededFault" => RegisterDomainError::LimitExceededFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterDomainError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RegisterDomainError::Validation(error_message.to_string()),_ => RegisterDomainError::Unknown(String::from(body))
+                                    "LimitExceededFault" => RegisterDomainError::LimitExceededFault(String::from(error_message)),"DomainAlreadyExistsFault" => RegisterDomainError::DomainAlreadyExistsFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterDomainError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RegisterDomainError::Validation(error_message.to_string()),_ => RegisterDomainError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterDomainError::Unknown(String::from(body))
@@ -3791,7 +3791,7 @@ Unknown(String)
                 impl Error for RegisterDomainError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterDomainError::DomainAlreadyExistsFault(ref cause) => cause,RegisterDomainError::LimitExceededFault(ref cause) => cause,RegisterDomainError::OperationNotPermittedFault(ref cause) => cause,RegisterDomainError::Validation(ref cause) => cause,RegisterDomainError::Credentials(ref err) => err.description(),RegisterDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterDomainError::Unknown(ref cause) => cause
+                            RegisterDomainError::LimitExceededFault(ref cause) => cause,RegisterDomainError::DomainAlreadyExistsFault(ref cause) => cause,RegisterDomainError::OperationNotPermittedFault(ref cause) => cause,RegisterDomainError::Validation(ref cause) => cause,RegisterDomainError::Credentials(ref err) => err.description(),RegisterDomainError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterDomainError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3799,14 +3799,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterWorkflowTypeError {
                     
-///<p>Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.</p>
-TypeAlreadyExistsFault(String),
 ///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
 LimitExceededFault(String),
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
+///<p>Returned if the type already exists in the specified domain. You will get this fault even if the existing type is in deprecated status. You can specify another version if the intent is to create a new distinct version of the type.</p>
+TypeAlreadyExistsFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3825,7 +3825,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "TypeAlreadyExistsFault" => RegisterWorkflowTypeError::TypeAlreadyExistsFault(String::from(error_message)),"LimitExceededFault" => RegisterWorkflowTypeError::LimitExceededFault(String::from(error_message)),"UnknownResourceFault" => RegisterWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RegisterWorkflowTypeError::Validation(error_message.to_string()),_ => RegisterWorkflowTypeError::Unknown(String::from(body))
+                                    "LimitExceededFault" => RegisterWorkflowTypeError::LimitExceededFault(String::from(error_message)),"TypeAlreadyExistsFault" => RegisterWorkflowTypeError::TypeAlreadyExistsFault(String::from(error_message)),"OperationNotPermittedFault" => RegisterWorkflowTypeError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RegisterWorkflowTypeError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RegisterWorkflowTypeError::Validation(error_message.to_string()),_ => RegisterWorkflowTypeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterWorkflowTypeError::Unknown(String::from(body))
@@ -3856,7 +3856,7 @@ Unknown(String)
                 impl Error for RegisterWorkflowTypeError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterWorkflowTypeError::TypeAlreadyExistsFault(ref cause) => cause,RegisterWorkflowTypeError::LimitExceededFault(ref cause) => cause,RegisterWorkflowTypeError::UnknownResourceFault(ref cause) => cause,RegisterWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,RegisterWorkflowTypeError::Validation(ref cause) => cause,RegisterWorkflowTypeError::Credentials(ref err) => err.description(),RegisterWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterWorkflowTypeError::Unknown(ref cause) => cause
+                            RegisterWorkflowTypeError::LimitExceededFault(ref cause) => cause,RegisterWorkflowTypeError::TypeAlreadyExistsFault(ref cause) => cause,RegisterWorkflowTypeError::OperationNotPermittedFault(ref cause) => cause,RegisterWorkflowTypeError::UnknownResourceFault(ref cause) => cause,RegisterWorkflowTypeError::Validation(ref cause) => cause,RegisterWorkflowTypeError::Credentials(ref err) => err.description(),RegisterWorkflowTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterWorkflowTypeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3864,10 +3864,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RequestCancelWorkflowExecutionError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3886,7 +3886,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RequestCancelWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RequestCancelWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RequestCancelWorkflowExecutionError::Validation(error_message.to_string()),_ => RequestCancelWorkflowExecutionError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RequestCancelWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RequestCancelWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RequestCancelWorkflowExecutionError::Validation(error_message.to_string()),_ => RequestCancelWorkflowExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RequestCancelWorkflowExecutionError::Unknown(String::from(body))
@@ -3917,7 +3917,7 @@ Unknown(String)
                 impl Error for RequestCancelWorkflowExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            RequestCancelWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,RequestCancelWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,RequestCancelWorkflowExecutionError::Validation(ref cause) => cause,RequestCancelWorkflowExecutionError::Credentials(ref err) => err.description(),RequestCancelWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RequestCancelWorkflowExecutionError::Unknown(ref cause) => cause
+                            RequestCancelWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,RequestCancelWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,RequestCancelWorkflowExecutionError::Validation(ref cause) => cause,RequestCancelWorkflowExecutionError::Credentials(ref err) => err.description(),RequestCancelWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RequestCancelWorkflowExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3925,10 +3925,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RespondActivityTaskCanceledError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3947,7 +3947,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RespondActivityTaskCanceledError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RespondActivityTaskCanceledError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RespondActivityTaskCanceledError::Validation(error_message.to_string()),_ => RespondActivityTaskCanceledError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RespondActivityTaskCanceledError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RespondActivityTaskCanceledError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RespondActivityTaskCanceledError::Validation(error_message.to_string()),_ => RespondActivityTaskCanceledError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RespondActivityTaskCanceledError::Unknown(String::from(body))
@@ -3978,7 +3978,7 @@ Unknown(String)
                 impl Error for RespondActivityTaskCanceledError {
                     fn description(&self) -> &str {
                         match *self {
-                            RespondActivityTaskCanceledError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskCanceledError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskCanceledError::Validation(ref cause) => cause,RespondActivityTaskCanceledError::Credentials(ref err) => err.description(),RespondActivityTaskCanceledError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskCanceledError::Unknown(ref cause) => cause
+                            RespondActivityTaskCanceledError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskCanceledError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskCanceledError::Validation(ref cause) => cause,RespondActivityTaskCanceledError::Credentials(ref err) => err.description(),RespondActivityTaskCanceledError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskCanceledError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3986,10 +3986,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RespondActivityTaskCompletedError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4008,7 +4008,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RespondActivityTaskCompletedError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RespondActivityTaskCompletedError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RespondActivityTaskCompletedError::Validation(error_message.to_string()),_ => RespondActivityTaskCompletedError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RespondActivityTaskCompletedError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RespondActivityTaskCompletedError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RespondActivityTaskCompletedError::Validation(error_message.to_string()),_ => RespondActivityTaskCompletedError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RespondActivityTaskCompletedError::Unknown(String::from(body))
@@ -4039,7 +4039,7 @@ Unknown(String)
                 impl Error for RespondActivityTaskCompletedError {
                     fn description(&self) -> &str {
                         match *self {
-                            RespondActivityTaskCompletedError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskCompletedError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskCompletedError::Validation(ref cause) => cause,RespondActivityTaskCompletedError::Credentials(ref err) => err.description(),RespondActivityTaskCompletedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskCompletedError::Unknown(ref cause) => cause
+                            RespondActivityTaskCompletedError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskCompletedError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskCompletedError::Validation(ref cause) => cause,RespondActivityTaskCompletedError::Credentials(ref err) => err.description(),RespondActivityTaskCompletedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskCompletedError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4047,10 +4047,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RespondActivityTaskFailedError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4069,7 +4069,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RespondActivityTaskFailedError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RespondActivityTaskFailedError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RespondActivityTaskFailedError::Validation(error_message.to_string()),_ => RespondActivityTaskFailedError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RespondActivityTaskFailedError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RespondActivityTaskFailedError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RespondActivityTaskFailedError::Validation(error_message.to_string()),_ => RespondActivityTaskFailedError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RespondActivityTaskFailedError::Unknown(String::from(body))
@@ -4100,7 +4100,7 @@ Unknown(String)
                 impl Error for RespondActivityTaskFailedError {
                     fn description(&self) -> &str {
                         match *self {
-                            RespondActivityTaskFailedError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskFailedError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskFailedError::Validation(ref cause) => cause,RespondActivityTaskFailedError::Credentials(ref err) => err.description(),RespondActivityTaskFailedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskFailedError::Unknown(ref cause) => cause
+                            RespondActivityTaskFailedError::OperationNotPermittedFault(ref cause) => cause,RespondActivityTaskFailedError::UnknownResourceFault(ref cause) => cause,RespondActivityTaskFailedError::Validation(ref cause) => cause,RespondActivityTaskFailedError::Credentials(ref err) => err.description(),RespondActivityTaskFailedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondActivityTaskFailedError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4108,10 +4108,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RespondDecisionTaskCompletedError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4130,7 +4130,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => RespondDecisionTaskCompletedError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => RespondDecisionTaskCompletedError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => RespondDecisionTaskCompletedError::Validation(error_message.to_string()),_ => RespondDecisionTaskCompletedError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => RespondDecisionTaskCompletedError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => RespondDecisionTaskCompletedError::UnknownResourceFault(String::from(error_message)),"ValidationException" => RespondDecisionTaskCompletedError::Validation(error_message.to_string()),_ => RespondDecisionTaskCompletedError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RespondDecisionTaskCompletedError::Unknown(String::from(body))
@@ -4161,7 +4161,7 @@ Unknown(String)
                 impl Error for RespondDecisionTaskCompletedError {
                     fn description(&self) -> &str {
                         match *self {
-                            RespondDecisionTaskCompletedError::UnknownResourceFault(ref cause) => cause,RespondDecisionTaskCompletedError::OperationNotPermittedFault(ref cause) => cause,RespondDecisionTaskCompletedError::Validation(ref cause) => cause,RespondDecisionTaskCompletedError::Credentials(ref err) => err.description(),RespondDecisionTaskCompletedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondDecisionTaskCompletedError::Unknown(ref cause) => cause
+                            RespondDecisionTaskCompletedError::OperationNotPermittedFault(ref cause) => cause,RespondDecisionTaskCompletedError::UnknownResourceFault(ref cause) => cause,RespondDecisionTaskCompletedError::Validation(ref cause) => cause,RespondDecisionTaskCompletedError::Credentials(ref err) => err.description(),RespondDecisionTaskCompletedError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RespondDecisionTaskCompletedError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4169,10 +4169,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SignalWorkflowExecutionError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4191,7 +4191,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => SignalWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => SignalWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => SignalWorkflowExecutionError::Validation(error_message.to_string()),_ => SignalWorkflowExecutionError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => SignalWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => SignalWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"ValidationException" => SignalWorkflowExecutionError::Validation(error_message.to_string()),_ => SignalWorkflowExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SignalWorkflowExecutionError::Unknown(String::from(body))
@@ -4222,7 +4222,7 @@ Unknown(String)
                 impl Error for SignalWorkflowExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            SignalWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,SignalWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,SignalWorkflowExecutionError::Validation(ref cause) => cause,SignalWorkflowExecutionError::Credentials(ref err) => err.description(),SignalWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SignalWorkflowExecutionError::Unknown(ref cause) => cause
+                            SignalWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,SignalWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,SignalWorkflowExecutionError::Validation(ref cause) => cause,SignalWorkflowExecutionError::Credentials(ref err) => err.description(),SignalWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SignalWorkflowExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4230,18 +4230,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum StartWorkflowExecutionError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
-///<p>Returned when the specified activity or workflow type was already deprecated.</p>
-TypeDeprecatedFault(String),
+///
+DefaultUndefinedFault(String),
 ///<p>Returned by <a>StartWorkflowExecution</a> when an open execution with the same workflowId is already running in the specified domain.</p>
 WorkflowExecutionAlreadyStartedFault(String),
 ///<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>
 LimitExceededFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
 OperationNotPermittedFault(String),
-///
-DefaultUndefinedFault(String),/// An error occurred dispatching the HTTP request
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),
+///<p>Returned when the specified activity or workflow type was already deprecated.</p>
+TypeDeprecatedFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4260,7 +4260,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => StartWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => StartWorkflowExecutionError::TypeDeprecatedFault(String::from(error_message)),"WorkflowExecutionAlreadyStartedFault" => StartWorkflowExecutionError::WorkflowExecutionAlreadyStartedFault(String::from(error_message)),"LimitExceededFault" => StartWorkflowExecutionError::LimitExceededFault(String::from(error_message)),"OperationNotPermittedFault" => StartWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"DefaultUndefinedFault" => StartWorkflowExecutionError::DefaultUndefinedFault(String::from(error_message)),"ValidationException" => StartWorkflowExecutionError::Validation(error_message.to_string()),_ => StartWorkflowExecutionError::Unknown(String::from(body))
+                                    "DefaultUndefinedFault" => StartWorkflowExecutionError::DefaultUndefinedFault(String::from(error_message)),"WorkflowExecutionAlreadyStartedFault" => StartWorkflowExecutionError::WorkflowExecutionAlreadyStartedFault(String::from(error_message)),"LimitExceededFault" => StartWorkflowExecutionError::LimitExceededFault(String::from(error_message)),"OperationNotPermittedFault" => StartWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => StartWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"TypeDeprecatedFault" => StartWorkflowExecutionError::TypeDeprecatedFault(String::from(error_message)),"ValidationException" => StartWorkflowExecutionError::Validation(error_message.to_string()),_ => StartWorkflowExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => StartWorkflowExecutionError::Unknown(String::from(body))
@@ -4291,7 +4291,7 @@ Unknown(String)
                 impl Error for StartWorkflowExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            StartWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,StartWorkflowExecutionError::TypeDeprecatedFault(ref cause) => cause,StartWorkflowExecutionError::WorkflowExecutionAlreadyStartedFault(ref cause) => cause,StartWorkflowExecutionError::LimitExceededFault(ref cause) => cause,StartWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,StartWorkflowExecutionError::DefaultUndefinedFault(ref cause) => cause,StartWorkflowExecutionError::Validation(ref cause) => cause,StartWorkflowExecutionError::Credentials(ref err) => err.description(),StartWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartWorkflowExecutionError::Unknown(ref cause) => cause
+                            StartWorkflowExecutionError::DefaultUndefinedFault(ref cause) => cause,StartWorkflowExecutionError::WorkflowExecutionAlreadyStartedFault(ref cause) => cause,StartWorkflowExecutionError::LimitExceededFault(ref cause) => cause,StartWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,StartWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,StartWorkflowExecutionError::TypeDeprecatedFault(ref cause) => cause,StartWorkflowExecutionError::Validation(ref cause) => cause,StartWorkflowExecutionError::Credentials(ref err) => err.description(),StartWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartWorkflowExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4299,10 +4299,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum TerminateWorkflowExecutionError {
                     
-///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
-UnknownResourceFault(String),
 ///<p>Returned when the caller does not have sufficient permissions to invoke the action.</p>
-OperationNotPermittedFault(String),/// An error occurred dispatching the HTTP request
+OperationNotPermittedFault(String),
+///<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>
+UnknownResourceFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4321,7 +4321,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "UnknownResourceFault" => TerminateWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"OperationNotPermittedFault" => TerminateWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"ValidationException" => TerminateWorkflowExecutionError::Validation(error_message.to_string()),_ => TerminateWorkflowExecutionError::Unknown(String::from(body))
+                                    "OperationNotPermittedFault" => TerminateWorkflowExecutionError::OperationNotPermittedFault(String::from(error_message)),"UnknownResourceFault" => TerminateWorkflowExecutionError::UnknownResourceFault(String::from(error_message)),"ValidationException" => TerminateWorkflowExecutionError::Validation(error_message.to_string()),_ => TerminateWorkflowExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => TerminateWorkflowExecutionError::Unknown(String::from(body))
@@ -4352,7 +4352,7 @@ Unknown(String)
                 impl Error for TerminateWorkflowExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            TerminateWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,TerminateWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,TerminateWorkflowExecutionError::Validation(ref cause) => cause,TerminateWorkflowExecutionError::Credentials(ref err) => err.description(),TerminateWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TerminateWorkflowExecutionError::Unknown(ref cause) => cause
+                            TerminateWorkflowExecutionError::OperationNotPermittedFault(ref cause) => cause,TerminateWorkflowExecutionError::UnknownResourceFault(ref cause) => cause,TerminateWorkflowExecutionError::Validation(ref cause) => cause,TerminateWorkflowExecutionError::Credentials(ref err) => err.description(),TerminateWorkflowExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TerminateWorkflowExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }

@@ -1035,12 +1035,12 @@ pub type WriteRequests = Vec<WriteRequest>;
                 #[derive(Debug, PartialEq)]
                 pub enum BatchGetItemError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1059,7 +1059,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ProvisionedThroughputExceededException" => BatchGetItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => BatchGetItemError::ResourceNotFound(String::from(error_message)),"InternalServerError" => BatchGetItemError::InternalServerError(String::from(error_message)),"ValidationException" => BatchGetItemError::Validation(error_message.to_string()),_ => BatchGetItemError::Unknown(String::from(body))
+                                    "InternalServerError" => BatchGetItemError::InternalServerError(String::from(error_message)),"ProvisionedThroughputExceededException" => BatchGetItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => BatchGetItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => BatchGetItemError::Validation(error_message.to_string()),_ => BatchGetItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => BatchGetItemError::Unknown(String::from(body))
@@ -1090,7 +1090,7 @@ Unknown(String)
                 impl Error for BatchGetItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            BatchGetItemError::ProvisionedThroughputExceeded(ref cause) => cause,BatchGetItemError::ResourceNotFound(ref cause) => cause,BatchGetItemError::InternalServerError(ref cause) => cause,BatchGetItemError::Validation(ref cause) => cause,BatchGetItemError::Credentials(ref err) => err.description(),BatchGetItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),BatchGetItemError::Unknown(ref cause) => cause
+                            BatchGetItemError::InternalServerError(ref cause) => cause,BatchGetItemError::ProvisionedThroughputExceeded(ref cause) => cause,BatchGetItemError::ResourceNotFound(ref cause) => cause,BatchGetItemError::Validation(ref cause) => cause,BatchGetItemError::Credentials(ref err) => err.description(),BatchGetItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),BatchGetItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1098,14 +1098,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum BatchWriteItemError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
+ItemCollectionSizeLimitExceeded(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
-ItemCollectionSizeLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1124,7 +1124,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ProvisionedThroughputExceededException" => BatchWriteItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => BatchWriteItemError::ResourceNotFound(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => BatchWriteItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"InternalServerError" => BatchWriteItemError::InternalServerError(String::from(error_message)),"ValidationException" => BatchWriteItemError::Validation(error_message.to_string()),_ => BatchWriteItemError::Unknown(String::from(body))
+                                    "InternalServerError" => BatchWriteItemError::InternalServerError(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => BatchWriteItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"ProvisionedThroughputExceededException" => BatchWriteItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => BatchWriteItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => BatchWriteItemError::Validation(error_message.to_string()),_ => BatchWriteItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => BatchWriteItemError::Unknown(String::from(body))
@@ -1155,7 +1155,7 @@ Unknown(String)
                 impl Error for BatchWriteItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            BatchWriteItemError::ProvisionedThroughputExceeded(ref cause) => cause,BatchWriteItemError::ResourceNotFound(ref cause) => cause,BatchWriteItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,BatchWriteItemError::InternalServerError(ref cause) => cause,BatchWriteItemError::Validation(ref cause) => cause,BatchWriteItemError::Credentials(ref err) => err.description(),BatchWriteItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),BatchWriteItemError::Unknown(ref cause) => cause
+                            BatchWriteItemError::InternalServerError(ref cause) => cause,BatchWriteItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,BatchWriteItemError::ProvisionedThroughputExceeded(ref cause) => cause,BatchWriteItemError::ResourceNotFound(ref cause) => cause,BatchWriteItemError::Validation(ref cause) => cause,BatchWriteItemError::Credentials(ref err) => err.description(),BatchWriteItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),BatchWriteItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1163,12 +1163,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTableError {
                     
-///<p>The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the <code>CREATING</code> state.</p>
-ResourceInUse(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The number of concurrent table requests (cumulative number of tables in the <code>CREATING</code>, <code>DELETING</code> or <code>UPDATING</code> state) exceeds the maximum allowed of 10.</p> <p>Also, for tables with secondary indexes, only one of those tables can be in the <code>CREATING</code> state at any point in time. Do not attempt to create more than one such table simultaneously.</p> <p>The total limit of tables in the <code>ACTIVE</code> state is 250.</p>
 LimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+///<p>The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the <code>CREATING</code> state.</p>
+ResourceInUse(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1187,7 +1187,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceInUseException" => CreateTableError::ResourceInUse(String::from(error_message)),"LimitExceededException" => CreateTableError::LimitExceeded(String::from(error_message)),"InternalServerError" => CreateTableError::InternalServerError(String::from(error_message)),"ValidationException" => CreateTableError::Validation(error_message.to_string()),_ => CreateTableError::Unknown(String::from(body))
+                                    "InternalServerError" => CreateTableError::InternalServerError(String::from(error_message)),"LimitExceededException" => CreateTableError::LimitExceeded(String::from(error_message)),"ResourceInUseException" => CreateTableError::ResourceInUse(String::from(error_message)),"ValidationException" => CreateTableError::Validation(error_message.to_string()),_ => CreateTableError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateTableError::Unknown(String::from(body))
@@ -1218,7 +1218,7 @@ Unknown(String)
                 impl Error for CreateTableError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTableError::ResourceInUse(ref cause) => cause,CreateTableError::LimitExceeded(ref cause) => cause,CreateTableError::InternalServerError(ref cause) => cause,CreateTableError::Validation(ref cause) => cause,CreateTableError::Credentials(ref err) => err.description(),CreateTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTableError::Unknown(ref cause) => cause
+                            CreateTableError::InternalServerError(ref cause) => cause,CreateTableError::LimitExceeded(ref cause) => cause,CreateTableError::ResourceInUse(ref cause) => cause,CreateTableError::Validation(ref cause) => cause,CreateTableError::Credentials(ref err) => err.description(),CreateTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTableError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1228,14 +1228,14 @@ Unknown(String)
                     
 ///<p>A condition specified in the operation could not be evaluated.</p>
 ConditionalCheckFailed(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
+ItemCollectionSizeLimitExceeded(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
-ItemCollectionSizeLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1254,7 +1254,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ConditionalCheckFailedException" => DeleteItemError::ConditionalCheckFailed(String::from(error_message)),"ProvisionedThroughputExceededException" => DeleteItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => DeleteItemError::ResourceNotFound(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => DeleteItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"InternalServerError" => DeleteItemError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteItemError::Validation(error_message.to_string()),_ => DeleteItemError::Unknown(String::from(body))
+                                    "ConditionalCheckFailedException" => DeleteItemError::ConditionalCheckFailed(String::from(error_message)),"InternalServerError" => DeleteItemError::InternalServerError(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => DeleteItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"ProvisionedThroughputExceededException" => DeleteItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => DeleteItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => DeleteItemError::Validation(error_message.to_string()),_ => DeleteItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteItemError::Unknown(String::from(body))
@@ -1285,7 +1285,7 @@ Unknown(String)
                 impl Error for DeleteItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteItemError::ConditionalCheckFailed(ref cause) => cause,DeleteItemError::ProvisionedThroughputExceeded(ref cause) => cause,DeleteItemError::ResourceNotFound(ref cause) => cause,DeleteItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,DeleteItemError::InternalServerError(ref cause) => cause,DeleteItemError::Validation(ref cause) => cause,DeleteItemError::Credentials(ref err) => err.description(),DeleteItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteItemError::Unknown(ref cause) => cause
+                            DeleteItemError::ConditionalCheckFailed(ref cause) => cause,DeleteItemError::InternalServerError(ref cause) => cause,DeleteItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,DeleteItemError::ProvisionedThroughputExceeded(ref cause) => cause,DeleteItemError::ResourceNotFound(ref cause) => cause,DeleteItemError::Validation(ref cause) => cause,DeleteItemError::Credentials(ref err) => err.description(),DeleteItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1293,14 +1293,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteTableError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>The number of concurrent table requests (cumulative number of tables in the <code>CREATING</code>, <code>DELETING</code> or <code>UPDATING</code> state) exceeds the maximum allowed of 10.</p> <p>Also, for tables with secondary indexes, only one of those tables can be in the <code>CREATING</code> state at any point in time. Do not attempt to create more than one such table simultaneously.</p> <p>The total limit of tables in the <code>ACTIVE</code> state is 250.</p>
+LimitExceeded(String),
 ///<p>The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the <code>CREATING</code> state.</p>
 ResourceInUse(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>The number of concurrent table requests (cumulative number of tables in the <code>CREATING</code>, <code>DELETING</code> or <code>UPDATING</code> state) exceeds the maximum allowed of 10.</p> <p>Also, for tables with secondary indexes, only one of those tables can be in the <code>CREATING</code> state at any point in time. Do not attempt to create more than one such table simultaneously.</p> <p>The total limit of tables in the <code>ACTIVE</code> state is 250.</p>
-LimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1319,7 +1319,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceInUseException" => DeleteTableError::ResourceInUse(String::from(error_message)),"ResourceNotFoundException" => DeleteTableError::ResourceNotFound(String::from(error_message)),"LimitExceededException" => DeleteTableError::LimitExceeded(String::from(error_message)),"InternalServerError" => DeleteTableError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteTableError::Validation(error_message.to_string()),_ => DeleteTableError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteTableError::InternalServerError(String::from(error_message)),"LimitExceededException" => DeleteTableError::LimitExceeded(String::from(error_message)),"ResourceInUseException" => DeleteTableError::ResourceInUse(String::from(error_message)),"ResourceNotFoundException" => DeleteTableError::ResourceNotFound(String::from(error_message)),"ValidationException" => DeleteTableError::Validation(error_message.to_string()),_ => DeleteTableError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteTableError::Unknown(String::from(body))
@@ -1350,7 +1350,7 @@ Unknown(String)
                 impl Error for DeleteTableError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteTableError::ResourceInUse(ref cause) => cause,DeleteTableError::ResourceNotFound(ref cause) => cause,DeleteTableError::LimitExceeded(ref cause) => cause,DeleteTableError::InternalServerError(ref cause) => cause,DeleteTableError::Validation(ref cause) => cause,DeleteTableError::Credentials(ref err) => err.description(),DeleteTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTableError::Unknown(ref cause) => cause
+                            DeleteTableError::InternalServerError(ref cause) => cause,DeleteTableError::LimitExceeded(ref cause) => cause,DeleteTableError::ResourceInUse(ref cause) => cause,DeleteTableError::ResourceNotFound(ref cause) => cause,DeleteTableError::Validation(ref cause) => cause,DeleteTableError::Credentials(ref err) => err.description(),DeleteTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTableError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1417,10 +1417,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTableError {
                     
-///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1439,7 +1439,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DescribeTableError::ResourceNotFound(String::from(error_message)),"InternalServerError" => DescribeTableError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeTableError::Validation(error_message.to_string()),_ => DescribeTableError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeTableError::InternalServerError(String::from(error_message)),"ResourceNotFoundException" => DescribeTableError::ResourceNotFound(String::from(error_message)),"ValidationException" => DescribeTableError::Validation(error_message.to_string()),_ => DescribeTableError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeTableError::Unknown(String::from(body))
@@ -1470,7 +1470,7 @@ Unknown(String)
                 impl Error for DescribeTableError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTableError::ResourceNotFound(ref cause) => cause,DescribeTableError::InternalServerError(ref cause) => cause,DescribeTableError::Validation(ref cause) => cause,DescribeTableError::Credentials(ref err) => err.description(),DescribeTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTableError::Unknown(ref cause) => cause
+                            DescribeTableError::InternalServerError(ref cause) => cause,DescribeTableError::ResourceNotFound(ref cause) => cause,DescribeTableError::Validation(ref cause) => cause,DescribeTableError::Credentials(ref err) => err.description(),DescribeTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTableError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1478,12 +1478,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetItemError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1502,7 +1502,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ProvisionedThroughputExceededException" => GetItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => GetItemError::ResourceNotFound(String::from(error_message)),"InternalServerError" => GetItemError::InternalServerError(String::from(error_message)),"ValidationException" => GetItemError::Validation(error_message.to_string()),_ => GetItemError::Unknown(String::from(body))
+                                    "InternalServerError" => GetItemError::InternalServerError(String::from(error_message)),"ProvisionedThroughputExceededException" => GetItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => GetItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => GetItemError::Validation(error_message.to_string()),_ => GetItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetItemError::Unknown(String::from(body))
@@ -1533,7 +1533,7 @@ Unknown(String)
                 impl Error for GetItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetItemError::ProvisionedThroughputExceeded(ref cause) => cause,GetItemError::ResourceNotFound(ref cause) => cause,GetItemError::InternalServerError(ref cause) => cause,GetItemError::Validation(ref cause) => cause,GetItemError::Credentials(ref err) => err.description(),GetItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetItemError::Unknown(ref cause) => cause
+                            GetItemError::InternalServerError(ref cause) => cause,GetItemError::ProvisionedThroughputExceeded(ref cause) => cause,GetItemError::ResourceNotFound(ref cause) => cause,GetItemError::Validation(ref cause) => cause,GetItemError::Credentials(ref err) => err.description(),GetItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1602,14 +1602,14 @@ Unknown(String)
                     
 ///<p>A condition specified in the operation could not be evaluated.</p>
 ConditionalCheckFailed(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
+ItemCollectionSizeLimitExceeded(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
-ItemCollectionSizeLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1628,7 +1628,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ConditionalCheckFailedException" => PutItemError::ConditionalCheckFailed(String::from(error_message)),"ProvisionedThroughputExceededException" => PutItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => PutItemError::ResourceNotFound(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => PutItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"InternalServerError" => PutItemError::InternalServerError(String::from(error_message)),"ValidationException" => PutItemError::Validation(error_message.to_string()),_ => PutItemError::Unknown(String::from(body))
+                                    "ConditionalCheckFailedException" => PutItemError::ConditionalCheckFailed(String::from(error_message)),"InternalServerError" => PutItemError::InternalServerError(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => PutItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"ProvisionedThroughputExceededException" => PutItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => PutItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => PutItemError::Validation(error_message.to_string()),_ => PutItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutItemError::Unknown(String::from(body))
@@ -1659,7 +1659,7 @@ Unknown(String)
                 impl Error for PutItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutItemError::ConditionalCheckFailed(ref cause) => cause,PutItemError::ProvisionedThroughputExceeded(ref cause) => cause,PutItemError::ResourceNotFound(ref cause) => cause,PutItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,PutItemError::InternalServerError(ref cause) => cause,PutItemError::Validation(ref cause) => cause,PutItemError::Credentials(ref err) => err.description(),PutItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutItemError::Unknown(ref cause) => cause
+                            PutItemError::ConditionalCheckFailed(ref cause) => cause,PutItemError::InternalServerError(ref cause) => cause,PutItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,PutItemError::ProvisionedThroughputExceeded(ref cause) => cause,PutItemError::ResourceNotFound(ref cause) => cause,PutItemError::Validation(ref cause) => cause,PutItemError::Credentials(ref err) => err.description(),PutItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1667,12 +1667,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum QueryError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1691,7 +1691,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ProvisionedThroughputExceededException" => QueryError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => QueryError::ResourceNotFound(String::from(error_message)),"InternalServerError" => QueryError::InternalServerError(String::from(error_message)),"ValidationException" => QueryError::Validation(error_message.to_string()),_ => QueryError::Unknown(String::from(body))
+                                    "InternalServerError" => QueryError::InternalServerError(String::from(error_message)),"ProvisionedThroughputExceededException" => QueryError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => QueryError::ResourceNotFound(String::from(error_message)),"ValidationException" => QueryError::Validation(error_message.to_string()),_ => QueryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => QueryError::Unknown(String::from(body))
@@ -1722,7 +1722,7 @@ Unknown(String)
                 impl Error for QueryError {
                     fn description(&self) -> &str {
                         match *self {
-                            QueryError::ProvisionedThroughputExceeded(ref cause) => cause,QueryError::ResourceNotFound(ref cause) => cause,QueryError::InternalServerError(ref cause) => cause,QueryError::Validation(ref cause) => cause,QueryError::Credentials(ref err) => err.description(),QueryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),QueryError::Unknown(ref cause) => cause
+                            QueryError::InternalServerError(ref cause) => cause,QueryError::ProvisionedThroughputExceeded(ref cause) => cause,QueryError::ResourceNotFound(ref cause) => cause,QueryError::Validation(ref cause) => cause,QueryError::Credentials(ref err) => err.description(),QueryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),QueryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1730,12 +1730,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ScanError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1754,7 +1754,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ProvisionedThroughputExceededException" => ScanError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => ScanError::ResourceNotFound(String::from(error_message)),"InternalServerError" => ScanError::InternalServerError(String::from(error_message)),"ValidationException" => ScanError::Validation(error_message.to_string()),_ => ScanError::Unknown(String::from(body))
+                                    "InternalServerError" => ScanError::InternalServerError(String::from(error_message)),"ProvisionedThroughputExceededException" => ScanError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => ScanError::ResourceNotFound(String::from(error_message)),"ValidationException" => ScanError::Validation(error_message.to_string()),_ => ScanError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ScanError::Unknown(String::from(body))
@@ -1785,7 +1785,7 @@ Unknown(String)
                 impl Error for ScanError {
                     fn description(&self) -> &str {
                         match *self {
-                            ScanError::ProvisionedThroughputExceeded(ref cause) => cause,ScanError::ResourceNotFound(ref cause) => cause,ScanError::InternalServerError(ref cause) => cause,ScanError::Validation(ref cause) => cause,ScanError::Credentials(ref err) => err.description(),ScanError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ScanError::Unknown(ref cause) => cause
+                            ScanError::InternalServerError(ref cause) => cause,ScanError::ProvisionedThroughputExceeded(ref cause) => cause,ScanError::ResourceNotFound(ref cause) => cause,ScanError::Validation(ref cause) => cause,ScanError::Credentials(ref err) => err.description(),ScanError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ScanError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1795,14 +1795,14 @@ Unknown(String)
                     
 ///<p>A condition specified in the operation could not be evaluated.</p>
 ConditionalCheckFailed(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
+ItemCollectionSizeLimitExceeded(String),
 ///<p>Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#APIRetries">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>
 ProvisionedThroughputExceeded(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>
-ItemCollectionSizeLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1821,7 +1821,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ConditionalCheckFailedException" => UpdateItemError::ConditionalCheckFailed(String::from(error_message)),"ProvisionedThroughputExceededException" => UpdateItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => UpdateItemError::ResourceNotFound(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => UpdateItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"InternalServerError" => UpdateItemError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateItemError::Validation(error_message.to_string()),_ => UpdateItemError::Unknown(String::from(body))
+                                    "ConditionalCheckFailedException" => UpdateItemError::ConditionalCheckFailed(String::from(error_message)),"InternalServerError" => UpdateItemError::InternalServerError(String::from(error_message)),"ItemCollectionSizeLimitExceededException" => UpdateItemError::ItemCollectionSizeLimitExceeded(String::from(error_message)),"ProvisionedThroughputExceededException" => UpdateItemError::ProvisionedThroughputExceeded(String::from(error_message)),"ResourceNotFoundException" => UpdateItemError::ResourceNotFound(String::from(error_message)),"ValidationException" => UpdateItemError::Validation(error_message.to_string()),_ => UpdateItemError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateItemError::Unknown(String::from(body))
@@ -1852,7 +1852,7 @@ Unknown(String)
                 impl Error for UpdateItemError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateItemError::ConditionalCheckFailed(ref cause) => cause,UpdateItemError::ProvisionedThroughputExceeded(ref cause) => cause,UpdateItemError::ResourceNotFound(ref cause) => cause,UpdateItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,UpdateItemError::InternalServerError(ref cause) => cause,UpdateItemError::Validation(ref cause) => cause,UpdateItemError::Credentials(ref err) => err.description(),UpdateItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateItemError::Unknown(ref cause) => cause
+                            UpdateItemError::ConditionalCheckFailed(ref cause) => cause,UpdateItemError::InternalServerError(ref cause) => cause,UpdateItemError::ItemCollectionSizeLimitExceeded(ref cause) => cause,UpdateItemError::ProvisionedThroughputExceeded(ref cause) => cause,UpdateItemError::ResourceNotFound(ref cause) => cause,UpdateItemError::Validation(ref cause) => cause,UpdateItemError::Credentials(ref err) => err.description(),UpdateItemError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateItemError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1860,14 +1860,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateTableError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>The number of concurrent table requests (cumulative number of tables in the <code>CREATING</code>, <code>DELETING</code> or <code>UPDATING</code> state) exceeds the maximum allowed of 10.</p> <p>Also, for tables with secondary indexes, only one of those tables can be in the <code>CREATING</code> state at any point in time. Do not attempt to create more than one such table simultaneously.</p> <p>The total limit of tables in the <code>ACTIVE</code> state is 250.</p>
+LimitExceeded(String),
 ///<p>The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the <code>CREATING</code> state.</p>
 ResourceInUse(String),
 ///<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>
-ResourceNotFound(String),
-///<p>The number of concurrent table requests (cumulative number of tables in the <code>CREATING</code>, <code>DELETING</code> or <code>UPDATING</code> state) exceeds the maximum allowed of 10.</p> <p>Also, for tables with secondary indexes, only one of those tables can be in the <code>CREATING</code> state at any point in time. Do not attempt to create more than one such table simultaneously.</p> <p>The total limit of tables in the <code>ACTIVE</code> state is 250.</p>
-LimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1886,7 +1886,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceInUseException" => UpdateTableError::ResourceInUse(String::from(error_message)),"ResourceNotFoundException" => UpdateTableError::ResourceNotFound(String::from(error_message)),"LimitExceededException" => UpdateTableError::LimitExceeded(String::from(error_message)),"InternalServerError" => UpdateTableError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateTableError::Validation(error_message.to_string()),_ => UpdateTableError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateTableError::InternalServerError(String::from(error_message)),"LimitExceededException" => UpdateTableError::LimitExceeded(String::from(error_message)),"ResourceInUseException" => UpdateTableError::ResourceInUse(String::from(error_message)),"ResourceNotFoundException" => UpdateTableError::ResourceNotFound(String::from(error_message)),"ValidationException" => UpdateTableError::Validation(error_message.to_string()),_ => UpdateTableError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateTableError::Unknown(String::from(body))
@@ -1917,7 +1917,7 @@ Unknown(String)
                 impl Error for UpdateTableError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateTableError::ResourceInUse(ref cause) => cause,UpdateTableError::ResourceNotFound(ref cause) => cause,UpdateTableError::LimitExceeded(ref cause) => cause,UpdateTableError::InternalServerError(ref cause) => cause,UpdateTableError::Validation(ref cause) => cause,UpdateTableError::Credentials(ref err) => err.description(),UpdateTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateTableError::Unknown(ref cause) => cause
+                            UpdateTableError::InternalServerError(ref cause) => cause,UpdateTableError::LimitExceeded(ref cause) => cause,UpdateTableError::ResourceInUse(ref cause) => cause,UpdateTableError::ResourceNotFound(ref cause) => cause,UpdateTableError::Validation(ref cause) => cause,UpdateTableError::Credentials(ref err) => err.description(),UpdateTableError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateTableError::Unknown(ref cause) => cause
                         }
                     }
                  }

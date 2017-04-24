@@ -538,10 +538,10 @@ pub type VpcId = String;
                 #[derive(Debug, PartialEq)]
                 pub enum AddTagsToResourceError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -562,7 +562,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => AddTagsToResourceError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => AddTagsToResourceError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => AddTagsToResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => AddTagsToResourceError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => AddTagsToResourceError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => AddTagsToResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddTagsToResourceError::Unknown(String::from(body))
@@ -593,7 +593,7 @@ Unknown(String)
                 impl Error for AddTagsToResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsToResourceError::CloudHsmService(ref cause) => cause,AddTagsToResourceError::CloudHsmInternal(ref cause) => cause,AddTagsToResourceError::InvalidRequest(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
+                            AddTagsToResourceError::CloudHsmInternal(ref cause) => cause,AddTagsToResourceError::CloudHsmService(ref cause) => cause,AddTagsToResourceError::InvalidRequest(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -601,10 +601,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateHapgError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -625,7 +625,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => CreateHapgError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => CreateHapgError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => CreateHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateHapgError::Validation(error_message.to_string()),_ => CreateHapgError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => CreateHapgError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => CreateHapgError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => CreateHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateHapgError::Validation(error_message.to_string()),_ => CreateHapgError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateHapgError::Unknown(String::from(body))
@@ -656,7 +656,7 @@ Unknown(String)
                 impl Error for CreateHapgError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateHapgError::CloudHsmService(ref cause) => cause,CreateHapgError::CloudHsmInternal(ref cause) => cause,CreateHapgError::InvalidRequest(ref cause) => cause,CreateHapgError::Validation(ref cause) => cause,CreateHapgError::Credentials(ref err) => err.description(),CreateHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHapgError::Unknown(ref cause) => cause
+                            CreateHapgError::CloudHsmInternal(ref cause) => cause,CreateHapgError::CloudHsmService(ref cause) => cause,CreateHapgError::InvalidRequest(ref cause) => cause,CreateHapgError::Validation(ref cause) => cause,CreateHapgError::Credentials(ref err) => err.description(),CreateHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHapgError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -664,10 +664,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateHsmError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -688,7 +688,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => CreateHsmError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => CreateHsmError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => CreateHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateHsmError::Validation(error_message.to_string()),_ => CreateHsmError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => CreateHsmError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => CreateHsmError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => CreateHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateHsmError::Validation(error_message.to_string()),_ => CreateHsmError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateHsmError::Unknown(String::from(body))
@@ -719,7 +719,7 @@ Unknown(String)
                 impl Error for CreateHsmError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateHsmError::CloudHsmService(ref cause) => cause,CreateHsmError::CloudHsmInternal(ref cause) => cause,CreateHsmError::InvalidRequest(ref cause) => cause,CreateHsmError::Validation(ref cause) => cause,CreateHsmError::Credentials(ref err) => err.description(),CreateHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmError::Unknown(ref cause) => cause
+                            CreateHsmError::CloudHsmInternal(ref cause) => cause,CreateHsmError::CloudHsmService(ref cause) => cause,CreateHsmError::InvalidRequest(ref cause) => cause,CreateHsmError::Validation(ref cause) => cause,CreateHsmError::Credentials(ref err) => err.description(),CreateHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -727,10 +727,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateLunaClientError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -751,7 +751,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => CreateLunaClientError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => CreateLunaClientError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => CreateLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateLunaClientError::Validation(error_message.to_string()),_ => CreateLunaClientError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => CreateLunaClientError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => CreateLunaClientError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => CreateLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => CreateLunaClientError::Validation(error_message.to_string()),_ => CreateLunaClientError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateLunaClientError::Unknown(String::from(body))
@@ -782,7 +782,7 @@ Unknown(String)
                 impl Error for CreateLunaClientError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateLunaClientError::CloudHsmService(ref cause) => cause,CreateLunaClientError::CloudHsmInternal(ref cause) => cause,CreateLunaClientError::InvalidRequest(ref cause) => cause,CreateLunaClientError::Validation(ref cause) => cause,CreateLunaClientError::Credentials(ref err) => err.description(),CreateLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLunaClientError::Unknown(ref cause) => cause
+                            CreateLunaClientError::CloudHsmInternal(ref cause) => cause,CreateLunaClientError::CloudHsmService(ref cause) => cause,CreateLunaClientError::InvalidRequest(ref cause) => cause,CreateLunaClientError::Validation(ref cause) => cause,CreateLunaClientError::Credentials(ref err) => err.description(),CreateLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLunaClientError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -790,10 +790,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteHapgError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -814,7 +814,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DeleteHapgError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DeleteHapgError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DeleteHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteHapgError::Validation(error_message.to_string()),_ => DeleteHapgError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DeleteHapgError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DeleteHapgError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DeleteHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteHapgError::Validation(error_message.to_string()),_ => DeleteHapgError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteHapgError::Unknown(String::from(body))
@@ -845,7 +845,7 @@ Unknown(String)
                 impl Error for DeleteHapgError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteHapgError::CloudHsmService(ref cause) => cause,DeleteHapgError::CloudHsmInternal(ref cause) => cause,DeleteHapgError::InvalidRequest(ref cause) => cause,DeleteHapgError::Validation(ref cause) => cause,DeleteHapgError::Credentials(ref err) => err.description(),DeleteHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHapgError::Unknown(ref cause) => cause
+                            DeleteHapgError::CloudHsmInternal(ref cause) => cause,DeleteHapgError::CloudHsmService(ref cause) => cause,DeleteHapgError::InvalidRequest(ref cause) => cause,DeleteHapgError::Validation(ref cause) => cause,DeleteHapgError::Credentials(ref err) => err.description(),DeleteHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHapgError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -853,10 +853,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteHsmError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -877,7 +877,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DeleteHsmError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DeleteHsmError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DeleteHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteHsmError::Validation(error_message.to_string()),_ => DeleteHsmError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DeleteHsmError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DeleteHsmError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DeleteHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteHsmError::Validation(error_message.to_string()),_ => DeleteHsmError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteHsmError::Unknown(String::from(body))
@@ -908,7 +908,7 @@ Unknown(String)
                 impl Error for DeleteHsmError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteHsmError::CloudHsmService(ref cause) => cause,DeleteHsmError::CloudHsmInternal(ref cause) => cause,DeleteHsmError::InvalidRequest(ref cause) => cause,DeleteHsmError::Validation(ref cause) => cause,DeleteHsmError::Credentials(ref err) => err.description(),DeleteHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmError::Unknown(ref cause) => cause
+                            DeleteHsmError::CloudHsmInternal(ref cause) => cause,DeleteHsmError::CloudHsmService(ref cause) => cause,DeleteHsmError::InvalidRequest(ref cause) => cause,DeleteHsmError::Validation(ref cause) => cause,DeleteHsmError::Credentials(ref err) => err.description(),DeleteHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -916,10 +916,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteLunaClientError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -940,7 +940,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DeleteLunaClientError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DeleteLunaClientError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DeleteLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteLunaClientError::Validation(error_message.to_string()),_ => DeleteLunaClientError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DeleteLunaClientError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DeleteLunaClientError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DeleteLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => DeleteLunaClientError::Validation(error_message.to_string()),_ => DeleteLunaClientError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteLunaClientError::Unknown(String::from(body))
@@ -971,7 +971,7 @@ Unknown(String)
                 impl Error for DeleteLunaClientError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteLunaClientError::CloudHsmService(ref cause) => cause,DeleteLunaClientError::CloudHsmInternal(ref cause) => cause,DeleteLunaClientError::InvalidRequest(ref cause) => cause,DeleteLunaClientError::Validation(ref cause) => cause,DeleteLunaClientError::Credentials(ref err) => err.description(),DeleteLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLunaClientError::Unknown(ref cause) => cause
+                            DeleteLunaClientError::CloudHsmInternal(ref cause) => cause,DeleteLunaClientError::CloudHsmService(ref cause) => cause,DeleteLunaClientError::InvalidRequest(ref cause) => cause,DeleteLunaClientError::Validation(ref cause) => cause,DeleteLunaClientError::Credentials(ref err) => err.description(),DeleteLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLunaClientError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -979,10 +979,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeHapgError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1003,7 +1003,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DescribeHapgError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DescribeHapgError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DescribeHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeHapgError::Validation(error_message.to_string()),_ => DescribeHapgError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DescribeHapgError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DescribeHapgError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DescribeHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeHapgError::Validation(error_message.to_string()),_ => DescribeHapgError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeHapgError::Unknown(String::from(body))
@@ -1034,7 +1034,7 @@ Unknown(String)
                 impl Error for DescribeHapgError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeHapgError::CloudHsmService(ref cause) => cause,DescribeHapgError::CloudHsmInternal(ref cause) => cause,DescribeHapgError::InvalidRequest(ref cause) => cause,DescribeHapgError::Validation(ref cause) => cause,DescribeHapgError::Credentials(ref err) => err.description(),DescribeHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeHapgError::Unknown(ref cause) => cause
+                            DescribeHapgError::CloudHsmInternal(ref cause) => cause,DescribeHapgError::CloudHsmService(ref cause) => cause,DescribeHapgError::InvalidRequest(ref cause) => cause,DescribeHapgError::Validation(ref cause) => cause,DescribeHapgError::Credentials(ref err) => err.description(),DescribeHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeHapgError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1042,10 +1042,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeHsmError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1066,7 +1066,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DescribeHsmError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DescribeHsmError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DescribeHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeHsmError::Validation(error_message.to_string()),_ => DescribeHsmError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DescribeHsmError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DescribeHsmError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DescribeHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeHsmError::Validation(error_message.to_string()),_ => DescribeHsmError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeHsmError::Unknown(String::from(body))
@@ -1097,7 +1097,7 @@ Unknown(String)
                 impl Error for DescribeHsmError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeHsmError::CloudHsmService(ref cause) => cause,DescribeHsmError::CloudHsmInternal(ref cause) => cause,DescribeHsmError::InvalidRequest(ref cause) => cause,DescribeHsmError::Validation(ref cause) => cause,DescribeHsmError::Credentials(ref err) => err.description(),DescribeHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeHsmError::Unknown(ref cause) => cause
+                            DescribeHsmError::CloudHsmInternal(ref cause) => cause,DescribeHsmError::CloudHsmService(ref cause) => cause,DescribeHsmError::InvalidRequest(ref cause) => cause,DescribeHsmError::Validation(ref cause) => cause,DescribeHsmError::Credentials(ref err) => err.description(),DescribeHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeHsmError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1105,10 +1105,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeLunaClientError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1129,7 +1129,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => DescribeLunaClientError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => DescribeLunaClientError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => DescribeLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeLunaClientError::Validation(error_message.to_string()),_ => DescribeLunaClientError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => DescribeLunaClientError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => DescribeLunaClientError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => DescribeLunaClientError::InvalidRequest(String::from(error_message)),"ValidationException" => DescribeLunaClientError::Validation(error_message.to_string()),_ => DescribeLunaClientError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeLunaClientError::Unknown(String::from(body))
@@ -1160,7 +1160,7 @@ Unknown(String)
                 impl Error for DescribeLunaClientError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeLunaClientError::CloudHsmService(ref cause) => cause,DescribeLunaClientError::CloudHsmInternal(ref cause) => cause,DescribeLunaClientError::InvalidRequest(ref cause) => cause,DescribeLunaClientError::Validation(ref cause) => cause,DescribeLunaClientError::Credentials(ref err) => err.description(),DescribeLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeLunaClientError::Unknown(ref cause) => cause
+                            DescribeLunaClientError::CloudHsmInternal(ref cause) => cause,DescribeLunaClientError::CloudHsmService(ref cause) => cause,DescribeLunaClientError::InvalidRequest(ref cause) => cause,DescribeLunaClientError::Validation(ref cause) => cause,DescribeLunaClientError::Credentials(ref err) => err.description(),DescribeLunaClientError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeLunaClientError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1168,10 +1168,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetConfigError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1192,7 +1192,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => GetConfigError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => GetConfigError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => GetConfigError::InvalidRequest(String::from(error_message)),"ValidationException" => GetConfigError::Validation(error_message.to_string()),_ => GetConfigError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => GetConfigError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => GetConfigError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => GetConfigError::InvalidRequest(String::from(error_message)),"ValidationException" => GetConfigError::Validation(error_message.to_string()),_ => GetConfigError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetConfigError::Unknown(String::from(body))
@@ -1223,7 +1223,7 @@ Unknown(String)
                 impl Error for GetConfigError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetConfigError::CloudHsmService(ref cause) => cause,GetConfigError::CloudHsmInternal(ref cause) => cause,GetConfigError::InvalidRequest(ref cause) => cause,GetConfigError::Validation(ref cause) => cause,GetConfigError::Credentials(ref err) => err.description(),GetConfigError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetConfigError::Unknown(ref cause) => cause
+                            GetConfigError::CloudHsmInternal(ref cause) => cause,GetConfigError::CloudHsmService(ref cause) => cause,GetConfigError::InvalidRequest(ref cause) => cause,GetConfigError::Validation(ref cause) => cause,GetConfigError::Credentials(ref err) => err.description(),GetConfigError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetConfigError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1231,10 +1231,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListAvailableZonesError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1255,7 +1255,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ListAvailableZonesError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ListAvailableZonesError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ListAvailableZonesError::InvalidRequest(String::from(error_message)),"ValidationException" => ListAvailableZonesError::Validation(error_message.to_string()),_ => ListAvailableZonesError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ListAvailableZonesError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ListAvailableZonesError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ListAvailableZonesError::InvalidRequest(String::from(error_message)),"ValidationException" => ListAvailableZonesError::Validation(error_message.to_string()),_ => ListAvailableZonesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListAvailableZonesError::Unknown(String::from(body))
@@ -1286,7 +1286,7 @@ Unknown(String)
                 impl Error for ListAvailableZonesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListAvailableZonesError::CloudHsmService(ref cause) => cause,ListAvailableZonesError::CloudHsmInternal(ref cause) => cause,ListAvailableZonesError::InvalidRequest(ref cause) => cause,ListAvailableZonesError::Validation(ref cause) => cause,ListAvailableZonesError::Credentials(ref err) => err.description(),ListAvailableZonesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListAvailableZonesError::Unknown(ref cause) => cause
+                            ListAvailableZonesError::CloudHsmInternal(ref cause) => cause,ListAvailableZonesError::CloudHsmService(ref cause) => cause,ListAvailableZonesError::InvalidRequest(ref cause) => cause,ListAvailableZonesError::Validation(ref cause) => cause,ListAvailableZonesError::Credentials(ref err) => err.description(),ListAvailableZonesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListAvailableZonesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1294,10 +1294,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListHapgsError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1318,7 +1318,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ListHapgsError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ListHapgsError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ListHapgsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListHapgsError::Validation(error_message.to_string()),_ => ListHapgsError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ListHapgsError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ListHapgsError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ListHapgsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListHapgsError::Validation(error_message.to_string()),_ => ListHapgsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListHapgsError::Unknown(String::from(body))
@@ -1349,7 +1349,7 @@ Unknown(String)
                 impl Error for ListHapgsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListHapgsError::CloudHsmService(ref cause) => cause,ListHapgsError::CloudHsmInternal(ref cause) => cause,ListHapgsError::InvalidRequest(ref cause) => cause,ListHapgsError::Validation(ref cause) => cause,ListHapgsError::Credentials(ref err) => err.description(),ListHapgsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListHapgsError::Unknown(ref cause) => cause
+                            ListHapgsError::CloudHsmInternal(ref cause) => cause,ListHapgsError::CloudHsmService(ref cause) => cause,ListHapgsError::InvalidRequest(ref cause) => cause,ListHapgsError::Validation(ref cause) => cause,ListHapgsError::Credentials(ref err) => err.description(),ListHapgsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListHapgsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1357,10 +1357,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListHsmsError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1381,7 +1381,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ListHsmsError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ListHsmsError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ListHsmsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListHsmsError::Validation(error_message.to_string()),_ => ListHsmsError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ListHsmsError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ListHsmsError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ListHsmsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListHsmsError::Validation(error_message.to_string()),_ => ListHsmsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListHsmsError::Unknown(String::from(body))
@@ -1412,7 +1412,7 @@ Unknown(String)
                 impl Error for ListHsmsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListHsmsError::CloudHsmService(ref cause) => cause,ListHsmsError::CloudHsmInternal(ref cause) => cause,ListHsmsError::InvalidRequest(ref cause) => cause,ListHsmsError::Validation(ref cause) => cause,ListHsmsError::Credentials(ref err) => err.description(),ListHsmsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListHsmsError::Unknown(ref cause) => cause
+                            ListHsmsError::CloudHsmInternal(ref cause) => cause,ListHsmsError::CloudHsmService(ref cause) => cause,ListHsmsError::InvalidRequest(ref cause) => cause,ListHsmsError::Validation(ref cause) => cause,ListHsmsError::Credentials(ref err) => err.description(),ListHsmsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListHsmsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1420,10 +1420,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListLunaClientsError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1444,7 +1444,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ListLunaClientsError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ListLunaClientsError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ListLunaClientsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListLunaClientsError::Validation(error_message.to_string()),_ => ListLunaClientsError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ListLunaClientsError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ListLunaClientsError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ListLunaClientsError::InvalidRequest(String::from(error_message)),"ValidationException" => ListLunaClientsError::Validation(error_message.to_string()),_ => ListLunaClientsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListLunaClientsError::Unknown(String::from(body))
@@ -1475,7 +1475,7 @@ Unknown(String)
                 impl Error for ListLunaClientsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListLunaClientsError::CloudHsmService(ref cause) => cause,ListLunaClientsError::CloudHsmInternal(ref cause) => cause,ListLunaClientsError::InvalidRequest(ref cause) => cause,ListLunaClientsError::Validation(ref cause) => cause,ListLunaClientsError::Credentials(ref err) => err.description(),ListLunaClientsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListLunaClientsError::Unknown(ref cause) => cause
+                            ListLunaClientsError::CloudHsmInternal(ref cause) => cause,ListLunaClientsError::CloudHsmService(ref cause) => cause,ListLunaClientsError::InvalidRequest(ref cause) => cause,ListLunaClientsError::Validation(ref cause) => cause,ListLunaClientsError::Credentials(ref err) => err.description(),ListLunaClientsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListLunaClientsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1483,10 +1483,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListTagsForResourceError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1507,7 +1507,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ListTagsForResourceError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ListTagsForResourceError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ListTagsForResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ListTagsForResourceError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ListTagsForResourceError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ListTagsForResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListTagsForResourceError::Unknown(String::from(body))
@@ -1538,7 +1538,7 @@ Unknown(String)
                 impl Error for ListTagsForResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListTagsForResourceError::CloudHsmService(ref cause) => cause,ListTagsForResourceError::CloudHsmInternal(ref cause) => cause,ListTagsForResourceError::InvalidRequest(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
+                            ListTagsForResourceError::CloudHsmInternal(ref cause) => cause,ListTagsForResourceError::CloudHsmService(ref cause) => cause,ListTagsForResourceError::InvalidRequest(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1546,10 +1546,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyHapgError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1570,7 +1570,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ModifyHapgError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ModifyHapgError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ModifyHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => ModifyHapgError::Validation(error_message.to_string()),_ => ModifyHapgError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ModifyHapgError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ModifyHapgError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ModifyHapgError::InvalidRequest(String::from(error_message)),"ValidationException" => ModifyHapgError::Validation(error_message.to_string()),_ => ModifyHapgError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ModifyHapgError::Unknown(String::from(body))
@@ -1601,7 +1601,7 @@ Unknown(String)
                 impl Error for ModifyHapgError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyHapgError::CloudHsmService(ref cause) => cause,ModifyHapgError::CloudHsmInternal(ref cause) => cause,ModifyHapgError::InvalidRequest(ref cause) => cause,ModifyHapgError::Validation(ref cause) => cause,ModifyHapgError::Credentials(ref err) => err.description(),ModifyHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyHapgError::Unknown(ref cause) => cause
+                            ModifyHapgError::CloudHsmInternal(ref cause) => cause,ModifyHapgError::CloudHsmService(ref cause) => cause,ModifyHapgError::InvalidRequest(ref cause) => cause,ModifyHapgError::Validation(ref cause) => cause,ModifyHapgError::Credentials(ref err) => err.description(),ModifyHapgError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyHapgError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1609,10 +1609,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyHsmError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1633,7 +1633,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => ModifyHsmError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => ModifyHsmError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => ModifyHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => ModifyHsmError::Validation(error_message.to_string()),_ => ModifyHsmError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => ModifyHsmError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => ModifyHsmError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => ModifyHsmError::InvalidRequest(String::from(error_message)),"ValidationException" => ModifyHsmError::Validation(error_message.to_string()),_ => ModifyHsmError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ModifyHsmError::Unknown(String::from(body))
@@ -1664,7 +1664,7 @@ Unknown(String)
                 impl Error for ModifyHsmError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyHsmError::CloudHsmService(ref cause) => cause,ModifyHsmError::CloudHsmInternal(ref cause) => cause,ModifyHsmError::InvalidRequest(ref cause) => cause,ModifyHsmError::Validation(ref cause) => cause,ModifyHsmError::Credentials(ref err) => err.description(),ModifyHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyHsmError::Unknown(ref cause) => cause
+                            ModifyHsmError::CloudHsmInternal(ref cause) => cause,ModifyHsmError::CloudHsmService(ref cause) => cause,ModifyHsmError::InvalidRequest(ref cause) => cause,ModifyHsmError::Validation(ref cause) => cause,ModifyHsmError::Credentials(ref err) => err.description(),ModifyHsmError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyHsmError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1731,10 +1731,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RemoveTagsFromResourceError {
                     
-///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
-CloudHsmService(String),
 ///<p>Indicates that an internal error occurred.</p>
 CloudHsmInternal(String),
+///<p>Indicates that an exception occurred in the AWS CloudHSM service.</p>
+CloudHsmService(String),
 ///<p>Indicates that one or more of the request parameters are not valid.</p>
 InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1755,7 +1755,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "CloudHsmServiceException" => RemoveTagsFromResourceError::CloudHsmService(String::from(error_message)),"CloudHsmInternalException" => RemoveTagsFromResourceError::CloudHsmInternal(String::from(error_message)),"InvalidRequestException" => RemoveTagsFromResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
+                                    "CloudHsmInternalException" => RemoveTagsFromResourceError::CloudHsmInternal(String::from(error_message)),"CloudHsmServiceException" => RemoveTagsFromResourceError::CloudHsmService(String::from(error_message)),"InvalidRequestException" => RemoveTagsFromResourceError::InvalidRequest(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemoveTagsFromResourceError::Unknown(String::from(body))
@@ -1786,7 +1786,7 @@ Unknown(String)
                 impl Error for RemoveTagsFromResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTagsFromResourceError::CloudHsmService(ref cause) => cause,RemoveTagsFromResourceError::CloudHsmInternal(ref cause) => cause,RemoveTagsFromResourceError::InvalidRequest(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
+                            RemoveTagsFromResourceError::CloudHsmInternal(ref cause) => cause,RemoveTagsFromResourceError::CloudHsmService(ref cause) => cause,RemoveTagsFromResourceError::InvalidRequest(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }

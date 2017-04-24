@@ -6096,12 +6096,12 @@ if let Some(ref field_value) = obj.topic_arn {
                 #[derive(Debug, PartialEq)]
                 pub enum CloneReceiptRuleSetError {
                     
-///<p>Indicates that the provided receipt rule set does not exist.</p>
-RuleSetDoesNotExist(String),
 ///<p>Indicates that a resource could not be created because of a naming conflict.</p>
 AlreadyExists(String),
 ///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
-LimitExceeded(String),/// An error occurred dispatching the HTTP request
+LimitExceeded(String),
+///<p>Indicates that the provided receipt rule set does not exist.</p>
+RuleSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6118,7 +6118,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "RuleSetDoesNotExistException" => CloneReceiptRuleSetError::RuleSetDoesNotExist(String::from(parsed_error.message)),"AlreadyExistsException" => CloneReceiptRuleSetError::AlreadyExists(String::from(parsed_error.message)),"LimitExceededException" => CloneReceiptRuleSetError::LimitExceeded(String::from(parsed_error.message)),_ => CloneReceiptRuleSetError::Unknown(String::from(body))
+                                    "AlreadyExistsException" => CloneReceiptRuleSetError::AlreadyExists(String::from(parsed_error.message)),"LimitExceededException" => CloneReceiptRuleSetError::LimitExceeded(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => CloneReceiptRuleSetError::RuleSetDoesNotExist(String::from(parsed_error.message)),_ => CloneReceiptRuleSetError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CloneReceiptRuleSetError::Unknown(body.to_string())
@@ -6150,7 +6150,7 @@ Unknown(String)
                 impl Error for CloneReceiptRuleSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CloneReceiptRuleSetError::RuleSetDoesNotExist(ref cause) => cause,CloneReceiptRuleSetError::AlreadyExists(ref cause) => cause,CloneReceiptRuleSetError::LimitExceeded(ref cause) => cause,CloneReceiptRuleSetError::Validation(ref cause) => cause,CloneReceiptRuleSetError::Credentials(ref err) => err.description(),CloneReceiptRuleSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CloneReceiptRuleSetError::Unknown(ref cause) => cause
+                            CloneReceiptRuleSetError::AlreadyExists(ref cause) => cause,CloneReceiptRuleSetError::LimitExceeded(ref cause) => cause,CloneReceiptRuleSetError::RuleSetDoesNotExist(ref cause) => cause,CloneReceiptRuleSetError::Validation(ref cause) => cause,CloneReceiptRuleSetError::Credentials(ref err) => err.description(),CloneReceiptRuleSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CloneReceiptRuleSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6286,10 +6286,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateReceiptFilterError {
                     
-///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
-LimitExceeded(String),
 ///<p>Indicates that a resource could not be created because of a naming conflict.</p>
-AlreadyExists(String),/// An error occurred dispatching the HTTP request
+AlreadyExists(String),
+///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6306,7 +6306,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LimitExceededException" => CreateReceiptFilterError::LimitExceeded(String::from(parsed_error.message)),"AlreadyExistsException" => CreateReceiptFilterError::AlreadyExists(String::from(parsed_error.message)),_ => CreateReceiptFilterError::Unknown(String::from(body))
+                                    "AlreadyExistsException" => CreateReceiptFilterError::AlreadyExists(String::from(parsed_error.message)),"LimitExceededException" => CreateReceiptFilterError::LimitExceeded(String::from(parsed_error.message)),_ => CreateReceiptFilterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateReceiptFilterError::Unknown(body.to_string())
@@ -6338,7 +6338,7 @@ Unknown(String)
                 impl Error for CreateReceiptFilterError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateReceiptFilterError::LimitExceeded(ref cause) => cause,CreateReceiptFilterError::AlreadyExists(ref cause) => cause,CreateReceiptFilterError::Validation(ref cause) => cause,CreateReceiptFilterError::Credentials(ref err) => err.description(),CreateReceiptFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateReceiptFilterError::Unknown(ref cause) => cause
+                            CreateReceiptFilterError::AlreadyExists(ref cause) => cause,CreateReceiptFilterError::LimitExceeded(ref cause) => cause,CreateReceiptFilterError::Validation(ref cause) => cause,CreateReceiptFilterError::Credentials(ref err) => err.description(),CreateReceiptFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateReceiptFilterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6346,20 +6346,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateReceiptRuleError {
                     
-///<p>Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
-InvalidSnsTopic(String),
-///<p>Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
-InvalidS3Configuration(String),
-///<p>Indicates that the provided AWS Lambda function is invalid, or that Amazon SES could not execute the provided function, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
-InvalidLambdaFunction(String),
 ///<p>Indicates that a resource could not be created because of a naming conflict.</p>
 AlreadyExists(String),
+///<p>Indicates that the provided AWS Lambda function is invalid, or that Amazon SES could not execute the provided function, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
+InvalidLambdaFunction(String),
+///<p>Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
+InvalidS3Configuration(String),
+///<p>Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
+InvalidSnsTopic(String),
+///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
+LimitExceeded(String),
 ///<p>Indicates that the provided receipt rule does not exist.</p>
 RuleDoesNotExist(String),
 ///<p>Indicates that the provided receipt rule set does not exist.</p>
-RuleSetDoesNotExist(String),
-///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
-LimitExceeded(String),/// An error occurred dispatching the HTTP request
+RuleSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6376,7 +6376,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidSnsTopicException" => CreateReceiptRuleError::InvalidSnsTopic(String::from(parsed_error.message)),"InvalidS3ConfigurationException" => CreateReceiptRuleError::InvalidS3Configuration(String::from(parsed_error.message)),"InvalidLambdaFunctionException" => CreateReceiptRuleError::InvalidLambdaFunction(String::from(parsed_error.message)),"AlreadyExistsException" => CreateReceiptRuleError::AlreadyExists(String::from(parsed_error.message)),"RuleDoesNotExistException" => CreateReceiptRuleError::RuleDoesNotExist(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => CreateReceiptRuleError::RuleSetDoesNotExist(String::from(parsed_error.message)),"LimitExceededException" => CreateReceiptRuleError::LimitExceeded(String::from(parsed_error.message)),_ => CreateReceiptRuleError::Unknown(String::from(body))
+                                    "AlreadyExistsException" => CreateReceiptRuleError::AlreadyExists(String::from(parsed_error.message)),"InvalidLambdaFunctionException" => CreateReceiptRuleError::InvalidLambdaFunction(String::from(parsed_error.message)),"InvalidS3ConfigurationException" => CreateReceiptRuleError::InvalidS3Configuration(String::from(parsed_error.message)),"InvalidSnsTopicException" => CreateReceiptRuleError::InvalidSnsTopic(String::from(parsed_error.message)),"LimitExceededException" => CreateReceiptRuleError::LimitExceeded(String::from(parsed_error.message)),"RuleDoesNotExistException" => CreateReceiptRuleError::RuleDoesNotExist(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => CreateReceiptRuleError::RuleSetDoesNotExist(String::from(parsed_error.message)),_ => CreateReceiptRuleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateReceiptRuleError::Unknown(body.to_string())
@@ -6408,7 +6408,7 @@ Unknown(String)
                 impl Error for CreateReceiptRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateReceiptRuleError::InvalidSnsTopic(ref cause) => cause,CreateReceiptRuleError::InvalidS3Configuration(ref cause) => cause,CreateReceiptRuleError::InvalidLambdaFunction(ref cause) => cause,CreateReceiptRuleError::AlreadyExists(ref cause) => cause,CreateReceiptRuleError::RuleDoesNotExist(ref cause) => cause,CreateReceiptRuleError::RuleSetDoesNotExist(ref cause) => cause,CreateReceiptRuleError::LimitExceeded(ref cause) => cause,CreateReceiptRuleError::Validation(ref cause) => cause,CreateReceiptRuleError::Credentials(ref err) => err.description(),CreateReceiptRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateReceiptRuleError::Unknown(ref cause) => cause
+                            CreateReceiptRuleError::AlreadyExists(ref cause) => cause,CreateReceiptRuleError::InvalidLambdaFunction(ref cause) => cause,CreateReceiptRuleError::InvalidS3Configuration(ref cause) => cause,CreateReceiptRuleError::InvalidSnsTopic(ref cause) => cause,CreateReceiptRuleError::LimitExceeded(ref cause) => cause,CreateReceiptRuleError::RuleDoesNotExist(ref cause) => cause,CreateReceiptRuleError::RuleSetDoesNotExist(ref cause) => cause,CreateReceiptRuleError::Validation(ref cause) => cause,CreateReceiptRuleError::Credentials(ref err) => err.description(),CreateReceiptRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateReceiptRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7952,10 +7952,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ReorderReceiptRuleSetError {
                     
-///<p>Indicates that the provided receipt rule set does not exist.</p>
-RuleSetDoesNotExist(String),
 ///<p>Indicates that the provided receipt rule does not exist.</p>
-RuleDoesNotExist(String),/// An error occurred dispatching the HTTP request
+RuleDoesNotExist(String),
+///<p>Indicates that the provided receipt rule set does not exist.</p>
+RuleSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7972,7 +7972,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "RuleSetDoesNotExistException" => ReorderReceiptRuleSetError::RuleSetDoesNotExist(String::from(parsed_error.message)),"RuleDoesNotExistException" => ReorderReceiptRuleSetError::RuleDoesNotExist(String::from(parsed_error.message)),_ => ReorderReceiptRuleSetError::Unknown(String::from(body))
+                                    "RuleDoesNotExistException" => ReorderReceiptRuleSetError::RuleDoesNotExist(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => ReorderReceiptRuleSetError::RuleSetDoesNotExist(String::from(parsed_error.message)),_ => ReorderReceiptRuleSetError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ReorderReceiptRuleSetError::Unknown(body.to_string())
@@ -8004,7 +8004,7 @@ Unknown(String)
                 impl Error for ReorderReceiptRuleSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            ReorderReceiptRuleSetError::RuleSetDoesNotExist(ref cause) => cause,ReorderReceiptRuleSetError::RuleDoesNotExist(ref cause) => cause,ReorderReceiptRuleSetError::Validation(ref cause) => cause,ReorderReceiptRuleSetError::Credentials(ref err) => err.description(),ReorderReceiptRuleSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReorderReceiptRuleSetError::Unknown(ref cause) => cause
+                            ReorderReceiptRuleSetError::RuleDoesNotExist(ref cause) => cause,ReorderReceiptRuleSetError::RuleSetDoesNotExist(ref cause) => cause,ReorderReceiptRuleSetError::Validation(ref cause) => cause,ReorderReceiptRuleSetError::Credentials(ref err) => err.description(),ReorderReceiptRuleSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ReorderReceiptRuleSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8070,12 +8070,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SendEmailError {
                     
-///<p>Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.</p>
-MessageRejected(String),
+///<p>Indicates that the configuration set does not exist.</p>
+ConfigurationSetDoesNotExist(String),
 ///<p> Indicates that the message could not be sent because Amazon SES could not read the MX record required to use the specified MAIL FROM domain. For information about editing the custom MAIL FROM domain settings for an identity, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from-edit.html">Amazon SES Developer Guide</a>.</p>
 MailFromDomainNotVerified(String),
-///<p>Indicates that the configuration set does not exist.</p>
-ConfigurationSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
+///<p>Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.</p>
+MessageRejected(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8092,7 +8092,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "MessageRejected" => SendEmailError::MessageRejected(String::from(parsed_error.message)),"MailFromDomainNotVerifiedException" => SendEmailError::MailFromDomainNotVerified(String::from(parsed_error.message)),"ConfigurationSetDoesNotExistException" => SendEmailError::ConfigurationSetDoesNotExist(String::from(parsed_error.message)),_ => SendEmailError::Unknown(String::from(body))
+                                    "ConfigurationSetDoesNotExistException" => SendEmailError::ConfigurationSetDoesNotExist(String::from(parsed_error.message)),"MailFromDomainNotVerifiedException" => SendEmailError::MailFromDomainNotVerified(String::from(parsed_error.message)),"MessageRejected" => SendEmailError::MessageRejected(String::from(parsed_error.message)),_ => SendEmailError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SendEmailError::Unknown(body.to_string())
@@ -8124,7 +8124,7 @@ Unknown(String)
                 impl Error for SendEmailError {
                     fn description(&self) -> &str {
                         match *self {
-                            SendEmailError::MessageRejected(ref cause) => cause,SendEmailError::MailFromDomainNotVerified(ref cause) => cause,SendEmailError::ConfigurationSetDoesNotExist(ref cause) => cause,SendEmailError::Validation(ref cause) => cause,SendEmailError::Credentials(ref err) => err.description(),SendEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendEmailError::Unknown(ref cause) => cause
+                            SendEmailError::ConfigurationSetDoesNotExist(ref cause) => cause,SendEmailError::MailFromDomainNotVerified(ref cause) => cause,SendEmailError::MessageRejected(ref cause) => cause,SendEmailError::Validation(ref cause) => cause,SendEmailError::Credentials(ref err) => err.description(),SendEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendEmailError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8132,12 +8132,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SendRawEmailError {
                     
-///<p>Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.</p>
-MessageRejected(String),
+///<p>Indicates that the configuration set does not exist.</p>
+ConfigurationSetDoesNotExist(String),
 ///<p> Indicates that the message could not be sent because Amazon SES could not read the MX record required to use the specified MAIL FROM domain. For information about editing the custom MAIL FROM domain settings for an identity, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/mail-from-edit.html">Amazon SES Developer Guide</a>.</p>
 MailFromDomainNotVerified(String),
-///<p>Indicates that the configuration set does not exist.</p>
-ConfigurationSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
+///<p>Indicates that the action failed, and the message could not be sent. Check the error stack for more information about what caused the error.</p>
+MessageRejected(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8154,7 +8154,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "MessageRejected" => SendRawEmailError::MessageRejected(String::from(parsed_error.message)),"MailFromDomainNotVerifiedException" => SendRawEmailError::MailFromDomainNotVerified(String::from(parsed_error.message)),"ConfigurationSetDoesNotExistException" => SendRawEmailError::ConfigurationSetDoesNotExist(String::from(parsed_error.message)),_ => SendRawEmailError::Unknown(String::from(body))
+                                    "ConfigurationSetDoesNotExistException" => SendRawEmailError::ConfigurationSetDoesNotExist(String::from(parsed_error.message)),"MailFromDomainNotVerifiedException" => SendRawEmailError::MailFromDomainNotVerified(String::from(parsed_error.message)),"MessageRejected" => SendRawEmailError::MessageRejected(String::from(parsed_error.message)),_ => SendRawEmailError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SendRawEmailError::Unknown(body.to_string())
@@ -8186,7 +8186,7 @@ Unknown(String)
                 impl Error for SendRawEmailError {
                     fn description(&self) -> &str {
                         match *self {
-                            SendRawEmailError::MessageRejected(ref cause) => cause,SendRawEmailError::MailFromDomainNotVerified(ref cause) => cause,SendRawEmailError::ConfigurationSetDoesNotExist(ref cause) => cause,SendRawEmailError::Validation(ref cause) => cause,SendRawEmailError::Credentials(ref err) => err.description(),SendRawEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendRawEmailError::Unknown(ref cause) => cause
+                            SendRawEmailError::ConfigurationSetDoesNotExist(ref cause) => cause,SendRawEmailError::MailFromDomainNotVerified(ref cause) => cause,SendRawEmailError::MessageRejected(ref cause) => cause,SendRawEmailError::Validation(ref cause) => cause,SendRawEmailError::Credentials(ref err) => err.description(),SendRawEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendRawEmailError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8532,10 +8532,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetReceiptRulePositionError {
                     
-///<p>Indicates that the provided receipt rule set does not exist.</p>
-RuleSetDoesNotExist(String),
 ///<p>Indicates that the provided receipt rule does not exist.</p>
-RuleDoesNotExist(String),/// An error occurred dispatching the HTTP request
+RuleDoesNotExist(String),
+///<p>Indicates that the provided receipt rule set does not exist.</p>
+RuleSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8552,7 +8552,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "RuleSetDoesNotExistException" => SetReceiptRulePositionError::RuleSetDoesNotExist(String::from(parsed_error.message)),"RuleDoesNotExistException" => SetReceiptRulePositionError::RuleDoesNotExist(String::from(parsed_error.message)),_ => SetReceiptRulePositionError::Unknown(String::from(body))
+                                    "RuleDoesNotExistException" => SetReceiptRulePositionError::RuleDoesNotExist(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => SetReceiptRulePositionError::RuleSetDoesNotExist(String::from(parsed_error.message)),_ => SetReceiptRulePositionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SetReceiptRulePositionError::Unknown(body.to_string())
@@ -8584,7 +8584,7 @@ Unknown(String)
                 impl Error for SetReceiptRulePositionError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetReceiptRulePositionError::RuleSetDoesNotExist(ref cause) => cause,SetReceiptRulePositionError::RuleDoesNotExist(ref cause) => cause,SetReceiptRulePositionError::Validation(ref cause) => cause,SetReceiptRulePositionError::Credentials(ref err) => err.description(),SetReceiptRulePositionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetReceiptRulePositionError::Unknown(ref cause) => cause
+                            SetReceiptRulePositionError::RuleDoesNotExist(ref cause) => cause,SetReceiptRulePositionError::RuleSetDoesNotExist(ref cause) => cause,SetReceiptRulePositionError::Validation(ref cause) => cause,SetReceiptRulePositionError::Credentials(ref err) => err.description(),SetReceiptRulePositionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetReceiptRulePositionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8656,18 +8656,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateReceiptRuleError {
                     
-///<p>Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
-InvalidSnsTopic(String),
-///<p>Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
-InvalidS3Configuration(String),
 ///<p>Indicates that the provided AWS Lambda function is invalid, or that Amazon SES could not execute the provided function, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
 InvalidLambdaFunction(String),
-///<p>Indicates that the provided receipt rule set does not exist.</p>
-RuleSetDoesNotExist(String),
+///<p>Indicates that the provided Amazon S3 bucket or AWS KMS encryption key is invalid, or that Amazon SES could not publish to the bucket, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
+InvalidS3Configuration(String),
+///<p>Indicates that the provided Amazon SNS topic is invalid, or that Amazon SES could not publish to the topic, possibly due to permissions issues. For information about giving permissions, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/receiving-email-permissions.html">Amazon SES Developer Guide</a>.</p>
+InvalidSnsTopic(String),
+///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
+LimitExceeded(String),
 ///<p>Indicates that the provided receipt rule does not exist.</p>
 RuleDoesNotExist(String),
-///<p>Indicates that a resource could not be created because of service limits. For a list of Amazon SES limits, see the <a href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide/limits.html">Amazon SES Developer Guide</a>.</p>
-LimitExceeded(String),/// An error occurred dispatching the HTTP request
+///<p>Indicates that the provided receipt rule set does not exist.</p>
+RuleSetDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8684,7 +8684,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidSnsTopicException" => UpdateReceiptRuleError::InvalidSnsTopic(String::from(parsed_error.message)),"InvalidS3ConfigurationException" => UpdateReceiptRuleError::InvalidS3Configuration(String::from(parsed_error.message)),"InvalidLambdaFunctionException" => UpdateReceiptRuleError::InvalidLambdaFunction(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => UpdateReceiptRuleError::RuleSetDoesNotExist(String::from(parsed_error.message)),"RuleDoesNotExistException" => UpdateReceiptRuleError::RuleDoesNotExist(String::from(parsed_error.message)),"LimitExceededException" => UpdateReceiptRuleError::LimitExceeded(String::from(parsed_error.message)),_ => UpdateReceiptRuleError::Unknown(String::from(body))
+                                    "InvalidLambdaFunctionException" => UpdateReceiptRuleError::InvalidLambdaFunction(String::from(parsed_error.message)),"InvalidS3ConfigurationException" => UpdateReceiptRuleError::InvalidS3Configuration(String::from(parsed_error.message)),"InvalidSnsTopicException" => UpdateReceiptRuleError::InvalidSnsTopic(String::from(parsed_error.message)),"LimitExceededException" => UpdateReceiptRuleError::LimitExceeded(String::from(parsed_error.message)),"RuleDoesNotExistException" => UpdateReceiptRuleError::RuleDoesNotExist(String::from(parsed_error.message)),"RuleSetDoesNotExistException" => UpdateReceiptRuleError::RuleSetDoesNotExist(String::from(parsed_error.message)),_ => UpdateReceiptRuleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => UpdateReceiptRuleError::Unknown(body.to_string())
@@ -8716,7 +8716,7 @@ Unknown(String)
                 impl Error for UpdateReceiptRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateReceiptRuleError::InvalidSnsTopic(ref cause) => cause,UpdateReceiptRuleError::InvalidS3Configuration(ref cause) => cause,UpdateReceiptRuleError::InvalidLambdaFunction(ref cause) => cause,UpdateReceiptRuleError::RuleSetDoesNotExist(ref cause) => cause,UpdateReceiptRuleError::RuleDoesNotExist(ref cause) => cause,UpdateReceiptRuleError::LimitExceeded(ref cause) => cause,UpdateReceiptRuleError::Validation(ref cause) => cause,UpdateReceiptRuleError::Credentials(ref err) => err.description(),UpdateReceiptRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateReceiptRuleError::Unknown(ref cause) => cause
+                            UpdateReceiptRuleError::InvalidLambdaFunction(ref cause) => cause,UpdateReceiptRuleError::InvalidS3Configuration(ref cause) => cause,UpdateReceiptRuleError::InvalidSnsTopic(ref cause) => cause,UpdateReceiptRuleError::LimitExceeded(ref cause) => cause,UpdateReceiptRuleError::RuleDoesNotExist(ref cause) => cause,UpdateReceiptRuleError::RuleSetDoesNotExist(ref cause) => cause,UpdateReceiptRuleError::Validation(ref cause) => cause,UpdateReceiptRuleError::Credentials(ref err) => err.description(),UpdateReceiptRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateReceiptRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }

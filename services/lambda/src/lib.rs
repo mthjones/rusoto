@@ -827,16 +827,16 @@ pub type VpcId = String;
                 #[derive(Debug, PartialEq)]
                 pub enum AddPermissionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>The resource already exists.</p>
-ResourceConflict(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
 ///<p>Lambda function access policy is limited to 20 KB.</p>
 PolicyLengthExceeded(String),
+///<p>The resource already exists.</p>
+ResourceConflict(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -857,7 +857,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => AddPermissionError::Service(String::from(error_message)),"ResourceNotFoundException" => AddPermissionError::ResourceNotFound(String::from(error_message)),"ResourceConflictException" => AddPermissionError::ResourceConflict(String::from(error_message)),"InvalidParameterValueException" => AddPermissionError::InvalidParameterValue(String::from(error_message)),"PolicyLengthExceededException" => AddPermissionError::PolicyLengthExceeded(String::from(error_message)),"TooManyRequestsException" => AddPermissionError::TooManyRequests(String::from(error_message)),"ValidationException" => AddPermissionError::Validation(error_message.to_string()),_ => AddPermissionError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => AddPermissionError::InvalidParameterValue(String::from(error_message)),"PolicyLengthExceededException" => AddPermissionError::PolicyLengthExceeded(String::from(error_message)),"ResourceConflictException" => AddPermissionError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => AddPermissionError::ResourceNotFound(String::from(error_message)),"ServiceException" => AddPermissionError::Service(String::from(error_message)),"TooManyRequestsException" => AddPermissionError::TooManyRequests(String::from(error_message)),"ValidationException" => AddPermissionError::Validation(error_message.to_string()),_ => AddPermissionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddPermissionError::Unknown(String::from(body))
@@ -888,7 +888,7 @@ Unknown(String)
                 impl Error for AddPermissionError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddPermissionError::Service(ref cause) => cause,AddPermissionError::ResourceNotFound(ref cause) => cause,AddPermissionError::ResourceConflict(ref cause) => cause,AddPermissionError::InvalidParameterValue(ref cause) => cause,AddPermissionError::PolicyLengthExceeded(ref cause) => cause,AddPermissionError::TooManyRequests(ref cause) => cause,AddPermissionError::Validation(ref cause) => cause,AddPermissionError::Credentials(ref err) => err.description(),AddPermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddPermissionError::Unknown(ref cause) => cause
+                            AddPermissionError::InvalidParameterValue(ref cause) => cause,AddPermissionError::PolicyLengthExceeded(ref cause) => cause,AddPermissionError::ResourceConflict(ref cause) => cause,AddPermissionError::ResourceNotFound(ref cause) => cause,AddPermissionError::Service(ref cause) => cause,AddPermissionError::TooManyRequests(ref cause) => cause,AddPermissionError::Validation(ref cause) => cause,AddPermissionError::Credentials(ref err) => err.description(),AddPermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddPermissionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -896,14 +896,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateAliasError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>The resource already exists.</p>
-ResourceConflict(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource already exists.</p>
+ResourceConflict(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -924,7 +924,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => CreateAliasError::Service(String::from(error_message)),"ResourceNotFoundException" => CreateAliasError::ResourceNotFound(String::from(error_message)),"ResourceConflictException" => CreateAliasError::ResourceConflict(String::from(error_message)),"InvalidParameterValueException" => CreateAliasError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => CreateAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => CreateAliasError::Validation(error_message.to_string()),_ => CreateAliasError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => CreateAliasError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => CreateAliasError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => CreateAliasError::ResourceNotFound(String::from(error_message)),"ServiceException" => CreateAliasError::Service(String::from(error_message)),"TooManyRequestsException" => CreateAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => CreateAliasError::Validation(error_message.to_string()),_ => CreateAliasError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateAliasError::Unknown(String::from(body))
@@ -955,7 +955,7 @@ Unknown(String)
                 impl Error for CreateAliasError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateAliasError::Service(ref cause) => cause,CreateAliasError::ResourceNotFound(ref cause) => cause,CreateAliasError::ResourceConflict(ref cause) => cause,CreateAliasError::InvalidParameterValue(ref cause) => cause,CreateAliasError::TooManyRequests(ref cause) => cause,CreateAliasError::Validation(ref cause) => cause,CreateAliasError::Credentials(ref err) => err.description(),CreateAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAliasError::Unknown(ref cause) => cause
+                            CreateAliasError::InvalidParameterValue(ref cause) => cause,CreateAliasError::ResourceConflict(ref cause) => cause,CreateAliasError::ResourceNotFound(ref cause) => cause,CreateAliasError::Service(ref cause) => cause,CreateAliasError::TooManyRequests(ref cause) => cause,CreateAliasError::Validation(ref cause) => cause,CreateAliasError::Credentials(ref err) => err.description(),CreateAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAliasError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -963,16 +963,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateEventSourceMappingError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
 ///<p>The resource already exists.</p>
 ResourceConflict(String),
-///<p/>
-TooManyRequests(String),
 ///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
+///<p/>
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -991,7 +991,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => CreateEventSourceMappingError::Service(String::from(error_message)),"InvalidParameterValueException" => CreateEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => CreateEventSourceMappingError::ResourceConflict(String::from(error_message)),"TooManyRequestsException" => CreateEventSourceMappingError::TooManyRequests(String::from(error_message)),"ResourceNotFoundException" => CreateEventSourceMappingError::ResourceNotFound(String::from(error_message)),"ValidationException" => CreateEventSourceMappingError::Validation(error_message.to_string()),_ => CreateEventSourceMappingError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => CreateEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => CreateEventSourceMappingError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => CreateEventSourceMappingError::ResourceNotFound(String::from(error_message)),"ServiceException" => CreateEventSourceMappingError::Service(String::from(error_message)),"TooManyRequestsException" => CreateEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => CreateEventSourceMappingError::Validation(error_message.to_string()),_ => CreateEventSourceMappingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateEventSourceMappingError::Unknown(String::from(body))
@@ -1022,7 +1022,7 @@ Unknown(String)
                 impl Error for CreateEventSourceMappingError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateEventSourceMappingError::Service(ref cause) => cause,CreateEventSourceMappingError::InvalidParameterValue(ref cause) => cause,CreateEventSourceMappingError::ResourceConflict(ref cause) => cause,CreateEventSourceMappingError::TooManyRequests(ref cause) => cause,CreateEventSourceMappingError::ResourceNotFound(ref cause) => cause,CreateEventSourceMappingError::Validation(ref cause) => cause,CreateEventSourceMappingError::Credentials(ref err) => err.description(),CreateEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEventSourceMappingError::Unknown(ref cause) => cause
+                            CreateEventSourceMappingError::InvalidParameterValue(ref cause) => cause,CreateEventSourceMappingError::ResourceConflict(ref cause) => cause,CreateEventSourceMappingError::ResourceNotFound(ref cause) => cause,CreateEventSourceMappingError::Service(ref cause) => cause,CreateEventSourceMappingError::TooManyRequests(ref cause) => cause,CreateEventSourceMappingError::Validation(ref cause) => cause,CreateEventSourceMappingError::Credentials(ref err) => err.description(),CreateEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEventSourceMappingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1030,18 +1030,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateFunctionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
+///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
+CodeStorageExceeded(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>The resource already exists.</p>
 ResourceConflict(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
-CodeStorageExceeded(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1060,7 +1060,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => CreateFunctionError::Service(String::from(error_message)),"InvalidParameterValueException" => CreateFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => CreateFunctionError::ResourceNotFound(String::from(error_message)),"ResourceConflictException" => CreateFunctionError::ResourceConflict(String::from(error_message)),"TooManyRequestsException" => CreateFunctionError::TooManyRequests(String::from(error_message)),"CodeStorageExceededException" => CreateFunctionError::CodeStorageExceeded(String::from(error_message)),"ValidationException" => CreateFunctionError::Validation(error_message.to_string()),_ => CreateFunctionError::Unknown(String::from(body))
+                                    "CodeStorageExceededException" => CreateFunctionError::CodeStorageExceeded(String::from(error_message)),"InvalidParameterValueException" => CreateFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => CreateFunctionError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => CreateFunctionError::ResourceNotFound(String::from(error_message)),"ServiceException" => CreateFunctionError::Service(String::from(error_message)),"TooManyRequestsException" => CreateFunctionError::TooManyRequests(String::from(error_message)),"ValidationException" => CreateFunctionError::Validation(error_message.to_string()),_ => CreateFunctionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateFunctionError::Unknown(String::from(body))
@@ -1091,7 +1091,7 @@ Unknown(String)
                 impl Error for CreateFunctionError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateFunctionError::Service(ref cause) => cause,CreateFunctionError::InvalidParameterValue(ref cause) => cause,CreateFunctionError::ResourceNotFound(ref cause) => cause,CreateFunctionError::ResourceConflict(ref cause) => cause,CreateFunctionError::TooManyRequests(ref cause) => cause,CreateFunctionError::CodeStorageExceeded(ref cause) => cause,CreateFunctionError::Validation(ref cause) => cause,CreateFunctionError::Credentials(ref err) => err.description(),CreateFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateFunctionError::Unknown(ref cause) => cause
+                            CreateFunctionError::CodeStorageExceeded(ref cause) => cause,CreateFunctionError::InvalidParameterValue(ref cause) => cause,CreateFunctionError::ResourceConflict(ref cause) => cause,CreateFunctionError::ResourceNotFound(ref cause) => cause,CreateFunctionError::Service(ref cause) => cause,CreateFunctionError::TooManyRequests(ref cause) => cause,CreateFunctionError::Validation(ref cause) => cause,CreateFunctionError::Credentials(ref err) => err.description(),CreateFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateFunctionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1099,10 +1099,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteAliasError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1123,7 +1123,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => DeleteAliasError::Service(String::from(error_message)),"InvalidParameterValueException" => DeleteAliasError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => DeleteAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => DeleteAliasError::Validation(error_message.to_string()),_ => DeleteAliasError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => DeleteAliasError::InvalidParameterValue(String::from(error_message)),"ServiceException" => DeleteAliasError::Service(String::from(error_message)),"TooManyRequestsException" => DeleteAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => DeleteAliasError::Validation(error_message.to_string()),_ => DeleteAliasError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteAliasError::Unknown(String::from(body))
@@ -1154,7 +1154,7 @@ Unknown(String)
                 impl Error for DeleteAliasError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteAliasError::Service(ref cause) => cause,DeleteAliasError::InvalidParameterValue(ref cause) => cause,DeleteAliasError::TooManyRequests(ref cause) => cause,DeleteAliasError::Validation(ref cause) => cause,DeleteAliasError::Credentials(ref err) => err.description(),DeleteAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteAliasError::Unknown(ref cause) => cause
+                            DeleteAliasError::InvalidParameterValue(ref cause) => cause,DeleteAliasError::Service(ref cause) => cause,DeleteAliasError::TooManyRequests(ref cause) => cause,DeleteAliasError::Validation(ref cause) => cause,DeleteAliasError::Credentials(ref err) => err.description(),DeleteAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteAliasError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1162,12 +1162,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteEventSourceMappingError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1188,7 +1188,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => DeleteEventSourceMappingError::Service(String::from(error_message)),"ResourceNotFoundException" => DeleteEventSourceMappingError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => DeleteEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => DeleteEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => DeleteEventSourceMappingError::Validation(error_message.to_string()),_ => DeleteEventSourceMappingError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => DeleteEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => DeleteEventSourceMappingError::ResourceNotFound(String::from(error_message)),"ServiceException" => DeleteEventSourceMappingError::Service(String::from(error_message)),"TooManyRequestsException" => DeleteEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => DeleteEventSourceMappingError::Validation(error_message.to_string()),_ => DeleteEventSourceMappingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteEventSourceMappingError::Unknown(String::from(body))
@@ -1219,7 +1219,7 @@ Unknown(String)
                 impl Error for DeleteEventSourceMappingError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteEventSourceMappingError::Service(ref cause) => cause,DeleteEventSourceMappingError::ResourceNotFound(ref cause) => cause,DeleteEventSourceMappingError::InvalidParameterValue(ref cause) => cause,DeleteEventSourceMappingError::TooManyRequests(ref cause) => cause,DeleteEventSourceMappingError::Validation(ref cause) => cause,DeleteEventSourceMappingError::Credentials(ref err) => err.description(),DeleteEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteEventSourceMappingError::Unknown(ref cause) => cause
+                            DeleteEventSourceMappingError::InvalidParameterValue(ref cause) => cause,DeleteEventSourceMappingError::ResourceNotFound(ref cause) => cause,DeleteEventSourceMappingError::Service(ref cause) => cause,DeleteEventSourceMappingError::TooManyRequests(ref cause) => cause,DeleteEventSourceMappingError::Validation(ref cause) => cause,DeleteEventSourceMappingError::Credentials(ref err) => err.description(),DeleteEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteEventSourceMappingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1227,16 +1227,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteFunctionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p/>
-TooManyRequests(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
 ///<p>The resource already exists.</p>
-ResourceConflict(String),/// An error occurred dispatching the HTTP request
+ResourceConflict(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
+///<p/>
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1255,7 +1255,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => DeleteFunctionError::Service(String::from(error_message)),"ResourceNotFoundException" => DeleteFunctionError::ResourceNotFound(String::from(error_message)),"TooManyRequestsException" => DeleteFunctionError::TooManyRequests(String::from(error_message)),"InvalidParameterValueException" => DeleteFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => DeleteFunctionError::ResourceConflict(String::from(error_message)),"ValidationException" => DeleteFunctionError::Validation(error_message.to_string()),_ => DeleteFunctionError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => DeleteFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => DeleteFunctionError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => DeleteFunctionError::ResourceNotFound(String::from(error_message)),"ServiceException" => DeleteFunctionError::Service(String::from(error_message)),"TooManyRequestsException" => DeleteFunctionError::TooManyRequests(String::from(error_message)),"ValidationException" => DeleteFunctionError::Validation(error_message.to_string()),_ => DeleteFunctionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteFunctionError::Unknown(String::from(body))
@@ -1286,7 +1286,7 @@ Unknown(String)
                 impl Error for DeleteFunctionError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteFunctionError::Service(ref cause) => cause,DeleteFunctionError::ResourceNotFound(ref cause) => cause,DeleteFunctionError::TooManyRequests(ref cause) => cause,DeleteFunctionError::InvalidParameterValue(ref cause) => cause,DeleteFunctionError::ResourceConflict(ref cause) => cause,DeleteFunctionError::Validation(ref cause) => cause,DeleteFunctionError::Credentials(ref err) => err.description(),DeleteFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteFunctionError::Unknown(ref cause) => cause
+                            DeleteFunctionError::InvalidParameterValue(ref cause) => cause,DeleteFunctionError::ResourceConflict(ref cause) => cause,DeleteFunctionError::ResourceNotFound(ref cause) => cause,DeleteFunctionError::Service(ref cause) => cause,DeleteFunctionError::TooManyRequests(ref cause) => cause,DeleteFunctionError::Validation(ref cause) => cause,DeleteFunctionError::Credentials(ref err) => err.description(),DeleteFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteFunctionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1294,10 +1294,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetAccountSettingsError {
                     
-///<p/>
-TooManyRequests(String),
 ///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),/// An error occurred dispatching the HTTP request
+Service(String),
+///<p/>
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1316,7 +1316,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "TooManyRequestsException" => GetAccountSettingsError::TooManyRequests(String::from(error_message)),"ServiceException" => GetAccountSettingsError::Service(String::from(error_message)),"ValidationException" => GetAccountSettingsError::Validation(error_message.to_string()),_ => GetAccountSettingsError::Unknown(String::from(body))
+                                    "ServiceException" => GetAccountSettingsError::Service(String::from(error_message)),"TooManyRequestsException" => GetAccountSettingsError::TooManyRequests(String::from(error_message)),"ValidationException" => GetAccountSettingsError::Validation(error_message.to_string()),_ => GetAccountSettingsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetAccountSettingsError::Unknown(String::from(body))
@@ -1347,7 +1347,7 @@ Unknown(String)
                 impl Error for GetAccountSettingsError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetAccountSettingsError::TooManyRequests(ref cause) => cause,GetAccountSettingsError::Service(ref cause) => cause,GetAccountSettingsError::Validation(ref cause) => cause,GetAccountSettingsError::Credentials(ref err) => err.description(),GetAccountSettingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetAccountSettingsError::Unknown(ref cause) => cause
+                            GetAccountSettingsError::Service(ref cause) => cause,GetAccountSettingsError::TooManyRequests(ref cause) => cause,GetAccountSettingsError::Validation(ref cause) => cause,GetAccountSettingsError::Credentials(ref err) => err.description(),GetAccountSettingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetAccountSettingsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1355,12 +1355,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetAliasError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1381,7 +1381,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => GetAliasError::Service(String::from(error_message)),"ResourceNotFoundException" => GetAliasError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => GetAliasError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => GetAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => GetAliasError::Validation(error_message.to_string()),_ => GetAliasError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => GetAliasError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => GetAliasError::ResourceNotFound(String::from(error_message)),"ServiceException" => GetAliasError::Service(String::from(error_message)),"TooManyRequestsException" => GetAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => GetAliasError::Validation(error_message.to_string()),_ => GetAliasError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetAliasError::Unknown(String::from(body))
@@ -1412,7 +1412,7 @@ Unknown(String)
                 impl Error for GetAliasError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetAliasError::Service(ref cause) => cause,GetAliasError::ResourceNotFound(ref cause) => cause,GetAliasError::InvalidParameterValue(ref cause) => cause,GetAliasError::TooManyRequests(ref cause) => cause,GetAliasError::Validation(ref cause) => cause,GetAliasError::Credentials(ref err) => err.description(),GetAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetAliasError::Unknown(ref cause) => cause
+                            GetAliasError::InvalidParameterValue(ref cause) => cause,GetAliasError::ResourceNotFound(ref cause) => cause,GetAliasError::Service(ref cause) => cause,GetAliasError::TooManyRequests(ref cause) => cause,GetAliasError::Validation(ref cause) => cause,GetAliasError::Credentials(ref err) => err.description(),GetAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetAliasError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1420,12 +1420,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetEventSourceMappingError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1446,7 +1446,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => GetEventSourceMappingError::Service(String::from(error_message)),"ResourceNotFoundException" => GetEventSourceMappingError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => GetEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => GetEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => GetEventSourceMappingError::Validation(error_message.to_string()),_ => GetEventSourceMappingError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => GetEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => GetEventSourceMappingError::ResourceNotFound(String::from(error_message)),"ServiceException" => GetEventSourceMappingError::Service(String::from(error_message)),"TooManyRequestsException" => GetEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => GetEventSourceMappingError::Validation(error_message.to_string()),_ => GetEventSourceMappingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetEventSourceMappingError::Unknown(String::from(body))
@@ -1477,7 +1477,7 @@ Unknown(String)
                 impl Error for GetEventSourceMappingError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetEventSourceMappingError::Service(ref cause) => cause,GetEventSourceMappingError::ResourceNotFound(ref cause) => cause,GetEventSourceMappingError::InvalidParameterValue(ref cause) => cause,GetEventSourceMappingError::TooManyRequests(ref cause) => cause,GetEventSourceMappingError::Validation(ref cause) => cause,GetEventSourceMappingError::Credentials(ref err) => err.description(),GetEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetEventSourceMappingError::Unknown(ref cause) => cause
+                            GetEventSourceMappingError::InvalidParameterValue(ref cause) => cause,GetEventSourceMappingError::ResourceNotFound(ref cause) => cause,GetEventSourceMappingError::Service(ref cause) => cause,GetEventSourceMappingError::TooManyRequests(ref cause) => cause,GetEventSourceMappingError::Validation(ref cause) => cause,GetEventSourceMappingError::Credentials(ref err) => err.description(),GetEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetEventSourceMappingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1485,14 +1485,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetFunctionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
+///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
+InvalidParameterValue(String),
 ///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
 ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1511,7 +1511,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => GetFunctionError::Service(String::from(error_message)),"ResourceNotFoundException" => GetFunctionError::ResourceNotFound(String::from(error_message)),"TooManyRequestsException" => GetFunctionError::TooManyRequests(String::from(error_message)),"InvalidParameterValueException" => GetFunctionError::InvalidParameterValue(String::from(error_message)),"ValidationException" => GetFunctionError::Validation(error_message.to_string()),_ => GetFunctionError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => GetFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => GetFunctionError::ResourceNotFound(String::from(error_message)),"ServiceException" => GetFunctionError::Service(String::from(error_message)),"TooManyRequestsException" => GetFunctionError::TooManyRequests(String::from(error_message)),"ValidationException" => GetFunctionError::Validation(error_message.to_string()),_ => GetFunctionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetFunctionError::Unknown(String::from(body))
@@ -1542,7 +1542,7 @@ Unknown(String)
                 impl Error for GetFunctionError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetFunctionError::Service(ref cause) => cause,GetFunctionError::ResourceNotFound(ref cause) => cause,GetFunctionError::TooManyRequests(ref cause) => cause,GetFunctionError::InvalidParameterValue(ref cause) => cause,GetFunctionError::Validation(ref cause) => cause,GetFunctionError::Credentials(ref err) => err.description(),GetFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetFunctionError::Unknown(ref cause) => cause
+                            GetFunctionError::InvalidParameterValue(ref cause) => cause,GetFunctionError::ResourceNotFound(ref cause) => cause,GetFunctionError::Service(ref cause) => cause,GetFunctionError::TooManyRequests(ref cause) => cause,GetFunctionError::Validation(ref cause) => cause,GetFunctionError::Credentials(ref err) => err.description(),GetFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetFunctionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1550,14 +1550,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetFunctionConfigurationError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
+///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
+InvalidParameterValue(String),
 ///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
 ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1576,7 +1576,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => GetFunctionConfigurationError::Service(String::from(error_message)),"ResourceNotFoundException" => GetFunctionConfigurationError::ResourceNotFound(String::from(error_message)),"TooManyRequestsException" => GetFunctionConfigurationError::TooManyRequests(String::from(error_message)),"InvalidParameterValueException" => GetFunctionConfigurationError::InvalidParameterValue(String::from(error_message)),"ValidationException" => GetFunctionConfigurationError::Validation(error_message.to_string()),_ => GetFunctionConfigurationError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => GetFunctionConfigurationError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => GetFunctionConfigurationError::ResourceNotFound(String::from(error_message)),"ServiceException" => GetFunctionConfigurationError::Service(String::from(error_message)),"TooManyRequestsException" => GetFunctionConfigurationError::TooManyRequests(String::from(error_message)),"ValidationException" => GetFunctionConfigurationError::Validation(error_message.to_string()),_ => GetFunctionConfigurationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetFunctionConfigurationError::Unknown(String::from(body))
@@ -1607,7 +1607,7 @@ Unknown(String)
                 impl Error for GetFunctionConfigurationError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetFunctionConfigurationError::Service(ref cause) => cause,GetFunctionConfigurationError::ResourceNotFound(ref cause) => cause,GetFunctionConfigurationError::TooManyRequests(ref cause) => cause,GetFunctionConfigurationError::InvalidParameterValue(ref cause) => cause,GetFunctionConfigurationError::Validation(ref cause) => cause,GetFunctionConfigurationError::Credentials(ref err) => err.description(),GetFunctionConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetFunctionConfigurationError::Unknown(ref cause) => cause
+                            GetFunctionConfigurationError::InvalidParameterValue(ref cause) => cause,GetFunctionConfigurationError::ResourceNotFound(ref cause) => cause,GetFunctionConfigurationError::Service(ref cause) => cause,GetFunctionConfigurationError::TooManyRequests(ref cause) => cause,GetFunctionConfigurationError::Validation(ref cause) => cause,GetFunctionConfigurationError::Credentials(ref err) => err.description(),GetFunctionConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetFunctionConfigurationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1615,14 +1615,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetPolicyError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
+///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
+InvalidParameterValue(String),
 ///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
 ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1641,7 +1641,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => GetPolicyError::Service(String::from(error_message)),"ResourceNotFoundException" => GetPolicyError::ResourceNotFound(String::from(error_message)),"TooManyRequestsException" => GetPolicyError::TooManyRequests(String::from(error_message)),"InvalidParameterValueException" => GetPolicyError::InvalidParameterValue(String::from(error_message)),"ValidationException" => GetPolicyError::Validation(error_message.to_string()),_ => GetPolicyError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => GetPolicyError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => GetPolicyError::ResourceNotFound(String::from(error_message)),"ServiceException" => GetPolicyError::Service(String::from(error_message)),"TooManyRequestsException" => GetPolicyError::TooManyRequests(String::from(error_message)),"ValidationException" => GetPolicyError::Validation(error_message.to_string()),_ => GetPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetPolicyError::Unknown(String::from(body))
@@ -1672,7 +1672,7 @@ Unknown(String)
                 impl Error for GetPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetPolicyError::Service(ref cause) => cause,GetPolicyError::ResourceNotFound(ref cause) => cause,GetPolicyError::TooManyRequests(ref cause) => cause,GetPolicyError::InvalidParameterValue(ref cause) => cause,GetPolicyError::Validation(ref cause) => cause,GetPolicyError::Credentials(ref err) => err.description(),GetPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyError::Unknown(ref cause) => cause
+                            GetPolicyError::InvalidParameterValue(ref cause) => cause,GetPolicyError::ResourceNotFound(ref cause) => cause,GetPolicyError::Service(ref cause) => cause,GetPolicyError::TooManyRequests(ref cause) => cause,GetPolicyError::Validation(ref cause) => cause,GetPolicyError::Credentials(ref err) => err.description(),GetPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1680,44 +1680,44 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum InvokeError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>The request body could not be parsed as JSON.</p>
-InvalidRequestContent(String),
-///<p>The request payload exceeded the <code>Invoke</code> request body JSON input limit. For more information, see <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a>. </p>
-RequestTooLarge(String),
-///<p>The content type of the <code>Invoke</code> request body is not JSON.</p>
-UnsupportedMediaType(String),
-///<p/>
-TooManyRequests(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),
-///<p>AWS Lambda received an unexpected EC2 client exception while setting up for the Lambda function.</p>
-EC2Unexpected(String),
-///<p>AWS Lambda was not able to set up VPC access for the Lambda function because one or more configured subnets has no available IP addresses.</p>
-SubnetIPAddressLimitReached(String),
-///<p>AWS Lambda was not able to create an Elastic Network Interface (ENI) in the VPC, specified as part of Lambda function configuration, because the limit for network interfaces has been reached.</p>
-ENILimitReached(String),
-///<p>AWS Lambda was throttled by Amazon EC2 during Lambda function initialization using the execution role provided for the Lambda function.</p>
-EC2Throttled(String),
 ///<p/>
 EC2AccessDenied(String),
-///<p>The Subnet ID provided in the Lambda function VPC configuration is invalid.</p>
-InvalidSubnetID(String),
+///<p>AWS Lambda was throttled by Amazon EC2 during Lambda function initialization using the execution role provided for the Lambda function.</p>
+EC2Throttled(String),
+///<p>AWS Lambda received an unexpected EC2 client exception while setting up for the Lambda function.</p>
+EC2Unexpected(String),
+///<p>AWS Lambda was not able to create an Elastic Network Interface (ENI) in the VPC, specified as part of Lambda function configuration, because the limit for network interfaces has been reached.</p>
+ENILimitReached(String),
+///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
+InvalidParameterValue(String),
+///<p>The request body could not be parsed as JSON.</p>
+InvalidRequestContent(String),
 ///<p>The Security Group ID provided in the Lambda function VPC configuration is invalid.</p>
 InvalidSecurityGroupID(String),
+///<p>The Subnet ID provided in the Lambda function VPC configuration is invalid.</p>
+InvalidSubnetID(String),
 ///<p>AWS Lambda could not unzip the function zip file.</p>
 InvalidZipFile(String),
+///<p>Lambda was unable to decrypt the environment variables because KMS access was denied. Check the Lambda function's KMS permissions.</p>
+KMSAccessDenied(String),
 ///<p>Lambda was unable to decrypt the environment variables because the KMS key used is disabled. Check the Lambda function's KMS key settings.</p>
 KMSDisabled(String),
 ///<p>Lambda was unable to decrypt the environment variables because the KMS key used is in an invalid state for Decrypt. Check the function's KMS key settings.</p>
 KMSInvalidState(String),
-///<p>Lambda was unable to decrypt the environment variables because KMS access was denied. Check the Lambda function's KMS permissions.</p>
-KMSAccessDenied(String),
 ///<p>Lambda was unable to decrypt the environment variables because the KMS key was not found. Check the function's KMS key settings. </p>
-KMSNotFound(String),/// An error occurred dispatching the HTTP request
+KMSNotFound(String),
+///<p>The request payload exceeded the <code>Invoke</code> request body JSON input limit. For more information, see <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a>. </p>
+RequestTooLarge(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
+///<p>AWS Lambda was not able to set up VPC access for the Lambda function because one or more configured subnets has no available IP addresses.</p>
+SubnetIPAddressLimitReached(String),
+///<p/>
+TooManyRequests(String),
+///<p>The content type of the <code>Invoke</code> request body is not JSON.</p>
+UnsupportedMediaType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1736,7 +1736,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => InvokeError::Service(String::from(error_message)),"ResourceNotFoundException" => InvokeError::ResourceNotFound(String::from(error_message)),"InvalidRequestContentException" => InvokeError::InvalidRequestContent(String::from(error_message)),"RequestTooLargeException" => InvokeError::RequestTooLarge(String::from(error_message)),"UnsupportedMediaTypeException" => InvokeError::UnsupportedMediaType(String::from(error_message)),"TooManyRequestsException" => InvokeError::TooManyRequests(String::from(error_message)),"InvalidParameterValueException" => InvokeError::InvalidParameterValue(String::from(error_message)),"EC2UnexpectedException" => InvokeError::EC2Unexpected(String::from(error_message)),"SubnetIPAddressLimitReachedException" => InvokeError::SubnetIPAddressLimitReached(String::from(error_message)),"ENILimitReachedException" => InvokeError::ENILimitReached(String::from(error_message)),"EC2ThrottledException" => InvokeError::EC2Throttled(String::from(error_message)),"EC2AccessDeniedException" => InvokeError::EC2AccessDenied(String::from(error_message)),"InvalidSubnetIDException" => InvokeError::InvalidSubnetID(String::from(error_message)),"InvalidSecurityGroupIDException" => InvokeError::InvalidSecurityGroupID(String::from(error_message)),"InvalidZipFileException" => InvokeError::InvalidZipFile(String::from(error_message)),"KMSDisabledException" => InvokeError::KMSDisabled(String::from(error_message)),"KMSInvalidStateException" => InvokeError::KMSInvalidState(String::from(error_message)),"KMSAccessDeniedException" => InvokeError::KMSAccessDenied(String::from(error_message)),"KMSNotFoundException" => InvokeError::KMSNotFound(String::from(error_message)),"ValidationException" => InvokeError::Validation(error_message.to_string()),_ => InvokeError::Unknown(String::from(body))
+                                    "EC2AccessDeniedException" => InvokeError::EC2AccessDenied(String::from(error_message)),"EC2ThrottledException" => InvokeError::EC2Throttled(String::from(error_message)),"EC2UnexpectedException" => InvokeError::EC2Unexpected(String::from(error_message)),"ENILimitReachedException" => InvokeError::ENILimitReached(String::from(error_message)),"InvalidParameterValueException" => InvokeError::InvalidParameterValue(String::from(error_message)),"InvalidRequestContentException" => InvokeError::InvalidRequestContent(String::from(error_message)),"InvalidSecurityGroupIDException" => InvokeError::InvalidSecurityGroupID(String::from(error_message)),"InvalidSubnetIDException" => InvokeError::InvalidSubnetID(String::from(error_message)),"InvalidZipFileException" => InvokeError::InvalidZipFile(String::from(error_message)),"KMSAccessDeniedException" => InvokeError::KMSAccessDenied(String::from(error_message)),"KMSDisabledException" => InvokeError::KMSDisabled(String::from(error_message)),"KMSInvalidStateException" => InvokeError::KMSInvalidState(String::from(error_message)),"KMSNotFoundException" => InvokeError::KMSNotFound(String::from(error_message)),"RequestTooLargeException" => InvokeError::RequestTooLarge(String::from(error_message)),"ResourceNotFoundException" => InvokeError::ResourceNotFound(String::from(error_message)),"ServiceException" => InvokeError::Service(String::from(error_message)),"SubnetIPAddressLimitReachedException" => InvokeError::SubnetIPAddressLimitReached(String::from(error_message)),"TooManyRequestsException" => InvokeError::TooManyRequests(String::from(error_message)),"UnsupportedMediaTypeException" => InvokeError::UnsupportedMediaType(String::from(error_message)),"ValidationException" => InvokeError::Validation(error_message.to_string()),_ => InvokeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => InvokeError::Unknown(String::from(body))
@@ -1767,7 +1767,7 @@ Unknown(String)
                 impl Error for InvokeError {
                     fn description(&self) -> &str {
                         match *self {
-                            InvokeError::Service(ref cause) => cause,InvokeError::ResourceNotFound(ref cause) => cause,InvokeError::InvalidRequestContent(ref cause) => cause,InvokeError::RequestTooLarge(ref cause) => cause,InvokeError::UnsupportedMediaType(ref cause) => cause,InvokeError::TooManyRequests(ref cause) => cause,InvokeError::InvalidParameterValue(ref cause) => cause,InvokeError::EC2Unexpected(ref cause) => cause,InvokeError::SubnetIPAddressLimitReached(ref cause) => cause,InvokeError::ENILimitReached(ref cause) => cause,InvokeError::EC2Throttled(ref cause) => cause,InvokeError::EC2AccessDenied(ref cause) => cause,InvokeError::InvalidSubnetID(ref cause) => cause,InvokeError::InvalidSecurityGroupID(ref cause) => cause,InvokeError::InvalidZipFile(ref cause) => cause,InvokeError::KMSDisabled(ref cause) => cause,InvokeError::KMSInvalidState(ref cause) => cause,InvokeError::KMSAccessDenied(ref cause) => cause,InvokeError::KMSNotFound(ref cause) => cause,InvokeError::Validation(ref cause) => cause,InvokeError::Credentials(ref err) => err.description(),InvokeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),InvokeError::Unknown(ref cause) => cause
+                            InvokeError::EC2AccessDenied(ref cause) => cause,InvokeError::EC2Throttled(ref cause) => cause,InvokeError::EC2Unexpected(ref cause) => cause,InvokeError::ENILimitReached(ref cause) => cause,InvokeError::InvalidParameterValue(ref cause) => cause,InvokeError::InvalidRequestContent(ref cause) => cause,InvokeError::InvalidSecurityGroupID(ref cause) => cause,InvokeError::InvalidSubnetID(ref cause) => cause,InvokeError::InvalidZipFile(ref cause) => cause,InvokeError::KMSAccessDenied(ref cause) => cause,InvokeError::KMSDisabled(ref cause) => cause,InvokeError::KMSInvalidState(ref cause) => cause,InvokeError::KMSNotFound(ref cause) => cause,InvokeError::RequestTooLarge(ref cause) => cause,InvokeError::ResourceNotFound(ref cause) => cause,InvokeError::Service(ref cause) => cause,InvokeError::SubnetIPAddressLimitReached(ref cause) => cause,InvokeError::TooManyRequests(ref cause) => cause,InvokeError::UnsupportedMediaType(ref cause) => cause,InvokeError::Validation(ref cause) => cause,InvokeError::Credentials(ref err) => err.description(),InvokeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),InvokeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1775,12 +1775,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum InvokeAsyncError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
+///<p>The request body could not be parsed as JSON.</p>
+InvalidRequestContent(String),
 ///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
 ResourceNotFound(String),
-///<p>The request body could not be parsed as JSON.</p>
-InvalidRequestContent(String),/// An error occurred dispatching the HTTP request
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1799,7 +1799,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => InvokeAsyncError::Service(String::from(error_message)),"ResourceNotFoundException" => InvokeAsyncError::ResourceNotFound(String::from(error_message)),"InvalidRequestContentException" => InvokeAsyncError::InvalidRequestContent(String::from(error_message)),"ValidationException" => InvokeAsyncError::Validation(error_message.to_string()),_ => InvokeAsyncError::Unknown(String::from(body))
+                                    "InvalidRequestContentException" => InvokeAsyncError::InvalidRequestContent(String::from(error_message)),"ResourceNotFoundException" => InvokeAsyncError::ResourceNotFound(String::from(error_message)),"ServiceException" => InvokeAsyncError::Service(String::from(error_message)),"ValidationException" => InvokeAsyncError::Validation(error_message.to_string()),_ => InvokeAsyncError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => InvokeAsyncError::Unknown(String::from(body))
@@ -1830,7 +1830,7 @@ Unknown(String)
                 impl Error for InvokeAsyncError {
                     fn description(&self) -> &str {
                         match *self {
-                            InvokeAsyncError::Service(ref cause) => cause,InvokeAsyncError::ResourceNotFound(ref cause) => cause,InvokeAsyncError::InvalidRequestContent(ref cause) => cause,InvokeAsyncError::Validation(ref cause) => cause,InvokeAsyncError::Credentials(ref err) => err.description(),InvokeAsyncError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),InvokeAsyncError::Unknown(ref cause) => cause
+                            InvokeAsyncError::InvalidRequestContent(ref cause) => cause,InvokeAsyncError::ResourceNotFound(ref cause) => cause,InvokeAsyncError::Service(ref cause) => cause,InvokeAsyncError::Validation(ref cause) => cause,InvokeAsyncError::Credentials(ref err) => err.description(),InvokeAsyncError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),InvokeAsyncError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1838,12 +1838,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListAliasesError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1864,7 +1864,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => ListAliasesError::Service(String::from(error_message)),"ResourceNotFoundException" => ListAliasesError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => ListAliasesError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => ListAliasesError::TooManyRequests(String::from(error_message)),"ValidationException" => ListAliasesError::Validation(error_message.to_string()),_ => ListAliasesError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => ListAliasesError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => ListAliasesError::ResourceNotFound(String::from(error_message)),"ServiceException" => ListAliasesError::Service(String::from(error_message)),"TooManyRequestsException" => ListAliasesError::TooManyRequests(String::from(error_message)),"ValidationException" => ListAliasesError::Validation(error_message.to_string()),_ => ListAliasesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListAliasesError::Unknown(String::from(body))
@@ -1895,7 +1895,7 @@ Unknown(String)
                 impl Error for ListAliasesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListAliasesError::Service(ref cause) => cause,ListAliasesError::ResourceNotFound(ref cause) => cause,ListAliasesError::InvalidParameterValue(ref cause) => cause,ListAliasesError::TooManyRequests(ref cause) => cause,ListAliasesError::Validation(ref cause) => cause,ListAliasesError::Credentials(ref err) => err.description(),ListAliasesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListAliasesError::Unknown(ref cause) => cause
+                            ListAliasesError::InvalidParameterValue(ref cause) => cause,ListAliasesError::ResourceNotFound(ref cause) => cause,ListAliasesError::Service(ref cause) => cause,ListAliasesError::TooManyRequests(ref cause) => cause,ListAliasesError::Validation(ref cause) => cause,ListAliasesError::Credentials(ref err) => err.description(),ListAliasesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListAliasesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1903,12 +1903,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListEventSourceMappingsError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1929,7 +1929,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => ListEventSourceMappingsError::Service(String::from(error_message)),"ResourceNotFoundException" => ListEventSourceMappingsError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => ListEventSourceMappingsError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => ListEventSourceMappingsError::TooManyRequests(String::from(error_message)),"ValidationException" => ListEventSourceMappingsError::Validation(error_message.to_string()),_ => ListEventSourceMappingsError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => ListEventSourceMappingsError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => ListEventSourceMappingsError::ResourceNotFound(String::from(error_message)),"ServiceException" => ListEventSourceMappingsError::Service(String::from(error_message)),"TooManyRequestsException" => ListEventSourceMappingsError::TooManyRequests(String::from(error_message)),"ValidationException" => ListEventSourceMappingsError::Validation(error_message.to_string()),_ => ListEventSourceMappingsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListEventSourceMappingsError::Unknown(String::from(body))
@@ -1960,7 +1960,7 @@ Unknown(String)
                 impl Error for ListEventSourceMappingsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListEventSourceMappingsError::Service(ref cause) => cause,ListEventSourceMappingsError::ResourceNotFound(ref cause) => cause,ListEventSourceMappingsError::InvalidParameterValue(ref cause) => cause,ListEventSourceMappingsError::TooManyRequests(ref cause) => cause,ListEventSourceMappingsError::Validation(ref cause) => cause,ListEventSourceMappingsError::Credentials(ref err) => err.description(),ListEventSourceMappingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListEventSourceMappingsError::Unknown(ref cause) => cause
+                            ListEventSourceMappingsError::InvalidParameterValue(ref cause) => cause,ListEventSourceMappingsError::ResourceNotFound(ref cause) => cause,ListEventSourceMappingsError::Service(ref cause) => cause,ListEventSourceMappingsError::TooManyRequests(ref cause) => cause,ListEventSourceMappingsError::Validation(ref cause) => cause,ListEventSourceMappingsError::Credentials(ref err) => err.description(),ListEventSourceMappingsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListEventSourceMappingsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2029,12 +2029,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListVersionsByFunctionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2055,7 +2055,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => ListVersionsByFunctionError::Service(String::from(error_message)),"ResourceNotFoundException" => ListVersionsByFunctionError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => ListVersionsByFunctionError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => ListVersionsByFunctionError::TooManyRequests(String::from(error_message)),"ValidationException" => ListVersionsByFunctionError::Validation(error_message.to_string()),_ => ListVersionsByFunctionError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => ListVersionsByFunctionError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => ListVersionsByFunctionError::ResourceNotFound(String::from(error_message)),"ServiceException" => ListVersionsByFunctionError::Service(String::from(error_message)),"TooManyRequestsException" => ListVersionsByFunctionError::TooManyRequests(String::from(error_message)),"ValidationException" => ListVersionsByFunctionError::Validation(error_message.to_string()),_ => ListVersionsByFunctionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListVersionsByFunctionError::Unknown(String::from(body))
@@ -2086,7 +2086,7 @@ Unknown(String)
                 impl Error for ListVersionsByFunctionError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListVersionsByFunctionError::Service(ref cause) => cause,ListVersionsByFunctionError::ResourceNotFound(ref cause) => cause,ListVersionsByFunctionError::InvalidParameterValue(ref cause) => cause,ListVersionsByFunctionError::TooManyRequests(ref cause) => cause,ListVersionsByFunctionError::Validation(ref cause) => cause,ListVersionsByFunctionError::Credentials(ref err) => err.description(),ListVersionsByFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVersionsByFunctionError::Unknown(ref cause) => cause
+                            ListVersionsByFunctionError::InvalidParameterValue(ref cause) => cause,ListVersionsByFunctionError::ResourceNotFound(ref cause) => cause,ListVersionsByFunctionError::Service(ref cause) => cause,ListVersionsByFunctionError::TooManyRequests(ref cause) => cause,ListVersionsByFunctionError::Validation(ref cause) => cause,ListVersionsByFunctionError::Credentials(ref err) => err.description(),ListVersionsByFunctionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListVersionsByFunctionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2094,16 +2094,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PublishVersionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
+///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
+CodeStorageExceeded(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
-CodeStorageExceeded(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2122,7 +2122,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => PublishVersionError::Service(String::from(error_message)),"ResourceNotFoundException" => PublishVersionError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => PublishVersionError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => PublishVersionError::TooManyRequests(String::from(error_message)),"CodeStorageExceededException" => PublishVersionError::CodeStorageExceeded(String::from(error_message)),"ValidationException" => PublishVersionError::Validation(error_message.to_string()),_ => PublishVersionError::Unknown(String::from(body))
+                                    "CodeStorageExceededException" => PublishVersionError::CodeStorageExceeded(String::from(error_message)),"InvalidParameterValueException" => PublishVersionError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => PublishVersionError::ResourceNotFound(String::from(error_message)),"ServiceException" => PublishVersionError::Service(String::from(error_message)),"TooManyRequestsException" => PublishVersionError::TooManyRequests(String::from(error_message)),"ValidationException" => PublishVersionError::Validation(error_message.to_string()),_ => PublishVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PublishVersionError::Unknown(String::from(body))
@@ -2153,7 +2153,7 @@ Unknown(String)
                 impl Error for PublishVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            PublishVersionError::Service(ref cause) => cause,PublishVersionError::ResourceNotFound(ref cause) => cause,PublishVersionError::InvalidParameterValue(ref cause) => cause,PublishVersionError::TooManyRequests(ref cause) => cause,PublishVersionError::CodeStorageExceeded(ref cause) => cause,PublishVersionError::Validation(ref cause) => cause,PublishVersionError::Credentials(ref err) => err.description(),PublishVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PublishVersionError::Unknown(ref cause) => cause
+                            PublishVersionError::CodeStorageExceeded(ref cause) => cause,PublishVersionError::InvalidParameterValue(ref cause) => cause,PublishVersionError::ResourceNotFound(ref cause) => cause,PublishVersionError::Service(ref cause) => cause,PublishVersionError::TooManyRequests(ref cause) => cause,PublishVersionError::Validation(ref cause) => cause,PublishVersionError::Credentials(ref err) => err.description(),PublishVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PublishVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2161,12 +2161,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RemovePermissionError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2187,7 +2187,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => RemovePermissionError::Service(String::from(error_message)),"ResourceNotFoundException" => RemovePermissionError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => RemovePermissionError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => RemovePermissionError::TooManyRequests(String::from(error_message)),"ValidationException" => RemovePermissionError::Validation(error_message.to_string()),_ => RemovePermissionError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => RemovePermissionError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => RemovePermissionError::ResourceNotFound(String::from(error_message)),"ServiceException" => RemovePermissionError::Service(String::from(error_message)),"TooManyRequestsException" => RemovePermissionError::TooManyRequests(String::from(error_message)),"ValidationException" => RemovePermissionError::Validation(error_message.to_string()),_ => RemovePermissionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemovePermissionError::Unknown(String::from(body))
@@ -2218,7 +2218,7 @@ Unknown(String)
                 impl Error for RemovePermissionError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemovePermissionError::Service(ref cause) => cause,RemovePermissionError::ResourceNotFound(ref cause) => cause,RemovePermissionError::InvalidParameterValue(ref cause) => cause,RemovePermissionError::TooManyRequests(ref cause) => cause,RemovePermissionError::Validation(ref cause) => cause,RemovePermissionError::Credentials(ref err) => err.description(),RemovePermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemovePermissionError::Unknown(ref cause) => cause
+                            RemovePermissionError::InvalidParameterValue(ref cause) => cause,RemovePermissionError::ResourceNotFound(ref cause) => cause,RemovePermissionError::Service(ref cause) => cause,RemovePermissionError::TooManyRequests(ref cause) => cause,RemovePermissionError::Validation(ref cause) => cause,RemovePermissionError::Credentials(ref err) => err.description(),RemovePermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemovePermissionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2226,12 +2226,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateAliasError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2252,7 +2252,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => UpdateAliasError::Service(String::from(error_message)),"ResourceNotFoundException" => UpdateAliasError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => UpdateAliasError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => UpdateAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateAliasError::Validation(error_message.to_string()),_ => UpdateAliasError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => UpdateAliasError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => UpdateAliasError::ResourceNotFound(String::from(error_message)),"ServiceException" => UpdateAliasError::Service(String::from(error_message)),"TooManyRequestsException" => UpdateAliasError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateAliasError::Validation(error_message.to_string()),_ => UpdateAliasError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateAliasError::Unknown(String::from(body))
@@ -2283,7 +2283,7 @@ Unknown(String)
                 impl Error for UpdateAliasError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateAliasError::Service(ref cause) => cause,UpdateAliasError::ResourceNotFound(ref cause) => cause,UpdateAliasError::InvalidParameterValue(ref cause) => cause,UpdateAliasError::TooManyRequests(ref cause) => cause,UpdateAliasError::Validation(ref cause) => cause,UpdateAliasError::Credentials(ref err) => err.description(),UpdateAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAliasError::Unknown(ref cause) => cause
+                            UpdateAliasError::InvalidParameterValue(ref cause) => cause,UpdateAliasError::ResourceNotFound(ref cause) => cause,UpdateAliasError::Service(ref cause) => cause,UpdateAliasError::TooManyRequests(ref cause) => cause,UpdateAliasError::Validation(ref cause) => cause,UpdateAliasError::Credentials(ref err) => err.description(),UpdateAliasError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAliasError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2291,16 +2291,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateEventSourceMappingError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
-///<p/>
-TooManyRequests(String),
 ///<p>The resource already exists.</p>
-ResourceConflict(String),/// An error occurred dispatching the HTTP request
+ResourceConflict(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
+///<p/>
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2319,7 +2319,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => UpdateEventSourceMappingError::Service(String::from(error_message)),"ResourceNotFoundException" => UpdateEventSourceMappingError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => UpdateEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => UpdateEventSourceMappingError::TooManyRequests(String::from(error_message)),"ResourceConflictException" => UpdateEventSourceMappingError::ResourceConflict(String::from(error_message)),"ValidationException" => UpdateEventSourceMappingError::Validation(error_message.to_string()),_ => UpdateEventSourceMappingError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => UpdateEventSourceMappingError::InvalidParameterValue(String::from(error_message)),"ResourceConflictException" => UpdateEventSourceMappingError::ResourceConflict(String::from(error_message)),"ResourceNotFoundException" => UpdateEventSourceMappingError::ResourceNotFound(String::from(error_message)),"ServiceException" => UpdateEventSourceMappingError::Service(String::from(error_message)),"TooManyRequestsException" => UpdateEventSourceMappingError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateEventSourceMappingError::Validation(error_message.to_string()),_ => UpdateEventSourceMappingError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateEventSourceMappingError::Unknown(String::from(body))
@@ -2350,7 +2350,7 @@ Unknown(String)
                 impl Error for UpdateEventSourceMappingError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateEventSourceMappingError::Service(ref cause) => cause,UpdateEventSourceMappingError::ResourceNotFound(ref cause) => cause,UpdateEventSourceMappingError::InvalidParameterValue(ref cause) => cause,UpdateEventSourceMappingError::TooManyRequests(ref cause) => cause,UpdateEventSourceMappingError::ResourceConflict(ref cause) => cause,UpdateEventSourceMappingError::Validation(ref cause) => cause,UpdateEventSourceMappingError::Credentials(ref err) => err.description(),UpdateEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateEventSourceMappingError::Unknown(ref cause) => cause
+                            UpdateEventSourceMappingError::InvalidParameterValue(ref cause) => cause,UpdateEventSourceMappingError::ResourceConflict(ref cause) => cause,UpdateEventSourceMappingError::ResourceNotFound(ref cause) => cause,UpdateEventSourceMappingError::Service(ref cause) => cause,UpdateEventSourceMappingError::TooManyRequests(ref cause) => cause,UpdateEventSourceMappingError::Validation(ref cause) => cause,UpdateEventSourceMappingError::Credentials(ref err) => err.description(),UpdateEventSourceMappingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateEventSourceMappingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2358,16 +2358,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateFunctionCodeError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
+///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
+CodeStorageExceeded(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
-TooManyRequests(String),
-///<p>You have exceeded your maximum total code size per account. <a href="http://docs.aws.amazon.com/lambda/latest/dg/limits.html">Limits</a> </p>
-CodeStorageExceeded(String),/// An error occurred dispatching the HTTP request
+TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2386,7 +2386,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => UpdateFunctionCodeError::Service(String::from(error_message)),"ResourceNotFoundException" => UpdateFunctionCodeError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => UpdateFunctionCodeError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => UpdateFunctionCodeError::TooManyRequests(String::from(error_message)),"CodeStorageExceededException" => UpdateFunctionCodeError::CodeStorageExceeded(String::from(error_message)),"ValidationException" => UpdateFunctionCodeError::Validation(error_message.to_string()),_ => UpdateFunctionCodeError::Unknown(String::from(body))
+                                    "CodeStorageExceededException" => UpdateFunctionCodeError::CodeStorageExceeded(String::from(error_message)),"InvalidParameterValueException" => UpdateFunctionCodeError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => UpdateFunctionCodeError::ResourceNotFound(String::from(error_message)),"ServiceException" => UpdateFunctionCodeError::Service(String::from(error_message)),"TooManyRequestsException" => UpdateFunctionCodeError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateFunctionCodeError::Validation(error_message.to_string()),_ => UpdateFunctionCodeError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateFunctionCodeError::Unknown(String::from(body))
@@ -2417,7 +2417,7 @@ Unknown(String)
                 impl Error for UpdateFunctionCodeError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateFunctionCodeError::Service(ref cause) => cause,UpdateFunctionCodeError::ResourceNotFound(ref cause) => cause,UpdateFunctionCodeError::InvalidParameterValue(ref cause) => cause,UpdateFunctionCodeError::TooManyRequests(ref cause) => cause,UpdateFunctionCodeError::CodeStorageExceeded(ref cause) => cause,UpdateFunctionCodeError::Validation(ref cause) => cause,UpdateFunctionCodeError::Credentials(ref err) => err.description(),UpdateFunctionCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateFunctionCodeError::Unknown(ref cause) => cause
+                            UpdateFunctionCodeError::CodeStorageExceeded(ref cause) => cause,UpdateFunctionCodeError::InvalidParameterValue(ref cause) => cause,UpdateFunctionCodeError::ResourceNotFound(ref cause) => cause,UpdateFunctionCodeError::Service(ref cause) => cause,UpdateFunctionCodeError::TooManyRequests(ref cause) => cause,UpdateFunctionCodeError::Validation(ref cause) => cause,UpdateFunctionCodeError::Credentials(ref err) => err.description(),UpdateFunctionCodeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateFunctionCodeError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2425,12 +2425,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateFunctionConfigurationError {
                     
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
 ///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
 InvalidParameterValue(String),
+///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
+ResourceNotFound(String),
+///<p>The AWS Lambda service encountered an internal error.</p>
+Service(String),
 ///<p/>
 TooManyRequests(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2451,7 +2451,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ServiceException" => UpdateFunctionConfigurationError::Service(String::from(error_message)),"ResourceNotFoundException" => UpdateFunctionConfigurationError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => UpdateFunctionConfigurationError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => UpdateFunctionConfigurationError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateFunctionConfigurationError::Validation(error_message.to_string()),_ => UpdateFunctionConfigurationError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => UpdateFunctionConfigurationError::InvalidParameterValue(String::from(error_message)),"ResourceNotFoundException" => UpdateFunctionConfigurationError::ResourceNotFound(String::from(error_message)),"ServiceException" => UpdateFunctionConfigurationError::Service(String::from(error_message)),"TooManyRequestsException" => UpdateFunctionConfigurationError::TooManyRequests(String::from(error_message)),"ValidationException" => UpdateFunctionConfigurationError::Validation(error_message.to_string()),_ => UpdateFunctionConfigurationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateFunctionConfigurationError::Unknown(String::from(body))
@@ -2482,7 +2482,7 @@ Unknown(String)
                 impl Error for UpdateFunctionConfigurationError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateFunctionConfigurationError::Service(ref cause) => cause,UpdateFunctionConfigurationError::ResourceNotFound(ref cause) => cause,UpdateFunctionConfigurationError::InvalidParameterValue(ref cause) => cause,UpdateFunctionConfigurationError::TooManyRequests(ref cause) => cause,UpdateFunctionConfigurationError::Validation(ref cause) => cause,UpdateFunctionConfigurationError::Credentials(ref err) => err.description(),UpdateFunctionConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateFunctionConfigurationError::Unknown(ref cause) => cause
+                            UpdateFunctionConfigurationError::InvalidParameterValue(ref cause) => cause,UpdateFunctionConfigurationError::ResourceNotFound(ref cause) => cause,UpdateFunctionConfigurationError::Service(ref cause) => cause,UpdateFunctionConfigurationError::TooManyRequests(ref cause) => cause,UpdateFunctionConfigurationError::Validation(ref cause) => cause,UpdateFunctionConfigurationError::Credentials(ref err) => err.description(),UpdateFunctionConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateFunctionConfigurationError::Unknown(ref cause) => cause
                         }
                     }
                  }

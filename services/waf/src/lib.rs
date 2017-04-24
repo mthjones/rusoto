@@ -1254,10 +1254,10 @@ WAFInternalError(String),
 WAFInvalidAccount(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1276,7 +1276,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFDisallowedNameException" => CreateByteMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateByteMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFStaleDataException" => CreateByteMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => CreateByteMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateByteMatchSetError::Validation(error_message.to_string()),_ => CreateByteMatchSetError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateByteMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateByteMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateByteMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateByteMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateByteMatchSetError::Validation(error_message.to_string()),_ => CreateByteMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateByteMatchSetError::Unknown(String::from(body))
@@ -1307,7 +1307,7 @@ Unknown(String)
                 impl Error for CreateByteMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateByteMatchSetError::WAFDisallowedName(ref cause) => cause,CreateByteMatchSetError::WAFInternalError(ref cause) => cause,CreateByteMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateByteMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateByteMatchSetError::WAFStaleData(ref cause) => cause,CreateByteMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateByteMatchSetError::Validation(ref cause) => cause,CreateByteMatchSetError::Credentials(ref err) => err.description(),CreateByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateByteMatchSetError::Unknown(ref cause) => cause
+                            CreateByteMatchSetError::WAFDisallowedName(ref cause) => cause,CreateByteMatchSetError::WAFInternalError(ref cause) => cause,CreateByteMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateByteMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateByteMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateByteMatchSetError::WAFStaleData(ref cause) => cause,CreateByteMatchSetError::Validation(ref cause) => cause,CreateByteMatchSetError::Credentials(ref err) => err.description(),CreateByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateByteMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1315,18 +1315,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateIPSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
+///<p>The name specified is invalid.</p>
+WAFDisallowedName(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
-///<p>The name specified is invalid.</p>
-WAFDisallowedName(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1345,7 +1345,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => CreateIPSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => CreateIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFDisallowedNameException" => CreateIPSetError::WAFDisallowedName(String::from(error_message)),"WAFInvalidParameterException" => CreateIPSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateIPSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateIPSetError::Validation(error_message.to_string()),_ => CreateIPSetError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateIPSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateIPSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateIPSetError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateIPSetError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateIPSetError::Validation(error_message.to_string()),_ => CreateIPSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateIPSetError::Unknown(String::from(body))
@@ -1376,7 +1376,7 @@ Unknown(String)
                 impl Error for CreateIPSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateIPSetError::WAFStaleData(ref cause) => cause,CreateIPSetError::WAFInternalError(ref cause) => cause,CreateIPSetError::WAFInvalidAccount(ref cause) => cause,CreateIPSetError::WAFDisallowedName(ref cause) => cause,CreateIPSetError::WAFInvalidParameter(ref cause) => cause,CreateIPSetError::WAFLimitsExceeded(ref cause) => cause,CreateIPSetError::Validation(ref cause) => cause,CreateIPSetError::Credentials(ref err) => err.description(),CreateIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateIPSetError::Unknown(ref cause) => cause
+                            CreateIPSetError::WAFDisallowedName(ref cause) => cause,CreateIPSetError::WAFInternalError(ref cause) => cause,CreateIPSetError::WAFInvalidAccount(ref cause) => cause,CreateIPSetError::WAFInvalidParameter(ref cause) => cause,CreateIPSetError::WAFLimitsExceeded(ref cause) => cause,CreateIPSetError::WAFStaleData(ref cause) => cause,CreateIPSetError::Validation(ref cause) => cause,CreateIPSetError::Credentials(ref err) => err.description(),CreateIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateIPSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1384,16 +1384,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateRuleError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
-WAFInternalError(String),
 ///<p>The name specified is invalid.</p>
 WAFDisallowedName(String),
+///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
+WAFInternalError(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1412,7 +1412,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => CreateRuleError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => CreateRuleError::WAFInternalError(String::from(error_message)),"WAFDisallowedNameException" => CreateRuleError::WAFDisallowedName(String::from(error_message)),"WAFInvalidParameterException" => CreateRuleError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateRuleError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateRuleError::Validation(error_message.to_string()),_ => CreateRuleError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateRuleError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateRuleError::WAFInternalError(String::from(error_message)),"WAFInvalidParameterException" => CreateRuleError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateRuleError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateRuleError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateRuleError::Validation(error_message.to_string()),_ => CreateRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateRuleError::Unknown(String::from(body))
@@ -1443,7 +1443,7 @@ Unknown(String)
                 impl Error for CreateRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateRuleError::WAFStaleData(ref cause) => cause,CreateRuleError::WAFInternalError(ref cause) => cause,CreateRuleError::WAFDisallowedName(ref cause) => cause,CreateRuleError::WAFInvalidParameter(ref cause) => cause,CreateRuleError::WAFLimitsExceeded(ref cause) => cause,CreateRuleError::Validation(ref cause) => cause,CreateRuleError::Credentials(ref err) => err.description(),CreateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRuleError::Unknown(ref cause) => cause
+                            CreateRuleError::WAFDisallowedName(ref cause) => cause,CreateRuleError::WAFInternalError(ref cause) => cause,CreateRuleError::WAFInvalidParameter(ref cause) => cause,CreateRuleError::WAFLimitsExceeded(ref cause) => cause,CreateRuleError::WAFStaleData(ref cause) => cause,CreateRuleError::Validation(ref cause) => cause,CreateRuleError::Credentials(ref err) => err.description(),CreateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1451,18 +1451,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateSizeConstraintSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
+///<p>The name specified is invalid.</p>
+WAFDisallowedName(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
-///<p>The name specified is invalid.</p>
-WAFDisallowedName(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1481,7 +1481,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => CreateSizeConstraintSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => CreateSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFDisallowedNameException" => CreateSizeConstraintSetError::WAFDisallowedName(String::from(error_message)),"WAFInvalidParameterException" => CreateSizeConstraintSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateSizeConstraintSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateSizeConstraintSetError::Validation(error_message.to_string()),_ => CreateSizeConstraintSetError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateSizeConstraintSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateSizeConstraintSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateSizeConstraintSetError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateSizeConstraintSetError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateSizeConstraintSetError::Validation(error_message.to_string()),_ => CreateSizeConstraintSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateSizeConstraintSetError::Unknown(String::from(body))
@@ -1512,7 +1512,7 @@ Unknown(String)
                 impl Error for CreateSizeConstraintSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateSizeConstraintSetError::WAFStaleData(ref cause) => cause,CreateSizeConstraintSetError::WAFInternalError(ref cause) => cause,CreateSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,CreateSizeConstraintSetError::WAFDisallowedName(ref cause) => cause,CreateSizeConstraintSetError::WAFInvalidParameter(ref cause) => cause,CreateSizeConstraintSetError::WAFLimitsExceeded(ref cause) => cause,CreateSizeConstraintSetError::Validation(ref cause) => cause,CreateSizeConstraintSetError::Credentials(ref err) => err.description(),CreateSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSizeConstraintSetError::Unknown(ref cause) => cause
+                            CreateSizeConstraintSetError::WAFDisallowedName(ref cause) => cause,CreateSizeConstraintSetError::WAFInternalError(ref cause) => cause,CreateSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,CreateSizeConstraintSetError::WAFInvalidParameter(ref cause) => cause,CreateSizeConstraintSetError::WAFLimitsExceeded(ref cause) => cause,CreateSizeConstraintSetError::WAFStaleData(ref cause) => cause,CreateSizeConstraintSetError::Validation(ref cause) => cause,CreateSizeConstraintSetError::Credentials(ref err) => err.description(),CreateSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSizeConstraintSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1528,10 +1528,10 @@ WAFInternalError(String),
 WAFInvalidAccount(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1550,7 +1550,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFDisallowedNameException" => CreateSqlInjectionMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateSqlInjectionMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFStaleDataException" => CreateSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => CreateSqlInjectionMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => CreateSqlInjectionMatchSetError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateSqlInjectionMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateSqlInjectionMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateSqlInjectionMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => CreateSqlInjectionMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateSqlInjectionMatchSetError::Unknown(String::from(body))
@@ -1581,7 +1581,7 @@ Unknown(String)
                 impl Error for CreateSqlInjectionMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateSqlInjectionMatchSetError::WAFDisallowedName(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateSqlInjectionMatchSetError::Validation(ref cause) => cause,CreateSqlInjectionMatchSetError::Credentials(ref err) => err.description(),CreateSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSqlInjectionMatchSetError::Unknown(ref cause) => cause
+                            CreateSqlInjectionMatchSetError::WAFDisallowedName(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,CreateSqlInjectionMatchSetError::Validation(ref cause) => cause,CreateSqlInjectionMatchSetError::Credentials(ref err) => err.description(),CreateSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSqlInjectionMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1589,18 +1589,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateWebACLError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
+///<p>The name specified is invalid.</p>
+WAFDisallowedName(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
-///<p>The name specified is invalid.</p>
-WAFDisallowedName(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1619,7 +1619,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => CreateWebACLError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => CreateWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFDisallowedNameException" => CreateWebACLError::WAFDisallowedName(String::from(error_message)),"WAFInvalidParameterException" => CreateWebACLError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateWebACLError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateWebACLError::Validation(error_message.to_string()),_ => CreateWebACLError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateWebACLError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateWebACLError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateWebACLError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateWebACLError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateWebACLError::Validation(error_message.to_string()),_ => CreateWebACLError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateWebACLError::Unknown(String::from(body))
@@ -1650,7 +1650,7 @@ Unknown(String)
                 impl Error for CreateWebACLError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateWebACLError::WAFStaleData(ref cause) => cause,CreateWebACLError::WAFInternalError(ref cause) => cause,CreateWebACLError::WAFInvalidAccount(ref cause) => cause,CreateWebACLError::WAFDisallowedName(ref cause) => cause,CreateWebACLError::WAFInvalidParameter(ref cause) => cause,CreateWebACLError::WAFLimitsExceeded(ref cause) => cause,CreateWebACLError::Validation(ref cause) => cause,CreateWebACLError::Credentials(ref err) => err.description(),CreateWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateWebACLError::Unknown(ref cause) => cause
+                            CreateWebACLError::WAFDisallowedName(ref cause) => cause,CreateWebACLError::WAFInternalError(ref cause) => cause,CreateWebACLError::WAFInvalidAccount(ref cause) => cause,CreateWebACLError::WAFInvalidParameter(ref cause) => cause,CreateWebACLError::WAFLimitsExceeded(ref cause) => cause,CreateWebACLError::WAFStaleData(ref cause) => cause,CreateWebACLError::Validation(ref cause) => cause,CreateWebACLError::Credentials(ref err) => err.description(),CreateWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateWebACLError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1666,10 +1666,10 @@ WAFInternalError(String),
 WAFInvalidAccount(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFLimitsExceeded(String),
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1688,7 +1688,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFDisallowedNameException" => CreateXssMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateXssMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFStaleDataException" => CreateXssMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => CreateXssMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => CreateXssMatchSetError::Validation(error_message.to_string()),_ => CreateXssMatchSetError::Unknown(String::from(body))
+                                    "WAFDisallowedNameException" => CreateXssMatchSetError::WAFDisallowedName(String::from(error_message)),"WAFInternalErrorException" => CreateXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => CreateXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidParameterException" => CreateXssMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => CreateXssMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFStaleDataException" => CreateXssMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => CreateXssMatchSetError::Validation(error_message.to_string()),_ => CreateXssMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateXssMatchSetError::Unknown(String::from(body))
@@ -1719,7 +1719,7 @@ Unknown(String)
                 impl Error for CreateXssMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateXssMatchSetError::WAFDisallowedName(ref cause) => cause,CreateXssMatchSetError::WAFInternalError(ref cause) => cause,CreateXssMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateXssMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateXssMatchSetError::WAFStaleData(ref cause) => cause,CreateXssMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateXssMatchSetError::Validation(ref cause) => cause,CreateXssMatchSetError::Credentials(ref err) => err.description(),CreateXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateXssMatchSetError::Unknown(ref cause) => cause
+                            CreateXssMatchSetError::WAFDisallowedName(ref cause) => cause,CreateXssMatchSetError::WAFInternalError(ref cause) => cause,CreateXssMatchSetError::WAFInvalidAccount(ref cause) => cause,CreateXssMatchSetError::WAFInvalidParameter(ref cause) => cause,CreateXssMatchSetError::WAFLimitsExceeded(ref cause) => cause,CreateXssMatchSetError::WAFStaleData(ref cause) => cause,CreateXssMatchSetError::Validation(ref cause) => cause,CreateXssMatchSetError::Credentials(ref err) => err.description(),CreateXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateXssMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1731,14 +1731,14 @@ Unknown(String)
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1757,7 +1757,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => DeleteByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteByteMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteByteMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteByteMatchSetError::WAFStaleData(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteByteMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteByteMatchSetError::Validation(error_message.to_string()),_ => DeleteByteMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteByteMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteByteMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteByteMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteByteMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteByteMatchSetError::Validation(error_message.to_string()),_ => DeleteByteMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteByteMatchSetError::Unknown(String::from(body))
@@ -1788,7 +1788,7 @@ Unknown(String)
                 impl Error for DeleteByteMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteByteMatchSetError::WAFInternalError(ref cause) => cause,DeleteByteMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteByteMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteByteMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteByteMatchSetError::WAFStaleData(ref cause) => cause,DeleteByteMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteByteMatchSetError::Validation(ref cause) => cause,DeleteByteMatchSetError::Credentials(ref err) => err.description(),DeleteByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteByteMatchSetError::Unknown(ref cause) => cause
+                            DeleteByteMatchSetError::WAFInternalError(ref cause) => cause,DeleteByteMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteByteMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteByteMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteByteMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteByteMatchSetError::WAFStaleData(ref cause) => cause,DeleteByteMatchSetError::Validation(ref cause) => cause,DeleteByteMatchSetError::Credentials(ref err) => err.description(),DeleteByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteByteMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1796,18 +1796,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteIPSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1826,7 +1826,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => DeleteIPSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => DeleteIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteIPSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteIPSetError::WAFReferencedItem(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteIPSetError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteIPSetError::Validation(error_message.to_string()),_ => DeleteIPSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteIPSetError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteIPSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteIPSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteIPSetError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteIPSetError::Validation(error_message.to_string()),_ => DeleteIPSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteIPSetError::Unknown(String::from(body))
@@ -1857,7 +1857,7 @@ Unknown(String)
                 impl Error for DeleteIPSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteIPSetError::WAFStaleData(ref cause) => cause,DeleteIPSetError::WAFInternalError(ref cause) => cause,DeleteIPSetError::WAFInvalidAccount(ref cause) => cause,DeleteIPSetError::WAFNonexistentItem(ref cause) => cause,DeleteIPSetError::WAFReferencedItem(ref cause) => cause,DeleteIPSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteIPSetError::Validation(ref cause) => cause,DeleteIPSetError::Credentials(ref err) => err.description(),DeleteIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteIPSetError::Unknown(ref cause) => cause
+                            DeleteIPSetError::WAFInternalError(ref cause) => cause,DeleteIPSetError::WAFInvalidAccount(ref cause) => cause,DeleteIPSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteIPSetError::WAFNonexistentItem(ref cause) => cause,DeleteIPSetError::WAFReferencedItem(ref cause) => cause,DeleteIPSetError::WAFStaleData(ref cause) => cause,DeleteIPSetError::Validation(ref cause) => cause,DeleteIPSetError::Credentials(ref err) => err.description(),DeleteIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteIPSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1865,18 +1865,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteRuleError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1895,7 +1895,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => DeleteRuleError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => DeleteRuleError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteRuleError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteRuleError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteRuleError::WAFReferencedItem(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteRuleError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteRuleError::Validation(error_message.to_string()),_ => DeleteRuleError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteRuleError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteRuleError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteRuleError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteRuleError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteRuleError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteRuleError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteRuleError::Validation(error_message.to_string()),_ => DeleteRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteRuleError::Unknown(String::from(body))
@@ -1926,7 +1926,7 @@ Unknown(String)
                 impl Error for DeleteRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRuleError::WAFStaleData(ref cause) => cause,DeleteRuleError::WAFInternalError(ref cause) => cause,DeleteRuleError::WAFInvalidAccount(ref cause) => cause,DeleteRuleError::WAFNonexistentItem(ref cause) => cause,DeleteRuleError::WAFReferencedItem(ref cause) => cause,DeleteRuleError::WAFNonEmptyEntity(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
+                            DeleteRuleError::WAFInternalError(ref cause) => cause,DeleteRuleError::WAFInvalidAccount(ref cause) => cause,DeleteRuleError::WAFNonEmptyEntity(ref cause) => cause,DeleteRuleError::WAFNonexistentItem(ref cause) => cause,DeleteRuleError::WAFReferencedItem(ref cause) => cause,DeleteRuleError::WAFStaleData(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1934,18 +1934,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteSizeConstraintSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1964,7 +1964,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => DeleteSizeConstraintSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => DeleteSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteSizeConstraintSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteSizeConstraintSetError::WAFReferencedItem(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteSizeConstraintSetError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteSizeConstraintSetError::Validation(error_message.to_string()),_ => DeleteSizeConstraintSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteSizeConstraintSetError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteSizeConstraintSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteSizeConstraintSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteSizeConstraintSetError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteSizeConstraintSetError::Validation(error_message.to_string()),_ => DeleteSizeConstraintSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteSizeConstraintSetError::Unknown(String::from(body))
@@ -1995,7 +1995,7 @@ Unknown(String)
                 impl Error for DeleteSizeConstraintSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteSizeConstraintSetError::WAFStaleData(ref cause) => cause,DeleteSizeConstraintSetError::WAFInternalError(ref cause) => cause,DeleteSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,DeleteSizeConstraintSetError::WAFNonexistentItem(ref cause) => cause,DeleteSizeConstraintSetError::WAFReferencedItem(ref cause) => cause,DeleteSizeConstraintSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteSizeConstraintSetError::Validation(ref cause) => cause,DeleteSizeConstraintSetError::Credentials(ref err) => err.description(),DeleteSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSizeConstraintSetError::Unknown(ref cause) => cause
+                            DeleteSizeConstraintSetError::WAFInternalError(ref cause) => cause,DeleteSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,DeleteSizeConstraintSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteSizeConstraintSetError::WAFNonexistentItem(ref cause) => cause,DeleteSizeConstraintSetError::WAFReferencedItem(ref cause) => cause,DeleteSizeConstraintSetError::WAFStaleData(ref cause) => cause,DeleteSizeConstraintSetError::Validation(ref cause) => cause,DeleteSizeConstraintSetError::Credentials(ref err) => err.description(),DeleteSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSizeConstraintSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2007,14 +2007,14 @@ Unknown(String)
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2033,7 +2033,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => DeleteSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteSqlInjectionMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteSqlInjectionMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteSqlInjectionMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => DeleteSqlInjectionMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteSqlInjectionMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteSqlInjectionMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteSqlInjectionMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => DeleteSqlInjectionMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteSqlInjectionMatchSetError::Unknown(String::from(body))
@@ -2064,7 +2064,7 @@ Unknown(String)
                 impl Error for DeleteSqlInjectionMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteSqlInjectionMatchSetError::Validation(ref cause) => cause,DeleteSqlInjectionMatchSetError::Credentials(ref err) => err.description(),DeleteSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSqlInjectionMatchSetError::Unknown(ref cause) => cause
+                            DeleteSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,DeleteSqlInjectionMatchSetError::Validation(ref cause) => cause,DeleteSqlInjectionMatchSetError::Credentials(ref err) => err.description(),DeleteSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSqlInjectionMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2072,18 +2072,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteWebACLError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2102,7 +2102,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => DeleteWebACLError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => DeleteWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteWebACLError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteWebACLError::WAFReferencedItem(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteWebACLError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteWebACLError::Validation(error_message.to_string()),_ => DeleteWebACLError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteWebACLError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteWebACLError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteWebACLError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteWebACLError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteWebACLError::Validation(error_message.to_string()),_ => DeleteWebACLError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteWebACLError::Unknown(String::from(body))
@@ -2133,7 +2133,7 @@ Unknown(String)
                 impl Error for DeleteWebACLError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteWebACLError::WAFStaleData(ref cause) => cause,DeleteWebACLError::WAFInternalError(ref cause) => cause,DeleteWebACLError::WAFInvalidAccount(ref cause) => cause,DeleteWebACLError::WAFNonexistentItem(ref cause) => cause,DeleteWebACLError::WAFReferencedItem(ref cause) => cause,DeleteWebACLError::WAFNonEmptyEntity(ref cause) => cause,DeleteWebACLError::Validation(ref cause) => cause,DeleteWebACLError::Credentials(ref err) => err.description(),DeleteWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteWebACLError::Unknown(ref cause) => cause
+                            DeleteWebACLError::WAFInternalError(ref cause) => cause,DeleteWebACLError::WAFInvalidAccount(ref cause) => cause,DeleteWebACLError::WAFNonEmptyEntity(ref cause) => cause,DeleteWebACLError::WAFNonexistentItem(ref cause) => cause,DeleteWebACLError::WAFReferencedItem(ref cause) => cause,DeleteWebACLError::WAFStaleData(ref cause) => cause,DeleteWebACLError::Validation(ref cause) => cause,DeleteWebACLError::Credentials(ref err) => err.description(),DeleteWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteWebACLError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2145,14 +2145,14 @@ Unknown(String)
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
 WAFInvalidAccount(String),
+///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
+WAFNonEmptyEntity(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation failed because you tried to delete an object that isn't empty. For example:</p> <ul> <li> <p>You tried to delete a <code>WebACL</code> that still contains one or more <code>Rule</code> objects.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that still contains one or more <code>ByteMatchSet</code> objects or other predicates.</p> </li> <li> <p>You tried to delete a <code>ByteMatchSet</code> that contains one or more <code>ByteMatchTuple</code> objects.</p> </li> <li> <p>You tried to delete an <code>IPSet</code> that references one or more IP addresses.</p> </li> </ul>
-WAFNonEmptyEntity(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2171,7 +2171,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => DeleteXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonexistentItemException" => DeleteXssMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteXssMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteXssMatchSetError::WAFStaleData(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteXssMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"ValidationException" => DeleteXssMatchSetError::Validation(error_message.to_string()),_ => DeleteXssMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => DeleteXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => DeleteXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFNonEmptyEntityException" => DeleteXssMatchSetError::WAFNonEmptyEntity(String::from(error_message)),"WAFNonexistentItemException" => DeleteXssMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => DeleteXssMatchSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => DeleteXssMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => DeleteXssMatchSetError::Validation(error_message.to_string()),_ => DeleteXssMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteXssMatchSetError::Unknown(String::from(body))
@@ -2202,7 +2202,7 @@ Unknown(String)
                 impl Error for DeleteXssMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteXssMatchSetError::WAFInternalError(ref cause) => cause,DeleteXssMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteXssMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteXssMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteXssMatchSetError::WAFStaleData(ref cause) => cause,DeleteXssMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteXssMatchSetError::Validation(ref cause) => cause,DeleteXssMatchSetError::Credentials(ref err) => err.description(),DeleteXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteXssMatchSetError::Unknown(ref cause) => cause
+                            DeleteXssMatchSetError::WAFInternalError(ref cause) => cause,DeleteXssMatchSetError::WAFInvalidAccount(ref cause) => cause,DeleteXssMatchSetError::WAFNonEmptyEntity(ref cause) => cause,DeleteXssMatchSetError::WAFNonexistentItem(ref cause) => cause,DeleteXssMatchSetError::WAFReferencedItem(ref cause) => cause,DeleteXssMatchSetError::WAFStaleData(ref cause) => cause,DeleteXssMatchSetError::Validation(ref cause) => cause,DeleteXssMatchSetError::Credentials(ref err) => err.description(),DeleteXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteXssMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2332,10 +2332,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetChangeTokenStatusError {
                     
-///<p>The operation failed because the referenced object doesn't exist.</p>
-WAFNonexistentItem(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
-WAFInternalError(String),/// An error occurred dispatching the HTTP request
+WAFInternalError(String),
+///<p>The operation failed because the referenced object doesn't exist.</p>
+WAFNonexistentItem(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2354,7 +2354,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFNonexistentItemException" => GetChangeTokenStatusError::WAFNonexistentItem(String::from(error_message)),"WAFInternalErrorException" => GetChangeTokenStatusError::WAFInternalError(String::from(error_message)),"ValidationException" => GetChangeTokenStatusError::Validation(error_message.to_string()),_ => GetChangeTokenStatusError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => GetChangeTokenStatusError::WAFInternalError(String::from(error_message)),"WAFNonexistentItemException" => GetChangeTokenStatusError::WAFNonexistentItem(String::from(error_message)),"ValidationException" => GetChangeTokenStatusError::Validation(error_message.to_string()),_ => GetChangeTokenStatusError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetChangeTokenStatusError::Unknown(String::from(body))
@@ -2385,7 +2385,7 @@ Unknown(String)
                 impl Error for GetChangeTokenStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetChangeTokenStatusError::WAFNonexistentItem(ref cause) => cause,GetChangeTokenStatusError::WAFInternalError(ref cause) => cause,GetChangeTokenStatusError::Validation(ref cause) => cause,GetChangeTokenStatusError::Credentials(ref err) => err.description(),GetChangeTokenStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetChangeTokenStatusError::Unknown(ref cause) => cause
+                            GetChangeTokenStatusError::WAFInternalError(ref cause) => cause,GetChangeTokenStatusError::WAFNonexistentItem(ref cause) => cause,GetChangeTokenStatusError::Validation(ref cause) => cause,GetChangeTokenStatusError::Credentials(ref err) => err.description(),GetChangeTokenStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetChangeTokenStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2519,10 +2519,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetSampledRequestsError {
                     
-///<p>The operation failed because the referenced object doesn't exist.</p>
-WAFNonexistentItem(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
-WAFInternalError(String),/// An error occurred dispatching the HTTP request
+WAFInternalError(String),
+///<p>The operation failed because the referenced object doesn't exist.</p>
+WAFNonexistentItem(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2541,7 +2541,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFNonexistentItemException" => GetSampledRequestsError::WAFNonexistentItem(String::from(error_message)),"WAFInternalErrorException" => GetSampledRequestsError::WAFInternalError(String::from(error_message)),"ValidationException" => GetSampledRequestsError::Validation(error_message.to_string()),_ => GetSampledRequestsError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => GetSampledRequestsError::WAFInternalError(String::from(error_message)),"WAFNonexistentItemException" => GetSampledRequestsError::WAFNonexistentItem(String::from(error_message)),"ValidationException" => GetSampledRequestsError::Validation(error_message.to_string()),_ => GetSampledRequestsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetSampledRequestsError::Unknown(String::from(body))
@@ -2572,7 +2572,7 @@ Unknown(String)
                 impl Error for GetSampledRequestsError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetSampledRequestsError::WAFNonexistentItem(ref cause) => cause,GetSampledRequestsError::WAFInternalError(ref cause) => cause,GetSampledRequestsError::Validation(ref cause) => cause,GetSampledRequestsError::Credentials(ref err) => err.description(),GetSampledRequestsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetSampledRequestsError::Unknown(ref cause) => cause
+                            GetSampledRequestsError::WAFInternalError(ref cause) => cause,GetSampledRequestsError::WAFNonexistentItem(ref cause) => cause,GetSampledRequestsError::Validation(ref cause) => cause,GetSampledRequestsError::Credentials(ref err) => err.description(),GetSampledRequestsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetSampledRequestsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3267,14 +3267,14 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3293,7 +3293,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => UpdateByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateByteMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateByteMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateByteMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateByteMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateByteMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => UpdateByteMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateByteMatchSetError::Validation(error_message.to_string()),_ => UpdateByteMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateByteMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateByteMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateByteMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateByteMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateByteMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateByteMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateByteMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateByteMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateByteMatchSetError::Validation(error_message.to_string()),_ => UpdateByteMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateByteMatchSetError::Unknown(String::from(body))
@@ -3324,7 +3324,7 @@ Unknown(String)
                 impl Error for UpdateByteMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateByteMatchSetError::WAFInternalError(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateByteMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateByteMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateByteMatchSetError::WAFStaleData(ref cause) => cause,UpdateByteMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateByteMatchSetError::Validation(ref cause) => cause,UpdateByteMatchSetError::Credentials(ref err) => err.description(),UpdateByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateByteMatchSetError::Unknown(ref cause) => cause
+                            UpdateByteMatchSetError::WAFInternalError(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateByteMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateByteMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateByteMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateByteMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateByteMatchSetError::WAFStaleData(ref cause) => cause,UpdateByteMatchSetError::Validation(ref cause) => cause,UpdateByteMatchSetError::Credentials(ref err) => err.description(),UpdateByteMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateByteMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3332,8 +3332,6 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateIPSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
@@ -3342,14 +3340,16 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3368,7 +3368,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => UpdateIPSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => UpdateIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateIPSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateIPSetError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateIPSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateIPSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateIPSetError::WAFReferencedItem(String::from(error_message)),"WAFLimitsExceededException" => UpdateIPSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateIPSetError::Validation(error_message.to_string()),_ => UpdateIPSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateIPSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateIPSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateIPSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateIPSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateIPSetError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateIPSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateIPSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateIPSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => UpdateIPSetError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateIPSetError::Validation(error_message.to_string()),_ => UpdateIPSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateIPSetError::Unknown(String::from(body))
@@ -3399,7 +3399,7 @@ Unknown(String)
                 impl Error for UpdateIPSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateIPSetError::WAFStaleData(ref cause) => cause,UpdateIPSetError::WAFInternalError(ref cause) => cause,UpdateIPSetError::WAFInvalidAccount(ref cause) => cause,UpdateIPSetError::WAFInvalidOperation(ref cause) => cause,UpdateIPSetError::WAFInvalidParameter(ref cause) => cause,UpdateIPSetError::WAFNonexistentContainer(ref cause) => cause,UpdateIPSetError::WAFNonexistentItem(ref cause) => cause,UpdateIPSetError::WAFReferencedItem(ref cause) => cause,UpdateIPSetError::WAFLimitsExceeded(ref cause) => cause,UpdateIPSetError::Validation(ref cause) => cause,UpdateIPSetError::Credentials(ref err) => err.description(),UpdateIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateIPSetError::Unknown(ref cause) => cause
+                            UpdateIPSetError::WAFInternalError(ref cause) => cause,UpdateIPSetError::WAFInvalidAccount(ref cause) => cause,UpdateIPSetError::WAFInvalidOperation(ref cause) => cause,UpdateIPSetError::WAFInvalidParameter(ref cause) => cause,UpdateIPSetError::WAFLimitsExceeded(ref cause) => cause,UpdateIPSetError::WAFNonexistentContainer(ref cause) => cause,UpdateIPSetError::WAFNonexistentItem(ref cause) => cause,UpdateIPSetError::WAFReferencedItem(ref cause) => cause,UpdateIPSetError::WAFStaleData(ref cause) => cause,UpdateIPSetError::Validation(ref cause) => cause,UpdateIPSetError::Credentials(ref err) => err.description(),UpdateIPSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateIPSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3407,8 +3407,6 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateRuleError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
@@ -3417,14 +3415,16 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3443,7 +3443,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => UpdateRuleError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => UpdateRuleError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateRuleError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateRuleError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateRuleError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateRuleError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateRuleError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateRuleError::WAFReferencedItem(String::from(error_message)),"WAFLimitsExceededException" => UpdateRuleError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateRuleError::Validation(error_message.to_string()),_ => UpdateRuleError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateRuleError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateRuleError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateRuleError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateRuleError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateRuleError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateRuleError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateRuleError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateRuleError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => UpdateRuleError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateRuleError::Validation(error_message.to_string()),_ => UpdateRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateRuleError::Unknown(String::from(body))
@@ -3474,7 +3474,7 @@ Unknown(String)
                 impl Error for UpdateRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateRuleError::WAFStaleData(ref cause) => cause,UpdateRuleError::WAFInternalError(ref cause) => cause,UpdateRuleError::WAFInvalidAccount(ref cause) => cause,UpdateRuleError::WAFInvalidOperation(ref cause) => cause,UpdateRuleError::WAFInvalidParameter(ref cause) => cause,UpdateRuleError::WAFNonexistentContainer(ref cause) => cause,UpdateRuleError::WAFNonexistentItem(ref cause) => cause,UpdateRuleError::WAFReferencedItem(ref cause) => cause,UpdateRuleError::WAFLimitsExceeded(ref cause) => cause,UpdateRuleError::Validation(ref cause) => cause,UpdateRuleError::Credentials(ref err) => err.description(),UpdateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateRuleError::Unknown(ref cause) => cause
+                            UpdateRuleError::WAFInternalError(ref cause) => cause,UpdateRuleError::WAFInvalidAccount(ref cause) => cause,UpdateRuleError::WAFInvalidOperation(ref cause) => cause,UpdateRuleError::WAFInvalidParameter(ref cause) => cause,UpdateRuleError::WAFLimitsExceeded(ref cause) => cause,UpdateRuleError::WAFNonexistentContainer(ref cause) => cause,UpdateRuleError::WAFNonexistentItem(ref cause) => cause,UpdateRuleError::WAFReferencedItem(ref cause) => cause,UpdateRuleError::WAFStaleData(ref cause) => cause,UpdateRuleError::Validation(ref cause) => cause,UpdateRuleError::Credentials(ref err) => err.description(),UpdateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3482,8 +3482,6 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateSizeConstraintSetError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
@@ -3492,14 +3490,16 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3518,7 +3518,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => UpdateSizeConstraintSetError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => UpdateSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateSizeConstraintSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateSizeConstraintSetError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateSizeConstraintSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateSizeConstraintSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateSizeConstraintSetError::WAFReferencedItem(String::from(error_message)),"WAFLimitsExceededException" => UpdateSizeConstraintSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateSizeConstraintSetError::Validation(error_message.to_string()),_ => UpdateSizeConstraintSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateSizeConstraintSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateSizeConstraintSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateSizeConstraintSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateSizeConstraintSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateSizeConstraintSetError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateSizeConstraintSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateSizeConstraintSetError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateSizeConstraintSetError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => UpdateSizeConstraintSetError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateSizeConstraintSetError::Validation(error_message.to_string()),_ => UpdateSizeConstraintSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateSizeConstraintSetError::Unknown(String::from(body))
@@ -3549,7 +3549,7 @@ Unknown(String)
                 impl Error for UpdateSizeConstraintSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateSizeConstraintSetError::WAFStaleData(ref cause) => cause,UpdateSizeConstraintSetError::WAFInternalError(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidOperation(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidParameter(ref cause) => cause,UpdateSizeConstraintSetError::WAFNonexistentContainer(ref cause) => cause,UpdateSizeConstraintSetError::WAFNonexistentItem(ref cause) => cause,UpdateSizeConstraintSetError::WAFReferencedItem(ref cause) => cause,UpdateSizeConstraintSetError::WAFLimitsExceeded(ref cause) => cause,UpdateSizeConstraintSetError::Validation(ref cause) => cause,UpdateSizeConstraintSetError::Credentials(ref err) => err.description(),UpdateSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSizeConstraintSetError::Unknown(ref cause) => cause
+                            UpdateSizeConstraintSetError::WAFInternalError(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidAccount(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidOperation(ref cause) => cause,UpdateSizeConstraintSetError::WAFInvalidParameter(ref cause) => cause,UpdateSizeConstraintSetError::WAFLimitsExceeded(ref cause) => cause,UpdateSizeConstraintSetError::WAFNonexistentContainer(ref cause) => cause,UpdateSizeConstraintSetError::WAFNonexistentItem(ref cause) => cause,UpdateSizeConstraintSetError::WAFReferencedItem(ref cause) => cause,UpdateSizeConstraintSetError::WAFStaleData(ref cause) => cause,UpdateSizeConstraintSetError::Validation(ref cause) => cause,UpdateSizeConstraintSetError::Credentials(ref err) => err.description(),UpdateSizeConstraintSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSizeConstraintSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3565,14 +3565,14 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3591,7 +3591,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => UpdateSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateSqlInjectionMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateSqlInjectionMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateSqlInjectionMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateSqlInjectionMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => UpdateSqlInjectionMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => UpdateSqlInjectionMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateSqlInjectionMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateSqlInjectionMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateSqlInjectionMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateSqlInjectionMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateSqlInjectionMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateSqlInjectionMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateSqlInjectionMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateSqlInjectionMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateSqlInjectionMatchSetError::Validation(error_message.to_string()),_ => UpdateSqlInjectionMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateSqlInjectionMatchSetError::Unknown(String::from(body))
@@ -3622,7 +3622,7 @@ Unknown(String)
                 impl Error for UpdateSqlInjectionMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateSqlInjectionMatchSetError::Validation(ref cause) => cause,UpdateSqlInjectionMatchSetError::Credentials(ref err) => err.description(),UpdateSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSqlInjectionMatchSetError::Unknown(ref cause) => cause
+                            UpdateSqlInjectionMatchSetError::WAFInternalError(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateSqlInjectionMatchSetError::WAFStaleData(ref cause) => cause,UpdateSqlInjectionMatchSetError::Validation(ref cause) => cause,UpdateSqlInjectionMatchSetError::Credentials(ref err) => err.description(),UpdateSqlInjectionMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateSqlInjectionMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3630,8 +3630,6 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateWebACLError {
                     
-///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
 ///<p>The operation failed because of a system problem, even though the request was valid. Retry your request.</p>
 WAFInternalError(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using an invalid account identifier.</p>
@@ -3640,14 +3638,16 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to delete an object that is still in use. For example:</p> <ul> <li> <p>You tried to delete a <code>ByteMatchSet</code> that is still referenced by a <code>Rule</code>.</p> </li> <li> <p>You tried to delete a <code>Rule</code> that is still referenced by a <code>WebACL</code>.</p> </li> </ul>
 WAFReferencedItem(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3666,7 +3666,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFStaleDataException" => UpdateWebACLError::WAFStaleData(String::from(error_message)),"WAFInternalErrorException" => UpdateWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateWebACLError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateWebACLError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateWebACLError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateWebACLError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateWebACLError::WAFReferencedItem(String::from(error_message)),"WAFLimitsExceededException" => UpdateWebACLError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateWebACLError::Validation(error_message.to_string()),_ => UpdateWebACLError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateWebACLError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateWebACLError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateWebACLError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateWebACLError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateWebACLError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateWebACLError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateWebACLError::WAFNonexistentItem(String::from(error_message)),"WAFReferencedItemException" => UpdateWebACLError::WAFReferencedItem(String::from(error_message)),"WAFStaleDataException" => UpdateWebACLError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateWebACLError::Validation(error_message.to_string()),_ => UpdateWebACLError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateWebACLError::Unknown(String::from(body))
@@ -3697,7 +3697,7 @@ Unknown(String)
                 impl Error for UpdateWebACLError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateWebACLError::WAFStaleData(ref cause) => cause,UpdateWebACLError::WAFInternalError(ref cause) => cause,UpdateWebACLError::WAFInvalidAccount(ref cause) => cause,UpdateWebACLError::WAFInvalidOperation(ref cause) => cause,UpdateWebACLError::WAFInvalidParameter(ref cause) => cause,UpdateWebACLError::WAFNonexistentContainer(ref cause) => cause,UpdateWebACLError::WAFNonexistentItem(ref cause) => cause,UpdateWebACLError::WAFReferencedItem(ref cause) => cause,UpdateWebACLError::WAFLimitsExceeded(ref cause) => cause,UpdateWebACLError::Validation(ref cause) => cause,UpdateWebACLError::Credentials(ref err) => err.description(),UpdateWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateWebACLError::Unknown(ref cause) => cause
+                            UpdateWebACLError::WAFInternalError(ref cause) => cause,UpdateWebACLError::WAFInvalidAccount(ref cause) => cause,UpdateWebACLError::WAFInvalidOperation(ref cause) => cause,UpdateWebACLError::WAFInvalidParameter(ref cause) => cause,UpdateWebACLError::WAFLimitsExceeded(ref cause) => cause,UpdateWebACLError::WAFNonexistentContainer(ref cause) => cause,UpdateWebACLError::WAFNonexistentItem(ref cause) => cause,UpdateWebACLError::WAFReferencedItem(ref cause) => cause,UpdateWebACLError::WAFStaleData(ref cause) => cause,UpdateWebACLError::Validation(ref cause) => cause,UpdateWebACLError::Credentials(ref err) => err.description(),UpdateWebACLError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateWebACLError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3713,14 +3713,14 @@ WAFInvalidAccount(String),
 WAFInvalidOperation(String),
 ///<p>The operation failed because AWS WAF didn't recognize a parameter in the request. For example:</p> <ul> <li> <p>You specified an invalid parameter name.</p> </li> <li> <p>You specified an invalid value.</p> </li> <li> <p>You tried to update an object (<code>ByteMatchSet</code>, <code>IPSet</code>, <code>Rule</code>, or <code>WebACL</code>) using an action other than <code>INSERT</code> or <code>DELETE</code>.</p> </li> <li> <p>You tried to create a <code>WebACL</code> with a <code>DefaultAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>WafAction</code> <code>Type</code> other than <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>FieldToMatch</code> <code>Type</code> other than HEADER, QUERY_STRING, or URI.</p> </li> <li> <p>You tried to update a <code>ByteMatchSet</code> with a <code>Field</code> of <code>HEADER</code> but no value for <code>Data</code>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL cannot be associated.</p> </li> </ul>
 WAFInvalidParameter(String),
+///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
+WAFLimitsExceeded(String),
 ///<p>The operation failed because you tried to add an object to or delete an object from another object that doesn't exist. For example:</p> <ul> <li> <p>You tried to add a <code>Rule</code> to or delete a <code>Rule</code> from a <code>WebACL</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchSet</code> to or delete a <code>ByteMatchSet</code> from a <code>Rule</code> that doesn't exist.</p> </li> <li> <p>You tried to add an IP address to or delete an IP address from an <code>IPSet</code> that doesn't exist.</p> </li> <li> <p>You tried to add a <code>ByteMatchTuple</code> to or delete a <code>ByteMatchTuple</code> from a <code>ByteMatchSet</code> that doesn't exist.</p> </li> </ul>
 WAFNonexistentContainer(String),
 ///<p>The operation failed because the referenced object doesn't exist.</p>
 WAFNonexistentItem(String),
 ///<p>The operation failed because you tried to create, update, or delete an object by using a change token that has already been used.</p>
-WAFStaleData(String),
-///<p>The operation exceeds a resource limit, for example, the maximum number of <code>WebACL</code> objects that you can create for an AWS account. For more information, see <a href="http://docs.aws.amazon.com/waf/latest/developerguide/limits.html">Limits</a> in the <i>AWS WAF Developer Guide</i>.</p>
-WAFLimitsExceeded(String),/// An error occurred dispatching the HTTP request
+WAFStaleData(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3739,7 +3739,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "WAFInternalErrorException" => UpdateXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateXssMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateXssMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFNonexistentContainerException" => UpdateXssMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateXssMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateXssMatchSetError::WAFStaleData(String::from(error_message)),"WAFLimitsExceededException" => UpdateXssMatchSetError::WAFLimitsExceeded(String::from(error_message)),"ValidationException" => UpdateXssMatchSetError::Validation(error_message.to_string()),_ => UpdateXssMatchSetError::Unknown(String::from(body))
+                                    "WAFInternalErrorException" => UpdateXssMatchSetError::WAFInternalError(String::from(error_message)),"WAFInvalidAccountException" => UpdateXssMatchSetError::WAFInvalidAccount(String::from(error_message)),"WAFInvalidOperationException" => UpdateXssMatchSetError::WAFInvalidOperation(String::from(error_message)),"WAFInvalidParameterException" => UpdateXssMatchSetError::WAFInvalidParameter(String::from(error_message)),"WAFLimitsExceededException" => UpdateXssMatchSetError::WAFLimitsExceeded(String::from(error_message)),"WAFNonexistentContainerException" => UpdateXssMatchSetError::WAFNonexistentContainer(String::from(error_message)),"WAFNonexistentItemException" => UpdateXssMatchSetError::WAFNonexistentItem(String::from(error_message)),"WAFStaleDataException" => UpdateXssMatchSetError::WAFStaleData(String::from(error_message)),"ValidationException" => UpdateXssMatchSetError::Validation(error_message.to_string()),_ => UpdateXssMatchSetError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateXssMatchSetError::Unknown(String::from(body))
@@ -3770,7 +3770,7 @@ Unknown(String)
                 impl Error for UpdateXssMatchSetError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateXssMatchSetError::WAFInternalError(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateXssMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateXssMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateXssMatchSetError::WAFStaleData(ref cause) => cause,UpdateXssMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateXssMatchSetError::Validation(ref cause) => cause,UpdateXssMatchSetError::Credentials(ref err) => err.description(),UpdateXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateXssMatchSetError::Unknown(ref cause) => cause
+                            UpdateXssMatchSetError::WAFInternalError(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidAccount(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidOperation(ref cause) => cause,UpdateXssMatchSetError::WAFInvalidParameter(ref cause) => cause,UpdateXssMatchSetError::WAFLimitsExceeded(ref cause) => cause,UpdateXssMatchSetError::WAFNonexistentContainer(ref cause) => cause,UpdateXssMatchSetError::WAFNonexistentItem(ref cause) => cause,UpdateXssMatchSetError::WAFStaleData(ref cause) => cause,UpdateXssMatchSetError::Validation(ref cause) => cause,UpdateXssMatchSetError::Credentials(ref err) => err.description(),UpdateXssMatchSetError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateXssMatchSetError::Unknown(ref cause) => cause
                         }
                     }
                  }

@@ -7074,10 +7074,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateOrUpdateTagsError {
                     
-///<p>You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see <a>DescribeAccountLimits</a>.</p>
-LimitExceededFault(String),
 ///<p>You already have an Auto Scaling group or launch configuration with this name.</p>
 AlreadyExistsFault(String),
+///<p>You have already reached a limit for your Auto Scaling resources (for example, groups, launch configurations, or lifecycle hooks). For more information, see <a>DescribeAccountLimits</a>.</p>
+LimitExceededFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
 ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -7096,7 +7096,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LimitExceededFault" => CreateOrUpdateTagsError::LimitExceededFault(String::from(parsed_error.message)),"AlreadyExistsFault" => CreateOrUpdateTagsError::AlreadyExistsFault(String::from(parsed_error.message)),"ResourceContentionFault" => CreateOrUpdateTagsError::ResourceContentionFault(String::from(parsed_error.message)),_ => CreateOrUpdateTagsError::Unknown(String::from(body))
+                                    "AlreadyExistsFault" => CreateOrUpdateTagsError::AlreadyExistsFault(String::from(parsed_error.message)),"LimitExceededFault" => CreateOrUpdateTagsError::LimitExceededFault(String::from(parsed_error.message)),"ResourceContentionFault" => CreateOrUpdateTagsError::ResourceContentionFault(String::from(parsed_error.message)),_ => CreateOrUpdateTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateOrUpdateTagsError::Unknown(body.to_string())
@@ -7128,7 +7128,7 @@ Unknown(String)
                 impl Error for CreateOrUpdateTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateOrUpdateTagsError::LimitExceededFault(ref cause) => cause,CreateOrUpdateTagsError::AlreadyExistsFault(ref cause) => cause,CreateOrUpdateTagsError::ResourceContentionFault(ref cause) => cause,CreateOrUpdateTagsError::Validation(ref cause) => cause,CreateOrUpdateTagsError::Credentials(ref err) => err.description(),CreateOrUpdateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateOrUpdateTagsError::Unknown(ref cause) => cause
+                            CreateOrUpdateTagsError::AlreadyExistsFault(ref cause) => cause,CreateOrUpdateTagsError::LimitExceededFault(ref cause) => cause,CreateOrUpdateTagsError::ResourceContentionFault(ref cause) => cause,CreateOrUpdateTagsError::Validation(ref cause) => cause,CreateOrUpdateTagsError::Credentials(ref err) => err.description(),CreateOrUpdateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateOrUpdateTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7136,12 +7136,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteAutoScalingGroupError {
                     
-///<p>The operation can't be performed because there are scaling activities in progress.</p>
-ScalingActivityInProgressFault(String),
+///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
+ResourceContentionFault(String),
 ///<p>The operation can't be performed because the resource is in use.</p>
 ResourceInUseFault(String),
-///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+///<p>The operation can't be performed because there are scaling activities in progress.</p>
+ScalingActivityInProgressFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7158,7 +7158,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ScalingActivityInProgressFault" => DeleteAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),"ResourceInUseFault" => DeleteAutoScalingGroupError::ResourceInUseFault(String::from(parsed_error.message)),"ResourceContentionFault" => DeleteAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),_ => DeleteAutoScalingGroupError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => DeleteAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),"ResourceInUseFault" => DeleteAutoScalingGroupError::ResourceInUseFault(String::from(parsed_error.message)),"ScalingActivityInProgressFault" => DeleteAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),_ => DeleteAutoScalingGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteAutoScalingGroupError::Unknown(body.to_string())
@@ -7190,7 +7190,7 @@ Unknown(String)
                 impl Error for DeleteAutoScalingGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,DeleteAutoScalingGroupError::ResourceInUseFault(ref cause) => cause,DeleteAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,DeleteAutoScalingGroupError::Validation(ref cause) => cause,DeleteAutoScalingGroupError::Credentials(ref err) => err.description(),DeleteAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteAutoScalingGroupError::Unknown(ref cause) => cause
+                            DeleteAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,DeleteAutoScalingGroupError::ResourceInUseFault(ref cause) => cause,DeleteAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,DeleteAutoScalingGroupError::Validation(ref cause) => cause,DeleteAutoScalingGroupError::Credentials(ref err) => err.description(),DeleteAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteAutoScalingGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7198,10 +7198,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteLaunchConfigurationError {
                     
-///<p>The operation can't be performed because the resource is in use.</p>
-ResourceInUseFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because the resource is in use.</p>
+ResourceInUseFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7218,7 +7218,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ResourceInUseFault" => DeleteLaunchConfigurationError::ResourceInUseFault(String::from(parsed_error.message)),"ResourceContentionFault" => DeleteLaunchConfigurationError::ResourceContentionFault(String::from(parsed_error.message)),_ => DeleteLaunchConfigurationError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => DeleteLaunchConfigurationError::ResourceContentionFault(String::from(parsed_error.message)),"ResourceInUseFault" => DeleteLaunchConfigurationError::ResourceInUseFault(String::from(parsed_error.message)),_ => DeleteLaunchConfigurationError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteLaunchConfigurationError::Unknown(body.to_string())
@@ -7250,7 +7250,7 @@ Unknown(String)
                 impl Error for DeleteLaunchConfigurationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteLaunchConfigurationError::ResourceInUseFault(ref cause) => cause,DeleteLaunchConfigurationError::ResourceContentionFault(ref cause) => cause,DeleteLaunchConfigurationError::Validation(ref cause) => cause,DeleteLaunchConfigurationError::Credentials(ref err) => err.description(),DeleteLaunchConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLaunchConfigurationError::Unknown(ref cause) => cause
+                            DeleteLaunchConfigurationError::ResourceContentionFault(ref cause) => cause,DeleteLaunchConfigurationError::ResourceInUseFault(ref cause) => cause,DeleteLaunchConfigurationError::Validation(ref cause) => cause,DeleteLaunchConfigurationError::Credentials(ref err) => err.description(),DeleteLaunchConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLaunchConfigurationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8956,10 +8956,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ExecutePolicyError {
                     
-///<p>The operation can't be performed because there are scaling activities in progress.</p>
-ScalingActivityInProgressFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because there are scaling activities in progress.</p>
+ScalingActivityInProgressFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8976,7 +8976,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ScalingActivityInProgressFault" => ExecutePolicyError::ScalingActivityInProgressFault(String::from(parsed_error.message)),"ResourceContentionFault" => ExecutePolicyError::ResourceContentionFault(String::from(parsed_error.message)),_ => ExecutePolicyError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => ExecutePolicyError::ResourceContentionFault(String::from(parsed_error.message)),"ScalingActivityInProgressFault" => ExecutePolicyError::ScalingActivityInProgressFault(String::from(parsed_error.message)),_ => ExecutePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ExecutePolicyError::Unknown(body.to_string())
@@ -9008,7 +9008,7 @@ Unknown(String)
                 impl Error for ExecutePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            ExecutePolicyError::ScalingActivityInProgressFault(ref cause) => cause,ExecutePolicyError::ResourceContentionFault(ref cause) => cause,ExecutePolicyError::Validation(ref cause) => cause,ExecutePolicyError::Credentials(ref err) => err.description(),ExecutePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ExecutePolicyError::Unknown(ref cause) => cause
+                            ExecutePolicyError::ResourceContentionFault(ref cause) => cause,ExecutePolicyError::ScalingActivityInProgressFault(ref cause) => cause,ExecutePolicyError::Validation(ref cause) => cause,ExecutePolicyError::Credentials(ref err) => err.description(),ExecutePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ExecutePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9374,10 +9374,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ResumeProcessesError {
                     
-///<p>The operation can't be performed because the resource is in use.</p>
-ResourceInUseFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because the resource is in use.</p>
+ResourceInUseFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9394,7 +9394,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ResourceInUseFault" => ResumeProcessesError::ResourceInUseFault(String::from(parsed_error.message)),"ResourceContentionFault" => ResumeProcessesError::ResourceContentionFault(String::from(parsed_error.message)),_ => ResumeProcessesError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => ResumeProcessesError::ResourceContentionFault(String::from(parsed_error.message)),"ResourceInUseFault" => ResumeProcessesError::ResourceInUseFault(String::from(parsed_error.message)),_ => ResumeProcessesError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ResumeProcessesError::Unknown(body.to_string())
@@ -9426,7 +9426,7 @@ Unknown(String)
                 impl Error for ResumeProcessesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ResumeProcessesError::ResourceInUseFault(ref cause) => cause,ResumeProcessesError::ResourceContentionFault(ref cause) => cause,ResumeProcessesError::Validation(ref cause) => cause,ResumeProcessesError::Credentials(ref err) => err.description(),ResumeProcessesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResumeProcessesError::Unknown(ref cause) => cause
+                            ResumeProcessesError::ResourceContentionFault(ref cause) => cause,ResumeProcessesError::ResourceInUseFault(ref cause) => cause,ResumeProcessesError::Validation(ref cause) => cause,ResumeProcessesError::Credentials(ref err) => err.description(),ResumeProcessesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResumeProcessesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9434,10 +9434,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetDesiredCapacityError {
                     
-///<p>The operation can't be performed because there are scaling activities in progress.</p>
-ScalingActivityInProgressFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because there are scaling activities in progress.</p>
+ScalingActivityInProgressFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9454,7 +9454,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ScalingActivityInProgressFault" => SetDesiredCapacityError::ScalingActivityInProgressFault(String::from(parsed_error.message)),"ResourceContentionFault" => SetDesiredCapacityError::ResourceContentionFault(String::from(parsed_error.message)),_ => SetDesiredCapacityError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => SetDesiredCapacityError::ResourceContentionFault(String::from(parsed_error.message)),"ScalingActivityInProgressFault" => SetDesiredCapacityError::ScalingActivityInProgressFault(String::from(parsed_error.message)),_ => SetDesiredCapacityError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SetDesiredCapacityError::Unknown(body.to_string())
@@ -9486,7 +9486,7 @@ Unknown(String)
                 impl Error for SetDesiredCapacityError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetDesiredCapacityError::ScalingActivityInProgressFault(ref cause) => cause,SetDesiredCapacityError::ResourceContentionFault(ref cause) => cause,SetDesiredCapacityError::Validation(ref cause) => cause,SetDesiredCapacityError::Credentials(ref err) => err.description(),SetDesiredCapacityError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetDesiredCapacityError::Unknown(ref cause) => cause
+                            SetDesiredCapacityError::ResourceContentionFault(ref cause) => cause,SetDesiredCapacityError::ScalingActivityInProgressFault(ref cause) => cause,SetDesiredCapacityError::Validation(ref cause) => cause,SetDesiredCapacityError::Credentials(ref err) => err.description(),SetDesiredCapacityError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetDesiredCapacityError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9612,10 +9612,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SuspendProcessesError {
                     
-///<p>The operation can't be performed because the resource is in use.</p>
-ResourceInUseFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because the resource is in use.</p>
+ResourceInUseFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9632,7 +9632,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ResourceInUseFault" => SuspendProcessesError::ResourceInUseFault(String::from(parsed_error.message)),"ResourceContentionFault" => SuspendProcessesError::ResourceContentionFault(String::from(parsed_error.message)),_ => SuspendProcessesError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => SuspendProcessesError::ResourceContentionFault(String::from(parsed_error.message)),"ResourceInUseFault" => SuspendProcessesError::ResourceInUseFault(String::from(parsed_error.message)),_ => SuspendProcessesError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SuspendProcessesError::Unknown(body.to_string())
@@ -9664,7 +9664,7 @@ Unknown(String)
                 impl Error for SuspendProcessesError {
                     fn description(&self) -> &str {
                         match *self {
-                            SuspendProcessesError::ResourceInUseFault(ref cause) => cause,SuspendProcessesError::ResourceContentionFault(ref cause) => cause,SuspendProcessesError::Validation(ref cause) => cause,SuspendProcessesError::Credentials(ref err) => err.description(),SuspendProcessesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SuspendProcessesError::Unknown(ref cause) => cause
+                            SuspendProcessesError::ResourceContentionFault(ref cause) => cause,SuspendProcessesError::ResourceInUseFault(ref cause) => cause,SuspendProcessesError::Validation(ref cause) => cause,SuspendProcessesError::Credentials(ref err) => err.description(),SuspendProcessesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SuspendProcessesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9672,10 +9672,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum TerminateInstanceInAutoScalingGroupError {
                     
-///<p>The operation can't be performed because there are scaling activities in progress.</p>
-ScalingActivityInProgressFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because there are scaling activities in progress.</p>
+ScalingActivityInProgressFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9692,7 +9692,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ScalingActivityInProgressFault" => TerminateInstanceInAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),"ResourceContentionFault" => TerminateInstanceInAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),_ => TerminateInstanceInAutoScalingGroupError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => TerminateInstanceInAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),"ScalingActivityInProgressFault" => TerminateInstanceInAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),_ => TerminateInstanceInAutoScalingGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => TerminateInstanceInAutoScalingGroupError::Unknown(body.to_string())
@@ -9724,7 +9724,7 @@ Unknown(String)
                 impl Error for TerminateInstanceInAutoScalingGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            TerminateInstanceInAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::Validation(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::Credentials(ref err) => err.description(),TerminateInstanceInAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TerminateInstanceInAutoScalingGroupError::Unknown(ref cause) => cause
+                            TerminateInstanceInAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::Validation(ref cause) => cause,TerminateInstanceInAutoScalingGroupError::Credentials(ref err) => err.description(),TerminateInstanceInAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TerminateInstanceInAutoScalingGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9732,10 +9732,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateAutoScalingGroupError {
                     
-///<p>The operation can't be performed because there are scaling activities in progress.</p>
-ScalingActivityInProgressFault(String),
 ///<p>You already have a pending update to an Auto Scaling resource (for example, a group, instance, or load balancer).</p>
-ResourceContentionFault(String),/// An error occurred dispatching the HTTP request
+ResourceContentionFault(String),
+///<p>The operation can't be performed because there are scaling activities in progress.</p>
+ScalingActivityInProgressFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9752,7 +9752,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ScalingActivityInProgressFault" => UpdateAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),"ResourceContentionFault" => UpdateAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),_ => UpdateAutoScalingGroupError::Unknown(String::from(body))
+                                    "ResourceContentionFault" => UpdateAutoScalingGroupError::ResourceContentionFault(String::from(parsed_error.message)),"ScalingActivityInProgressFault" => UpdateAutoScalingGroupError::ScalingActivityInProgressFault(String::from(parsed_error.message)),_ => UpdateAutoScalingGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => UpdateAutoScalingGroupError::Unknown(body.to_string())
@@ -9784,7 +9784,7 @@ Unknown(String)
                 impl Error for UpdateAutoScalingGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,UpdateAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,UpdateAutoScalingGroupError::Validation(ref cause) => cause,UpdateAutoScalingGroupError::Credentials(ref err) => err.description(),UpdateAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAutoScalingGroupError::Unknown(ref cause) => cause
+                            UpdateAutoScalingGroupError::ResourceContentionFault(ref cause) => cause,UpdateAutoScalingGroupError::ScalingActivityInProgressFault(ref cause) => cause,UpdateAutoScalingGroupError::Validation(ref cause) => cause,UpdateAutoScalingGroupError::Credentials(ref err) => err.description(),UpdateAutoScalingGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAutoScalingGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }

@@ -9204,14 +9204,14 @@ struct VpcSecurityGroupMembershipListDeserializer;
                 #[derive(Debug, PartialEq)]
                 pub enum AuthorizeClusterSecurityGroupIngressError {
                     
-///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),
-///<p>The state of the cluster security group is not <code>available</code>. </p>
-InvalidClusterSecurityGroupStateFault(String),
 ///<p>The specified CIDR block or EC2 security group is already authorized for the specified cluster security group.</p>
 AuthorizationAlreadyExistsFault(String),
 ///<p>The authorization quota for the cluster security group has been reached.</p>
-AuthorizationQuotaExceededFault(String),/// An error occurred dispatching the HTTP request
+AuthorizationQuotaExceededFault(String),
+///<p>The cluster security group name does not refer to an existing cluster security group.</p>
+ClusterSecurityGroupNotFoundFault(String),
+///<p>The state of the cluster security group is not <code>available</code>. </p>
+InvalidClusterSecurityGroupStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9228,7 +9228,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSecurityGroupNotFoundFault" => AuthorizeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => AuthorizeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),"AuthorizationAlreadyExistsFault" => AuthorizeClusterSecurityGroupIngressError::AuthorizationAlreadyExistsFault(String::from(parsed_error.message)),"AuthorizationQuotaExceededFault" => AuthorizeClusterSecurityGroupIngressError::AuthorizationQuotaExceededFault(String::from(parsed_error.message)),_ => AuthorizeClusterSecurityGroupIngressError::Unknown(String::from(body))
+                                    "AuthorizationAlreadyExistsFault" => AuthorizeClusterSecurityGroupIngressError::AuthorizationAlreadyExistsFault(String::from(parsed_error.message)),"AuthorizationQuotaExceededFault" => AuthorizeClusterSecurityGroupIngressError::AuthorizationQuotaExceededFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => AuthorizeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => AuthorizeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),_ => AuthorizeClusterSecurityGroupIngressError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => AuthorizeClusterSecurityGroupIngressError::Unknown(body.to_string())
@@ -9260,7 +9260,7 @@ Unknown(String)
                 impl Error for AuthorizeClusterSecurityGroupIngressError {
                     fn description(&self) -> &str {
                         match *self {
-                            AuthorizeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::AuthorizationAlreadyExistsFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::AuthorizationQuotaExceededFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::Validation(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::Credentials(ref err) => err.description(),AuthorizeClusterSecurityGroupIngressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AuthorizeClusterSecurityGroupIngressError::Unknown(ref cause) => cause
+                            AuthorizeClusterSecurityGroupIngressError::AuthorizationAlreadyExistsFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::AuthorizationQuotaExceededFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::Validation(ref cause) => cause,AuthorizeClusterSecurityGroupIngressError::Credentials(ref err) => err.description(),AuthorizeClusterSecurityGroupIngressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AuthorizeClusterSecurityGroupIngressError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9268,12 +9268,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum AuthorizeSnapshotAccessError {
                     
-///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
-ClusterSnapshotNotFoundFault(String),
 ///<p>The specified CIDR block or EC2 security group is already authorized for the specified cluster security group.</p>
 AuthorizationAlreadyExistsFault(String),
 ///<p>The authorization quota for the cluster security group has been reached.</p>
 AuthorizationQuotaExceededFault(String),
+///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
+ClusterSnapshotNotFoundFault(String),
 ///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
 DependentServiceRequestThrottlingFault(String),
 ///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
@@ -9296,7 +9296,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSnapshotNotFoundFault" => AuthorizeSnapshotAccessError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"AuthorizationAlreadyExistsFault" => AuthorizeSnapshotAccessError::AuthorizationAlreadyExistsFault(String::from(parsed_error.message)),"AuthorizationQuotaExceededFault" => AuthorizeSnapshotAccessError::AuthorizationQuotaExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => AuthorizeSnapshotAccessError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => AuthorizeSnapshotAccessError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"LimitExceededFault" => AuthorizeSnapshotAccessError::LimitExceededFault(String::from(parsed_error.message)),_ => AuthorizeSnapshotAccessError::Unknown(String::from(body))
+                                    "AuthorizationAlreadyExistsFault" => AuthorizeSnapshotAccessError::AuthorizationAlreadyExistsFault(String::from(parsed_error.message)),"AuthorizationQuotaExceededFault" => AuthorizeSnapshotAccessError::AuthorizationQuotaExceededFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => AuthorizeSnapshotAccessError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => AuthorizeSnapshotAccessError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => AuthorizeSnapshotAccessError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"LimitExceededFault" => AuthorizeSnapshotAccessError::LimitExceededFault(String::from(parsed_error.message)),_ => AuthorizeSnapshotAccessError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => AuthorizeSnapshotAccessError::Unknown(body.to_string())
@@ -9328,7 +9328,7 @@ Unknown(String)
                 impl Error for AuthorizeSnapshotAccessError {
                     fn description(&self) -> &str {
                         match *self {
-                            AuthorizeSnapshotAccessError::ClusterSnapshotNotFoundFault(ref cause) => cause,AuthorizeSnapshotAccessError::AuthorizationAlreadyExistsFault(ref cause) => cause,AuthorizeSnapshotAccessError::AuthorizationQuotaExceededFault(ref cause) => cause,AuthorizeSnapshotAccessError::DependentServiceRequestThrottlingFault(ref cause) => cause,AuthorizeSnapshotAccessError::InvalidClusterSnapshotStateFault(ref cause) => cause,AuthorizeSnapshotAccessError::LimitExceededFault(ref cause) => cause,AuthorizeSnapshotAccessError::Validation(ref cause) => cause,AuthorizeSnapshotAccessError::Credentials(ref err) => err.description(),AuthorizeSnapshotAccessError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AuthorizeSnapshotAccessError::Unknown(ref cause) => cause
+                            AuthorizeSnapshotAccessError::AuthorizationAlreadyExistsFault(ref cause) => cause,AuthorizeSnapshotAccessError::AuthorizationQuotaExceededFault(ref cause) => cause,AuthorizeSnapshotAccessError::ClusterSnapshotNotFoundFault(ref cause) => cause,AuthorizeSnapshotAccessError::DependentServiceRequestThrottlingFault(ref cause) => cause,AuthorizeSnapshotAccessError::InvalidClusterSnapshotStateFault(ref cause) => cause,AuthorizeSnapshotAccessError::LimitExceededFault(ref cause) => cause,AuthorizeSnapshotAccessError::Validation(ref cause) => cause,AuthorizeSnapshotAccessError::Credentials(ref err) => err.description(),AuthorizeSnapshotAccessError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AuthorizeSnapshotAccessError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9340,10 +9340,10 @@ Unknown(String)
 ClusterSnapshotAlreadyExistsFault(String),
 ///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
 ClusterSnapshotNotFoundFault(String),
-///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
-InvalidClusterSnapshotStateFault(String),
 ///<p>The request would result in the user exceeding the allowed number of cluster snapshots.</p>
-ClusterSnapshotQuotaExceededFault(String),/// An error occurred dispatching the HTTP request
+ClusterSnapshotQuotaExceededFault(String),
+///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
+InvalidClusterSnapshotStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9360,7 +9360,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSnapshotAlreadyExistsFault" => CopyClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => CopyClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => CopyClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => CopyClusterSnapshotError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),_ => CopyClusterSnapshotError::Unknown(String::from(body))
+                                    "ClusterSnapshotAlreadyExistsFault" => CopyClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => CopyClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => CopyClusterSnapshotError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => CopyClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),_ => CopyClusterSnapshotError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CopyClusterSnapshotError::Unknown(body.to_string())
@@ -9392,7 +9392,7 @@ Unknown(String)
                 impl Error for CopyClusterSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            CopyClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,CopyClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,CopyClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,CopyClusterSnapshotError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,CopyClusterSnapshotError::Validation(ref cause) => cause,CopyClusterSnapshotError::Credentials(ref err) => err.description(),CopyClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CopyClusterSnapshotError::Unknown(ref cause) => cause
+                            CopyClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,CopyClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,CopyClusterSnapshotError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,CopyClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,CopyClusterSnapshotError::Validation(ref cause) => cause,CopyClusterSnapshotError::Credentials(ref err) => err.description(),CopyClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CopyClusterSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9402,42 +9402,42 @@ Unknown(String)
                     
 ///<p>The account already has a cluster with the given identifier.</p>
 ClusterAlreadyExistsFault(String),
-///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
-InsufficientClusterCapacityFault(String),
 ///<p>The parameter group name does not refer to an existing parameter group.</p>
 ClusterParameterGroupNotFoundFault(String),
-///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),
 ///<p>The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ClusterQuotaExceededFault(String),
-///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
-NumberOfNodesQuotaExceededFault(String),
-///<p>The operation would exceed the number of nodes allowed for a cluster.</p>
-NumberOfNodesPerClusterLimitExceededFault(String),
+///<p>The cluster security group name does not refer to an existing cluster security group.</p>
+ClusterSecurityGroupNotFoundFault(String),
 ///<p>The cluster subnet group name does not refer to an existing cluster subnet group.</p>
 ClusterSubnetGroupNotFoundFault(String),
-///<p>The cluster subnet group does not cover all Availability Zones.</p>
-InvalidVPCNetworkStateFault(String),
-///<p>The cluster subnet group cannot be deleted because it is in use.</p>
-InvalidClusterSubnetGroupStateFault(String),
-///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
-InvalidSubnet(String),
-///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
 ///<p>There is no Amazon Redshift HSM client certificate with the specified identifier.</p>
 HsmClientCertificateNotFoundFault(String),
 ///<p>There is no Amazon Redshift HSM configuration with the specified identifier.</p>
 HsmConfigurationNotFoundFault(String),
+///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
+InsufficientClusterCapacityFault(String),
+///<p>The cluster subnet group cannot be deleted because it is in use.</p>
+InvalidClusterSubnetGroupStateFault(String),
 ///<p>The Elastic IP (EIP) is invalid or cannot be found.</p>
 InvalidElasticIpFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
+///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
+InvalidSubnet(String),
 ///<p>The tag is invalid.</p>
 InvalidTagFault(String),
+///<p>The cluster subnet group does not cover all Availability Zones.</p>
+InvalidVPCNetworkStateFault(String),
 ///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
 LimitExceededFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+///<p>The operation would exceed the number of nodes allowed for a cluster.</p>
+NumberOfNodesPerClusterLimitExceededFault(String),
+///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
+NumberOfNodesQuotaExceededFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),
+///<p>Your account is not authorized to perform the requested operation.</p>
+UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9454,7 +9454,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterAlreadyExistsFault" => CreateClusterError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => CreateClusterError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => CreateClusterError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => CreateClusterError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"ClusterQuotaExceededFault" => CreateClusterError::ClusterQuotaExceededFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => CreateClusterError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"NumberOfNodesPerClusterLimitExceededFault" => CreateClusterError::NumberOfNodesPerClusterLimitExceededFault(String::from(parsed_error.message)),"ClusterSubnetGroupNotFoundFault" => CreateClusterError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => CreateClusterError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"InvalidClusterSubnetGroupStateFault" => CreateClusterError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateClusterError::InvalidSubnet(String::from(parsed_error.message)),"UnauthorizedOperation" => CreateClusterError::UnauthorizedOperation(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => CreateClusterError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => CreateClusterError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => CreateClusterError::InvalidElasticIpFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterError::InvalidTagFault(String::from(parsed_error.message)),"LimitExceededFault" => CreateClusterError::LimitExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => CreateClusterError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => CreateClusterError::Unknown(String::from(body))
+                                    "ClusterAlreadyExistsFault" => CreateClusterError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => CreateClusterError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"ClusterQuotaExceededFault" => CreateClusterError::ClusterQuotaExceededFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => CreateClusterError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSubnetGroupNotFoundFault" => CreateClusterError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => CreateClusterError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => CreateClusterError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => CreateClusterError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => CreateClusterError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"InvalidClusterSubnetGroupStateFault" => CreateClusterError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => CreateClusterError::InvalidElasticIpFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateClusterError::InvalidSubnet(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterError::InvalidTagFault(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => CreateClusterError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"LimitExceededFault" => CreateClusterError::LimitExceededFault(String::from(parsed_error.message)),"NumberOfNodesPerClusterLimitExceededFault" => CreateClusterError::NumberOfNodesPerClusterLimitExceededFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => CreateClusterError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterError::TagLimitExceededFault(String::from(parsed_error.message)),"UnauthorizedOperation" => CreateClusterError::UnauthorizedOperation(String::from(parsed_error.message)),_ => CreateClusterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateClusterError::Unknown(body.to_string())
@@ -9486,7 +9486,7 @@ Unknown(String)
                 impl Error for CreateClusterError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateClusterError::ClusterAlreadyExistsFault(ref cause) => cause,CreateClusterError::InsufficientClusterCapacityFault(ref cause) => cause,CreateClusterError::ClusterParameterGroupNotFoundFault(ref cause) => cause,CreateClusterError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,CreateClusterError::ClusterQuotaExceededFault(ref cause) => cause,CreateClusterError::NumberOfNodesQuotaExceededFault(ref cause) => cause,CreateClusterError::NumberOfNodesPerClusterLimitExceededFault(ref cause) => cause,CreateClusterError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,CreateClusterError::InvalidVPCNetworkStateFault(ref cause) => cause,CreateClusterError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,CreateClusterError::InvalidSubnet(ref cause) => cause,CreateClusterError::UnauthorizedOperation(ref cause) => cause,CreateClusterError::HsmClientCertificateNotFoundFault(ref cause) => cause,CreateClusterError::HsmConfigurationNotFoundFault(ref cause) => cause,CreateClusterError::InvalidElasticIpFault(ref cause) => cause,CreateClusterError::TagLimitExceededFault(ref cause) => cause,CreateClusterError::InvalidTagFault(ref cause) => cause,CreateClusterError::LimitExceededFault(ref cause) => cause,CreateClusterError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateClusterError::Validation(ref cause) => cause,CreateClusterError::Credentials(ref err) => err.description(),CreateClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterError::Unknown(ref cause) => cause
+                            CreateClusterError::ClusterAlreadyExistsFault(ref cause) => cause,CreateClusterError::ClusterParameterGroupNotFoundFault(ref cause) => cause,CreateClusterError::ClusterQuotaExceededFault(ref cause) => cause,CreateClusterError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,CreateClusterError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,CreateClusterError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateClusterError::HsmClientCertificateNotFoundFault(ref cause) => cause,CreateClusterError::HsmConfigurationNotFoundFault(ref cause) => cause,CreateClusterError::InsufficientClusterCapacityFault(ref cause) => cause,CreateClusterError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,CreateClusterError::InvalidElasticIpFault(ref cause) => cause,CreateClusterError::InvalidSubnet(ref cause) => cause,CreateClusterError::InvalidTagFault(ref cause) => cause,CreateClusterError::InvalidVPCNetworkStateFault(ref cause) => cause,CreateClusterError::LimitExceededFault(ref cause) => cause,CreateClusterError::NumberOfNodesPerClusterLimitExceededFault(ref cause) => cause,CreateClusterError::NumberOfNodesQuotaExceededFault(ref cause) => cause,CreateClusterError::TagLimitExceededFault(ref cause) => cause,CreateClusterError::UnauthorizedOperation(ref cause) => cause,CreateClusterError::Validation(ref cause) => cause,CreateClusterError::Credentials(ref err) => err.description(),CreateClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9494,14 +9494,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateClusterParameterGroupError {
                     
-///<p>The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
-ClusterParameterGroupQuotaExceededFault(String),
 ///<p>A cluster parameter group with the same name already exists.</p>
 ClusterParameterGroupAlreadyExistsFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
+///<p>The request would result in the user exceeding the allowed number of cluster parameter groups. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
+ClusterParameterGroupQuotaExceededFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9518,7 +9518,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterParameterGroupQuotaExceededFault" => CreateClusterParameterGroupError::ClusterParameterGroupQuotaExceededFault(String::from(parsed_error.message)),"ClusterParameterGroupAlreadyExistsFault" => CreateClusterParameterGroupError::ClusterParameterGroupAlreadyExistsFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterParameterGroupError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterParameterGroupError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateClusterParameterGroupError::Unknown(String::from(body))
+                                    "ClusterParameterGroupAlreadyExistsFault" => CreateClusterParameterGroupError::ClusterParameterGroupAlreadyExistsFault(String::from(parsed_error.message)),"ClusterParameterGroupQuotaExceededFault" => CreateClusterParameterGroupError::ClusterParameterGroupQuotaExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterParameterGroupError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterParameterGroupError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateClusterParameterGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateClusterParameterGroupError::Unknown(body.to_string())
@@ -9550,7 +9550,7 @@ Unknown(String)
                 impl Error for CreateClusterParameterGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateClusterParameterGroupError::ClusterParameterGroupQuotaExceededFault(ref cause) => cause,CreateClusterParameterGroupError::ClusterParameterGroupAlreadyExistsFault(ref cause) => cause,CreateClusterParameterGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterParameterGroupError::InvalidTagFault(ref cause) => cause,CreateClusterParameterGroupError::Validation(ref cause) => cause,CreateClusterParameterGroupError::Credentials(ref err) => err.description(),CreateClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterParameterGroupError::Unknown(ref cause) => cause
+                            CreateClusterParameterGroupError::ClusterParameterGroupAlreadyExistsFault(ref cause) => cause,CreateClusterParameterGroupError::ClusterParameterGroupQuotaExceededFault(ref cause) => cause,CreateClusterParameterGroupError::InvalidTagFault(ref cause) => cause,CreateClusterParameterGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterParameterGroupError::Validation(ref cause) => cause,CreateClusterParameterGroupError::Credentials(ref err) => err.description(),CreateClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterParameterGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9562,10 +9562,10 @@ Unknown(String)
 ClusterSecurityGroupAlreadyExistsFault(String),
 ///<p>The request would result in the user exceeding the allowed number of cluster security groups. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ClusterSecurityGroupQuotaExceededFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9582,7 +9582,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSecurityGroupAlreadyExistsFault" => CreateClusterSecurityGroupError::ClusterSecurityGroupAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSecurityGroupQuotaExceededFault" => CreateClusterSecurityGroupError::ClusterSecurityGroupQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSecurityGroupError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSecurityGroupError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateClusterSecurityGroupError::Unknown(String::from(body))
+                                    "ClusterSecurityGroupAlreadyExistsFault" => CreateClusterSecurityGroupError::ClusterSecurityGroupAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSecurityGroupQuotaExceededFault" => CreateClusterSecurityGroupError::ClusterSecurityGroupQuotaExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSecurityGroupError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSecurityGroupError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateClusterSecurityGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateClusterSecurityGroupError::Unknown(body.to_string())
@@ -9614,7 +9614,7 @@ Unknown(String)
                 impl Error for CreateClusterSecurityGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateClusterSecurityGroupError::ClusterSecurityGroupAlreadyExistsFault(ref cause) => cause,CreateClusterSecurityGroupError::ClusterSecurityGroupQuotaExceededFault(ref cause) => cause,CreateClusterSecurityGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterSecurityGroupError::InvalidTagFault(ref cause) => cause,CreateClusterSecurityGroupError::Validation(ref cause) => cause,CreateClusterSecurityGroupError::Credentials(ref err) => err.description(),CreateClusterSecurityGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSecurityGroupError::Unknown(ref cause) => cause
+                            CreateClusterSecurityGroupError::ClusterSecurityGroupAlreadyExistsFault(ref cause) => cause,CreateClusterSecurityGroupError::ClusterSecurityGroupQuotaExceededFault(ref cause) => cause,CreateClusterSecurityGroupError::InvalidTagFault(ref cause) => cause,CreateClusterSecurityGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterSecurityGroupError::Validation(ref cause) => cause,CreateClusterSecurityGroupError::Credentials(ref err) => err.description(),CreateClusterSecurityGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSecurityGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9622,18 +9622,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateClusterSnapshotError {
                     
-///<p>The value specified as a snapshot identifier is already used by an existing snapshot.</p>
-ClusterSnapshotAlreadyExistsFault(String),
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
+///<p>The value specified as a snapshot identifier is already used by an existing snapshot.</p>
+ClusterSnapshotAlreadyExistsFault(String),
 ///<p>The request would result in the user exceeding the allowed number of cluster snapshots.</p>
 ClusterSnapshotQuotaExceededFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9650,7 +9650,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSnapshotAlreadyExistsFault" => CreateClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => CreateClusterSnapshotError::InvalidClusterStateFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => CreateClusterSnapshotError::ClusterNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => CreateClusterSnapshotError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSnapshotError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSnapshotError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateClusterSnapshotError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => CreateClusterSnapshotError::ClusterNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotAlreadyExistsFault" => CreateClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => CreateClusterSnapshotError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => CreateClusterSnapshotError::InvalidClusterStateFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSnapshotError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSnapshotError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateClusterSnapshotError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateClusterSnapshotError::Unknown(body.to_string())
@@ -9682,7 +9682,7 @@ Unknown(String)
                 impl Error for CreateClusterSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,CreateClusterSnapshotError::InvalidClusterStateFault(ref cause) => cause,CreateClusterSnapshotError::ClusterNotFoundFault(ref cause) => cause,CreateClusterSnapshotError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,CreateClusterSnapshotError::TagLimitExceededFault(ref cause) => cause,CreateClusterSnapshotError::InvalidTagFault(ref cause) => cause,CreateClusterSnapshotError::Validation(ref cause) => cause,CreateClusterSnapshotError::Credentials(ref err) => err.description(),CreateClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSnapshotError::Unknown(ref cause) => cause
+                            CreateClusterSnapshotError::ClusterNotFoundFault(ref cause) => cause,CreateClusterSnapshotError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,CreateClusterSnapshotError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,CreateClusterSnapshotError::InvalidClusterStateFault(ref cause) => cause,CreateClusterSnapshotError::InvalidTagFault(ref cause) => cause,CreateClusterSnapshotError::TagLimitExceededFault(ref cause) => cause,CreateClusterSnapshotError::Validation(ref cause) => cause,CreateClusterSnapshotError::Credentials(ref err) => err.description(),CreateClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9696,16 +9696,16 @@ ClusterSubnetGroupAlreadyExistsFault(String),
 ClusterSubnetGroupQuotaExceededFault(String),
 ///<p>The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ClusterSubnetQuotaExceededFault(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
 ///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
 InvalidSubnet(String),
-///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
 ///<p>The tag is invalid.</p>
 InvalidTagFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),
+///<p>Your account is not authorized to perform the requested operation.</p>
+UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9722,7 +9722,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSubnetGroupAlreadyExistsFault" => CreateClusterSubnetGroupError::ClusterSubnetGroupAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSubnetGroupQuotaExceededFault" => CreateClusterSubnetGroupError::ClusterSubnetGroupQuotaExceededFault(String::from(parsed_error.message)),"ClusterSubnetQuotaExceededFault" => CreateClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateClusterSubnetGroupError::InvalidSubnet(String::from(parsed_error.message)),"UnauthorizedOperation" => CreateClusterSubnetGroupError::UnauthorizedOperation(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSubnetGroupError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSubnetGroupError::InvalidTagFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => CreateClusterSubnetGroupError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => CreateClusterSubnetGroupError::Unknown(String::from(body))
+                                    "ClusterSubnetGroupAlreadyExistsFault" => CreateClusterSubnetGroupError::ClusterSubnetGroupAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSubnetGroupQuotaExceededFault" => CreateClusterSubnetGroupError::ClusterSubnetGroupQuotaExceededFault(String::from(parsed_error.message)),"ClusterSubnetQuotaExceededFault" => CreateClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => CreateClusterSubnetGroupError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateClusterSubnetGroupError::InvalidSubnet(String::from(parsed_error.message)),"InvalidTagFault" => CreateClusterSubnetGroupError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateClusterSubnetGroupError::TagLimitExceededFault(String::from(parsed_error.message)),"UnauthorizedOperation" => CreateClusterSubnetGroupError::UnauthorizedOperation(String::from(parsed_error.message)),_ => CreateClusterSubnetGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateClusterSubnetGroupError::Unknown(body.to_string())
@@ -9754,7 +9754,7 @@ Unknown(String)
                 impl Error for CreateClusterSubnetGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateClusterSubnetGroupError::ClusterSubnetGroupAlreadyExistsFault(ref cause) => cause,CreateClusterSubnetGroupError::ClusterSubnetGroupQuotaExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::InvalidSubnet(ref cause) => cause,CreateClusterSubnetGroupError::UnauthorizedOperation(ref cause) => cause,CreateClusterSubnetGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::InvalidTagFault(ref cause) => cause,CreateClusterSubnetGroupError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateClusterSubnetGroupError::Validation(ref cause) => cause,CreateClusterSubnetGroupError::Credentials(ref err) => err.description(),CreateClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSubnetGroupError::Unknown(ref cause) => cause
+                            CreateClusterSubnetGroupError::ClusterSubnetGroupAlreadyExistsFault(ref cause) => cause,CreateClusterSubnetGroupError::ClusterSubnetGroupQuotaExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateClusterSubnetGroupError::InvalidSubnet(ref cause) => cause,CreateClusterSubnetGroupError::InvalidTagFault(ref cause) => cause,CreateClusterSubnetGroupError::TagLimitExceededFault(ref cause) => cause,CreateClusterSubnetGroupError::UnauthorizedOperation(ref cause) => cause,CreateClusterSubnetGroupError::Validation(ref cause) => cause,CreateClusterSubnetGroupError::Credentials(ref err) => err.description(),CreateClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateClusterSubnetGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9764,26 +9764,26 @@ Unknown(String)
                     
 ///<p>The request would exceed the allowed number of event subscriptions for this account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 EventSubscriptionQuotaExceededFault(String),
-///<p>There is already an existing event notification subscription with the specified name.</p>
-SubscriptionAlreadyExistFault(String),
+///<p>The tag is invalid.</p>
+InvalidTagFault(String),
 ///<p>Amazon SNS has responded that there is a problem with the specified Amazon SNS topic.</p>
 SNSInvalidTopicFault(String),
 ///<p>You do not have permission to publish to the specified Amazon SNS topic.</p>
 SNSNoAuthorizationFault(String),
 ///<p>An Amazon SNS topic with the specified Amazon Resource Name (ARN) does not exist.</p>
 SNSTopicArnNotFoundFault(String),
-///<p>An Amazon Redshift event with the specified event ID does not exist.</p>
-SubscriptionEventIdNotFoundFault(String),
-///<p>The value specified for the event category was not one of the allowed values, or it specified a category that does not apply to the specified source type. The allowed values are Configuration, Management, Monitoring, and Security.</p>
-SubscriptionCategoryNotFoundFault(String),
-///<p>The value specified for the event severity was not one of the allowed values, or it specified a severity that does not apply to the specified source type. The allowed values are ERROR and INFO.</p>
-SubscriptionSeverityNotFoundFault(String),
 ///<p>The specified Amazon Redshift event source could not be found.</p>
 SourceNotFoundFault(String),
+///<p>There is already an existing event notification subscription with the specified name.</p>
+SubscriptionAlreadyExistFault(String),
+///<p>The value specified for the event category was not one of the allowed values, or it specified a category that does not apply to the specified source type. The allowed values are Configuration, Management, Monitoring, and Security.</p>
+SubscriptionCategoryNotFoundFault(String),
+///<p>An Amazon Redshift event with the specified event ID does not exist.</p>
+SubscriptionEventIdNotFoundFault(String),
+///<p>The value specified for the event severity was not one of the allowed values, or it specified a severity that does not apply to the specified source type. The allowed values are ERROR and INFO.</p>
+SubscriptionSeverityNotFoundFault(String),
 ///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
-///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9800,7 +9800,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "EventSubscriptionQuotaExceededFault" => CreateEventSubscriptionError::EventSubscriptionQuotaExceededFault(String::from(parsed_error.message)),"SubscriptionAlreadyExistFault" => CreateEventSubscriptionError::SubscriptionAlreadyExistFault(String::from(parsed_error.message)),"SNSInvalidTopicFault" => CreateEventSubscriptionError::SNSInvalidTopicFault(String::from(parsed_error.message)),"SNSNoAuthorizationFault" => CreateEventSubscriptionError::SNSNoAuthorizationFault(String::from(parsed_error.message)),"SNSTopicArnNotFoundFault" => CreateEventSubscriptionError::SNSTopicArnNotFoundFault(String::from(parsed_error.message)),"SubscriptionEventIdNotFoundFault" => CreateEventSubscriptionError::SubscriptionEventIdNotFoundFault(String::from(parsed_error.message)),"SubscriptionCategoryNotFoundFault" => CreateEventSubscriptionError::SubscriptionCategoryNotFoundFault(String::from(parsed_error.message)),"SubscriptionSeverityNotFoundFault" => CreateEventSubscriptionError::SubscriptionSeverityNotFoundFault(String::from(parsed_error.message)),"SourceNotFoundFault" => CreateEventSubscriptionError::SourceNotFoundFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateEventSubscriptionError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateEventSubscriptionError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateEventSubscriptionError::Unknown(String::from(body))
+                                    "EventSubscriptionQuotaExceededFault" => CreateEventSubscriptionError::EventSubscriptionQuotaExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateEventSubscriptionError::InvalidTagFault(String::from(parsed_error.message)),"SNSInvalidTopicFault" => CreateEventSubscriptionError::SNSInvalidTopicFault(String::from(parsed_error.message)),"SNSNoAuthorizationFault" => CreateEventSubscriptionError::SNSNoAuthorizationFault(String::from(parsed_error.message)),"SNSTopicArnNotFoundFault" => CreateEventSubscriptionError::SNSTopicArnNotFoundFault(String::from(parsed_error.message)),"SourceNotFoundFault" => CreateEventSubscriptionError::SourceNotFoundFault(String::from(parsed_error.message)),"SubscriptionAlreadyExistFault" => CreateEventSubscriptionError::SubscriptionAlreadyExistFault(String::from(parsed_error.message)),"SubscriptionCategoryNotFoundFault" => CreateEventSubscriptionError::SubscriptionCategoryNotFoundFault(String::from(parsed_error.message)),"SubscriptionEventIdNotFoundFault" => CreateEventSubscriptionError::SubscriptionEventIdNotFoundFault(String::from(parsed_error.message)),"SubscriptionSeverityNotFoundFault" => CreateEventSubscriptionError::SubscriptionSeverityNotFoundFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateEventSubscriptionError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateEventSubscriptionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateEventSubscriptionError::Unknown(body.to_string())
@@ -9832,7 +9832,7 @@ Unknown(String)
                 impl Error for CreateEventSubscriptionError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateEventSubscriptionError::EventSubscriptionQuotaExceededFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionAlreadyExistFault(ref cause) => cause,CreateEventSubscriptionError::SNSInvalidTopicFault(ref cause) => cause,CreateEventSubscriptionError::SNSNoAuthorizationFault(ref cause) => cause,CreateEventSubscriptionError::SNSTopicArnNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionEventIdNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionCategoryNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionSeverityNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SourceNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::TagLimitExceededFault(ref cause) => cause,CreateEventSubscriptionError::InvalidTagFault(ref cause) => cause,CreateEventSubscriptionError::Validation(ref cause) => cause,CreateEventSubscriptionError::Credentials(ref err) => err.description(),CreateEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEventSubscriptionError::Unknown(ref cause) => cause
+                            CreateEventSubscriptionError::EventSubscriptionQuotaExceededFault(ref cause) => cause,CreateEventSubscriptionError::InvalidTagFault(ref cause) => cause,CreateEventSubscriptionError::SNSInvalidTopicFault(ref cause) => cause,CreateEventSubscriptionError::SNSNoAuthorizationFault(ref cause) => cause,CreateEventSubscriptionError::SNSTopicArnNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SourceNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionAlreadyExistFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionCategoryNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionEventIdNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::SubscriptionSeverityNotFoundFault(ref cause) => cause,CreateEventSubscriptionError::TagLimitExceededFault(ref cause) => cause,CreateEventSubscriptionError::Validation(ref cause) => cause,CreateEventSubscriptionError::Credentials(ref err) => err.description(),CreateEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEventSubscriptionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9844,10 +9844,10 @@ Unknown(String)
 HsmClientCertificateAlreadyExistsFault(String),
 ///<p>The quota for HSM client certificates has been reached. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 HsmClientCertificateQuotaExceededFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9864,7 +9864,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "HsmClientCertificateAlreadyExistsFault" => CreateHsmClientCertificateError::HsmClientCertificateAlreadyExistsFault(String::from(parsed_error.message)),"HsmClientCertificateQuotaExceededFault" => CreateHsmClientCertificateError::HsmClientCertificateQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateHsmClientCertificateError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateHsmClientCertificateError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateHsmClientCertificateError::Unknown(String::from(body))
+                                    "HsmClientCertificateAlreadyExistsFault" => CreateHsmClientCertificateError::HsmClientCertificateAlreadyExistsFault(String::from(parsed_error.message)),"HsmClientCertificateQuotaExceededFault" => CreateHsmClientCertificateError::HsmClientCertificateQuotaExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateHsmClientCertificateError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateHsmClientCertificateError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateHsmClientCertificateError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateHsmClientCertificateError::Unknown(body.to_string())
@@ -9896,7 +9896,7 @@ Unknown(String)
                 impl Error for CreateHsmClientCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateHsmClientCertificateError::HsmClientCertificateAlreadyExistsFault(ref cause) => cause,CreateHsmClientCertificateError::HsmClientCertificateQuotaExceededFault(ref cause) => cause,CreateHsmClientCertificateError::TagLimitExceededFault(ref cause) => cause,CreateHsmClientCertificateError::InvalidTagFault(ref cause) => cause,CreateHsmClientCertificateError::Validation(ref cause) => cause,CreateHsmClientCertificateError::Credentials(ref err) => err.description(),CreateHsmClientCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmClientCertificateError::Unknown(ref cause) => cause
+                            CreateHsmClientCertificateError::HsmClientCertificateAlreadyExistsFault(ref cause) => cause,CreateHsmClientCertificateError::HsmClientCertificateQuotaExceededFault(ref cause) => cause,CreateHsmClientCertificateError::InvalidTagFault(ref cause) => cause,CreateHsmClientCertificateError::TagLimitExceededFault(ref cause) => cause,CreateHsmClientCertificateError::Validation(ref cause) => cause,CreateHsmClientCertificateError::Credentials(ref err) => err.description(),CreateHsmClientCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmClientCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9908,10 +9908,10 @@ Unknown(String)
 HsmConfigurationAlreadyExistsFault(String),
 ///<p>The quota for HSM configurations has been reached. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 HsmConfigurationQuotaExceededFault(String),
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9928,7 +9928,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "HsmConfigurationAlreadyExistsFault" => CreateHsmConfigurationError::HsmConfigurationAlreadyExistsFault(String::from(parsed_error.message)),"HsmConfigurationQuotaExceededFault" => CreateHsmConfigurationError::HsmConfigurationQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateHsmConfigurationError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateHsmConfigurationError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateHsmConfigurationError::Unknown(String::from(body))
+                                    "HsmConfigurationAlreadyExistsFault" => CreateHsmConfigurationError::HsmConfigurationAlreadyExistsFault(String::from(parsed_error.message)),"HsmConfigurationQuotaExceededFault" => CreateHsmConfigurationError::HsmConfigurationQuotaExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateHsmConfigurationError::InvalidTagFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateHsmConfigurationError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateHsmConfigurationError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateHsmConfigurationError::Unknown(body.to_string())
@@ -9960,7 +9960,7 @@ Unknown(String)
                 impl Error for CreateHsmConfigurationError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateHsmConfigurationError::HsmConfigurationAlreadyExistsFault(ref cause) => cause,CreateHsmConfigurationError::HsmConfigurationQuotaExceededFault(ref cause) => cause,CreateHsmConfigurationError::TagLimitExceededFault(ref cause) => cause,CreateHsmConfigurationError::InvalidTagFault(ref cause) => cause,CreateHsmConfigurationError::Validation(ref cause) => cause,CreateHsmConfigurationError::Credentials(ref err) => err.description(),CreateHsmConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmConfigurationError::Unknown(ref cause) => cause
+                            CreateHsmConfigurationError::HsmConfigurationAlreadyExistsFault(ref cause) => cause,CreateHsmConfigurationError::HsmConfigurationQuotaExceededFault(ref cause) => cause,CreateHsmConfigurationError::InvalidTagFault(ref cause) => cause,CreateHsmConfigurationError::TagLimitExceededFault(ref cause) => cause,CreateHsmConfigurationError::Validation(ref cause) => cause,CreateHsmConfigurationError::Credentials(ref err) => err.description(),CreateHsmConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateHsmConfigurationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -9968,18 +9968,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateSnapshotCopyGrantError {
                     
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
+///<p>The tag is invalid.</p>
+InvalidTagFault(String),
+///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
+LimitExceededFault(String),
 ///<p>The snapshot copy grant can't be created because a grant with the same name already exists.</p>
 SnapshotCopyGrantAlreadyExistsFault(String),
 ///<p>The AWS account has exceeded the maximum number of snapshot copy grants in this region.</p>
 SnapshotCopyGrantQuotaExceededFault(String),
-///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
-LimitExceededFault(String),
 ///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
-///<p>The tag is invalid.</p>
-InvalidTagFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -9996,7 +9996,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "SnapshotCopyGrantAlreadyExistsFault" => CreateSnapshotCopyGrantError::SnapshotCopyGrantAlreadyExistsFault(String::from(parsed_error.message)),"SnapshotCopyGrantQuotaExceededFault" => CreateSnapshotCopyGrantError::SnapshotCopyGrantQuotaExceededFault(String::from(parsed_error.message)),"LimitExceededFault" => CreateSnapshotCopyGrantError::LimitExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateSnapshotCopyGrantError::TagLimitExceededFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateSnapshotCopyGrantError::InvalidTagFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => CreateSnapshotCopyGrantError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => CreateSnapshotCopyGrantError::Unknown(String::from(body))
+                                    "DependentServiceRequestThrottlingFault" => CreateSnapshotCopyGrantError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateSnapshotCopyGrantError::InvalidTagFault(String::from(parsed_error.message)),"LimitExceededFault" => CreateSnapshotCopyGrantError::LimitExceededFault(String::from(parsed_error.message)),"SnapshotCopyGrantAlreadyExistsFault" => CreateSnapshotCopyGrantError::SnapshotCopyGrantAlreadyExistsFault(String::from(parsed_error.message)),"SnapshotCopyGrantQuotaExceededFault" => CreateSnapshotCopyGrantError::SnapshotCopyGrantQuotaExceededFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateSnapshotCopyGrantError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateSnapshotCopyGrantError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateSnapshotCopyGrantError::Unknown(body.to_string())
@@ -10028,7 +10028,7 @@ Unknown(String)
                 impl Error for CreateSnapshotCopyGrantError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateSnapshotCopyGrantError::SnapshotCopyGrantAlreadyExistsFault(ref cause) => cause,CreateSnapshotCopyGrantError::SnapshotCopyGrantQuotaExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::LimitExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::TagLimitExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::InvalidTagFault(ref cause) => cause,CreateSnapshotCopyGrantError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateSnapshotCopyGrantError::Validation(ref cause) => cause,CreateSnapshotCopyGrantError::Credentials(ref err) => err.description(),CreateSnapshotCopyGrantError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotCopyGrantError::Unknown(ref cause) => cause
+                            CreateSnapshotCopyGrantError::DependentServiceRequestThrottlingFault(ref cause) => cause,CreateSnapshotCopyGrantError::InvalidTagFault(ref cause) => cause,CreateSnapshotCopyGrantError::LimitExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::SnapshotCopyGrantAlreadyExistsFault(ref cause) => cause,CreateSnapshotCopyGrantError::SnapshotCopyGrantQuotaExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::TagLimitExceededFault(ref cause) => cause,CreateSnapshotCopyGrantError::Validation(ref cause) => cause,CreateSnapshotCopyGrantError::Credentials(ref err) => err.description(),CreateSnapshotCopyGrantError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSnapshotCopyGrantError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10036,12 +10036,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTagsError {
                     
-///<p>The request exceeds the limit of 10 tags for the resource.</p>
-TagLimitExceededFault(String),
+///<p>The tag is invalid.</p>
+InvalidTagFault(String),
 ///<p>The resource could not be found.</p>
 ResourceNotFoundFault(String),
-///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+///<p>The request exceeds the limit of 10 tags for the resource.</p>
+TagLimitExceededFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10058,7 +10058,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TagLimitExceededFault" => CreateTagsError::TagLimitExceededFault(String::from(parsed_error.message)),"ResourceNotFoundFault" => CreateTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),"InvalidTagFault" => CreateTagsError::InvalidTagFault(String::from(parsed_error.message)),_ => CreateTagsError::Unknown(String::from(body))
+                                    "InvalidTagFault" => CreateTagsError::InvalidTagFault(String::from(parsed_error.message)),"ResourceNotFoundFault" => CreateTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),"TagLimitExceededFault" => CreateTagsError::TagLimitExceededFault(String::from(parsed_error.message)),_ => CreateTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateTagsError::Unknown(body.to_string())
@@ -10090,7 +10090,7 @@ Unknown(String)
                 impl Error for CreateTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTagsError::TagLimitExceededFault(ref cause) => cause,CreateTagsError::ResourceNotFoundFault(ref cause) => cause,CreateTagsError::InvalidTagFault(ref cause) => cause,CreateTagsError::Validation(ref cause) => cause,CreateTagsError::Credentials(ref err) => err.description(),CreateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTagsError::Unknown(ref cause) => cause
+                            CreateTagsError::InvalidTagFault(ref cause) => cause,CreateTagsError::ResourceNotFoundFault(ref cause) => cause,CreateTagsError::TagLimitExceededFault(ref cause) => cause,CreateTagsError::Validation(ref cause) => cause,CreateTagsError::Credentials(ref err) => err.description(),CreateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10100,12 +10100,12 @@ Unknown(String)
                     
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The value specified as a snapshot identifier is already used by an existing snapshot.</p>
 ClusterSnapshotAlreadyExistsFault(String),
 ///<p>The request would result in the user exceeding the allowed number of cluster snapshots.</p>
-ClusterSnapshotQuotaExceededFault(String),/// An error occurred dispatching the HTTP request
+ClusterSnapshotQuotaExceededFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10122,7 +10122,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterNotFoundFault" => DeleteClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => DeleteClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),"ClusterSnapshotAlreadyExistsFault" => DeleteClusterError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => DeleteClusterError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),_ => DeleteClusterError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => DeleteClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotAlreadyExistsFault" => DeleteClusterError::ClusterSnapshotAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotQuotaExceededFault" => DeleteClusterError::ClusterSnapshotQuotaExceededFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => DeleteClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),_ => DeleteClusterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteClusterError::Unknown(body.to_string())
@@ -10154,7 +10154,7 @@ Unknown(String)
                 impl Error for DeleteClusterError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteClusterError::ClusterNotFoundFault(ref cause) => cause,DeleteClusterError::InvalidClusterStateFault(ref cause) => cause,DeleteClusterError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,DeleteClusterError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,DeleteClusterError::Validation(ref cause) => cause,DeleteClusterError::Credentials(ref err) => err.description(),DeleteClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterError::Unknown(ref cause) => cause
+                            DeleteClusterError::ClusterNotFoundFault(ref cause) => cause,DeleteClusterError::ClusterSnapshotAlreadyExistsFault(ref cause) => cause,DeleteClusterError::ClusterSnapshotQuotaExceededFault(ref cause) => cause,DeleteClusterError::InvalidClusterStateFault(ref cause) => cause,DeleteClusterError::Validation(ref cause) => cause,DeleteClusterError::Credentials(ref err) => err.description(),DeleteClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10162,10 +10162,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteClusterParameterGroupError {
                     
-///<p>The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.</p>
-InvalidClusterParameterGroupStateFault(String),
 ///<p>The parameter group name does not refer to an existing parameter group.</p>
-ClusterParameterGroupNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterParameterGroupNotFoundFault(String),
+///<p>The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.</p>
+InvalidClusterParameterGroupStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10182,7 +10182,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterParameterGroupStateFault" => DeleteClusterParameterGroupError::InvalidClusterParameterGroupStateFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => DeleteClusterParameterGroupError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),_ => DeleteClusterParameterGroupError::Unknown(String::from(body))
+                                    "ClusterParameterGroupNotFoundFault" => DeleteClusterParameterGroupError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterParameterGroupStateFault" => DeleteClusterParameterGroupError::InvalidClusterParameterGroupStateFault(String::from(parsed_error.message)),_ => DeleteClusterParameterGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteClusterParameterGroupError::Unknown(body.to_string())
@@ -10214,7 +10214,7 @@ Unknown(String)
                 impl Error for DeleteClusterParameterGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteClusterParameterGroupError::InvalidClusterParameterGroupStateFault(ref cause) => cause,DeleteClusterParameterGroupError::ClusterParameterGroupNotFoundFault(ref cause) => cause,DeleteClusterParameterGroupError::Validation(ref cause) => cause,DeleteClusterParameterGroupError::Credentials(ref err) => err.description(),DeleteClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterParameterGroupError::Unknown(ref cause) => cause
+                            DeleteClusterParameterGroupError::ClusterParameterGroupNotFoundFault(ref cause) => cause,DeleteClusterParameterGroupError::InvalidClusterParameterGroupStateFault(ref cause) => cause,DeleteClusterParameterGroupError::Validation(ref cause) => cause,DeleteClusterParameterGroupError::Credentials(ref err) => err.description(),DeleteClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterParameterGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10222,10 +10222,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteClusterSecurityGroupError {
                     
-///<p>The state of the cluster security group is not <code>available</code>. </p>
-InvalidClusterSecurityGroupStateFault(String),
 ///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterSecurityGroupNotFoundFault(String),
+///<p>The state of the cluster security group is not <code>available</code>. </p>
+InvalidClusterSecurityGroupStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10242,7 +10242,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterSecurityGroupStateFault" => DeleteClusterSecurityGroupError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => DeleteClusterSecurityGroupError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),_ => DeleteClusterSecurityGroupError::Unknown(String::from(body))
+                                    "ClusterSecurityGroupNotFoundFault" => DeleteClusterSecurityGroupError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => DeleteClusterSecurityGroupError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),_ => DeleteClusterSecurityGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteClusterSecurityGroupError::Unknown(body.to_string())
@@ -10274,7 +10274,7 @@ Unknown(String)
                 impl Error for DeleteClusterSecurityGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteClusterSecurityGroupError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,DeleteClusterSecurityGroupError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,DeleteClusterSecurityGroupError::Validation(ref cause) => cause,DeleteClusterSecurityGroupError::Credentials(ref err) => err.description(),DeleteClusterSecurityGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSecurityGroupError::Unknown(ref cause) => cause
+                            DeleteClusterSecurityGroupError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,DeleteClusterSecurityGroupError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,DeleteClusterSecurityGroupError::Validation(ref cause) => cause,DeleteClusterSecurityGroupError::Credentials(ref err) => err.description(),DeleteClusterSecurityGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSecurityGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10282,10 +10282,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteClusterSnapshotError {
                     
-///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
-InvalidClusterSnapshotStateFault(String),
 ///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
-ClusterSnapshotNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterSnapshotNotFoundFault(String),
+///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
+InvalidClusterSnapshotStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10302,7 +10302,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterSnapshotStateFault" => DeleteClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => DeleteClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),_ => DeleteClusterSnapshotError::Unknown(String::from(body))
+                                    "ClusterSnapshotNotFoundFault" => DeleteClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => DeleteClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),_ => DeleteClusterSnapshotError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteClusterSnapshotError::Unknown(body.to_string())
@@ -10334,7 +10334,7 @@ Unknown(String)
                 impl Error for DeleteClusterSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,DeleteClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,DeleteClusterSnapshotError::Validation(ref cause) => cause,DeleteClusterSnapshotError::Credentials(ref err) => err.description(),DeleteClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSnapshotError::Unknown(ref cause) => cause
+                            DeleteClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,DeleteClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,DeleteClusterSnapshotError::Validation(ref cause) => cause,DeleteClusterSnapshotError::Credentials(ref err) => err.description(),DeleteClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10342,12 +10342,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteClusterSubnetGroupError {
                     
+///<p>The cluster subnet group name does not refer to an existing cluster subnet group.</p>
+ClusterSubnetGroupNotFoundFault(String),
 ///<p>The cluster subnet group cannot be deleted because it is in use.</p>
 InvalidClusterSubnetGroupStateFault(String),
 ///<p>The state of the subnet is invalid.</p>
-InvalidClusterSubnetStateFault(String),
-///<p>The cluster subnet group name does not refer to an existing cluster subnet group.</p>
-ClusterSubnetGroupNotFoundFault(String),/// An error occurred dispatching the HTTP request
+InvalidClusterSubnetStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10364,7 +10364,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterSubnetGroupStateFault" => DeleteClusterSubnetGroupError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidClusterSubnetStateFault" => DeleteClusterSubnetGroupError::InvalidClusterSubnetStateFault(String::from(parsed_error.message)),"ClusterSubnetGroupNotFoundFault" => DeleteClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),_ => DeleteClusterSubnetGroupError::Unknown(String::from(body))
+                                    "ClusterSubnetGroupNotFoundFault" => DeleteClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSubnetGroupStateFault" => DeleteClusterSubnetGroupError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidClusterSubnetStateFault" => DeleteClusterSubnetGroupError::InvalidClusterSubnetStateFault(String::from(parsed_error.message)),_ => DeleteClusterSubnetGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteClusterSubnetGroupError::Unknown(body.to_string())
@@ -10396,7 +10396,7 @@ Unknown(String)
                 impl Error for DeleteClusterSubnetGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteClusterSubnetGroupError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,DeleteClusterSubnetGroupError::InvalidClusterSubnetStateFault(ref cause) => cause,DeleteClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,DeleteClusterSubnetGroupError::Validation(ref cause) => cause,DeleteClusterSubnetGroupError::Credentials(ref err) => err.description(),DeleteClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSubnetGroupError::Unknown(ref cause) => cause
+                            DeleteClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,DeleteClusterSubnetGroupError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,DeleteClusterSubnetGroupError::InvalidClusterSubnetStateFault(ref cause) => cause,DeleteClusterSubnetGroupError::Validation(ref cause) => cause,DeleteClusterSubnetGroupError::Credentials(ref err) => err.description(),DeleteClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteClusterSubnetGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10404,10 +10404,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteEventSubscriptionError {
                     
-///<p>An Amazon Redshift event notification subscription with the specified name does not exist.</p>
-SubscriptionNotFoundFault(String),
 ///<p>The subscription request is invalid because it is a duplicate request. This subscription request is already in progress.</p>
-InvalidSubscriptionStateFault(String),/// An error occurred dispatching the HTTP request
+InvalidSubscriptionStateFault(String),
+///<p>An Amazon Redshift event notification subscription with the specified name does not exist.</p>
+SubscriptionNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10424,7 +10424,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "SubscriptionNotFoundFault" => DeleteEventSubscriptionError::SubscriptionNotFoundFault(String::from(parsed_error.message)),"InvalidSubscriptionStateFault" => DeleteEventSubscriptionError::InvalidSubscriptionStateFault(String::from(parsed_error.message)),_ => DeleteEventSubscriptionError::Unknown(String::from(body))
+                                    "InvalidSubscriptionStateFault" => DeleteEventSubscriptionError::InvalidSubscriptionStateFault(String::from(parsed_error.message)),"SubscriptionNotFoundFault" => DeleteEventSubscriptionError::SubscriptionNotFoundFault(String::from(parsed_error.message)),_ => DeleteEventSubscriptionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteEventSubscriptionError::Unknown(body.to_string())
@@ -10456,7 +10456,7 @@ Unknown(String)
                 impl Error for DeleteEventSubscriptionError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteEventSubscriptionError::SubscriptionNotFoundFault(ref cause) => cause,DeleteEventSubscriptionError::InvalidSubscriptionStateFault(ref cause) => cause,DeleteEventSubscriptionError::Validation(ref cause) => cause,DeleteEventSubscriptionError::Credentials(ref err) => err.description(),DeleteEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteEventSubscriptionError::Unknown(ref cause) => cause
+                            DeleteEventSubscriptionError::InvalidSubscriptionStateFault(ref cause) => cause,DeleteEventSubscriptionError::SubscriptionNotFoundFault(ref cause) => cause,DeleteEventSubscriptionError::Validation(ref cause) => cause,DeleteEventSubscriptionError::Credentials(ref err) => err.description(),DeleteEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteEventSubscriptionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10464,10 +10464,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteHsmClientCertificateError {
                     
-///<p>The specified HSM client certificate is not in the <code>available</code> state, or it is still in use by one or more Amazon Redshift clusters.</p>
-InvalidHsmClientCertificateStateFault(String),
 ///<p>There is no Amazon Redshift HSM client certificate with the specified identifier.</p>
-HsmClientCertificateNotFoundFault(String),/// An error occurred dispatching the HTTP request
+HsmClientCertificateNotFoundFault(String),
+///<p>The specified HSM client certificate is not in the <code>available</code> state, or it is still in use by one or more Amazon Redshift clusters.</p>
+InvalidHsmClientCertificateStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10484,7 +10484,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidHsmClientCertificateStateFault" => DeleteHsmClientCertificateError::InvalidHsmClientCertificateStateFault(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => DeleteHsmClientCertificateError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),_ => DeleteHsmClientCertificateError::Unknown(String::from(body))
+                                    "HsmClientCertificateNotFoundFault" => DeleteHsmClientCertificateError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"InvalidHsmClientCertificateStateFault" => DeleteHsmClientCertificateError::InvalidHsmClientCertificateStateFault(String::from(parsed_error.message)),_ => DeleteHsmClientCertificateError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteHsmClientCertificateError::Unknown(body.to_string())
@@ -10516,7 +10516,7 @@ Unknown(String)
                 impl Error for DeleteHsmClientCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteHsmClientCertificateError::InvalidHsmClientCertificateStateFault(ref cause) => cause,DeleteHsmClientCertificateError::HsmClientCertificateNotFoundFault(ref cause) => cause,DeleteHsmClientCertificateError::Validation(ref cause) => cause,DeleteHsmClientCertificateError::Credentials(ref err) => err.description(),DeleteHsmClientCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmClientCertificateError::Unknown(ref cause) => cause
+                            DeleteHsmClientCertificateError::HsmClientCertificateNotFoundFault(ref cause) => cause,DeleteHsmClientCertificateError::InvalidHsmClientCertificateStateFault(ref cause) => cause,DeleteHsmClientCertificateError::Validation(ref cause) => cause,DeleteHsmClientCertificateError::Credentials(ref err) => err.description(),DeleteHsmClientCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmClientCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10524,10 +10524,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteHsmConfigurationError {
                     
-///<p>The specified HSM configuration is not in the <code>available</code> state, or it is still in use by one or more Amazon Redshift clusters.</p>
-InvalidHsmConfigurationStateFault(String),
 ///<p>There is no Amazon Redshift HSM configuration with the specified identifier.</p>
-HsmConfigurationNotFoundFault(String),/// An error occurred dispatching the HTTP request
+HsmConfigurationNotFoundFault(String),
+///<p>The specified HSM configuration is not in the <code>available</code> state, or it is still in use by one or more Amazon Redshift clusters.</p>
+InvalidHsmConfigurationStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10544,7 +10544,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidHsmConfigurationStateFault" => DeleteHsmConfigurationError::InvalidHsmConfigurationStateFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => DeleteHsmConfigurationError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),_ => DeleteHsmConfigurationError::Unknown(String::from(body))
+                                    "HsmConfigurationNotFoundFault" => DeleteHsmConfigurationError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InvalidHsmConfigurationStateFault" => DeleteHsmConfigurationError::InvalidHsmConfigurationStateFault(String::from(parsed_error.message)),_ => DeleteHsmConfigurationError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteHsmConfigurationError::Unknown(body.to_string())
@@ -10576,7 +10576,7 @@ Unknown(String)
                 impl Error for DeleteHsmConfigurationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteHsmConfigurationError::InvalidHsmConfigurationStateFault(ref cause) => cause,DeleteHsmConfigurationError::HsmConfigurationNotFoundFault(ref cause) => cause,DeleteHsmConfigurationError::Validation(ref cause) => cause,DeleteHsmConfigurationError::Credentials(ref err) => err.description(),DeleteHsmConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmConfigurationError::Unknown(ref cause) => cause
+                            DeleteHsmConfigurationError::HsmConfigurationNotFoundFault(ref cause) => cause,DeleteHsmConfigurationError::InvalidHsmConfigurationStateFault(ref cause) => cause,DeleteHsmConfigurationError::Validation(ref cause) => cause,DeleteHsmConfigurationError::Credentials(ref err) => err.description(),DeleteHsmConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteHsmConfigurationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10644,10 +10644,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteTagsError {
                     
-///<p>The resource could not be found.</p>
-ResourceNotFoundFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The resource could not be found.</p>
+ResourceNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -10664,7 +10664,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ResourceNotFoundFault" => DeleteTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),"InvalidTagFault" => DeleteTagsError::InvalidTagFault(String::from(parsed_error.message)),_ => DeleteTagsError::Unknown(String::from(body))
+                                    "InvalidTagFault" => DeleteTagsError::InvalidTagFault(String::from(parsed_error.message)),"ResourceNotFoundFault" => DeleteTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),_ => DeleteTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteTagsError::Unknown(body.to_string())
@@ -10696,7 +10696,7 @@ Unknown(String)
                 impl Error for DeleteTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteTagsError::ResourceNotFoundFault(ref cause) => cause,DeleteTagsError::InvalidTagFault(ref cause) => cause,DeleteTagsError::Validation(ref cause) => cause,DeleteTagsError::Credentials(ref err) => err.description(),DeleteTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTagsError::Unknown(ref cause) => cause
+                            DeleteTagsError::InvalidTagFault(ref cause) => cause,DeleteTagsError::ResourceNotFoundFault(ref cause) => cause,DeleteTagsError::Validation(ref cause) => cause,DeleteTagsError::Credentials(ref err) => err.description(),DeleteTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11756,10 +11756,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeSnapshotCopyGrantsError {
                     
-///<p>The specified snapshot copy grant can't be found. Make sure that the name is typed correctly and that the grant exists in the destination region.</p>
-SnapshotCopyGrantNotFoundFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The specified snapshot copy grant can't be found. Make sure that the name is typed correctly and that the grant exists in the destination region.</p>
+SnapshotCopyGrantNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -11776,7 +11776,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "SnapshotCopyGrantNotFoundFault" => DescribeSnapshotCopyGrantsError::SnapshotCopyGrantNotFoundFault(String::from(parsed_error.message)),"InvalidTagFault" => DescribeSnapshotCopyGrantsError::InvalidTagFault(String::from(parsed_error.message)),_ => DescribeSnapshotCopyGrantsError::Unknown(String::from(body))
+                                    "InvalidTagFault" => DescribeSnapshotCopyGrantsError::InvalidTagFault(String::from(parsed_error.message)),"SnapshotCopyGrantNotFoundFault" => DescribeSnapshotCopyGrantsError::SnapshotCopyGrantNotFoundFault(String::from(parsed_error.message)),_ => DescribeSnapshotCopyGrantsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeSnapshotCopyGrantsError::Unknown(body.to_string())
@@ -11808,7 +11808,7 @@ Unknown(String)
                 impl Error for DescribeSnapshotCopyGrantsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeSnapshotCopyGrantsError::SnapshotCopyGrantNotFoundFault(ref cause) => cause,DescribeSnapshotCopyGrantsError::InvalidTagFault(ref cause) => cause,DescribeSnapshotCopyGrantsError::Validation(ref cause) => cause,DescribeSnapshotCopyGrantsError::Credentials(ref err) => err.description(),DescribeSnapshotCopyGrantsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeSnapshotCopyGrantsError::Unknown(ref cause) => cause
+                            DescribeSnapshotCopyGrantsError::InvalidTagFault(ref cause) => cause,DescribeSnapshotCopyGrantsError::SnapshotCopyGrantNotFoundFault(ref cause) => cause,DescribeSnapshotCopyGrantsError::Validation(ref cause) => cause,DescribeSnapshotCopyGrantsError::Credentials(ref err) => err.description(),DescribeSnapshotCopyGrantsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeSnapshotCopyGrantsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11816,10 +11816,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTableRestoreStatusError {
                     
-///<p>The specified <code>TableRestoreRequestId</code> value was not found.</p>
-TableRestoreNotFoundFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
-ClusterNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterNotFoundFault(String),
+///<p>The specified <code>TableRestoreRequestId</code> value was not found.</p>
+TableRestoreNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -11836,7 +11836,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TableRestoreNotFoundFault" => DescribeTableRestoreStatusError::TableRestoreNotFoundFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => DescribeTableRestoreStatusError::ClusterNotFoundFault(String::from(parsed_error.message)),_ => DescribeTableRestoreStatusError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => DescribeTableRestoreStatusError::ClusterNotFoundFault(String::from(parsed_error.message)),"TableRestoreNotFoundFault" => DescribeTableRestoreStatusError::TableRestoreNotFoundFault(String::from(parsed_error.message)),_ => DescribeTableRestoreStatusError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeTableRestoreStatusError::Unknown(body.to_string())
@@ -11868,7 +11868,7 @@ Unknown(String)
                 impl Error for DescribeTableRestoreStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTableRestoreStatusError::TableRestoreNotFoundFault(ref cause) => cause,DescribeTableRestoreStatusError::ClusterNotFoundFault(ref cause) => cause,DescribeTableRestoreStatusError::Validation(ref cause) => cause,DescribeTableRestoreStatusError::Credentials(ref err) => err.description(),DescribeTableRestoreStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTableRestoreStatusError::Unknown(ref cause) => cause
+                            DescribeTableRestoreStatusError::ClusterNotFoundFault(ref cause) => cause,DescribeTableRestoreStatusError::TableRestoreNotFoundFault(ref cause) => cause,DescribeTableRestoreStatusError::Validation(ref cause) => cause,DescribeTableRestoreStatusError::Credentials(ref err) => err.description(),DescribeTableRestoreStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTableRestoreStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11876,10 +11876,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTagsError {
                     
-///<p>The resource could not be found.</p>
-ResourceNotFoundFault(String),
 ///<p>The tag is invalid.</p>
-InvalidTagFault(String),/// An error occurred dispatching the HTTP request
+InvalidTagFault(String),
+///<p>The resource could not be found.</p>
+ResourceNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -11896,7 +11896,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ResourceNotFoundFault" => DescribeTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),"InvalidTagFault" => DescribeTagsError::InvalidTagFault(String::from(parsed_error.message)),_ => DescribeTagsError::Unknown(String::from(body))
+                                    "InvalidTagFault" => DescribeTagsError::InvalidTagFault(String::from(parsed_error.message)),"ResourceNotFoundFault" => DescribeTagsError::ResourceNotFoundFault(String::from(parsed_error.message)),_ => DescribeTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeTagsError::Unknown(body.to_string())
@@ -11928,7 +11928,7 @@ Unknown(String)
                 impl Error for DescribeTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTagsError::ResourceNotFoundFault(ref cause) => cause,DescribeTagsError::InvalidTagFault(ref cause) => cause,DescribeTagsError::Validation(ref cause) => cause,DescribeTagsError::Credentials(ref err) => err.description(),DescribeTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTagsError::Unknown(ref cause) => cause
+                            DescribeTagsError::InvalidTagFault(ref cause) => cause,DescribeTagsError::ResourceNotFoundFault(ref cause) => cause,DescribeTagsError::Validation(ref cause) => cause,DescribeTagsError::Credentials(ref err) => err.description(),DescribeTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11996,10 +11996,10 @@ Unknown(String)
                     
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
-///<p>The cluster already has cross-region snapshot copy disabled.</p>
-SnapshotCopyAlreadyDisabledFault(String),
 ///<p>The specified cluster is not in the <code>available</code> state. </p>
 InvalidClusterStateFault(String),
+///<p>The cluster already has cross-region snapshot copy disabled.</p>
+SnapshotCopyAlreadyDisabledFault(String),
 ///<p>Your account is not authorized to perform the requested operation.</p>
 UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -12018,7 +12018,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterNotFoundFault" => DisableSnapshotCopyError::ClusterNotFoundFault(String::from(parsed_error.message)),"SnapshotCopyAlreadyDisabledFault" => DisableSnapshotCopyError::SnapshotCopyAlreadyDisabledFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => DisableSnapshotCopyError::InvalidClusterStateFault(String::from(parsed_error.message)),"UnauthorizedOperation" => DisableSnapshotCopyError::UnauthorizedOperation(String::from(parsed_error.message)),_ => DisableSnapshotCopyError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => DisableSnapshotCopyError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => DisableSnapshotCopyError::InvalidClusterStateFault(String::from(parsed_error.message)),"SnapshotCopyAlreadyDisabledFault" => DisableSnapshotCopyError::SnapshotCopyAlreadyDisabledFault(String::from(parsed_error.message)),"UnauthorizedOperation" => DisableSnapshotCopyError::UnauthorizedOperation(String::from(parsed_error.message)),_ => DisableSnapshotCopyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DisableSnapshotCopyError::Unknown(body.to_string())
@@ -12050,7 +12050,7 @@ Unknown(String)
                 impl Error for DisableSnapshotCopyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DisableSnapshotCopyError::ClusterNotFoundFault(ref cause) => cause,DisableSnapshotCopyError::SnapshotCopyAlreadyDisabledFault(ref cause) => cause,DisableSnapshotCopyError::InvalidClusterStateFault(ref cause) => cause,DisableSnapshotCopyError::UnauthorizedOperation(ref cause) => cause,DisableSnapshotCopyError::Validation(ref cause) => cause,DisableSnapshotCopyError::Credentials(ref err) => err.description(),DisableSnapshotCopyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableSnapshotCopyError::Unknown(ref cause) => cause
+                            DisableSnapshotCopyError::ClusterNotFoundFault(ref cause) => cause,DisableSnapshotCopyError::InvalidClusterStateFault(ref cause) => cause,DisableSnapshotCopyError::SnapshotCopyAlreadyDisabledFault(ref cause) => cause,DisableSnapshotCopyError::UnauthorizedOperation(ref cause) => cause,DisableSnapshotCopyError::Validation(ref cause) => cause,DisableSnapshotCopyError::Credentials(ref err) => err.description(),DisableSnapshotCopyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DisableSnapshotCopyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12058,16 +12058,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum EnableLoggingError {
                     
-///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
-ClusterNotFoundFault(String),
 ///<p>Could not find the specified S3 bucket.</p>
 BucketNotFoundFault(String),
+///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
+ClusterNotFoundFault(String),
 ///<p>The cluster does not have read bucket or put object permissions on the S3 bucket specified when enabling logging.</p>
 InsufficientS3BucketPolicyFault(String),
-///<p>The string specified for the logging S3 key prefix does not comply with the documented constraints.</p>
-InvalidS3KeyPrefixFault(String),
 ///<p>The S3 bucket name is invalid. For more information about naming rules, go to <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html">Bucket Restrictions and Limitations</a> in the Amazon Simple Storage Service (S3) Developer Guide.</p>
-InvalidS3BucketNameFault(String),/// An error occurred dispatching the HTTP request
+InvalidS3BucketNameFault(String),
+///<p>The string specified for the logging S3 key prefix does not comply with the documented constraints.</p>
+InvalidS3KeyPrefixFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12084,7 +12084,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterNotFoundFault" => EnableLoggingError::ClusterNotFoundFault(String::from(parsed_error.message)),"BucketNotFoundFault" => EnableLoggingError::BucketNotFoundFault(String::from(parsed_error.message)),"InsufficientS3BucketPolicyFault" => EnableLoggingError::InsufficientS3BucketPolicyFault(String::from(parsed_error.message)),"InvalidS3KeyPrefixFault" => EnableLoggingError::InvalidS3KeyPrefixFault(String::from(parsed_error.message)),"InvalidS3BucketNameFault" => EnableLoggingError::InvalidS3BucketNameFault(String::from(parsed_error.message)),_ => EnableLoggingError::Unknown(String::from(body))
+                                    "BucketNotFoundFault" => EnableLoggingError::BucketNotFoundFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => EnableLoggingError::ClusterNotFoundFault(String::from(parsed_error.message)),"InsufficientS3BucketPolicyFault" => EnableLoggingError::InsufficientS3BucketPolicyFault(String::from(parsed_error.message)),"InvalidS3BucketNameFault" => EnableLoggingError::InvalidS3BucketNameFault(String::from(parsed_error.message)),"InvalidS3KeyPrefixFault" => EnableLoggingError::InvalidS3KeyPrefixFault(String::from(parsed_error.message)),_ => EnableLoggingError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => EnableLoggingError::Unknown(body.to_string())
@@ -12116,7 +12116,7 @@ Unknown(String)
                 impl Error for EnableLoggingError {
                     fn description(&self) -> &str {
                         match *self {
-                            EnableLoggingError::ClusterNotFoundFault(ref cause) => cause,EnableLoggingError::BucketNotFoundFault(ref cause) => cause,EnableLoggingError::InsufficientS3BucketPolicyFault(ref cause) => cause,EnableLoggingError::InvalidS3KeyPrefixFault(ref cause) => cause,EnableLoggingError::InvalidS3BucketNameFault(ref cause) => cause,EnableLoggingError::Validation(ref cause) => cause,EnableLoggingError::Credentials(ref err) => err.description(),EnableLoggingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableLoggingError::Unknown(ref cause) => cause
+                            EnableLoggingError::BucketNotFoundFault(ref cause) => cause,EnableLoggingError::ClusterNotFoundFault(ref cause) => cause,EnableLoggingError::InsufficientS3BucketPolicyFault(ref cause) => cause,EnableLoggingError::InvalidS3BucketNameFault(ref cause) => cause,EnableLoggingError::InvalidS3KeyPrefixFault(ref cause) => cause,EnableLoggingError::Validation(ref cause) => cause,EnableLoggingError::Credentials(ref err) => err.description(),EnableLoggingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableLoggingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12124,26 +12124,26 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum EnableSnapshotCopyError {
                     
-///<p>The specified options are incompatible.</p>
-IncompatibleOrderableOptions(String),
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
 ///<p>Cross-region snapshot copy was temporarily disabled. Try your request again.</p>
 CopyToRegionDisabledFault(String),
-///<p>The cluster already has cross-region snapshot copy enabled.</p>
-SnapshotCopyAlreadyEnabledFault(String),
-///<p>The specified region is incorrect or does not exist.</p>
-UnknownSnapshotCopyRegionFault(String),
-///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
-///<p>The specified snapshot copy grant can't be found. Make sure that the name is typed correctly and that the grant exists in the destination region.</p>
-SnapshotCopyGrantNotFoundFault(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
+///<p>The specified options are incompatible.</p>
+IncompatibleOrderableOptions(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),
 ///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
 LimitExceededFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+///<p>The cluster already has cross-region snapshot copy enabled.</p>
+SnapshotCopyAlreadyEnabledFault(String),
+///<p>The specified snapshot copy grant can't be found. Make sure that the name is typed correctly and that the grant exists in the destination region.</p>
+SnapshotCopyGrantNotFoundFault(String),
+///<p>Your account is not authorized to perform the requested operation.</p>
+UnauthorizedOperation(String),
+///<p>The specified region is incorrect or does not exist.</p>
+UnknownSnapshotCopyRegionFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12160,7 +12160,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "IncompatibleOrderableOptions" => EnableSnapshotCopyError::IncompatibleOrderableOptions(String::from(parsed_error.message)),"InvalidClusterStateFault" => EnableSnapshotCopyError::InvalidClusterStateFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => EnableSnapshotCopyError::ClusterNotFoundFault(String::from(parsed_error.message)),"CopyToRegionDisabledFault" => EnableSnapshotCopyError::CopyToRegionDisabledFault(String::from(parsed_error.message)),"SnapshotCopyAlreadyEnabledFault" => EnableSnapshotCopyError::SnapshotCopyAlreadyEnabledFault(String::from(parsed_error.message)),"UnknownSnapshotCopyRegionFault" => EnableSnapshotCopyError::UnknownSnapshotCopyRegionFault(String::from(parsed_error.message)),"UnauthorizedOperation" => EnableSnapshotCopyError::UnauthorizedOperation(String::from(parsed_error.message)),"SnapshotCopyGrantNotFoundFault" => EnableSnapshotCopyError::SnapshotCopyGrantNotFoundFault(String::from(parsed_error.message)),"LimitExceededFault" => EnableSnapshotCopyError::LimitExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => EnableSnapshotCopyError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => EnableSnapshotCopyError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => EnableSnapshotCopyError::ClusterNotFoundFault(String::from(parsed_error.message)),"CopyToRegionDisabledFault" => EnableSnapshotCopyError::CopyToRegionDisabledFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => EnableSnapshotCopyError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"IncompatibleOrderableOptions" => EnableSnapshotCopyError::IncompatibleOrderableOptions(String::from(parsed_error.message)),"InvalidClusterStateFault" => EnableSnapshotCopyError::InvalidClusterStateFault(String::from(parsed_error.message)),"LimitExceededFault" => EnableSnapshotCopyError::LimitExceededFault(String::from(parsed_error.message)),"SnapshotCopyAlreadyEnabledFault" => EnableSnapshotCopyError::SnapshotCopyAlreadyEnabledFault(String::from(parsed_error.message)),"SnapshotCopyGrantNotFoundFault" => EnableSnapshotCopyError::SnapshotCopyGrantNotFoundFault(String::from(parsed_error.message)),"UnauthorizedOperation" => EnableSnapshotCopyError::UnauthorizedOperation(String::from(parsed_error.message)),"UnknownSnapshotCopyRegionFault" => EnableSnapshotCopyError::UnknownSnapshotCopyRegionFault(String::from(parsed_error.message)),_ => EnableSnapshotCopyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => EnableSnapshotCopyError::Unknown(body.to_string())
@@ -12192,7 +12192,7 @@ Unknown(String)
                 impl Error for EnableSnapshotCopyError {
                     fn description(&self) -> &str {
                         match *self {
-                            EnableSnapshotCopyError::IncompatibleOrderableOptions(ref cause) => cause,EnableSnapshotCopyError::InvalidClusterStateFault(ref cause) => cause,EnableSnapshotCopyError::ClusterNotFoundFault(ref cause) => cause,EnableSnapshotCopyError::CopyToRegionDisabledFault(ref cause) => cause,EnableSnapshotCopyError::SnapshotCopyAlreadyEnabledFault(ref cause) => cause,EnableSnapshotCopyError::UnknownSnapshotCopyRegionFault(ref cause) => cause,EnableSnapshotCopyError::UnauthorizedOperation(ref cause) => cause,EnableSnapshotCopyError::SnapshotCopyGrantNotFoundFault(ref cause) => cause,EnableSnapshotCopyError::LimitExceededFault(ref cause) => cause,EnableSnapshotCopyError::DependentServiceRequestThrottlingFault(ref cause) => cause,EnableSnapshotCopyError::Validation(ref cause) => cause,EnableSnapshotCopyError::Credentials(ref err) => err.description(),EnableSnapshotCopyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableSnapshotCopyError::Unknown(ref cause) => cause
+                            EnableSnapshotCopyError::ClusterNotFoundFault(ref cause) => cause,EnableSnapshotCopyError::CopyToRegionDisabledFault(ref cause) => cause,EnableSnapshotCopyError::DependentServiceRequestThrottlingFault(ref cause) => cause,EnableSnapshotCopyError::IncompatibleOrderableOptions(ref cause) => cause,EnableSnapshotCopyError::InvalidClusterStateFault(ref cause) => cause,EnableSnapshotCopyError::LimitExceededFault(ref cause) => cause,EnableSnapshotCopyError::SnapshotCopyAlreadyEnabledFault(ref cause) => cause,EnableSnapshotCopyError::SnapshotCopyGrantNotFoundFault(ref cause) => cause,EnableSnapshotCopyError::UnauthorizedOperation(ref cause) => cause,EnableSnapshotCopyError::UnknownSnapshotCopyRegionFault(ref cause) => cause,EnableSnapshotCopyError::Validation(ref cause) => cause,EnableSnapshotCopyError::Credentials(ref err) => err.description(),EnableSnapshotCopyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),EnableSnapshotCopyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12200,36 +12200,36 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyClusterError {
                     
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
-///<p>The state of the cluster security group is not <code>available</code>. </p>
-InvalidClusterSecurityGroupStateFault(String),
+///<p>The account already has a cluster with the given identifier.</p>
+ClusterAlreadyExistsFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
-///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
-NumberOfNodesQuotaExceededFault(String),
-///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),
 ///<p>The parameter group name does not refer to an existing parameter group.</p>
 ClusterParameterGroupNotFoundFault(String),
-///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
-InsufficientClusterCapacityFault(String),
-///<p>A request option was specified that is not supported.</p>
-UnsupportedOptionFault(String),
-///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
+///<p>The cluster security group name does not refer to an existing cluster security group.</p>
+ClusterSecurityGroupNotFoundFault(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
 ///<p>There is no Amazon Redshift HSM client certificate with the specified identifier.</p>
 HsmClientCertificateNotFoundFault(String),
 ///<p>There is no Amazon Redshift HSM configuration with the specified identifier.</p>
 HsmConfigurationNotFoundFault(String),
-///<p>The account already has a cluster with the given identifier.</p>
-ClusterAlreadyExistsFault(String),
+///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
+InsufficientClusterCapacityFault(String),
+///<p>The state of the cluster security group is not <code>available</code>. </p>
+InvalidClusterSecurityGroupStateFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),
+///<p>The Elastic IP (EIP) is invalid or cannot be found.</p>
+InvalidElasticIpFault(String),
 ///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
 LimitExceededFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),
-///<p>The Elastic IP (EIP) is invalid or cannot be found.</p>
-InvalidElasticIpFault(String),/// An error occurred dispatching the HTTP request
+///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
+NumberOfNodesQuotaExceededFault(String),
+///<p>Your account is not authorized to perform the requested operation.</p>
+UnauthorizedOperation(String),
+///<p>A request option was specified that is not supported.</p>
+UnsupportedOptionFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12246,7 +12246,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterStateFault" => ModifyClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => ModifyClusterError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => ModifyClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => ModifyClusterError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => ModifyClusterError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => ModifyClusterError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => ModifyClusterError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"UnsupportedOptionFault" => ModifyClusterError::UnsupportedOptionFault(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifyClusterError::UnauthorizedOperation(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => ModifyClusterError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => ModifyClusterError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"ClusterAlreadyExistsFault" => ModifyClusterError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"LimitExceededFault" => ModifyClusterError::LimitExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => ModifyClusterError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => ModifyClusterError::InvalidElasticIpFault(String::from(parsed_error.message)),_ => ModifyClusterError::Unknown(String::from(body))
+                                    "ClusterAlreadyExistsFault" => ModifyClusterError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => ModifyClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => ModifyClusterError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => ModifyClusterError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => ModifyClusterError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => ModifyClusterError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => ModifyClusterError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => ModifyClusterError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => ModifyClusterError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => ModifyClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => ModifyClusterError::InvalidElasticIpFault(String::from(parsed_error.message)),"LimitExceededFault" => ModifyClusterError::LimitExceededFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => ModifyClusterError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifyClusterError::UnauthorizedOperation(String::from(parsed_error.message)),"UnsupportedOptionFault" => ModifyClusterError::UnsupportedOptionFault(String::from(parsed_error.message)),_ => ModifyClusterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyClusterError::Unknown(body.to_string())
@@ -12278,7 +12278,7 @@ Unknown(String)
                 impl Error for ModifyClusterError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyClusterError::InvalidClusterStateFault(ref cause) => cause,ModifyClusterError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,ModifyClusterError::ClusterNotFoundFault(ref cause) => cause,ModifyClusterError::NumberOfNodesQuotaExceededFault(ref cause) => cause,ModifyClusterError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,ModifyClusterError::ClusterParameterGroupNotFoundFault(ref cause) => cause,ModifyClusterError::InsufficientClusterCapacityFault(ref cause) => cause,ModifyClusterError::UnsupportedOptionFault(ref cause) => cause,ModifyClusterError::UnauthorizedOperation(ref cause) => cause,ModifyClusterError::HsmClientCertificateNotFoundFault(ref cause) => cause,ModifyClusterError::HsmConfigurationNotFoundFault(ref cause) => cause,ModifyClusterError::ClusterAlreadyExistsFault(ref cause) => cause,ModifyClusterError::LimitExceededFault(ref cause) => cause,ModifyClusterError::DependentServiceRequestThrottlingFault(ref cause) => cause,ModifyClusterError::InvalidElasticIpFault(ref cause) => cause,ModifyClusterError::Validation(ref cause) => cause,ModifyClusterError::Credentials(ref err) => err.description(),ModifyClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterError::Unknown(ref cause) => cause
+                            ModifyClusterError::ClusterAlreadyExistsFault(ref cause) => cause,ModifyClusterError::ClusterNotFoundFault(ref cause) => cause,ModifyClusterError::ClusterParameterGroupNotFoundFault(ref cause) => cause,ModifyClusterError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,ModifyClusterError::DependentServiceRequestThrottlingFault(ref cause) => cause,ModifyClusterError::HsmClientCertificateNotFoundFault(ref cause) => cause,ModifyClusterError::HsmConfigurationNotFoundFault(ref cause) => cause,ModifyClusterError::InsufficientClusterCapacityFault(ref cause) => cause,ModifyClusterError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,ModifyClusterError::InvalidClusterStateFault(ref cause) => cause,ModifyClusterError::InvalidElasticIpFault(ref cause) => cause,ModifyClusterError::LimitExceededFault(ref cause) => cause,ModifyClusterError::NumberOfNodesQuotaExceededFault(ref cause) => cause,ModifyClusterError::UnauthorizedOperation(ref cause) => cause,ModifyClusterError::UnsupportedOptionFault(ref cause) => cause,ModifyClusterError::Validation(ref cause) => cause,ModifyClusterError::Credentials(ref err) => err.description(),ModifyClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12286,10 +12286,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyClusterIamRolesError {
                     
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
-ClusterNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterNotFoundFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12306,7 +12306,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterStateFault" => ModifyClusterIamRolesError::InvalidClusterStateFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => ModifyClusterIamRolesError::ClusterNotFoundFault(String::from(parsed_error.message)),_ => ModifyClusterIamRolesError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => ModifyClusterIamRolesError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => ModifyClusterIamRolesError::InvalidClusterStateFault(String::from(parsed_error.message)),_ => ModifyClusterIamRolesError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyClusterIamRolesError::Unknown(body.to_string())
@@ -12338,7 +12338,7 @@ Unknown(String)
                 impl Error for ModifyClusterIamRolesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyClusterIamRolesError::InvalidClusterStateFault(ref cause) => cause,ModifyClusterIamRolesError::ClusterNotFoundFault(ref cause) => cause,ModifyClusterIamRolesError::Validation(ref cause) => cause,ModifyClusterIamRolesError::Credentials(ref err) => err.description(),ModifyClusterIamRolesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterIamRolesError::Unknown(ref cause) => cause
+                            ModifyClusterIamRolesError::ClusterNotFoundFault(ref cause) => cause,ModifyClusterIamRolesError::InvalidClusterStateFault(ref cause) => cause,ModifyClusterIamRolesError::Validation(ref cause) => cause,ModifyClusterIamRolesError::Credentials(ref err) => err.description(),ModifyClusterIamRolesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterIamRolesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12410,14 +12410,14 @@ Unknown(String)
 ClusterSubnetGroupNotFoundFault(String),
 ///<p>The request would result in user exceeding the allowed number of subnets in a cluster subnet groups. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ClusterSubnetQuotaExceededFault(String),
-///<p>A specified subnet is already in use by another cluster.</p>
-SubnetAlreadyInUse(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
 ///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
 InvalidSubnet(String),
+///<p>A specified subnet is already in use by another cluster.</p>
+SubnetAlreadyInUse(String),
 ///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12434,7 +12434,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSubnetGroupNotFoundFault" => ModifyClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSubnetQuotaExceededFault" => ModifyClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(String::from(parsed_error.message)),"SubnetAlreadyInUse" => ModifyClusterSubnetGroupError::SubnetAlreadyInUse(String::from(parsed_error.message)),"InvalidSubnet" => ModifyClusterSubnetGroupError::InvalidSubnet(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifyClusterSubnetGroupError::UnauthorizedOperation(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => ModifyClusterSubnetGroupError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => ModifyClusterSubnetGroupError::Unknown(String::from(body))
+                                    "ClusterSubnetGroupNotFoundFault" => ModifyClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSubnetQuotaExceededFault" => ModifyClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => ModifyClusterSubnetGroupError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidSubnet" => ModifyClusterSubnetGroupError::InvalidSubnet(String::from(parsed_error.message)),"SubnetAlreadyInUse" => ModifyClusterSubnetGroupError::SubnetAlreadyInUse(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifyClusterSubnetGroupError::UnauthorizedOperation(String::from(parsed_error.message)),_ => ModifyClusterSubnetGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyClusterSubnetGroupError::Unknown(body.to_string())
@@ -12466,7 +12466,7 @@ Unknown(String)
                 impl Error for ModifyClusterSubnetGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,ModifyClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(ref cause) => cause,ModifyClusterSubnetGroupError::SubnetAlreadyInUse(ref cause) => cause,ModifyClusterSubnetGroupError::InvalidSubnet(ref cause) => cause,ModifyClusterSubnetGroupError::UnauthorizedOperation(ref cause) => cause,ModifyClusterSubnetGroupError::DependentServiceRequestThrottlingFault(ref cause) => cause,ModifyClusterSubnetGroupError::Validation(ref cause) => cause,ModifyClusterSubnetGroupError::Credentials(ref err) => err.description(),ModifyClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterSubnetGroupError::Unknown(ref cause) => cause
+                            ModifyClusterSubnetGroupError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,ModifyClusterSubnetGroupError::ClusterSubnetQuotaExceededFault(ref cause) => cause,ModifyClusterSubnetGroupError::DependentServiceRequestThrottlingFault(ref cause) => cause,ModifyClusterSubnetGroupError::InvalidSubnet(ref cause) => cause,ModifyClusterSubnetGroupError::SubnetAlreadyInUse(ref cause) => cause,ModifyClusterSubnetGroupError::UnauthorizedOperation(ref cause) => cause,ModifyClusterSubnetGroupError::Validation(ref cause) => cause,ModifyClusterSubnetGroupError::Credentials(ref err) => err.description(),ModifyClusterSubnetGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyClusterSubnetGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12474,24 +12474,24 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyEventSubscriptionError {
                     
-///<p>An Amazon Redshift event notification subscription with the specified name does not exist.</p>
-SubscriptionNotFoundFault(String),
+///<p>The subscription request is invalid because it is a duplicate request. This subscription request is already in progress.</p>
+InvalidSubscriptionStateFault(String),
 ///<p>Amazon SNS has responded that there is a problem with the specified Amazon SNS topic.</p>
 SNSInvalidTopicFault(String),
 ///<p>You do not have permission to publish to the specified Amazon SNS topic.</p>
 SNSNoAuthorizationFault(String),
 ///<p>An Amazon SNS topic with the specified Amazon Resource Name (ARN) does not exist.</p>
 SNSTopicArnNotFoundFault(String),
-///<p>An Amazon Redshift event with the specified event ID does not exist.</p>
-SubscriptionEventIdNotFoundFault(String),
-///<p>The value specified for the event category was not one of the allowed values, or it specified a category that does not apply to the specified source type. The allowed values are Configuration, Management, Monitoring, and Security.</p>
-SubscriptionCategoryNotFoundFault(String),
-///<p>The value specified for the event severity was not one of the allowed values, or it specified a severity that does not apply to the specified source type. The allowed values are ERROR and INFO.</p>
-SubscriptionSeverityNotFoundFault(String),
 ///<p>The specified Amazon Redshift event source could not be found.</p>
 SourceNotFoundFault(String),
-///<p>The subscription request is invalid because it is a duplicate request. This subscription request is already in progress.</p>
-InvalidSubscriptionStateFault(String),/// An error occurred dispatching the HTTP request
+///<p>The value specified for the event category was not one of the allowed values, or it specified a category that does not apply to the specified source type. The allowed values are Configuration, Management, Monitoring, and Security.</p>
+SubscriptionCategoryNotFoundFault(String),
+///<p>An Amazon Redshift event with the specified event ID does not exist.</p>
+SubscriptionEventIdNotFoundFault(String),
+///<p>An Amazon Redshift event notification subscription with the specified name does not exist.</p>
+SubscriptionNotFoundFault(String),
+///<p>The value specified for the event severity was not one of the allowed values, or it specified a severity that does not apply to the specified source type. The allowed values are ERROR and INFO.</p>
+SubscriptionSeverityNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12508,7 +12508,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "SubscriptionNotFoundFault" => ModifyEventSubscriptionError::SubscriptionNotFoundFault(String::from(parsed_error.message)),"SNSInvalidTopicFault" => ModifyEventSubscriptionError::SNSInvalidTopicFault(String::from(parsed_error.message)),"SNSNoAuthorizationFault" => ModifyEventSubscriptionError::SNSNoAuthorizationFault(String::from(parsed_error.message)),"SNSTopicArnNotFoundFault" => ModifyEventSubscriptionError::SNSTopicArnNotFoundFault(String::from(parsed_error.message)),"SubscriptionEventIdNotFoundFault" => ModifyEventSubscriptionError::SubscriptionEventIdNotFoundFault(String::from(parsed_error.message)),"SubscriptionCategoryNotFoundFault" => ModifyEventSubscriptionError::SubscriptionCategoryNotFoundFault(String::from(parsed_error.message)),"SubscriptionSeverityNotFoundFault" => ModifyEventSubscriptionError::SubscriptionSeverityNotFoundFault(String::from(parsed_error.message)),"SourceNotFoundFault" => ModifyEventSubscriptionError::SourceNotFoundFault(String::from(parsed_error.message)),"InvalidSubscriptionStateFault" => ModifyEventSubscriptionError::InvalidSubscriptionStateFault(String::from(parsed_error.message)),_ => ModifyEventSubscriptionError::Unknown(String::from(body))
+                                    "InvalidSubscriptionStateFault" => ModifyEventSubscriptionError::InvalidSubscriptionStateFault(String::from(parsed_error.message)),"SNSInvalidTopicFault" => ModifyEventSubscriptionError::SNSInvalidTopicFault(String::from(parsed_error.message)),"SNSNoAuthorizationFault" => ModifyEventSubscriptionError::SNSNoAuthorizationFault(String::from(parsed_error.message)),"SNSTopicArnNotFoundFault" => ModifyEventSubscriptionError::SNSTopicArnNotFoundFault(String::from(parsed_error.message)),"SourceNotFoundFault" => ModifyEventSubscriptionError::SourceNotFoundFault(String::from(parsed_error.message)),"SubscriptionCategoryNotFoundFault" => ModifyEventSubscriptionError::SubscriptionCategoryNotFoundFault(String::from(parsed_error.message)),"SubscriptionEventIdNotFoundFault" => ModifyEventSubscriptionError::SubscriptionEventIdNotFoundFault(String::from(parsed_error.message)),"SubscriptionNotFoundFault" => ModifyEventSubscriptionError::SubscriptionNotFoundFault(String::from(parsed_error.message)),"SubscriptionSeverityNotFoundFault" => ModifyEventSubscriptionError::SubscriptionSeverityNotFoundFault(String::from(parsed_error.message)),_ => ModifyEventSubscriptionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyEventSubscriptionError::Unknown(body.to_string())
@@ -12540,7 +12540,7 @@ Unknown(String)
                 impl Error for ModifyEventSubscriptionError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyEventSubscriptionError::SubscriptionNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SNSInvalidTopicFault(ref cause) => cause,ModifyEventSubscriptionError::SNSNoAuthorizationFault(ref cause) => cause,ModifyEventSubscriptionError::SNSTopicArnNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionEventIdNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionCategoryNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionSeverityNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SourceNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::InvalidSubscriptionStateFault(ref cause) => cause,ModifyEventSubscriptionError::Validation(ref cause) => cause,ModifyEventSubscriptionError::Credentials(ref err) => err.description(),ModifyEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyEventSubscriptionError::Unknown(ref cause) => cause
+                            ModifyEventSubscriptionError::InvalidSubscriptionStateFault(ref cause) => cause,ModifyEventSubscriptionError::SNSInvalidTopicFault(ref cause) => cause,ModifyEventSubscriptionError::SNSNoAuthorizationFault(ref cause) => cause,ModifyEventSubscriptionError::SNSTopicArnNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SourceNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionCategoryNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionEventIdNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::SubscriptionSeverityNotFoundFault(ref cause) => cause,ModifyEventSubscriptionError::Validation(ref cause) => cause,ModifyEventSubscriptionError::Credentials(ref err) => err.description(),ModifyEventSubscriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyEventSubscriptionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12550,12 +12550,12 @@ Unknown(String)
                     
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),
 ///<p>Cross-region snapshot copy was temporarily disabled. Try your request again.</p>
 SnapshotCopyDisabledFault(String),
 ///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),/// An error occurred dispatching the HTTP request
+UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12572,7 +12572,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterNotFoundFault" => ModifySnapshotCopyRetentionPeriodError::ClusterNotFoundFault(String::from(parsed_error.message)),"SnapshotCopyDisabledFault" => ModifySnapshotCopyRetentionPeriodError::SnapshotCopyDisabledFault(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifySnapshotCopyRetentionPeriodError::UnauthorizedOperation(String::from(parsed_error.message)),"InvalidClusterStateFault" => ModifySnapshotCopyRetentionPeriodError::InvalidClusterStateFault(String::from(parsed_error.message)),_ => ModifySnapshotCopyRetentionPeriodError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => ModifySnapshotCopyRetentionPeriodError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => ModifySnapshotCopyRetentionPeriodError::InvalidClusterStateFault(String::from(parsed_error.message)),"SnapshotCopyDisabledFault" => ModifySnapshotCopyRetentionPeriodError::SnapshotCopyDisabledFault(String::from(parsed_error.message)),"UnauthorizedOperation" => ModifySnapshotCopyRetentionPeriodError::UnauthorizedOperation(String::from(parsed_error.message)),_ => ModifySnapshotCopyRetentionPeriodError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifySnapshotCopyRetentionPeriodError::Unknown(body.to_string())
@@ -12604,7 +12604,7 @@ Unknown(String)
                 impl Error for ModifySnapshotCopyRetentionPeriodError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifySnapshotCopyRetentionPeriodError::ClusterNotFoundFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::SnapshotCopyDisabledFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::UnauthorizedOperation(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::InvalidClusterStateFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::Validation(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::Credentials(ref err) => err.description(),ModifySnapshotCopyRetentionPeriodError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifySnapshotCopyRetentionPeriodError::Unknown(ref cause) => cause
+                            ModifySnapshotCopyRetentionPeriodError::ClusterNotFoundFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::InvalidClusterStateFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::SnapshotCopyDisabledFault(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::UnauthorizedOperation(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::Validation(ref cause) => cause,ModifySnapshotCopyRetentionPeriodError::Credentials(ref err) => err.description(),ModifySnapshotCopyRetentionPeriodError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifySnapshotCopyRetentionPeriodError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12612,10 +12612,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PurchaseReservedNodeOfferingError {
                     
-///<p>Specified offering does not exist.</p>
-ReservedNodeOfferingNotFoundFault(String),
 ///<p>User already has a reservation with the given identifier.</p>
 ReservedNodeAlreadyExistsFault(String),
+///<p>Specified offering does not exist.</p>
+ReservedNodeOfferingNotFoundFault(String),
 ///<p>Request would exceed the user's compute node quota. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ReservedNodeQuotaExceededFault(String),
 ///<p>The requested operation isn't supported.</p>
@@ -12636,7 +12636,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ReservedNodeOfferingNotFoundFault" => PurchaseReservedNodeOfferingError::ReservedNodeOfferingNotFoundFault(String::from(parsed_error.message)),"ReservedNodeAlreadyExistsFault" => PurchaseReservedNodeOfferingError::ReservedNodeAlreadyExistsFault(String::from(parsed_error.message)),"ReservedNodeQuotaExceededFault" => PurchaseReservedNodeOfferingError::ReservedNodeQuotaExceededFault(String::from(parsed_error.message)),"UnsupportedOperationFault" => PurchaseReservedNodeOfferingError::UnsupportedOperationFault(String::from(parsed_error.message)),_ => PurchaseReservedNodeOfferingError::Unknown(String::from(body))
+                                    "ReservedNodeAlreadyExistsFault" => PurchaseReservedNodeOfferingError::ReservedNodeAlreadyExistsFault(String::from(parsed_error.message)),"ReservedNodeOfferingNotFoundFault" => PurchaseReservedNodeOfferingError::ReservedNodeOfferingNotFoundFault(String::from(parsed_error.message)),"ReservedNodeQuotaExceededFault" => PurchaseReservedNodeOfferingError::ReservedNodeQuotaExceededFault(String::from(parsed_error.message)),"UnsupportedOperationFault" => PurchaseReservedNodeOfferingError::UnsupportedOperationFault(String::from(parsed_error.message)),_ => PurchaseReservedNodeOfferingError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => PurchaseReservedNodeOfferingError::Unknown(body.to_string())
@@ -12668,7 +12668,7 @@ Unknown(String)
                 impl Error for PurchaseReservedNodeOfferingError {
                     fn description(&self) -> &str {
                         match *self {
-                            PurchaseReservedNodeOfferingError::ReservedNodeOfferingNotFoundFault(ref cause) => cause,PurchaseReservedNodeOfferingError::ReservedNodeAlreadyExistsFault(ref cause) => cause,PurchaseReservedNodeOfferingError::ReservedNodeQuotaExceededFault(ref cause) => cause,PurchaseReservedNodeOfferingError::UnsupportedOperationFault(ref cause) => cause,PurchaseReservedNodeOfferingError::Validation(ref cause) => cause,PurchaseReservedNodeOfferingError::Credentials(ref err) => err.description(),PurchaseReservedNodeOfferingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PurchaseReservedNodeOfferingError::Unknown(ref cause) => cause
+                            PurchaseReservedNodeOfferingError::ReservedNodeAlreadyExistsFault(ref cause) => cause,PurchaseReservedNodeOfferingError::ReservedNodeOfferingNotFoundFault(ref cause) => cause,PurchaseReservedNodeOfferingError::ReservedNodeQuotaExceededFault(ref cause) => cause,PurchaseReservedNodeOfferingError::UnsupportedOperationFault(ref cause) => cause,PurchaseReservedNodeOfferingError::Validation(ref cause) => cause,PurchaseReservedNodeOfferingError::Credentials(ref err) => err.description(),PurchaseReservedNodeOfferingError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PurchaseReservedNodeOfferingError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12676,10 +12676,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RebootClusterError {
                     
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
-ClusterNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterNotFoundFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12696,7 +12696,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterStateFault" => RebootClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => RebootClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),_ => RebootClusterError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => RebootClusterError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => RebootClusterError::InvalidClusterStateFault(String::from(parsed_error.message)),_ => RebootClusterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RebootClusterError::Unknown(body.to_string())
@@ -12728,7 +12728,7 @@ Unknown(String)
                 impl Error for RebootClusterError {
                     fn description(&self) -> &str {
                         match *self {
-                            RebootClusterError::InvalidClusterStateFault(ref cause) => cause,RebootClusterError::ClusterNotFoundFault(ref cause) => cause,RebootClusterError::Validation(ref cause) => cause,RebootClusterError::Credentials(ref err) => err.description(),RebootClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RebootClusterError::Unknown(ref cause) => cause
+                            RebootClusterError::ClusterNotFoundFault(ref cause) => cause,RebootClusterError::InvalidClusterStateFault(ref cause) => cause,RebootClusterError::Validation(ref cause) => cause,RebootClusterError::Credentials(ref err) => err.description(),RebootClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RebootClusterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12736,10 +12736,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ResetClusterParameterGroupError {
                     
-///<p>The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.</p>
-InvalidClusterParameterGroupStateFault(String),
 ///<p>The parameter group name does not refer to an existing parameter group.</p>
-ClusterParameterGroupNotFoundFault(String),/// An error occurred dispatching the HTTP request
+ClusterParameterGroupNotFoundFault(String),
+///<p>The cluster parameter group action can not be completed because another task is in progress that involves the parameter group. Wait a few moments and try the operation again.</p>
+InvalidClusterParameterGroupStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12756,7 +12756,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidClusterParameterGroupStateFault" => ResetClusterParameterGroupError::InvalidClusterParameterGroupStateFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => ResetClusterParameterGroupError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),_ => ResetClusterParameterGroupError::Unknown(String::from(body))
+                                    "ClusterParameterGroupNotFoundFault" => ResetClusterParameterGroupError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterParameterGroupStateFault" => ResetClusterParameterGroupError::InvalidClusterParameterGroupStateFault(String::from(parsed_error.message)),_ => ResetClusterParameterGroupError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ResetClusterParameterGroupError::Unknown(body.to_string())
@@ -12788,7 +12788,7 @@ Unknown(String)
                 impl Error for ResetClusterParameterGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            ResetClusterParameterGroupError::InvalidClusterParameterGroupStateFault(ref cause) => cause,ResetClusterParameterGroupError::ClusterParameterGroupNotFoundFault(ref cause) => cause,ResetClusterParameterGroupError::Validation(ref cause) => cause,ResetClusterParameterGroupError::Credentials(ref err) => err.description(),ResetClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResetClusterParameterGroupError::Unknown(ref cause) => cause
+                            ResetClusterParameterGroupError::ClusterParameterGroupNotFoundFault(ref cause) => cause,ResetClusterParameterGroupError::InvalidClusterParameterGroupStateFault(ref cause) => cause,ResetClusterParameterGroupError::Validation(ref cause) => cause,ResetClusterParameterGroupError::Credentials(ref err) => err.description(),ResetClusterParameterGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResetClusterParameterGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12800,44 +12800,44 @@ Unknown(String)
 AccessToSnapshotDeniedFault(String),
 ///<p>The account already has a cluster with the given identifier.</p>
 ClusterAlreadyExistsFault(String),
-///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
-ClusterSnapshotNotFoundFault(String),
+///<p>The parameter group name does not refer to an existing parameter group.</p>
+ClusterParameterGroupNotFoundFault(String),
 ///<p>The request would exceed the allowed number of cluster instances for this account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
 ClusterQuotaExceededFault(String),
-///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
-InsufficientClusterCapacityFault(String),
-///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
-InvalidClusterSnapshotStateFault(String),
-///<p>The restore is invalid.</p>
-InvalidRestoreFault(String),
-///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
-NumberOfNodesQuotaExceededFault(String),
-///<p>The operation would exceed the number of nodes allowed for a cluster.</p>
-NumberOfNodesPerClusterLimitExceededFault(String),
-///<p>The cluster subnet group does not cover all Availability Zones.</p>
-InvalidVPCNetworkStateFault(String),
-///<p>The cluster subnet group cannot be deleted because it is in use.</p>
-InvalidClusterSubnetGroupStateFault(String),
-///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
-InvalidSubnet(String),
+///<p>The cluster security group name does not refer to an existing cluster security group.</p>
+ClusterSecurityGroupNotFoundFault(String),
+///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
+ClusterSnapshotNotFoundFault(String),
 ///<p>The cluster subnet group name does not refer to an existing cluster subnet group.</p>
 ClusterSubnetGroupNotFoundFault(String),
-///<p>Your account is not authorized to perform the requested operation.</p>
-UnauthorizedOperation(String),
+///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
+DependentServiceRequestThrottlingFault(String),
 ///<p>There is no Amazon Redshift HSM client certificate with the specified identifier.</p>
 HsmClientCertificateNotFoundFault(String),
 ///<p>There is no Amazon Redshift HSM configuration with the specified identifier.</p>
 HsmConfigurationNotFoundFault(String),
+///<p>The number of nodes specified exceeds the allotted capacity of the cluster.</p>
+InsufficientClusterCapacityFault(String),
+///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
+InvalidClusterSnapshotStateFault(String),
+///<p>The cluster subnet group cannot be deleted because it is in use.</p>
+InvalidClusterSubnetGroupStateFault(String),
 ///<p>The Elastic IP (EIP) is invalid or cannot be found.</p>
 InvalidElasticIpFault(String),
-///<p>The parameter group name does not refer to an existing parameter group.</p>
-ClusterParameterGroupNotFoundFault(String),
-///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),
+///<p>The restore is invalid.</p>
+InvalidRestoreFault(String),
+///<p>The requested subnet is not valid, or not all of the subnets are in the same VPC.</p>
+InvalidSubnet(String),
+///<p>The cluster subnet group does not cover all Availability Zones.</p>
+InvalidVPCNetworkStateFault(String),
 ///<p>The encryption key has exceeded its grant limit in AWS KMS.</p>
 LimitExceededFault(String),
-///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+///<p>The operation would exceed the number of nodes allowed for a cluster.</p>
+NumberOfNodesPerClusterLimitExceededFault(String),
+///<p>The operation would exceed the number of nodes allotted to the account. For information about increasing your quota, go to <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/amazon-redshift-limits.html">Limits in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>
+NumberOfNodesQuotaExceededFault(String),
+///<p>Your account is not authorized to perform the requested operation.</p>
+UnauthorizedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -12854,7 +12854,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "AccessToSnapshotDeniedFault" => RestoreFromClusterSnapshotError::AccessToSnapshotDeniedFault(String::from(parsed_error.message)),"ClusterAlreadyExistsFault" => RestoreFromClusterSnapshotError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"ClusterQuotaExceededFault" => RestoreFromClusterSnapshotError::ClusterQuotaExceededFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => RestoreFromClusterSnapshotError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => RestoreFromClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"InvalidRestoreFault" => RestoreFromClusterSnapshotError::InvalidRestoreFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => RestoreFromClusterSnapshotError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"NumberOfNodesPerClusterLimitExceededFault" => RestoreFromClusterSnapshotError::NumberOfNodesPerClusterLimitExceededFault(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => RestoreFromClusterSnapshotError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"InvalidClusterSubnetGroupStateFault" => RestoreFromClusterSnapshotError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidSubnet" => RestoreFromClusterSnapshotError::InvalidSubnet(String::from(parsed_error.message)),"ClusterSubnetGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"UnauthorizedOperation" => RestoreFromClusterSnapshotError::UnauthorizedOperation(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => RestoreFromClusterSnapshotError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => RestoreFromClusterSnapshotError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => RestoreFromClusterSnapshotError::InvalidElasticIpFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"LimitExceededFault" => RestoreFromClusterSnapshotError::LimitExceededFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => RestoreFromClusterSnapshotError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => RestoreFromClusterSnapshotError::Unknown(String::from(body))
+                                    "AccessToSnapshotDeniedFault" => RestoreFromClusterSnapshotError::AccessToSnapshotDeniedFault(String::from(parsed_error.message)),"ClusterAlreadyExistsFault" => RestoreFromClusterSnapshotError::ClusterAlreadyExistsFault(String::from(parsed_error.message)),"ClusterParameterGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"ClusterQuotaExceededFault" => RestoreFromClusterSnapshotError::ClusterQuotaExceededFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"ClusterSubnetGroupNotFoundFault" => RestoreFromClusterSnapshotError::ClusterSubnetGroupNotFoundFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => RestoreFromClusterSnapshotError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"HsmClientCertificateNotFoundFault" => RestoreFromClusterSnapshotError::HsmClientCertificateNotFoundFault(String::from(parsed_error.message)),"HsmConfigurationNotFoundFault" => RestoreFromClusterSnapshotError::HsmConfigurationNotFoundFault(String::from(parsed_error.message)),"InsufficientClusterCapacityFault" => RestoreFromClusterSnapshotError::InsufficientClusterCapacityFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => RestoreFromClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"InvalidClusterSubnetGroupStateFault" => RestoreFromClusterSnapshotError::InvalidClusterSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidElasticIpFault" => RestoreFromClusterSnapshotError::InvalidElasticIpFault(String::from(parsed_error.message)),"InvalidRestoreFault" => RestoreFromClusterSnapshotError::InvalidRestoreFault(String::from(parsed_error.message)),"InvalidSubnet" => RestoreFromClusterSnapshotError::InvalidSubnet(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => RestoreFromClusterSnapshotError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"LimitExceededFault" => RestoreFromClusterSnapshotError::LimitExceededFault(String::from(parsed_error.message)),"NumberOfNodesPerClusterLimitExceededFault" => RestoreFromClusterSnapshotError::NumberOfNodesPerClusterLimitExceededFault(String::from(parsed_error.message)),"NumberOfNodesQuotaExceededFault" => RestoreFromClusterSnapshotError::NumberOfNodesQuotaExceededFault(String::from(parsed_error.message)),"UnauthorizedOperation" => RestoreFromClusterSnapshotError::UnauthorizedOperation(String::from(parsed_error.message)),_ => RestoreFromClusterSnapshotError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RestoreFromClusterSnapshotError::Unknown(body.to_string())
@@ -12886,7 +12886,7 @@ Unknown(String)
                 impl Error for RestoreFromClusterSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            RestoreFromClusterSnapshotError::AccessToSnapshotDeniedFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterAlreadyExistsFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterQuotaExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::InsufficientClusterCapacityFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidRestoreFault(ref cause) => cause,RestoreFromClusterSnapshotError::NumberOfNodesQuotaExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::NumberOfNodesPerClusterLimitExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidVPCNetworkStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidSubnet(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::UnauthorizedOperation(ref cause) => cause,RestoreFromClusterSnapshotError::HsmClientCertificateNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::HsmConfigurationNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidElasticIpFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterParameterGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::LimitExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::DependentServiceRequestThrottlingFault(ref cause) => cause,RestoreFromClusterSnapshotError::Validation(ref cause) => cause,RestoreFromClusterSnapshotError::Credentials(ref err) => err.description(),RestoreFromClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RestoreFromClusterSnapshotError::Unknown(ref cause) => cause
+                            RestoreFromClusterSnapshotError::AccessToSnapshotDeniedFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterAlreadyExistsFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterParameterGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterQuotaExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::ClusterSubnetGroupNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::DependentServiceRequestThrottlingFault(ref cause) => cause,RestoreFromClusterSnapshotError::HsmClientCertificateNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::HsmConfigurationNotFoundFault(ref cause) => cause,RestoreFromClusterSnapshotError::InsufficientClusterCapacityFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidClusterSubnetGroupStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidElasticIpFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidRestoreFault(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidSubnet(ref cause) => cause,RestoreFromClusterSnapshotError::InvalidVPCNetworkStateFault(ref cause) => cause,RestoreFromClusterSnapshotError::LimitExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::NumberOfNodesPerClusterLimitExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::NumberOfNodesQuotaExceededFault(ref cause) => cause,RestoreFromClusterSnapshotError::UnauthorizedOperation(ref cause) => cause,RestoreFromClusterSnapshotError::Validation(ref cause) => cause,RestoreFromClusterSnapshotError::Credentials(ref err) => err.description(),RestoreFromClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RestoreFromClusterSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12894,18 +12894,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RestoreTableFromClusterSnapshotError {
                     
+///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
+ClusterNotFoundFault(String),
 ///<p>The snapshot identifier does not refer to an existing cluster snapshot.</p>
 ClusterSnapshotNotFoundFault(String),
 ///<p>You have exceeded the allowed number of table restore requests. Wait for your current table restore requests to complete before making a new request.</p>
 InProgressTableRestoreQuotaExceededFault(String),
 ///<p>The specified cluster snapshot is not in the <code>available</code> state, or other accounts are authorized to access the snapshot. </p>
 InvalidClusterSnapshotStateFault(String),
-///<p>The value specified for the <code>sourceDatabaseName</code>, <code>sourceSchemaName</code>, or <code>sourceTableName</code> parameter, or a combination of these, doesn't exist in the snapshot.</p>
-InvalidTableRestoreArgumentFault(String),
-///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
-ClusterNotFoundFault(String),
 ///<p>The specified cluster is not in the <code>available</code> state. </p>
 InvalidClusterStateFault(String),
+///<p>The value specified for the <code>sourceDatabaseName</code>, <code>sourceSchemaName</code>, or <code>sourceTableName</code> parameter, or a combination of these, doesn't exist in the snapshot.</p>
+InvalidTableRestoreArgumentFault(String),
 ///<p>The requested operation isn't supported.</p>
 UnsupportedOperationFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -12924,7 +12924,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSnapshotNotFoundFault" => RestoreTableFromClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"InProgressTableRestoreQuotaExceededFault" => RestoreTableFromClusterSnapshotError::InProgressTableRestoreQuotaExceededFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => RestoreTableFromClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"InvalidTableRestoreArgumentFault" => RestoreTableFromClusterSnapshotError::InvalidTableRestoreArgumentFault(String::from(parsed_error.message)),"ClusterNotFoundFault" => RestoreTableFromClusterSnapshotError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => RestoreTableFromClusterSnapshotError::InvalidClusterStateFault(String::from(parsed_error.message)),"UnsupportedOperationFault" => RestoreTableFromClusterSnapshotError::UnsupportedOperationFault(String::from(parsed_error.message)),_ => RestoreTableFromClusterSnapshotError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => RestoreTableFromClusterSnapshotError::ClusterNotFoundFault(String::from(parsed_error.message)),"ClusterSnapshotNotFoundFault" => RestoreTableFromClusterSnapshotError::ClusterSnapshotNotFoundFault(String::from(parsed_error.message)),"InProgressTableRestoreQuotaExceededFault" => RestoreTableFromClusterSnapshotError::InProgressTableRestoreQuotaExceededFault(String::from(parsed_error.message)),"InvalidClusterSnapshotStateFault" => RestoreTableFromClusterSnapshotError::InvalidClusterSnapshotStateFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => RestoreTableFromClusterSnapshotError::InvalidClusterStateFault(String::from(parsed_error.message)),"InvalidTableRestoreArgumentFault" => RestoreTableFromClusterSnapshotError::InvalidTableRestoreArgumentFault(String::from(parsed_error.message)),"UnsupportedOperationFault" => RestoreTableFromClusterSnapshotError::UnsupportedOperationFault(String::from(parsed_error.message)),_ => RestoreTableFromClusterSnapshotError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RestoreTableFromClusterSnapshotError::Unknown(body.to_string())
@@ -12956,7 +12956,7 @@ Unknown(String)
                 impl Error for RestoreTableFromClusterSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            RestoreTableFromClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InProgressTableRestoreQuotaExceededFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidTableRestoreArgumentFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::ClusterNotFoundFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidClusterStateFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::UnsupportedOperationFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::Validation(ref cause) => cause,RestoreTableFromClusterSnapshotError::Credentials(ref err) => err.description(),RestoreTableFromClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RestoreTableFromClusterSnapshotError::Unknown(ref cause) => cause
+                            RestoreTableFromClusterSnapshotError::ClusterNotFoundFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::ClusterSnapshotNotFoundFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InProgressTableRestoreQuotaExceededFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidClusterSnapshotStateFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidClusterStateFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::InvalidTableRestoreArgumentFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::UnsupportedOperationFault(ref cause) => cause,RestoreTableFromClusterSnapshotError::Validation(ref cause) => cause,RestoreTableFromClusterSnapshotError::Credentials(ref err) => err.description(),RestoreTableFromClusterSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RestoreTableFromClusterSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12964,10 +12964,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RevokeClusterSecurityGroupIngressError {
                     
-///<p>The cluster security group name does not refer to an existing cluster security group.</p>
-ClusterSecurityGroupNotFoundFault(String),
 ///<p>The specified CIDR IP range or EC2 security group is not authorized for the specified cluster security group.</p>
 AuthorizationNotFoundFault(String),
+///<p>The cluster security group name does not refer to an existing cluster security group.</p>
+ClusterSecurityGroupNotFoundFault(String),
 ///<p>The state of the cluster security group is not <code>available</code>. </p>
 InvalidClusterSecurityGroupStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -12986,7 +12986,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterSecurityGroupNotFoundFault" => RevokeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"AuthorizationNotFoundFault" => RevokeClusterSecurityGroupIngressError::AuthorizationNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => RevokeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),_ => RevokeClusterSecurityGroupIngressError::Unknown(String::from(body))
+                                    "AuthorizationNotFoundFault" => RevokeClusterSecurityGroupIngressError::AuthorizationNotFoundFault(String::from(parsed_error.message)),"ClusterSecurityGroupNotFoundFault" => RevokeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(String::from(parsed_error.message)),"InvalidClusterSecurityGroupStateFault" => RevokeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(String::from(parsed_error.message)),_ => RevokeClusterSecurityGroupIngressError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RevokeClusterSecurityGroupIngressError::Unknown(body.to_string())
@@ -13018,7 +13018,7 @@ Unknown(String)
                 impl Error for RevokeClusterSecurityGroupIngressError {
                     fn description(&self) -> &str {
                         match *self {
-                            RevokeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::AuthorizationNotFoundFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::Validation(ref cause) => cause,RevokeClusterSecurityGroupIngressError::Credentials(ref err) => err.description(),RevokeClusterSecurityGroupIngressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RevokeClusterSecurityGroupIngressError::Unknown(ref cause) => cause
+                            RevokeClusterSecurityGroupIngressError::AuthorizationNotFoundFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::ClusterSecurityGroupNotFoundFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::InvalidClusterSecurityGroupStateFault(ref cause) => cause,RevokeClusterSecurityGroupIngressError::Validation(ref cause) => cause,RevokeClusterSecurityGroupIngressError::Credentials(ref err) => err.description(),RevokeClusterSecurityGroupIngressError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RevokeClusterSecurityGroupIngressError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -13090,10 +13090,10 @@ Unknown(String)
                     
 ///<p>The <code>ClusterIdentifier</code> parameter does not refer to an existing cluster. </p>
 ClusterNotFoundFault(String),
-///<p>The specified cluster is not in the <code>available</code> state. </p>
-InvalidClusterStateFault(String),
 ///<p>The request cannot be completed because a dependent service is throttling requests made by Amazon Redshift on your behalf. Wait and retry the request.</p>
-DependentServiceRequestThrottlingFault(String),/// An error occurred dispatching the HTTP request
+DependentServiceRequestThrottlingFault(String),
+///<p>The specified cluster is not in the <code>available</code> state. </p>
+InvalidClusterStateFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -13110,7 +13110,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "ClusterNotFoundFault" => RotateEncryptionKeyError::ClusterNotFoundFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => RotateEncryptionKeyError::InvalidClusterStateFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => RotateEncryptionKeyError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),_ => RotateEncryptionKeyError::Unknown(String::from(body))
+                                    "ClusterNotFoundFault" => RotateEncryptionKeyError::ClusterNotFoundFault(String::from(parsed_error.message)),"DependentServiceRequestThrottlingFault" => RotateEncryptionKeyError::DependentServiceRequestThrottlingFault(String::from(parsed_error.message)),"InvalidClusterStateFault" => RotateEncryptionKeyError::InvalidClusterStateFault(String::from(parsed_error.message)),_ => RotateEncryptionKeyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RotateEncryptionKeyError::Unknown(body.to_string())
@@ -13142,7 +13142,7 @@ Unknown(String)
                 impl Error for RotateEncryptionKeyError {
                     fn description(&self) -> &str {
                         match *self {
-                            RotateEncryptionKeyError::ClusterNotFoundFault(ref cause) => cause,RotateEncryptionKeyError::InvalidClusterStateFault(ref cause) => cause,RotateEncryptionKeyError::DependentServiceRequestThrottlingFault(ref cause) => cause,RotateEncryptionKeyError::Validation(ref cause) => cause,RotateEncryptionKeyError::Credentials(ref err) => err.description(),RotateEncryptionKeyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RotateEncryptionKeyError::Unknown(ref cause) => cause
+                            RotateEncryptionKeyError::ClusterNotFoundFault(ref cause) => cause,RotateEncryptionKeyError::DependentServiceRequestThrottlingFault(ref cause) => cause,RotateEncryptionKeyError::InvalidClusterStateFault(ref cause) => cause,RotateEncryptionKeyError::Validation(ref cause) => cause,RotateEncryptionKeyError::Credentials(ref err) => err.description(),RotateEncryptionKeyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RotateEncryptionKeyError::Unknown(ref cause) => cause
                         }
                     }
                  }

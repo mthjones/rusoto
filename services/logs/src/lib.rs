@@ -861,12 +861,12 @@ pub type Value = String;
                 #[derive(Debug, PartialEq)]
                 pub enum CancelExportTaskError {
                     
+///<p>The operation is not valid on the specified resource.</p>
+InvalidOperation(String),
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
 ///<p>The specified resource does not exist.</p>
 ResourceNotFound(String),
-///<p>The operation is not valid on the specified resource.</p>
-InvalidOperation(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -887,7 +887,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => CancelExportTaskError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => CancelExportTaskError::ResourceNotFound(String::from(error_message)),"InvalidOperationException" => CancelExportTaskError::InvalidOperation(String::from(error_message)),"ServiceUnavailableException" => CancelExportTaskError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CancelExportTaskError::Validation(error_message.to_string()),_ => CancelExportTaskError::Unknown(String::from(body))
+                                    "InvalidOperationException" => CancelExportTaskError::InvalidOperation(String::from(error_message)),"InvalidParameterException" => CancelExportTaskError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => CancelExportTaskError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => CancelExportTaskError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CancelExportTaskError::Validation(error_message.to_string()),_ => CancelExportTaskError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CancelExportTaskError::Unknown(String::from(body))
@@ -918,7 +918,7 @@ Unknown(String)
                 impl Error for CancelExportTaskError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelExportTaskError::InvalidParameter(ref cause) => cause,CancelExportTaskError::ResourceNotFound(ref cause) => cause,CancelExportTaskError::InvalidOperation(ref cause) => cause,CancelExportTaskError::ServiceUnavailable(ref cause) => cause,CancelExportTaskError::Validation(ref cause) => cause,CancelExportTaskError::Credentials(ref err) => err.description(),CancelExportTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelExportTaskError::Unknown(ref cause) => cause
+                            CancelExportTaskError::InvalidOperation(ref cause) => cause,CancelExportTaskError::InvalidParameter(ref cause) => cause,CancelExportTaskError::ResourceNotFound(ref cause) => cause,CancelExportTaskError::ServiceUnavailable(ref cause) => cause,CancelExportTaskError::Validation(ref cause) => cause,CancelExportTaskError::Credentials(ref err) => err.description(),CancelExportTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelExportTaskError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -932,12 +932,12 @@ InvalidParameter(String),
 LimitExceeded(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
-///<p>The service cannot complete the request.</p>
-ServiceUnavailable(String),
+///<p>The specified resource already exists.</p>
+ResourceAlreadyExists(String),
 ///<p>The specified resource does not exist.</p>
 ResourceNotFound(String),
-///<p>The specified resource already exists.</p>
-ResourceAlreadyExists(String),/// An error occurred dispatching the HTTP request
+///<p>The service cannot complete the request.</p>
+ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -956,7 +956,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => CreateExportTaskError::InvalidParameter(String::from(error_message)),"LimitExceededException" => CreateExportTaskError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => CreateExportTaskError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => CreateExportTaskError::ServiceUnavailable(String::from(error_message)),"ResourceNotFoundException" => CreateExportTaskError::ResourceNotFound(String::from(error_message)),"ResourceAlreadyExistsException" => CreateExportTaskError::ResourceAlreadyExists(String::from(error_message)),"ValidationException" => CreateExportTaskError::Validation(error_message.to_string()),_ => CreateExportTaskError::Unknown(String::from(body))
+                                    "InvalidParameterException" => CreateExportTaskError::InvalidParameter(String::from(error_message)),"LimitExceededException" => CreateExportTaskError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => CreateExportTaskError::OperationAborted(String::from(error_message)),"ResourceAlreadyExistsException" => CreateExportTaskError::ResourceAlreadyExists(String::from(error_message)),"ResourceNotFoundException" => CreateExportTaskError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => CreateExportTaskError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CreateExportTaskError::Validation(error_message.to_string()),_ => CreateExportTaskError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateExportTaskError::Unknown(String::from(body))
@@ -987,7 +987,7 @@ Unknown(String)
                 impl Error for CreateExportTaskError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateExportTaskError::InvalidParameter(ref cause) => cause,CreateExportTaskError::LimitExceeded(ref cause) => cause,CreateExportTaskError::OperationAborted(ref cause) => cause,CreateExportTaskError::ServiceUnavailable(ref cause) => cause,CreateExportTaskError::ResourceNotFound(ref cause) => cause,CreateExportTaskError::ResourceAlreadyExists(ref cause) => cause,CreateExportTaskError::Validation(ref cause) => cause,CreateExportTaskError::Credentials(ref err) => err.description(),CreateExportTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateExportTaskError::Unknown(ref cause) => cause
+                            CreateExportTaskError::InvalidParameter(ref cause) => cause,CreateExportTaskError::LimitExceeded(ref cause) => cause,CreateExportTaskError::OperationAborted(ref cause) => cause,CreateExportTaskError::ResourceAlreadyExists(ref cause) => cause,CreateExportTaskError::ResourceNotFound(ref cause) => cause,CreateExportTaskError::ServiceUnavailable(ref cause) => cause,CreateExportTaskError::Validation(ref cause) => cause,CreateExportTaskError::Credentials(ref err) => err.description(),CreateExportTaskError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateExportTaskError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -997,12 +997,12 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource already exists.</p>
-ResourceAlreadyExists(String),
 ///<p>You have reached the maximum number of resources that can be created.</p>
 LimitExceeded(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource already exists.</p>
+ResourceAlreadyExists(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1023,7 +1023,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => CreateLogGroupError::InvalidParameter(String::from(error_message)),"ResourceAlreadyExistsException" => CreateLogGroupError::ResourceAlreadyExists(String::from(error_message)),"LimitExceededException" => CreateLogGroupError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => CreateLogGroupError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => CreateLogGroupError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CreateLogGroupError::Validation(error_message.to_string()),_ => CreateLogGroupError::Unknown(String::from(body))
+                                    "InvalidParameterException" => CreateLogGroupError::InvalidParameter(String::from(error_message)),"LimitExceededException" => CreateLogGroupError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => CreateLogGroupError::OperationAborted(String::from(error_message)),"ResourceAlreadyExistsException" => CreateLogGroupError::ResourceAlreadyExists(String::from(error_message)),"ServiceUnavailableException" => CreateLogGroupError::ServiceUnavailable(String::from(error_message)),"ValidationException" => CreateLogGroupError::Validation(error_message.to_string()),_ => CreateLogGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateLogGroupError::Unknown(String::from(body))
@@ -1054,7 +1054,7 @@ Unknown(String)
                 impl Error for CreateLogGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateLogGroupError::InvalidParameter(ref cause) => cause,CreateLogGroupError::ResourceAlreadyExists(ref cause) => cause,CreateLogGroupError::LimitExceeded(ref cause) => cause,CreateLogGroupError::OperationAborted(ref cause) => cause,CreateLogGroupError::ServiceUnavailable(ref cause) => cause,CreateLogGroupError::Validation(ref cause) => cause,CreateLogGroupError::Credentials(ref err) => err.description(),CreateLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLogGroupError::Unknown(ref cause) => cause
+                            CreateLogGroupError::InvalidParameter(ref cause) => cause,CreateLogGroupError::LimitExceeded(ref cause) => cause,CreateLogGroupError::OperationAborted(ref cause) => cause,CreateLogGroupError::ResourceAlreadyExists(ref cause) => cause,CreateLogGroupError::ServiceUnavailable(ref cause) => cause,CreateLogGroupError::Validation(ref cause) => cause,CreateLogGroupError::Credentials(ref err) => err.description(),CreateLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLogGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1129,10 +1129,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1153,7 +1153,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteDestinationError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteDestinationError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteDestinationError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteDestinationError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteDestinationError::Validation(error_message.to_string()),_ => DeleteDestinationError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteDestinationError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteDestinationError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteDestinationError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteDestinationError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteDestinationError::Validation(error_message.to_string()),_ => DeleteDestinationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteDestinationError::Unknown(String::from(body))
@@ -1184,7 +1184,7 @@ Unknown(String)
                 impl Error for DeleteDestinationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteDestinationError::InvalidParameter(ref cause) => cause,DeleteDestinationError::ResourceNotFound(ref cause) => cause,DeleteDestinationError::OperationAborted(ref cause) => cause,DeleteDestinationError::ServiceUnavailable(ref cause) => cause,DeleteDestinationError::Validation(ref cause) => cause,DeleteDestinationError::Credentials(ref err) => err.description(),DeleteDestinationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDestinationError::Unknown(ref cause) => cause
+                            DeleteDestinationError::InvalidParameter(ref cause) => cause,DeleteDestinationError::OperationAborted(ref cause) => cause,DeleteDestinationError::ResourceNotFound(ref cause) => cause,DeleteDestinationError::ServiceUnavailable(ref cause) => cause,DeleteDestinationError::Validation(ref cause) => cause,DeleteDestinationError::Credentials(ref err) => err.description(),DeleteDestinationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDestinationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1194,10 +1194,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1218,7 +1218,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteLogGroupError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteLogGroupError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteLogGroupError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteLogGroupError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteLogGroupError::Validation(error_message.to_string()),_ => DeleteLogGroupError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteLogGroupError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteLogGroupError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteLogGroupError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteLogGroupError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteLogGroupError::Validation(error_message.to_string()),_ => DeleteLogGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteLogGroupError::Unknown(String::from(body))
@@ -1249,7 +1249,7 @@ Unknown(String)
                 impl Error for DeleteLogGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteLogGroupError::InvalidParameter(ref cause) => cause,DeleteLogGroupError::ResourceNotFound(ref cause) => cause,DeleteLogGroupError::OperationAborted(ref cause) => cause,DeleteLogGroupError::ServiceUnavailable(ref cause) => cause,DeleteLogGroupError::Validation(ref cause) => cause,DeleteLogGroupError::Credentials(ref err) => err.description(),DeleteLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLogGroupError::Unknown(ref cause) => cause
+                            DeleteLogGroupError::InvalidParameter(ref cause) => cause,DeleteLogGroupError::OperationAborted(ref cause) => cause,DeleteLogGroupError::ResourceNotFound(ref cause) => cause,DeleteLogGroupError::ServiceUnavailable(ref cause) => cause,DeleteLogGroupError::Validation(ref cause) => cause,DeleteLogGroupError::Credentials(ref err) => err.description(),DeleteLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLogGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1259,10 +1259,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1283,7 +1283,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteLogStreamError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteLogStreamError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteLogStreamError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteLogStreamError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteLogStreamError::Validation(error_message.to_string()),_ => DeleteLogStreamError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteLogStreamError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteLogStreamError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteLogStreamError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteLogStreamError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteLogStreamError::Validation(error_message.to_string()),_ => DeleteLogStreamError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteLogStreamError::Unknown(String::from(body))
@@ -1314,7 +1314,7 @@ Unknown(String)
                 impl Error for DeleteLogStreamError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteLogStreamError::InvalidParameter(ref cause) => cause,DeleteLogStreamError::ResourceNotFound(ref cause) => cause,DeleteLogStreamError::OperationAborted(ref cause) => cause,DeleteLogStreamError::ServiceUnavailable(ref cause) => cause,DeleteLogStreamError::Validation(ref cause) => cause,DeleteLogStreamError::Credentials(ref err) => err.description(),DeleteLogStreamError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLogStreamError::Unknown(ref cause) => cause
+                            DeleteLogStreamError::InvalidParameter(ref cause) => cause,DeleteLogStreamError::OperationAborted(ref cause) => cause,DeleteLogStreamError::ResourceNotFound(ref cause) => cause,DeleteLogStreamError::ServiceUnavailable(ref cause) => cause,DeleteLogStreamError::Validation(ref cause) => cause,DeleteLogStreamError::Credentials(ref err) => err.description(),DeleteLogStreamError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteLogStreamError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1324,10 +1324,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1348,7 +1348,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteMetricFilterError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteMetricFilterError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteMetricFilterError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteMetricFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteMetricFilterError::Validation(error_message.to_string()),_ => DeleteMetricFilterError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteMetricFilterError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteMetricFilterError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteMetricFilterError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteMetricFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteMetricFilterError::Validation(error_message.to_string()),_ => DeleteMetricFilterError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteMetricFilterError::Unknown(String::from(body))
@@ -1379,7 +1379,7 @@ Unknown(String)
                 impl Error for DeleteMetricFilterError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteMetricFilterError::InvalidParameter(ref cause) => cause,DeleteMetricFilterError::ResourceNotFound(ref cause) => cause,DeleteMetricFilterError::OperationAborted(ref cause) => cause,DeleteMetricFilterError::ServiceUnavailable(ref cause) => cause,DeleteMetricFilterError::Validation(ref cause) => cause,DeleteMetricFilterError::Credentials(ref err) => err.description(),DeleteMetricFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteMetricFilterError::Unknown(ref cause) => cause
+                            DeleteMetricFilterError::InvalidParameter(ref cause) => cause,DeleteMetricFilterError::OperationAborted(ref cause) => cause,DeleteMetricFilterError::ResourceNotFound(ref cause) => cause,DeleteMetricFilterError::ServiceUnavailable(ref cause) => cause,DeleteMetricFilterError::Validation(ref cause) => cause,DeleteMetricFilterError::Credentials(ref err) => err.description(),DeleteMetricFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteMetricFilterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1389,10 +1389,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1413,7 +1413,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteRetentionPolicyError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteRetentionPolicyError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteRetentionPolicyError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteRetentionPolicyError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteRetentionPolicyError::Validation(error_message.to_string()),_ => DeleteRetentionPolicyError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteRetentionPolicyError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteRetentionPolicyError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteRetentionPolicyError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteRetentionPolicyError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteRetentionPolicyError::Validation(error_message.to_string()),_ => DeleteRetentionPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteRetentionPolicyError::Unknown(String::from(body))
@@ -1444,7 +1444,7 @@ Unknown(String)
                 impl Error for DeleteRetentionPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRetentionPolicyError::InvalidParameter(ref cause) => cause,DeleteRetentionPolicyError::ResourceNotFound(ref cause) => cause,DeleteRetentionPolicyError::OperationAborted(ref cause) => cause,DeleteRetentionPolicyError::ServiceUnavailable(ref cause) => cause,DeleteRetentionPolicyError::Validation(ref cause) => cause,DeleteRetentionPolicyError::Credentials(ref err) => err.description(),DeleteRetentionPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRetentionPolicyError::Unknown(ref cause) => cause
+                            DeleteRetentionPolicyError::InvalidParameter(ref cause) => cause,DeleteRetentionPolicyError::OperationAborted(ref cause) => cause,DeleteRetentionPolicyError::ResourceNotFound(ref cause) => cause,DeleteRetentionPolicyError::ServiceUnavailable(ref cause) => cause,DeleteRetentionPolicyError::Validation(ref cause) => cause,DeleteRetentionPolicyError::Credentials(ref err) => err.description(),DeleteRetentionPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRetentionPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1454,10 +1454,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1478,7 +1478,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => DeleteSubscriptionFilterError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => DeleteSubscriptionFilterError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => DeleteSubscriptionFilterError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => DeleteSubscriptionFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteSubscriptionFilterError::Validation(error_message.to_string()),_ => DeleteSubscriptionFilterError::Unknown(String::from(body))
+                                    "InvalidParameterException" => DeleteSubscriptionFilterError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => DeleteSubscriptionFilterError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => DeleteSubscriptionFilterError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => DeleteSubscriptionFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => DeleteSubscriptionFilterError::Validation(error_message.to_string()),_ => DeleteSubscriptionFilterError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteSubscriptionFilterError::Unknown(String::from(body))
@@ -1509,7 +1509,7 @@ Unknown(String)
                 impl Error for DeleteSubscriptionFilterError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteSubscriptionFilterError::InvalidParameter(ref cause) => cause,DeleteSubscriptionFilterError::ResourceNotFound(ref cause) => cause,DeleteSubscriptionFilterError::OperationAborted(ref cause) => cause,DeleteSubscriptionFilterError::ServiceUnavailable(ref cause) => cause,DeleteSubscriptionFilterError::Validation(ref cause) => cause,DeleteSubscriptionFilterError::Credentials(ref err) => err.description(),DeleteSubscriptionFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSubscriptionFilterError::Unknown(ref cause) => cause
+                            DeleteSubscriptionFilterError::InvalidParameter(ref cause) => cause,DeleteSubscriptionFilterError::OperationAborted(ref cause) => cause,DeleteSubscriptionFilterError::ResourceNotFound(ref cause) => cause,DeleteSubscriptionFilterError::ServiceUnavailable(ref cause) => cause,DeleteSubscriptionFilterError::Validation(ref cause) => cause,DeleteSubscriptionFilterError::Credentials(ref err) => err.description(),DeleteSubscriptionFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteSubscriptionFilterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2202,12 +2202,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PutLogEventsError {
                     
+///<p>The event was already logged.</p>
+DataAlreadyAccepted(String),
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
 ///<p>The sequence token is not valid.</p>
 InvalidSequenceToken(String),
-///<p>The event was already logged.</p>
-DataAlreadyAccepted(String),
 ///<p>The specified resource does not exist.</p>
 ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
@@ -2230,7 +2230,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => PutLogEventsError::InvalidParameter(String::from(error_message)),"InvalidSequenceTokenException" => PutLogEventsError::InvalidSequenceToken(String::from(error_message)),"DataAlreadyAcceptedException" => PutLogEventsError::DataAlreadyAccepted(String::from(error_message)),"ResourceNotFoundException" => PutLogEventsError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => PutLogEventsError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutLogEventsError::Validation(error_message.to_string()),_ => PutLogEventsError::Unknown(String::from(body))
+                                    "DataAlreadyAcceptedException" => PutLogEventsError::DataAlreadyAccepted(String::from(error_message)),"InvalidParameterException" => PutLogEventsError::InvalidParameter(String::from(error_message)),"InvalidSequenceTokenException" => PutLogEventsError::InvalidSequenceToken(String::from(error_message)),"ResourceNotFoundException" => PutLogEventsError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => PutLogEventsError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutLogEventsError::Validation(error_message.to_string()),_ => PutLogEventsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutLogEventsError::Unknown(String::from(body))
@@ -2261,7 +2261,7 @@ Unknown(String)
                 impl Error for PutLogEventsError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutLogEventsError::InvalidParameter(ref cause) => cause,PutLogEventsError::InvalidSequenceToken(ref cause) => cause,PutLogEventsError::DataAlreadyAccepted(ref cause) => cause,PutLogEventsError::ResourceNotFound(ref cause) => cause,PutLogEventsError::ServiceUnavailable(ref cause) => cause,PutLogEventsError::Validation(ref cause) => cause,PutLogEventsError::Credentials(ref err) => err.description(),PutLogEventsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutLogEventsError::Unknown(ref cause) => cause
+                            PutLogEventsError::DataAlreadyAccepted(ref cause) => cause,PutLogEventsError::InvalidParameter(ref cause) => cause,PutLogEventsError::InvalidSequenceToken(ref cause) => cause,PutLogEventsError::ResourceNotFound(ref cause) => cause,PutLogEventsError::ServiceUnavailable(ref cause) => cause,PutLogEventsError::Validation(ref cause) => cause,PutLogEventsError::Credentials(ref err) => err.description(),PutLogEventsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutLogEventsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2271,12 +2271,12 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>Multiple requests to update the same resource were in conflict.</p>
-OperationAborted(String),
 ///<p>You have reached the maximum number of resources that can be created.</p>
 LimitExceeded(String),
+///<p>Multiple requests to update the same resource were in conflict.</p>
+OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2297,7 +2297,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => PutMetricFilterError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => PutMetricFilterError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => PutMetricFilterError::OperationAborted(String::from(error_message)),"LimitExceededException" => PutMetricFilterError::LimitExceeded(String::from(error_message)),"ServiceUnavailableException" => PutMetricFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutMetricFilterError::Validation(error_message.to_string()),_ => PutMetricFilterError::Unknown(String::from(body))
+                                    "InvalidParameterException" => PutMetricFilterError::InvalidParameter(String::from(error_message)),"LimitExceededException" => PutMetricFilterError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => PutMetricFilterError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => PutMetricFilterError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => PutMetricFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutMetricFilterError::Validation(error_message.to_string()),_ => PutMetricFilterError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutMetricFilterError::Unknown(String::from(body))
@@ -2328,7 +2328,7 @@ Unknown(String)
                 impl Error for PutMetricFilterError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutMetricFilterError::InvalidParameter(ref cause) => cause,PutMetricFilterError::ResourceNotFound(ref cause) => cause,PutMetricFilterError::OperationAborted(ref cause) => cause,PutMetricFilterError::LimitExceeded(ref cause) => cause,PutMetricFilterError::ServiceUnavailable(ref cause) => cause,PutMetricFilterError::Validation(ref cause) => cause,PutMetricFilterError::Credentials(ref err) => err.description(),PutMetricFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutMetricFilterError::Unknown(ref cause) => cause
+                            PutMetricFilterError::InvalidParameter(ref cause) => cause,PutMetricFilterError::LimitExceeded(ref cause) => cause,PutMetricFilterError::OperationAborted(ref cause) => cause,PutMetricFilterError::ResourceNotFound(ref cause) => cause,PutMetricFilterError::ServiceUnavailable(ref cause) => cause,PutMetricFilterError::Validation(ref cause) => cause,PutMetricFilterError::Credentials(ref err) => err.description(),PutMetricFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutMetricFilterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2338,10 +2338,10 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>Multiple requests to update the same resource were in conflict.</p>
 OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2362,7 +2362,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => PutRetentionPolicyError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => PutRetentionPolicyError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => PutRetentionPolicyError::OperationAborted(String::from(error_message)),"ServiceUnavailableException" => PutRetentionPolicyError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutRetentionPolicyError::Validation(error_message.to_string()),_ => PutRetentionPolicyError::Unknown(String::from(body))
+                                    "InvalidParameterException" => PutRetentionPolicyError::InvalidParameter(String::from(error_message)),"OperationAbortedException" => PutRetentionPolicyError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => PutRetentionPolicyError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => PutRetentionPolicyError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutRetentionPolicyError::Validation(error_message.to_string()),_ => PutRetentionPolicyError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutRetentionPolicyError::Unknown(String::from(body))
@@ -2393,7 +2393,7 @@ Unknown(String)
                 impl Error for PutRetentionPolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutRetentionPolicyError::InvalidParameter(ref cause) => cause,PutRetentionPolicyError::ResourceNotFound(ref cause) => cause,PutRetentionPolicyError::OperationAborted(ref cause) => cause,PutRetentionPolicyError::ServiceUnavailable(ref cause) => cause,PutRetentionPolicyError::Validation(ref cause) => cause,PutRetentionPolicyError::Credentials(ref err) => err.description(),PutRetentionPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRetentionPolicyError::Unknown(ref cause) => cause
+                            PutRetentionPolicyError::InvalidParameter(ref cause) => cause,PutRetentionPolicyError::OperationAborted(ref cause) => cause,PutRetentionPolicyError::ResourceNotFound(ref cause) => cause,PutRetentionPolicyError::ServiceUnavailable(ref cause) => cause,PutRetentionPolicyError::Validation(ref cause) => cause,PutRetentionPolicyError::Credentials(ref err) => err.description(),PutRetentionPolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRetentionPolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2403,12 +2403,12 @@ Unknown(String)
                     
 ///<p>A parameter is specified incorrectly.</p>
 InvalidParameter(String),
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
-///<p>Multiple requests to update the same resource were in conflict.</p>
-OperationAborted(String),
 ///<p>You have reached the maximum number of resources that can be created.</p>
 LimitExceeded(String),
+///<p>Multiple requests to update the same resource were in conflict.</p>
+OperationAborted(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),
 ///<p>The service cannot complete the request.</p>
 ServiceUnavailable(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2429,7 +2429,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterException" => PutSubscriptionFilterError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => PutSubscriptionFilterError::ResourceNotFound(String::from(error_message)),"OperationAbortedException" => PutSubscriptionFilterError::OperationAborted(String::from(error_message)),"LimitExceededException" => PutSubscriptionFilterError::LimitExceeded(String::from(error_message)),"ServiceUnavailableException" => PutSubscriptionFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutSubscriptionFilterError::Validation(error_message.to_string()),_ => PutSubscriptionFilterError::Unknown(String::from(body))
+                                    "InvalidParameterException" => PutSubscriptionFilterError::InvalidParameter(String::from(error_message)),"LimitExceededException" => PutSubscriptionFilterError::LimitExceeded(String::from(error_message)),"OperationAbortedException" => PutSubscriptionFilterError::OperationAborted(String::from(error_message)),"ResourceNotFoundException" => PutSubscriptionFilterError::ResourceNotFound(String::from(error_message)),"ServiceUnavailableException" => PutSubscriptionFilterError::ServiceUnavailable(String::from(error_message)),"ValidationException" => PutSubscriptionFilterError::Validation(error_message.to_string()),_ => PutSubscriptionFilterError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutSubscriptionFilterError::Unknown(String::from(body))
@@ -2460,7 +2460,7 @@ Unknown(String)
                 impl Error for PutSubscriptionFilterError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutSubscriptionFilterError::InvalidParameter(ref cause) => cause,PutSubscriptionFilterError::ResourceNotFound(ref cause) => cause,PutSubscriptionFilterError::OperationAborted(ref cause) => cause,PutSubscriptionFilterError::LimitExceeded(ref cause) => cause,PutSubscriptionFilterError::ServiceUnavailable(ref cause) => cause,PutSubscriptionFilterError::Validation(ref cause) => cause,PutSubscriptionFilterError::Credentials(ref err) => err.description(),PutSubscriptionFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutSubscriptionFilterError::Unknown(ref cause) => cause
+                            PutSubscriptionFilterError::InvalidParameter(ref cause) => cause,PutSubscriptionFilterError::LimitExceeded(ref cause) => cause,PutSubscriptionFilterError::OperationAborted(ref cause) => cause,PutSubscriptionFilterError::ResourceNotFound(ref cause) => cause,PutSubscriptionFilterError::ServiceUnavailable(ref cause) => cause,PutSubscriptionFilterError::Validation(ref cause) => cause,PutSubscriptionFilterError::Credentials(ref err) => err.description(),PutSubscriptionFilterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutSubscriptionFilterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2468,10 +2468,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum TagLogGroupError {
                     
-///<p>The specified resource does not exist.</p>
-ResourceNotFound(String),
 ///<p>A parameter is specified incorrectly.</p>
-InvalidParameter(String),/// An error occurred dispatching the HTTP request
+InvalidParameter(String),
+///<p>The specified resource does not exist.</p>
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2490,7 +2490,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => TagLogGroupError::ResourceNotFound(String::from(error_message)),"InvalidParameterException" => TagLogGroupError::InvalidParameter(String::from(error_message)),"ValidationException" => TagLogGroupError::Validation(error_message.to_string()),_ => TagLogGroupError::Unknown(String::from(body))
+                                    "InvalidParameterException" => TagLogGroupError::InvalidParameter(String::from(error_message)),"ResourceNotFoundException" => TagLogGroupError::ResourceNotFound(String::from(error_message)),"ValidationException" => TagLogGroupError::Validation(error_message.to_string()),_ => TagLogGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => TagLogGroupError::Unknown(String::from(body))
@@ -2521,7 +2521,7 @@ Unknown(String)
                 impl Error for TagLogGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            TagLogGroupError::ResourceNotFound(ref cause) => cause,TagLogGroupError::InvalidParameter(ref cause) => cause,TagLogGroupError::Validation(ref cause) => cause,TagLogGroupError::Credentials(ref err) => err.description(),TagLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TagLogGroupError::Unknown(ref cause) => cause
+                            TagLogGroupError::InvalidParameter(ref cause) => cause,TagLogGroupError::ResourceNotFound(ref cause) => cause,TagLogGroupError::Validation(ref cause) => cause,TagLogGroupError::Credentials(ref err) => err.description(),TagLogGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TagLogGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }

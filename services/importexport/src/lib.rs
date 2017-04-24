@@ -1143,18 +1143,18 @@ struct WarningMessageDeserializer;
                 #[derive(Debug, PartialEq)]
                 pub enum CancelJobError {
                     
-///The JOBID was missing, not found, or not associated with the AWS account.
-InvalidJobId(String),
-///Indicates that the specified job has expired out of the system.
-ExpiredJobId(String),
-///The specified job ID has been canceled and is no longer valid.
-CanceledJobId(String),
 ///AWS Import/Export cannot cancel the job
 UnableToCancelJobId(String),
+///Indicates that the specified job has expired out of the system.
+ExpiredJobId(String),
 ///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
 InvalidAccessKeyId(String),
+///The JOBID was missing, not found, or not associated with the AWS account.
+InvalidJobId(String),
 ///The client tool version is invalid.
-InvalidVersion(String),/// An error occurred dispatching the HTTP request
+InvalidVersion(String),
+///The specified job ID has been canceled and is no longer valid.
+CanceledJobId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1171,7 +1171,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidJobIdException" => CancelJobError::InvalidJobId(String::from(parsed_error.message)),"ExpiredJobIdException" => CancelJobError::ExpiredJobId(String::from(parsed_error.message)),"CanceledJobIdException" => CancelJobError::CanceledJobId(String::from(parsed_error.message)),"UnableToCancelJobIdException" => CancelJobError::UnableToCancelJobId(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => CancelJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidVersionException" => CancelJobError::InvalidVersion(String::from(parsed_error.message)),_ => CancelJobError::Unknown(String::from(body))
+                                    "UnableToCancelJobIdException" => CancelJobError::UnableToCancelJobId(String::from(parsed_error.message)),"ExpiredJobIdException" => CancelJobError::ExpiredJobId(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => CancelJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidJobIdException" => CancelJobError::InvalidJobId(String::from(parsed_error.message)),"InvalidVersionException" => CancelJobError::InvalidVersion(String::from(parsed_error.message)),"CanceledJobIdException" => CancelJobError::CanceledJobId(String::from(parsed_error.message)),_ => CancelJobError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CancelJobError::Unknown(body.to_string())
@@ -1203,7 +1203,7 @@ Unknown(String)
                 impl Error for CancelJobError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelJobError::InvalidJobId(ref cause) => cause,CancelJobError::ExpiredJobId(ref cause) => cause,CancelJobError::CanceledJobId(ref cause) => cause,CancelJobError::UnableToCancelJobId(ref cause) => cause,CancelJobError::InvalidAccessKeyId(ref cause) => cause,CancelJobError::InvalidVersion(ref cause) => cause,CancelJobError::Validation(ref cause) => cause,CancelJobError::Credentials(ref err) => err.description(),CancelJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelJobError::Unknown(ref cause) => cause
+                            CancelJobError::UnableToCancelJobId(ref cause) => cause,CancelJobError::ExpiredJobId(ref cause) => cause,CancelJobError::InvalidAccessKeyId(ref cause) => cause,CancelJobError::InvalidJobId(ref cause) => cause,CancelJobError::InvalidVersion(ref cause) => cause,CancelJobError::CanceledJobId(ref cause) => cause,CancelJobError::Validation(ref cause) => cause,CancelJobError::Credentials(ref err) => err.description(),CancelJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelJobError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1211,38 +1211,38 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateJobError {
                     
-///One or more required parameters was missing from the request.
-MissingParameter(String),
-///One or more parameters had an invalid value.
-InvalidParameter(String),
-///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
-InvalidAccessKeyId(String),
-///The address specified in the manifest is invalid.
-InvalidAddress(String),
-///One or more manifest fields was invalid. Please correct and resubmit.
-InvalidManifestField(String),
-///One or more required fields were missing from the manifest file. Please correct and resubmit.
-MissingManifestField(String),
-///The specified bucket does not exist. Create the specified bucket or change the manifest's bucket, exportBucket, or logBucket field to a bucket that the account, as specified by the manifest's Access Key ID, has write permissions to.
-NoSuchBucket(String),
-///One or more required customs parameters was missing from the manifest.
-MissingCustoms(String),
-///One or more customs parameters was invalid. Please correct and resubmit.
-InvalidCustoms(String),
-///File system specified in export manifest is invalid.
-InvalidFileSystem(String),
-///Your manifest file contained buckets from multiple regions. A job is restricted to buckets from one region. Please correct and resubmit.
-MultipleRegions(String),
-///The account specified does not have the appropriate bucket permissions.
-BucketPermission(String),
-///Your manifest is not well-formed.
-MalformedManifest(String),
 ///Each account can create only a certain number of jobs per day. If you need to create more than this, please contact awsimportexport@amazon.com to explain your particular use case.
 CreateJobQuotaExceeded(String),
+///File system specified in export manifest is invalid.
+InvalidFileSystem(String),
+///One or more customs parameters was invalid. Please correct and resubmit.
+InvalidCustoms(String),
+///One or more manifest fields was invalid. Please correct and resubmit.
+InvalidManifestField(String),
+///One or more parameters had an invalid value.
+InvalidParameter(String),
+///One or more required customs parameters was missing from the manifest.
+MissingCustoms(String),
+///One or more required fields were missing from the manifest file. Please correct and resubmit.
+MissingManifestField(String),
+///One or more required parameters was missing from the request.
+MissingParameter(String),
+///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
+InvalidAccessKeyId(String),
 ///The JOBID was missing, not found, or not associated with the AWS account.
 InvalidJobId(String),
+///The account specified does not have the appropriate bucket permissions.
+BucketPermission(String),
+///The address specified in the manifest is invalid.
+InvalidAddress(String),
 ///The client tool version is invalid.
-InvalidVersion(String),/// An error occurred dispatching the HTTP request
+InvalidVersion(String),
+///The specified bucket does not exist. Create the specified bucket or change the manifest's bucket, exportBucket, or logBucket field to a bucket that the account, as specified by the manifest's Access Key ID, has write permissions to.
+NoSuchBucket(String),
+///Your manifest file contained buckets from multiple regions. A job is restricted to buckets from one region. Please correct and resubmit.
+MultipleRegions(String),
+///Your manifest is not well-formed.
+MalformedManifest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1259,7 +1259,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "MissingParameterException" => CreateJobError::MissingParameter(String::from(parsed_error.message)),"InvalidParameterException" => CreateJobError::InvalidParameter(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => CreateJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidAddressException" => CreateJobError::InvalidAddress(String::from(parsed_error.message)),"InvalidManifestFieldException" => CreateJobError::InvalidManifestField(String::from(parsed_error.message)),"MissingManifestFieldException" => CreateJobError::MissingManifestField(String::from(parsed_error.message)),"NoSuchBucketException" => CreateJobError::NoSuchBucket(String::from(parsed_error.message)),"MissingCustomsException" => CreateJobError::MissingCustoms(String::from(parsed_error.message)),"InvalidCustomsException" => CreateJobError::InvalidCustoms(String::from(parsed_error.message)),"InvalidFileSystemException" => CreateJobError::InvalidFileSystem(String::from(parsed_error.message)),"MultipleRegionsException" => CreateJobError::MultipleRegions(String::from(parsed_error.message)),"BucketPermissionException" => CreateJobError::BucketPermission(String::from(parsed_error.message)),"MalformedManifestException" => CreateJobError::MalformedManifest(String::from(parsed_error.message)),"CreateJobQuotaExceededException" => CreateJobError::CreateJobQuotaExceeded(String::from(parsed_error.message)),"InvalidJobIdException" => CreateJobError::InvalidJobId(String::from(parsed_error.message)),"InvalidVersionException" => CreateJobError::InvalidVersion(String::from(parsed_error.message)),_ => CreateJobError::Unknown(String::from(body))
+                                    "CreateJobQuotaExceededException" => CreateJobError::CreateJobQuotaExceeded(String::from(parsed_error.message)),"InvalidFileSystemException" => CreateJobError::InvalidFileSystem(String::from(parsed_error.message)),"InvalidCustomsException" => CreateJobError::InvalidCustoms(String::from(parsed_error.message)),"InvalidManifestFieldException" => CreateJobError::InvalidManifestField(String::from(parsed_error.message)),"InvalidParameterException" => CreateJobError::InvalidParameter(String::from(parsed_error.message)),"MissingCustomsException" => CreateJobError::MissingCustoms(String::from(parsed_error.message)),"MissingManifestFieldException" => CreateJobError::MissingManifestField(String::from(parsed_error.message)),"MissingParameterException" => CreateJobError::MissingParameter(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => CreateJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidJobIdException" => CreateJobError::InvalidJobId(String::from(parsed_error.message)),"BucketPermissionException" => CreateJobError::BucketPermission(String::from(parsed_error.message)),"InvalidAddressException" => CreateJobError::InvalidAddress(String::from(parsed_error.message)),"InvalidVersionException" => CreateJobError::InvalidVersion(String::from(parsed_error.message)),"NoSuchBucketException" => CreateJobError::NoSuchBucket(String::from(parsed_error.message)),"MultipleRegionsException" => CreateJobError::MultipleRegions(String::from(parsed_error.message)),"MalformedManifestException" => CreateJobError::MalformedManifest(String::from(parsed_error.message)),_ => CreateJobError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateJobError::Unknown(body.to_string())
@@ -1291,7 +1291,7 @@ Unknown(String)
                 impl Error for CreateJobError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateJobError::MissingParameter(ref cause) => cause,CreateJobError::InvalidParameter(ref cause) => cause,CreateJobError::InvalidAccessKeyId(ref cause) => cause,CreateJobError::InvalidAddress(ref cause) => cause,CreateJobError::InvalidManifestField(ref cause) => cause,CreateJobError::MissingManifestField(ref cause) => cause,CreateJobError::NoSuchBucket(ref cause) => cause,CreateJobError::MissingCustoms(ref cause) => cause,CreateJobError::InvalidCustoms(ref cause) => cause,CreateJobError::InvalidFileSystem(ref cause) => cause,CreateJobError::MultipleRegions(ref cause) => cause,CreateJobError::BucketPermission(ref cause) => cause,CreateJobError::MalformedManifest(ref cause) => cause,CreateJobError::CreateJobQuotaExceeded(ref cause) => cause,CreateJobError::InvalidJobId(ref cause) => cause,CreateJobError::InvalidVersion(ref cause) => cause,CreateJobError::Validation(ref cause) => cause,CreateJobError::Credentials(ref err) => err.description(),CreateJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateJobError::Unknown(ref cause) => cause
+                            CreateJobError::CreateJobQuotaExceeded(ref cause) => cause,CreateJobError::InvalidFileSystem(ref cause) => cause,CreateJobError::InvalidCustoms(ref cause) => cause,CreateJobError::InvalidManifestField(ref cause) => cause,CreateJobError::InvalidParameter(ref cause) => cause,CreateJobError::MissingCustoms(ref cause) => cause,CreateJobError::MissingManifestField(ref cause) => cause,CreateJobError::MissingParameter(ref cause) => cause,CreateJobError::InvalidAccessKeyId(ref cause) => cause,CreateJobError::InvalidJobId(ref cause) => cause,CreateJobError::BucketPermission(ref cause) => cause,CreateJobError::InvalidAddress(ref cause) => cause,CreateJobError::InvalidVersion(ref cause) => cause,CreateJobError::NoSuchBucket(ref cause) => cause,CreateJobError::MultipleRegions(ref cause) => cause,CreateJobError::MalformedManifest(ref cause) => cause,CreateJobError::Validation(ref cause) => cause,CreateJobError::Credentials(ref err) => err.description(),CreateJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateJobError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1299,20 +1299,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetShippingLabelError {
                     
-///The JOBID was missing, not found, or not associated with the AWS account.
-InvalidJobId(String),
 ///Indicates that the specified job has expired out of the system.
 ExpiredJobId(String),
-///The specified job ID has been canceled and is no longer valid.
-CanceledJobId(String),
+///One or more parameters had an invalid value.
+InvalidParameter(String),
 ///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
 InvalidAccessKeyId(String),
+///The JOBID was missing, not found, or not associated with the AWS account.
+InvalidJobId(String),
 ///The address specified in the manifest is invalid.
 InvalidAddress(String),
 ///The client tool version is invalid.
 InvalidVersion(String),
-///One or more parameters had an invalid value.
-InvalidParameter(String),/// An error occurred dispatching the HTTP request
+///The specified job ID has been canceled and is no longer valid.
+CanceledJobId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1329,7 +1329,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidJobIdException" => GetShippingLabelError::InvalidJobId(String::from(parsed_error.message)),"ExpiredJobIdException" => GetShippingLabelError::ExpiredJobId(String::from(parsed_error.message)),"CanceledJobIdException" => GetShippingLabelError::CanceledJobId(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => GetShippingLabelError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidAddressException" => GetShippingLabelError::InvalidAddress(String::from(parsed_error.message)),"InvalidVersionException" => GetShippingLabelError::InvalidVersion(String::from(parsed_error.message)),"InvalidParameterException" => GetShippingLabelError::InvalidParameter(String::from(parsed_error.message)),_ => GetShippingLabelError::Unknown(String::from(body))
+                                    "ExpiredJobIdException" => GetShippingLabelError::ExpiredJobId(String::from(parsed_error.message)),"InvalidParameterException" => GetShippingLabelError::InvalidParameter(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => GetShippingLabelError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidJobIdException" => GetShippingLabelError::InvalidJobId(String::from(parsed_error.message)),"InvalidAddressException" => GetShippingLabelError::InvalidAddress(String::from(parsed_error.message)),"InvalidVersionException" => GetShippingLabelError::InvalidVersion(String::from(parsed_error.message)),"CanceledJobIdException" => GetShippingLabelError::CanceledJobId(String::from(parsed_error.message)),_ => GetShippingLabelError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => GetShippingLabelError::Unknown(body.to_string())
@@ -1361,7 +1361,7 @@ Unknown(String)
                 impl Error for GetShippingLabelError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetShippingLabelError::InvalidJobId(ref cause) => cause,GetShippingLabelError::ExpiredJobId(ref cause) => cause,GetShippingLabelError::CanceledJobId(ref cause) => cause,GetShippingLabelError::InvalidAccessKeyId(ref cause) => cause,GetShippingLabelError::InvalidAddress(ref cause) => cause,GetShippingLabelError::InvalidVersion(ref cause) => cause,GetShippingLabelError::InvalidParameter(ref cause) => cause,GetShippingLabelError::Validation(ref cause) => cause,GetShippingLabelError::Credentials(ref err) => err.description(),GetShippingLabelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetShippingLabelError::Unknown(ref cause) => cause
+                            GetShippingLabelError::ExpiredJobId(ref cause) => cause,GetShippingLabelError::InvalidParameter(ref cause) => cause,GetShippingLabelError::InvalidAccessKeyId(ref cause) => cause,GetShippingLabelError::InvalidJobId(ref cause) => cause,GetShippingLabelError::InvalidAddress(ref cause) => cause,GetShippingLabelError::InvalidVersion(ref cause) => cause,GetShippingLabelError::CanceledJobId(ref cause) => cause,GetShippingLabelError::Validation(ref cause) => cause,GetShippingLabelError::Credentials(ref err) => err.description(),GetShippingLabelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetShippingLabelError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1369,16 +1369,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetStatusError {
                     
-///The JOBID was missing, not found, or not associated with the AWS account.
-InvalidJobId(String),
 ///Indicates that the specified job has expired out of the system.
 ExpiredJobId(String),
-///The specified job ID has been canceled and is no longer valid.
-CanceledJobId(String),
 ///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
 InvalidAccessKeyId(String),
+///The JOBID was missing, not found, or not associated with the AWS account.
+InvalidJobId(String),
 ///The client tool version is invalid.
-InvalidVersion(String),/// An error occurred dispatching the HTTP request
+InvalidVersion(String),
+///The specified job ID has been canceled and is no longer valid.
+CanceledJobId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1395,7 +1395,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidJobIdException" => GetStatusError::InvalidJobId(String::from(parsed_error.message)),"ExpiredJobIdException" => GetStatusError::ExpiredJobId(String::from(parsed_error.message)),"CanceledJobIdException" => GetStatusError::CanceledJobId(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => GetStatusError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidVersionException" => GetStatusError::InvalidVersion(String::from(parsed_error.message)),_ => GetStatusError::Unknown(String::from(body))
+                                    "ExpiredJobIdException" => GetStatusError::ExpiredJobId(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => GetStatusError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidJobIdException" => GetStatusError::InvalidJobId(String::from(parsed_error.message)),"InvalidVersionException" => GetStatusError::InvalidVersion(String::from(parsed_error.message)),"CanceledJobIdException" => GetStatusError::CanceledJobId(String::from(parsed_error.message)),_ => GetStatusError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => GetStatusError::Unknown(body.to_string())
@@ -1427,7 +1427,7 @@ Unknown(String)
                 impl Error for GetStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetStatusError::InvalidJobId(ref cause) => cause,GetStatusError::ExpiredJobId(ref cause) => cause,GetStatusError::CanceledJobId(ref cause) => cause,GetStatusError::InvalidAccessKeyId(ref cause) => cause,GetStatusError::InvalidVersion(ref cause) => cause,GetStatusError::Validation(ref cause) => cause,GetStatusError::Credentials(ref err) => err.description(),GetStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetStatusError::Unknown(ref cause) => cause
+                            GetStatusError::ExpiredJobId(ref cause) => cause,GetStatusError::InvalidAccessKeyId(ref cause) => cause,GetStatusError::InvalidJobId(ref cause) => cause,GetStatusError::InvalidVersion(ref cause) => cause,GetStatusError::CanceledJobId(ref cause) => cause,GetStatusError::Validation(ref cause) => cause,GetStatusError::Credentials(ref err) => err.description(),GetStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1497,42 +1497,42 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateJobError {
                     
-///One or more required parameters was missing from the request.
-MissingParameter(String),
-///One or more parameters had an invalid value.
-InvalidParameter(String),
-///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
-InvalidAccessKeyId(String),
-///The address specified in the manifest is invalid.
-InvalidAddress(String),
-///One or more manifest fields was invalid. Please correct and resubmit.
-InvalidManifestField(String),
-///The JOBID was missing, not found, or not associated with the AWS account.
-InvalidJobId(String),
-///One or more required fields were missing from the manifest file. Please correct and resubmit.
-MissingManifestField(String),
-///The specified bucket does not exist. Create the specified bucket or change the manifest's bucket, exportBucket, or logBucket field to a bucket that the account, as specified by the manifest's Access Key ID, has write permissions to.
-NoSuchBucket(String),
-///Indicates that the specified job has expired out of the system.
-ExpiredJobId(String),
-///The specified job ID has been canceled and is no longer valid.
-CanceledJobId(String),
-///One or more required customs parameters was missing from the manifest.
-MissingCustoms(String),
-///One or more customs parameters was invalid. Please correct and resubmit.
-InvalidCustoms(String),
-///File system specified in export manifest is invalid.
-InvalidFileSystem(String),
-///Your manifest file contained buckets from multiple regions. A job is restricted to buckets from one region. Please correct and resubmit.
-MultipleRegions(String),
-///The account specified does not have the appropriate bucket permissions.
-BucketPermission(String),
-///Your manifest is not well-formed.
-MalformedManifest(String),
 ///AWS Import/Export cannot update the job
 UnableToUpdateJobId(String),
+///File system specified in export manifest is invalid.
+InvalidFileSystem(String),
+///Indicates that the specified job has expired out of the system.
+ExpiredJobId(String),
+///One or more customs parameters was invalid. Please correct and resubmit.
+InvalidCustoms(String),
+///One or more manifest fields was invalid. Please correct and resubmit.
+InvalidManifestField(String),
+///One or more parameters had an invalid value.
+InvalidParameter(String),
+///One or more required customs parameters was missing from the manifest.
+MissingCustoms(String),
+///One or more required fields were missing from the manifest file. Please correct and resubmit.
+MissingManifestField(String),
+///One or more required parameters was missing from the request.
+MissingParameter(String),
+///The AWS Access Key ID specified in the request did not match the manifest's accessKeyId value. The manifest and the request authentication must use the same AWS Access Key ID.
+InvalidAccessKeyId(String),
+///The JOBID was missing, not found, or not associated with the AWS account.
+InvalidJobId(String),
+///The account specified does not have the appropriate bucket permissions.
+BucketPermission(String),
+///The address specified in the manifest is invalid.
+InvalidAddress(String),
 ///The client tool version is invalid.
-InvalidVersion(String),/// An error occurred dispatching the HTTP request
+InvalidVersion(String),
+///The specified bucket does not exist. Create the specified bucket or change the manifest's bucket, exportBucket, or logBucket field to a bucket that the account, as specified by the manifest's Access Key ID, has write permissions to.
+NoSuchBucket(String),
+///The specified job ID has been canceled and is no longer valid.
+CanceledJobId(String),
+///Your manifest file contained buckets from multiple regions. A job is restricted to buckets from one region. Please correct and resubmit.
+MultipleRegions(String),
+///Your manifest is not well-formed.
+MalformedManifest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1549,7 +1549,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "MissingParameterException" => UpdateJobError::MissingParameter(String::from(parsed_error.message)),"InvalidParameterException" => UpdateJobError::InvalidParameter(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => UpdateJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidAddressException" => UpdateJobError::InvalidAddress(String::from(parsed_error.message)),"InvalidManifestFieldException" => UpdateJobError::InvalidManifestField(String::from(parsed_error.message)),"InvalidJobIdException" => UpdateJobError::InvalidJobId(String::from(parsed_error.message)),"MissingManifestFieldException" => UpdateJobError::MissingManifestField(String::from(parsed_error.message)),"NoSuchBucketException" => UpdateJobError::NoSuchBucket(String::from(parsed_error.message)),"ExpiredJobIdException" => UpdateJobError::ExpiredJobId(String::from(parsed_error.message)),"CanceledJobIdException" => UpdateJobError::CanceledJobId(String::from(parsed_error.message)),"MissingCustomsException" => UpdateJobError::MissingCustoms(String::from(parsed_error.message)),"InvalidCustomsException" => UpdateJobError::InvalidCustoms(String::from(parsed_error.message)),"InvalidFileSystemException" => UpdateJobError::InvalidFileSystem(String::from(parsed_error.message)),"MultipleRegionsException" => UpdateJobError::MultipleRegions(String::from(parsed_error.message)),"BucketPermissionException" => UpdateJobError::BucketPermission(String::from(parsed_error.message)),"MalformedManifestException" => UpdateJobError::MalformedManifest(String::from(parsed_error.message)),"UnableToUpdateJobIdException" => UpdateJobError::UnableToUpdateJobId(String::from(parsed_error.message)),"InvalidVersionException" => UpdateJobError::InvalidVersion(String::from(parsed_error.message)),_ => UpdateJobError::Unknown(String::from(body))
+                                    "UnableToUpdateJobIdException" => UpdateJobError::UnableToUpdateJobId(String::from(parsed_error.message)),"InvalidFileSystemException" => UpdateJobError::InvalidFileSystem(String::from(parsed_error.message)),"ExpiredJobIdException" => UpdateJobError::ExpiredJobId(String::from(parsed_error.message)),"InvalidCustomsException" => UpdateJobError::InvalidCustoms(String::from(parsed_error.message)),"InvalidManifestFieldException" => UpdateJobError::InvalidManifestField(String::from(parsed_error.message)),"InvalidParameterException" => UpdateJobError::InvalidParameter(String::from(parsed_error.message)),"MissingCustomsException" => UpdateJobError::MissingCustoms(String::from(parsed_error.message)),"MissingManifestFieldException" => UpdateJobError::MissingManifestField(String::from(parsed_error.message)),"MissingParameterException" => UpdateJobError::MissingParameter(String::from(parsed_error.message)),"InvalidAccessKeyIdException" => UpdateJobError::InvalidAccessKeyId(String::from(parsed_error.message)),"InvalidJobIdException" => UpdateJobError::InvalidJobId(String::from(parsed_error.message)),"BucketPermissionException" => UpdateJobError::BucketPermission(String::from(parsed_error.message)),"InvalidAddressException" => UpdateJobError::InvalidAddress(String::from(parsed_error.message)),"InvalidVersionException" => UpdateJobError::InvalidVersion(String::from(parsed_error.message)),"NoSuchBucketException" => UpdateJobError::NoSuchBucket(String::from(parsed_error.message)),"CanceledJobIdException" => UpdateJobError::CanceledJobId(String::from(parsed_error.message)),"MultipleRegionsException" => UpdateJobError::MultipleRegions(String::from(parsed_error.message)),"MalformedManifestException" => UpdateJobError::MalformedManifest(String::from(parsed_error.message)),_ => UpdateJobError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => UpdateJobError::Unknown(body.to_string())
@@ -1581,7 +1581,7 @@ Unknown(String)
                 impl Error for UpdateJobError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateJobError::MissingParameter(ref cause) => cause,UpdateJobError::InvalidParameter(ref cause) => cause,UpdateJobError::InvalidAccessKeyId(ref cause) => cause,UpdateJobError::InvalidAddress(ref cause) => cause,UpdateJobError::InvalidManifestField(ref cause) => cause,UpdateJobError::InvalidJobId(ref cause) => cause,UpdateJobError::MissingManifestField(ref cause) => cause,UpdateJobError::NoSuchBucket(ref cause) => cause,UpdateJobError::ExpiredJobId(ref cause) => cause,UpdateJobError::CanceledJobId(ref cause) => cause,UpdateJobError::MissingCustoms(ref cause) => cause,UpdateJobError::InvalidCustoms(ref cause) => cause,UpdateJobError::InvalidFileSystem(ref cause) => cause,UpdateJobError::MultipleRegions(ref cause) => cause,UpdateJobError::BucketPermission(ref cause) => cause,UpdateJobError::MalformedManifest(ref cause) => cause,UpdateJobError::UnableToUpdateJobId(ref cause) => cause,UpdateJobError::InvalidVersion(ref cause) => cause,UpdateJobError::Validation(ref cause) => cause,UpdateJobError::Credentials(ref err) => err.description(),UpdateJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateJobError::Unknown(ref cause) => cause
+                            UpdateJobError::UnableToUpdateJobId(ref cause) => cause,UpdateJobError::InvalidFileSystem(ref cause) => cause,UpdateJobError::ExpiredJobId(ref cause) => cause,UpdateJobError::InvalidCustoms(ref cause) => cause,UpdateJobError::InvalidManifestField(ref cause) => cause,UpdateJobError::InvalidParameter(ref cause) => cause,UpdateJobError::MissingCustoms(ref cause) => cause,UpdateJobError::MissingManifestField(ref cause) => cause,UpdateJobError::MissingParameter(ref cause) => cause,UpdateJobError::InvalidAccessKeyId(ref cause) => cause,UpdateJobError::InvalidJobId(ref cause) => cause,UpdateJobError::BucketPermission(ref cause) => cause,UpdateJobError::InvalidAddress(ref cause) => cause,UpdateJobError::InvalidVersion(ref cause) => cause,UpdateJobError::NoSuchBucket(ref cause) => cause,UpdateJobError::CanceledJobId(ref cause) => cause,UpdateJobError::MultipleRegions(ref cause) => cause,UpdateJobError::MalformedManifest(ref cause) => cause,UpdateJobError::Validation(ref cause) => cause,UpdateJobError::Credentials(ref err) => err.description(),UpdateJobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateJobError::Unknown(ref cause) => cause
                         }
                     }
                  }

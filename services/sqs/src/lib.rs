@@ -2129,14 +2129,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ChangeMessageVisibilityBatchError {
                     
-///<p>The batch request contains more entries than permissible.</p>
-TooManyEntriesInBatchRequest(String),
-///<p>The batch request doesn't contain any entries.</p>
-EmptyBatchRequest(String),
 ///<p>Two or more batch entries in the request have the same <code>Id</code>.</p>
 BatchEntryIdsNotDistinct(String),
+///<p>The batch request doesn't contain any entries.</p>
+EmptyBatchRequest(String),
 ///<p>The <code>Id</code> of a batch entry in a batch request doesn't abide by the specification.</p>
-InvalidBatchEntryId(String),/// An error occurred dispatching the HTTP request
+InvalidBatchEntryId(String),
+///<p>The batch request contains more entries than permissible.</p>
+TooManyEntriesInBatchRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2153,7 +2153,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyEntriesInBatchRequest" => ChangeMessageVisibilityBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),"EmptyBatchRequest" => ChangeMessageVisibilityBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"BatchEntryIdsNotDistinct" => ChangeMessageVisibilityBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"InvalidBatchEntryId" => ChangeMessageVisibilityBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),_ => ChangeMessageVisibilityBatchError::Unknown(String::from(body))
+                                    "BatchEntryIdsNotDistinct" => ChangeMessageVisibilityBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"EmptyBatchRequest" => ChangeMessageVisibilityBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"InvalidBatchEntryId" => ChangeMessageVisibilityBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),"TooManyEntriesInBatchRequest" => ChangeMessageVisibilityBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),_ => ChangeMessageVisibilityBatchError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ChangeMessageVisibilityBatchError::Unknown(body.to_string())
@@ -2185,7 +2185,7 @@ Unknown(String)
                 impl Error for ChangeMessageVisibilityBatchError {
                     fn description(&self) -> &str {
                         match *self {
-                            ChangeMessageVisibilityBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,ChangeMessageVisibilityBatchError::EmptyBatchRequest(ref cause) => cause,ChangeMessageVisibilityBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,ChangeMessageVisibilityBatchError::InvalidBatchEntryId(ref cause) => cause,ChangeMessageVisibilityBatchError::Validation(ref cause) => cause,ChangeMessageVisibilityBatchError::Credentials(ref err) => err.description(),ChangeMessageVisibilityBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ChangeMessageVisibilityBatchError::Unknown(ref cause) => cause
+                            ChangeMessageVisibilityBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,ChangeMessageVisibilityBatchError::EmptyBatchRequest(ref cause) => cause,ChangeMessageVisibilityBatchError::InvalidBatchEntryId(ref cause) => cause,ChangeMessageVisibilityBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,ChangeMessageVisibilityBatchError::Validation(ref cause) => cause,ChangeMessageVisibilityBatchError::Credentials(ref err) => err.description(),ChangeMessageVisibilityBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ChangeMessageVisibilityBatchError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2313,14 +2313,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteMessageBatchError {
                     
-///<p>The batch request contains more entries than permissible.</p>
-TooManyEntriesInBatchRequest(String),
-///<p>The batch request doesn't contain any entries.</p>
-EmptyBatchRequest(String),
 ///<p>Two or more batch entries in the request have the same <code>Id</code>.</p>
 BatchEntryIdsNotDistinct(String),
+///<p>The batch request doesn't contain any entries.</p>
+EmptyBatchRequest(String),
 ///<p>The <code>Id</code> of a batch entry in a batch request doesn't abide by the specification.</p>
-InvalidBatchEntryId(String),/// An error occurred dispatching the HTTP request
+InvalidBatchEntryId(String),
+///<p>The batch request contains more entries than permissible.</p>
+TooManyEntriesInBatchRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2337,7 +2337,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyEntriesInBatchRequest" => DeleteMessageBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),"EmptyBatchRequest" => DeleteMessageBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"BatchEntryIdsNotDistinct" => DeleteMessageBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"InvalidBatchEntryId" => DeleteMessageBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),_ => DeleteMessageBatchError::Unknown(String::from(body))
+                                    "BatchEntryIdsNotDistinct" => DeleteMessageBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"EmptyBatchRequest" => DeleteMessageBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"InvalidBatchEntryId" => DeleteMessageBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),"TooManyEntriesInBatchRequest" => DeleteMessageBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),_ => DeleteMessageBatchError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteMessageBatchError::Unknown(body.to_string())
@@ -2369,7 +2369,7 @@ Unknown(String)
                 impl Error for DeleteMessageBatchError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteMessageBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,DeleteMessageBatchError::EmptyBatchRequest(ref cause) => cause,DeleteMessageBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,DeleteMessageBatchError::InvalidBatchEntryId(ref cause) => cause,DeleteMessageBatchError::Validation(ref cause) => cause,DeleteMessageBatchError::Credentials(ref err) => err.description(),DeleteMessageBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteMessageBatchError::Unknown(ref cause) => cause
+                            DeleteMessageBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,DeleteMessageBatchError::EmptyBatchRequest(ref cause) => cause,DeleteMessageBatchError::InvalidBatchEntryId(ref cause) => cause,DeleteMessageBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,DeleteMessageBatchError::Validation(ref cause) => cause,DeleteMessageBatchError::Credentials(ref err) => err.description(),DeleteMessageBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteMessageBatchError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2663,10 +2663,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PurgeQueueError {
                     
-///<p>The queue referred to doesn't exist.</p>
-QueueDoesNotExist(String),
 ///<p>Indicates that the specified queue previously received a <code>PurgeQueue</code> request within the last 60 seconds (the time it can take to delete the messages in the queue).</p>
-PurgeQueueInProgress(String),/// An error occurred dispatching the HTTP request
+PurgeQueueInProgress(String),
+///<p>The queue referred to doesn't exist.</p>
+QueueDoesNotExist(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2683,7 +2683,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "QueueDoesNotExist" => PurgeQueueError::QueueDoesNotExist(String::from(parsed_error.message)),"PurgeQueueInProgress" => PurgeQueueError::PurgeQueueInProgress(String::from(parsed_error.message)),_ => PurgeQueueError::Unknown(String::from(body))
+                                    "PurgeQueueInProgress" => PurgeQueueError::PurgeQueueInProgress(String::from(parsed_error.message)),"QueueDoesNotExist" => PurgeQueueError::QueueDoesNotExist(String::from(parsed_error.message)),_ => PurgeQueueError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => PurgeQueueError::Unknown(body.to_string())
@@ -2715,7 +2715,7 @@ Unknown(String)
                 impl Error for PurgeQueueError {
                     fn description(&self) -> &str {
                         match *self {
-                            PurgeQueueError::QueueDoesNotExist(ref cause) => cause,PurgeQueueError::PurgeQueueInProgress(ref cause) => cause,PurgeQueueError::Validation(ref cause) => cause,PurgeQueueError::Credentials(ref err) => err.description(),PurgeQueueError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PurgeQueueError::Unknown(ref cause) => cause
+                            PurgeQueueError::PurgeQueueInProgress(ref cause) => cause,PurgeQueueError::QueueDoesNotExist(ref cause) => cause,PurgeQueueError::Validation(ref cause) => cause,PurgeQueueError::Credentials(ref err) => err.description(),PurgeQueueError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PurgeQueueError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2897,16 +2897,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SendMessageBatchError {
                     
-///<p>The batch request contains more entries than permissible.</p>
-TooManyEntriesInBatchRequest(String),
-///<p>The batch request doesn't contain any entries.</p>
-EmptyBatchRequest(String),
 ///<p>Two or more batch entries in the request have the same <code>Id</code>.</p>
 BatchEntryIdsNotDistinct(String),
 ///<p>The length of all the messages put together is more than the limit.</p>
 BatchRequestTooLong(String),
+///<p>The batch request doesn't contain any entries.</p>
+EmptyBatchRequest(String),
 ///<p>The <code>Id</code> of a batch entry in a batch request doesn't abide by the specification.</p>
 InvalidBatchEntryId(String),
+///<p>The batch request contains more entries than permissible.</p>
+TooManyEntriesInBatchRequest(String),
 ///<p>Error code 400. Unsupported operation.</p>
 UnsupportedOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -2925,7 +2925,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyEntriesInBatchRequest" => SendMessageBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),"EmptyBatchRequest" => SendMessageBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"BatchEntryIdsNotDistinct" => SendMessageBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"BatchRequestTooLong" => SendMessageBatchError::BatchRequestTooLong(String::from(parsed_error.message)),"InvalidBatchEntryId" => SendMessageBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),"UnsupportedOperation" => SendMessageBatchError::UnsupportedOperation(String::from(parsed_error.message)),_ => SendMessageBatchError::Unknown(String::from(body))
+                                    "BatchEntryIdsNotDistinct" => SendMessageBatchError::BatchEntryIdsNotDistinct(String::from(parsed_error.message)),"BatchRequestTooLong" => SendMessageBatchError::BatchRequestTooLong(String::from(parsed_error.message)),"EmptyBatchRequest" => SendMessageBatchError::EmptyBatchRequest(String::from(parsed_error.message)),"InvalidBatchEntryId" => SendMessageBatchError::InvalidBatchEntryId(String::from(parsed_error.message)),"TooManyEntriesInBatchRequest" => SendMessageBatchError::TooManyEntriesInBatchRequest(String::from(parsed_error.message)),"UnsupportedOperation" => SendMessageBatchError::UnsupportedOperation(String::from(parsed_error.message)),_ => SendMessageBatchError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SendMessageBatchError::Unknown(body.to_string())
@@ -2957,7 +2957,7 @@ Unknown(String)
                 impl Error for SendMessageBatchError {
                     fn description(&self) -> &str {
                         match *self {
-                            SendMessageBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,SendMessageBatchError::EmptyBatchRequest(ref cause) => cause,SendMessageBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,SendMessageBatchError::BatchRequestTooLong(ref cause) => cause,SendMessageBatchError::InvalidBatchEntryId(ref cause) => cause,SendMessageBatchError::UnsupportedOperation(ref cause) => cause,SendMessageBatchError::Validation(ref cause) => cause,SendMessageBatchError::Credentials(ref err) => err.description(),SendMessageBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendMessageBatchError::Unknown(ref cause) => cause
+                            SendMessageBatchError::BatchEntryIdsNotDistinct(ref cause) => cause,SendMessageBatchError::BatchRequestTooLong(ref cause) => cause,SendMessageBatchError::EmptyBatchRequest(ref cause) => cause,SendMessageBatchError::InvalidBatchEntryId(ref cause) => cause,SendMessageBatchError::TooManyEntriesInBatchRequest(ref cause) => cause,SendMessageBatchError::UnsupportedOperation(ref cause) => cause,SendMessageBatchError::Validation(ref cause) => cause,SendMessageBatchError::Credentials(ref err) => err.description(),SendMessageBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendMessageBatchError::Unknown(ref cause) => cause
                         }
                     }
                  }

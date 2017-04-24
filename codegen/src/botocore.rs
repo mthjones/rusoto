@@ -338,7 +338,7 @@ impl<'a> Operation {
 
     // botocore duplicates errors in a few places
     // return a unique set
-    pub fn errors(&'a self) -> HashSet<&'a Error> {
+    pub fn errors(&'a self) -> BTreeSet<&'a Error> {
         self.errors.as_ref().unwrap().iter().collect()
     }
 }

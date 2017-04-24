@@ -1152,10 +1152,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteDeliveryChannelError {
                     
-///<p>You have specified a delivery channel that does not exist.</p>
-NoSuchDeliveryChannel(String),
 ///<p>You cannot delete the delivery channel you specified because the configuration recorder is running.</p>
-LastDeliveryChannelDeleteFailed(String),/// An error occurred dispatching the HTTP request
+LastDeliveryChannelDeleteFailed(String),
+///<p>You have specified a delivery channel that does not exist.</p>
+NoSuchDeliveryChannel(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1174,7 +1174,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "NoSuchDeliveryChannelException" => DeleteDeliveryChannelError::NoSuchDeliveryChannel(String::from(error_message)),"LastDeliveryChannelDeleteFailedException" => DeleteDeliveryChannelError::LastDeliveryChannelDeleteFailed(String::from(error_message)),"ValidationException" => DeleteDeliveryChannelError::Validation(error_message.to_string()),_ => DeleteDeliveryChannelError::Unknown(String::from(body))
+                                    "LastDeliveryChannelDeleteFailedException" => DeleteDeliveryChannelError::LastDeliveryChannelDeleteFailed(String::from(error_message)),"NoSuchDeliveryChannelException" => DeleteDeliveryChannelError::NoSuchDeliveryChannel(String::from(error_message)),"ValidationException" => DeleteDeliveryChannelError::Validation(error_message.to_string()),_ => DeleteDeliveryChannelError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteDeliveryChannelError::Unknown(String::from(body))
@@ -1205,7 +1205,7 @@ Unknown(String)
                 impl Error for DeleteDeliveryChannelError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteDeliveryChannelError::NoSuchDeliveryChannel(ref cause) => cause,DeleteDeliveryChannelError::LastDeliveryChannelDeleteFailed(ref cause) => cause,DeleteDeliveryChannelError::Validation(ref cause) => cause,DeleteDeliveryChannelError::Credentials(ref err) => err.description(),DeleteDeliveryChannelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDeliveryChannelError::Unknown(ref cause) => cause
+                            DeleteDeliveryChannelError::LastDeliveryChannelDeleteFailed(ref cause) => cause,DeleteDeliveryChannelError::NoSuchDeliveryChannel(ref cause) => cause,DeleteDeliveryChannelError::Validation(ref cause) => cause,DeleteDeliveryChannelError::Credentials(ref err) => err.description(),DeleteDeliveryChannelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDeliveryChannelError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1274,12 +1274,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeliverConfigSnapshotError {
                     
-///<p>You have specified a delivery channel that does not exist.</p>
-NoSuchDeliveryChannel(String),
 ///<p>There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.</p>
 NoAvailableConfigurationRecorder(String),
 ///<p>There is no configuration recorder running.</p>
-NoRunningConfigurationRecorder(String),/// An error occurred dispatching the HTTP request
+NoRunningConfigurationRecorder(String),
+///<p>You have specified a delivery channel that does not exist.</p>
+NoSuchDeliveryChannel(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1298,7 +1298,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "NoSuchDeliveryChannelException" => DeliverConfigSnapshotError::NoSuchDeliveryChannel(String::from(error_message)),"NoAvailableConfigurationRecorderException" => DeliverConfigSnapshotError::NoAvailableConfigurationRecorder(String::from(error_message)),"NoRunningConfigurationRecorderException" => DeliverConfigSnapshotError::NoRunningConfigurationRecorder(String::from(error_message)),"ValidationException" => DeliverConfigSnapshotError::Validation(error_message.to_string()),_ => DeliverConfigSnapshotError::Unknown(String::from(body))
+                                    "NoAvailableConfigurationRecorderException" => DeliverConfigSnapshotError::NoAvailableConfigurationRecorder(String::from(error_message)),"NoRunningConfigurationRecorderException" => DeliverConfigSnapshotError::NoRunningConfigurationRecorder(String::from(error_message)),"NoSuchDeliveryChannelException" => DeliverConfigSnapshotError::NoSuchDeliveryChannel(String::from(error_message)),"ValidationException" => DeliverConfigSnapshotError::Validation(error_message.to_string()),_ => DeliverConfigSnapshotError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeliverConfigSnapshotError::Unknown(String::from(body))
@@ -1329,7 +1329,7 @@ Unknown(String)
                 impl Error for DeliverConfigSnapshotError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeliverConfigSnapshotError::NoSuchDeliveryChannel(ref cause) => cause,DeliverConfigSnapshotError::NoAvailableConfigurationRecorder(ref cause) => cause,DeliverConfigSnapshotError::NoRunningConfigurationRecorder(ref cause) => cause,DeliverConfigSnapshotError::Validation(ref cause) => cause,DeliverConfigSnapshotError::Credentials(ref err) => err.description(),DeliverConfigSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeliverConfigSnapshotError::Unknown(ref cause) => cause
+                            DeliverConfigSnapshotError::NoAvailableConfigurationRecorder(ref cause) => cause,DeliverConfigSnapshotError::NoRunningConfigurationRecorder(ref cause) => cause,DeliverConfigSnapshotError::NoSuchDeliveryChannel(ref cause) => cause,DeliverConfigSnapshotError::Validation(ref cause) => cause,DeliverConfigSnapshotError::Credentials(ref err) => err.description(),DeliverConfigSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeliverConfigSnapshotError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1398,10 +1398,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeComplianceByResourceError {
                     
-///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
-InvalidParameterValue(String),
 ///<p>The specified next token is invalid. Specify the <code>nextToken</code> string that was returned in the previous response to get the next page of results.</p>
-InvalidNextToken(String),/// An error occurred dispatching the HTTP request
+InvalidNextToken(String),
+///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
+InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1420,7 +1420,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterValueException" => DescribeComplianceByResourceError::InvalidParameterValue(String::from(error_message)),"InvalidNextTokenException" => DescribeComplianceByResourceError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeComplianceByResourceError::Validation(error_message.to_string()),_ => DescribeComplianceByResourceError::Unknown(String::from(body))
+                                    "InvalidNextTokenException" => DescribeComplianceByResourceError::InvalidNextToken(String::from(error_message)),"InvalidParameterValueException" => DescribeComplianceByResourceError::InvalidParameterValue(String::from(error_message)),"ValidationException" => DescribeComplianceByResourceError::Validation(error_message.to_string()),_ => DescribeComplianceByResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeComplianceByResourceError::Unknown(String::from(body))
@@ -1451,7 +1451,7 @@ Unknown(String)
                 impl Error for DescribeComplianceByResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeComplianceByResourceError::InvalidParameterValue(ref cause) => cause,DescribeComplianceByResourceError::InvalidNextToken(ref cause) => cause,DescribeComplianceByResourceError::Validation(ref cause) => cause,DescribeComplianceByResourceError::Credentials(ref err) => err.description(),DescribeComplianceByResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeComplianceByResourceError::Unknown(ref cause) => cause
+                            DescribeComplianceByResourceError::InvalidNextToken(ref cause) => cause,DescribeComplianceByResourceError::InvalidParameterValue(ref cause) => cause,DescribeComplianceByResourceError::Validation(ref cause) => cause,DescribeComplianceByResourceError::Credentials(ref err) => err.description(),DescribeComplianceByResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeComplianceByResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1459,10 +1459,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeConfigRuleEvaluationStatusError {
                     
-///<p>One or more AWS Config rules in the request are invalid. Verify that the rule names are correct and try again.</p>
-NoSuchConfigRule(String),
 ///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
-InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
+InvalidParameterValue(String),
+///<p>One or more AWS Config rules in the request are invalid. Verify that the rule names are correct and try again.</p>
+NoSuchConfigRule(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1481,7 +1481,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "NoSuchConfigRuleException" => DescribeConfigRuleEvaluationStatusError::NoSuchConfigRule(String::from(error_message)),"InvalidParameterValueException" => DescribeConfigRuleEvaluationStatusError::InvalidParameterValue(String::from(error_message)),"ValidationException" => DescribeConfigRuleEvaluationStatusError::Validation(error_message.to_string()),_ => DescribeConfigRuleEvaluationStatusError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => DescribeConfigRuleEvaluationStatusError::InvalidParameterValue(String::from(error_message)),"NoSuchConfigRuleException" => DescribeConfigRuleEvaluationStatusError::NoSuchConfigRule(String::from(error_message)),"ValidationException" => DescribeConfigRuleEvaluationStatusError::Validation(error_message.to_string()),_ => DescribeConfigRuleEvaluationStatusError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeConfigRuleEvaluationStatusError::Unknown(String::from(body))
@@ -1512,7 +1512,7 @@ Unknown(String)
                 impl Error for DescribeConfigRuleEvaluationStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeConfigRuleEvaluationStatusError::NoSuchConfigRule(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::InvalidParameterValue(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::Validation(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::Credentials(ref err) => err.description(),DescribeConfigRuleEvaluationStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeConfigRuleEvaluationStatusError::Unknown(ref cause) => cause
+                            DescribeConfigRuleEvaluationStatusError::InvalidParameterValue(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::NoSuchConfigRule(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::Validation(ref cause) => cause,DescribeConfigRuleEvaluationStatusError::Credentials(ref err) => err.description(),DescribeConfigRuleEvaluationStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeConfigRuleEvaluationStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1815,10 +1815,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetComplianceDetailsByConfigRuleError {
                     
-///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
-InvalidParameterValue(String),
 ///<p>The specified next token is invalid. Specify the <code>nextToken</code> string that was returned in the previous response to get the next page of results.</p>
 InvalidNextToken(String),
+///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
+InvalidParameterValue(String),
 ///<p>One or more AWS Config rules in the request are invalid. Verify that the rule names are correct and try again.</p>
 NoSuchConfigRule(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -1839,7 +1839,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterValueException" => GetComplianceDetailsByConfigRuleError::InvalidParameterValue(String::from(error_message)),"InvalidNextTokenException" => GetComplianceDetailsByConfigRuleError::InvalidNextToken(String::from(error_message)),"NoSuchConfigRuleException" => GetComplianceDetailsByConfigRuleError::NoSuchConfigRule(String::from(error_message)),"ValidationException" => GetComplianceDetailsByConfigRuleError::Validation(error_message.to_string()),_ => GetComplianceDetailsByConfigRuleError::Unknown(String::from(body))
+                                    "InvalidNextTokenException" => GetComplianceDetailsByConfigRuleError::InvalidNextToken(String::from(error_message)),"InvalidParameterValueException" => GetComplianceDetailsByConfigRuleError::InvalidParameterValue(String::from(error_message)),"NoSuchConfigRuleException" => GetComplianceDetailsByConfigRuleError::NoSuchConfigRule(String::from(error_message)),"ValidationException" => GetComplianceDetailsByConfigRuleError::Validation(error_message.to_string()),_ => GetComplianceDetailsByConfigRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetComplianceDetailsByConfigRuleError::Unknown(String::from(body))
@@ -1870,7 +1870,7 @@ Unknown(String)
                 impl Error for GetComplianceDetailsByConfigRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetComplianceDetailsByConfigRuleError::InvalidParameterValue(ref cause) => cause,GetComplianceDetailsByConfigRuleError::InvalidNextToken(ref cause) => cause,GetComplianceDetailsByConfigRuleError::NoSuchConfigRule(ref cause) => cause,GetComplianceDetailsByConfigRuleError::Validation(ref cause) => cause,GetComplianceDetailsByConfigRuleError::Credentials(ref err) => err.description(),GetComplianceDetailsByConfigRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetComplianceDetailsByConfigRuleError::Unknown(ref cause) => cause
+                            GetComplianceDetailsByConfigRuleError::InvalidNextToken(ref cause) => cause,GetComplianceDetailsByConfigRuleError::InvalidParameterValue(ref cause) => cause,GetComplianceDetailsByConfigRuleError::NoSuchConfigRule(ref cause) => cause,GetComplianceDetailsByConfigRuleError::Validation(ref cause) => cause,GetComplianceDetailsByConfigRuleError::Credentials(ref err) => err.description(),GetComplianceDetailsByConfigRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetComplianceDetailsByConfigRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2053,12 +2053,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetResourceConfigHistoryError {
                     
-///<p>The specified time range is not valid. The earlier time is not chronologically before the later time.</p>
-InvalidTimeRange(String),
 ///<p>The specified limit is outside the allowable range.</p>
 InvalidLimit(String),
 ///<p>The specified next token is invalid. Specify the <code>nextToken</code> string that was returned in the previous response to get the next page of results.</p>
 InvalidNextToken(String),
+///<p>The specified time range is not valid. The earlier time is not chronologically before the later time.</p>
+InvalidTimeRange(String),
 ///<p>There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.</p>
 NoAvailableConfigurationRecorder(String),
 ///<p>You have specified a resource that is either unknown or has not been discovered.</p>
@@ -2081,7 +2081,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidTimeRangeException" => GetResourceConfigHistoryError::InvalidTimeRange(String::from(error_message)),"InvalidLimitException" => GetResourceConfigHistoryError::InvalidLimit(String::from(error_message)),"InvalidNextTokenException" => GetResourceConfigHistoryError::InvalidNextToken(String::from(error_message)),"NoAvailableConfigurationRecorderException" => GetResourceConfigHistoryError::NoAvailableConfigurationRecorder(String::from(error_message)),"ResourceNotDiscoveredException" => GetResourceConfigHistoryError::ResourceNotDiscovered(String::from(error_message)),"ValidationException" => GetResourceConfigHistoryError::Validation(error_message.to_string()),_ => GetResourceConfigHistoryError::Unknown(String::from(body))
+                                    "InvalidLimitException" => GetResourceConfigHistoryError::InvalidLimit(String::from(error_message)),"InvalidNextTokenException" => GetResourceConfigHistoryError::InvalidNextToken(String::from(error_message)),"InvalidTimeRangeException" => GetResourceConfigHistoryError::InvalidTimeRange(String::from(error_message)),"NoAvailableConfigurationRecorderException" => GetResourceConfigHistoryError::NoAvailableConfigurationRecorder(String::from(error_message)),"ResourceNotDiscoveredException" => GetResourceConfigHistoryError::ResourceNotDiscovered(String::from(error_message)),"ValidationException" => GetResourceConfigHistoryError::Validation(error_message.to_string()),_ => GetResourceConfigHistoryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetResourceConfigHistoryError::Unknown(String::from(body))
@@ -2112,7 +2112,7 @@ Unknown(String)
                 impl Error for GetResourceConfigHistoryError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetResourceConfigHistoryError::InvalidTimeRange(ref cause) => cause,GetResourceConfigHistoryError::InvalidLimit(ref cause) => cause,GetResourceConfigHistoryError::InvalidNextToken(ref cause) => cause,GetResourceConfigHistoryError::NoAvailableConfigurationRecorder(ref cause) => cause,GetResourceConfigHistoryError::ResourceNotDiscovered(ref cause) => cause,GetResourceConfigHistoryError::Validation(ref cause) => cause,GetResourceConfigHistoryError::Credentials(ref err) => err.description(),GetResourceConfigHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetResourceConfigHistoryError::Unknown(ref cause) => cause
+                            GetResourceConfigHistoryError::InvalidLimit(ref cause) => cause,GetResourceConfigHistoryError::InvalidNextToken(ref cause) => cause,GetResourceConfigHistoryError::InvalidTimeRange(ref cause) => cause,GetResourceConfigHistoryError::NoAvailableConfigurationRecorder(ref cause) => cause,GetResourceConfigHistoryError::ResourceNotDiscovered(ref cause) => cause,GetResourceConfigHistoryError::Validation(ref cause) => cause,GetResourceConfigHistoryError::Credentials(ref err) => err.description(),GetResourceConfigHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetResourceConfigHistoryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2183,16 +2183,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PutConfigRuleError {
                     
+///<p>Indicates one of the following errors:</p> <ul> <li> <p>The rule cannot be created because the IAM role assigned to AWS Config lacks permissions to perform the config:Put* action.</p> </li> <li> <p>The AWS Lambda function cannot be invoked. Check the function ARN, and check the function's permissions.</p> </li> </ul>
+InsufficientPermissions(String),
 ///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
 InvalidParameterValue(String),
 ///<p>Failed to add the AWS Config rule because the account already contains the maximum number of 50 rules. Consider deleting any deactivated rules before adding new rules.</p>
 MaxNumberOfConfigRulesExceeded(String),
-///<p>The rule is currently being deleted or the rule is deleting your evaluation results. Try your request again later.</p>
-ResourceInUse(String),
-///<p>Indicates one of the following errors:</p> <ul> <li> <p>The rule cannot be created because the IAM role assigned to AWS Config lacks permissions to perform the config:Put* action.</p> </li> <li> <p>The AWS Lambda function cannot be invoked. Check the function ARN, and check the function's permissions.</p> </li> </ul>
-InsufficientPermissions(String),
 ///<p>There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.</p>
-NoAvailableConfigurationRecorder(String),/// An error occurred dispatching the HTTP request
+NoAvailableConfigurationRecorder(String),
+///<p>The rule is currently being deleted or the rule is deleting your evaluation results. Try your request again later.</p>
+ResourceInUse(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2211,7 +2211,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterValueException" => PutConfigRuleError::InvalidParameterValue(String::from(error_message)),"MaxNumberOfConfigRulesExceededException" => PutConfigRuleError::MaxNumberOfConfigRulesExceeded(String::from(error_message)),"ResourceInUseException" => PutConfigRuleError::ResourceInUse(String::from(error_message)),"InsufficientPermissionsException" => PutConfigRuleError::InsufficientPermissions(String::from(error_message)),"NoAvailableConfigurationRecorderException" => PutConfigRuleError::NoAvailableConfigurationRecorder(String::from(error_message)),"ValidationException" => PutConfigRuleError::Validation(error_message.to_string()),_ => PutConfigRuleError::Unknown(String::from(body))
+                                    "InsufficientPermissionsException" => PutConfigRuleError::InsufficientPermissions(String::from(error_message)),"InvalidParameterValueException" => PutConfigRuleError::InvalidParameterValue(String::from(error_message)),"MaxNumberOfConfigRulesExceededException" => PutConfigRuleError::MaxNumberOfConfigRulesExceeded(String::from(error_message)),"NoAvailableConfigurationRecorderException" => PutConfigRuleError::NoAvailableConfigurationRecorder(String::from(error_message)),"ResourceInUseException" => PutConfigRuleError::ResourceInUse(String::from(error_message)),"ValidationException" => PutConfigRuleError::Validation(error_message.to_string()),_ => PutConfigRuleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutConfigRuleError::Unknown(String::from(body))
@@ -2242,7 +2242,7 @@ Unknown(String)
                 impl Error for PutConfigRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutConfigRuleError::InvalidParameterValue(ref cause) => cause,PutConfigRuleError::MaxNumberOfConfigRulesExceeded(ref cause) => cause,PutConfigRuleError::ResourceInUse(ref cause) => cause,PutConfigRuleError::InsufficientPermissions(ref cause) => cause,PutConfigRuleError::NoAvailableConfigurationRecorder(ref cause) => cause,PutConfigRuleError::Validation(ref cause) => cause,PutConfigRuleError::Credentials(ref err) => err.description(),PutConfigRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutConfigRuleError::Unknown(ref cause) => cause
+                            PutConfigRuleError::InsufficientPermissions(ref cause) => cause,PutConfigRuleError::InvalidParameterValue(ref cause) => cause,PutConfigRuleError::MaxNumberOfConfigRulesExceeded(ref cause) => cause,PutConfigRuleError::NoAvailableConfigurationRecorder(ref cause) => cause,PutConfigRuleError::ResourceInUse(ref cause) => cause,PutConfigRuleError::Validation(ref cause) => cause,PutConfigRuleError::Credentials(ref err) => err.description(),PutConfigRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutConfigRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2250,14 +2250,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PutConfigurationRecorderError {
                     
-///<p>You have reached the limit on the number of recorders you can create.</p>
-MaxNumberOfConfigurationRecordersExceeded(String),
 ///<p>You have provided a configuration recorder name that is not valid.</p>
 InvalidConfigurationRecorderName(String),
+///<p>AWS Config throws an exception if the recording group does not contain a valid list of resource types. Invalid values could also be incorrectly formatted.</p>
+InvalidRecordingGroup(String),
 ///<p>You have provided a null or empty role ARN.</p>
 InvalidRole(String),
-///<p>AWS Config throws an exception if the recording group does not contain a valid list of resource types. Invalid values could also be incorrectly formatted.</p>
-InvalidRecordingGroup(String),/// An error occurred dispatching the HTTP request
+///<p>You have reached the limit on the number of recorders you can create.</p>
+MaxNumberOfConfigurationRecordersExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2276,7 +2276,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "MaxNumberOfConfigurationRecordersExceededException" => PutConfigurationRecorderError::MaxNumberOfConfigurationRecordersExceeded(String::from(error_message)),"InvalidConfigurationRecorderNameException" => PutConfigurationRecorderError::InvalidConfigurationRecorderName(String::from(error_message)),"InvalidRoleException" => PutConfigurationRecorderError::InvalidRole(String::from(error_message)),"InvalidRecordingGroupException" => PutConfigurationRecorderError::InvalidRecordingGroup(String::from(error_message)),"ValidationException" => PutConfigurationRecorderError::Validation(error_message.to_string()),_ => PutConfigurationRecorderError::Unknown(String::from(body))
+                                    "InvalidConfigurationRecorderNameException" => PutConfigurationRecorderError::InvalidConfigurationRecorderName(String::from(error_message)),"InvalidRecordingGroupException" => PutConfigurationRecorderError::InvalidRecordingGroup(String::from(error_message)),"InvalidRoleException" => PutConfigurationRecorderError::InvalidRole(String::from(error_message)),"MaxNumberOfConfigurationRecordersExceededException" => PutConfigurationRecorderError::MaxNumberOfConfigurationRecordersExceeded(String::from(error_message)),"ValidationException" => PutConfigurationRecorderError::Validation(error_message.to_string()),_ => PutConfigurationRecorderError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutConfigurationRecorderError::Unknown(String::from(body))
@@ -2307,7 +2307,7 @@ Unknown(String)
                 impl Error for PutConfigurationRecorderError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutConfigurationRecorderError::MaxNumberOfConfigurationRecordersExceeded(ref cause) => cause,PutConfigurationRecorderError::InvalidConfigurationRecorderName(ref cause) => cause,PutConfigurationRecorderError::InvalidRole(ref cause) => cause,PutConfigurationRecorderError::InvalidRecordingGroup(ref cause) => cause,PutConfigurationRecorderError::Validation(ref cause) => cause,PutConfigurationRecorderError::Credentials(ref err) => err.description(),PutConfigurationRecorderError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutConfigurationRecorderError::Unknown(ref cause) => cause
+                            PutConfigurationRecorderError::InvalidConfigurationRecorderName(ref cause) => cause,PutConfigurationRecorderError::InvalidRecordingGroup(ref cause) => cause,PutConfigurationRecorderError::InvalidRole(ref cause) => cause,PutConfigurationRecorderError::MaxNumberOfConfigurationRecordersExceeded(ref cause) => cause,PutConfigurationRecorderError::Validation(ref cause) => cause,PutConfigurationRecorderError::Credentials(ref err) => err.description(),PutConfigurationRecorderError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutConfigurationRecorderError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2315,20 +2315,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PutDeliveryChannelError {
                     
-///<p>You have reached the limit on the number of delivery channels you can create.</p>
-MaxNumberOfDeliveryChannelsExceeded(String),
-///<p>There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.</p>
-NoAvailableConfigurationRecorder(String),
+///<p>Your Amazon S3 bucket policy does not permit AWS Config to write to it.</p>
+InsufficientDeliveryPolicy(String),
 ///<p>The specified delivery channel name is not valid.</p>
 InvalidDeliveryChannelName(String),
-///<p>The specified Amazon S3 bucket does not exist.</p>
-NoSuchBucket(String),
 ///<p>The specified Amazon S3 key prefix is not valid.</p>
 InvalidS3KeyPrefix(String),
 ///<p>The specified Amazon SNS topic does not exist.</p>
 InvalidSNSTopicARN(String),
-///<p>Your Amazon S3 bucket policy does not permit AWS Config to write to it.</p>
-InsufficientDeliveryPolicy(String),/// An error occurred dispatching the HTTP request
+///<p>You have reached the limit on the number of delivery channels you can create.</p>
+MaxNumberOfDeliveryChannelsExceeded(String),
+///<p>There are no configuration recorders available to provide the role needed to describe your resources. Create a configuration recorder.</p>
+NoAvailableConfigurationRecorder(String),
+///<p>The specified Amazon S3 bucket does not exist.</p>
+NoSuchBucket(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2347,7 +2347,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "MaxNumberOfDeliveryChannelsExceededException" => PutDeliveryChannelError::MaxNumberOfDeliveryChannelsExceeded(String::from(error_message)),"NoAvailableConfigurationRecorderException" => PutDeliveryChannelError::NoAvailableConfigurationRecorder(String::from(error_message)),"InvalidDeliveryChannelNameException" => PutDeliveryChannelError::InvalidDeliveryChannelName(String::from(error_message)),"NoSuchBucketException" => PutDeliveryChannelError::NoSuchBucket(String::from(error_message)),"InvalidS3KeyPrefixException" => PutDeliveryChannelError::InvalidS3KeyPrefix(String::from(error_message)),"InvalidSNSTopicARNException" => PutDeliveryChannelError::InvalidSNSTopicARN(String::from(error_message)),"InsufficientDeliveryPolicyException" => PutDeliveryChannelError::InsufficientDeliveryPolicy(String::from(error_message)),"ValidationException" => PutDeliveryChannelError::Validation(error_message.to_string()),_ => PutDeliveryChannelError::Unknown(String::from(body))
+                                    "InsufficientDeliveryPolicyException" => PutDeliveryChannelError::InsufficientDeliveryPolicy(String::from(error_message)),"InvalidDeliveryChannelNameException" => PutDeliveryChannelError::InvalidDeliveryChannelName(String::from(error_message)),"InvalidS3KeyPrefixException" => PutDeliveryChannelError::InvalidS3KeyPrefix(String::from(error_message)),"InvalidSNSTopicARNException" => PutDeliveryChannelError::InvalidSNSTopicARN(String::from(error_message)),"MaxNumberOfDeliveryChannelsExceededException" => PutDeliveryChannelError::MaxNumberOfDeliveryChannelsExceeded(String::from(error_message)),"NoAvailableConfigurationRecorderException" => PutDeliveryChannelError::NoAvailableConfigurationRecorder(String::from(error_message)),"NoSuchBucketException" => PutDeliveryChannelError::NoSuchBucket(String::from(error_message)),"ValidationException" => PutDeliveryChannelError::Validation(error_message.to_string()),_ => PutDeliveryChannelError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutDeliveryChannelError::Unknown(String::from(body))
@@ -2378,7 +2378,7 @@ Unknown(String)
                 impl Error for PutDeliveryChannelError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutDeliveryChannelError::MaxNumberOfDeliveryChannelsExceeded(ref cause) => cause,PutDeliveryChannelError::NoAvailableConfigurationRecorder(ref cause) => cause,PutDeliveryChannelError::InvalidDeliveryChannelName(ref cause) => cause,PutDeliveryChannelError::NoSuchBucket(ref cause) => cause,PutDeliveryChannelError::InvalidS3KeyPrefix(ref cause) => cause,PutDeliveryChannelError::InvalidSNSTopicARN(ref cause) => cause,PutDeliveryChannelError::InsufficientDeliveryPolicy(ref cause) => cause,PutDeliveryChannelError::Validation(ref cause) => cause,PutDeliveryChannelError::Credentials(ref err) => err.description(),PutDeliveryChannelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutDeliveryChannelError::Unknown(ref cause) => cause
+                            PutDeliveryChannelError::InsufficientDeliveryPolicy(ref cause) => cause,PutDeliveryChannelError::InvalidDeliveryChannelName(ref cause) => cause,PutDeliveryChannelError::InvalidS3KeyPrefix(ref cause) => cause,PutDeliveryChannelError::InvalidSNSTopicARN(ref cause) => cause,PutDeliveryChannelError::MaxNumberOfDeliveryChannelsExceeded(ref cause) => cause,PutDeliveryChannelError::NoAvailableConfigurationRecorder(ref cause) => cause,PutDeliveryChannelError::NoSuchBucket(ref cause) => cause,PutDeliveryChannelError::Validation(ref cause) => cause,PutDeliveryChannelError::Credentials(ref err) => err.description(),PutDeliveryChannelError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutDeliveryChannelError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2449,14 +2449,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum StartConfigRulesEvaluationError {
                     
-///<p>One or more AWS Config rules in the request are invalid. Verify that the rule names are correct and try again.</p>
-NoSuchConfigRule(String),
+///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
+InvalidParameterValue(String),
 ///<p>This exception is thrown if an evaluation is in progress or if you call the <a>StartConfigRulesEvaluation</a> API more than once per minute.</p>
 LimitExceeded(String),
+///<p>One or more AWS Config rules in the request are invalid. Verify that the rule names are correct and try again.</p>
+NoSuchConfigRule(String),
 ///<p>The rule is currently being deleted or the rule is deleting your evaluation results. Try your request again later.</p>
-ResourceInUse(String),
-///<p>One or more of the specified parameters are invalid. Verify that your parameters are valid and try again.</p>
-InvalidParameterValue(String),/// An error occurred dispatching the HTTP request
+ResourceInUse(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2475,7 +2475,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "NoSuchConfigRuleException" => StartConfigRulesEvaluationError::NoSuchConfigRule(String::from(error_message)),"LimitExceededException" => StartConfigRulesEvaluationError::LimitExceeded(String::from(error_message)),"ResourceInUseException" => StartConfigRulesEvaluationError::ResourceInUse(String::from(error_message)),"InvalidParameterValueException" => StartConfigRulesEvaluationError::InvalidParameterValue(String::from(error_message)),"ValidationException" => StartConfigRulesEvaluationError::Validation(error_message.to_string()),_ => StartConfigRulesEvaluationError::Unknown(String::from(body))
+                                    "InvalidParameterValueException" => StartConfigRulesEvaluationError::InvalidParameterValue(String::from(error_message)),"LimitExceededException" => StartConfigRulesEvaluationError::LimitExceeded(String::from(error_message)),"NoSuchConfigRuleException" => StartConfigRulesEvaluationError::NoSuchConfigRule(String::from(error_message)),"ResourceInUseException" => StartConfigRulesEvaluationError::ResourceInUse(String::from(error_message)),"ValidationException" => StartConfigRulesEvaluationError::Validation(error_message.to_string()),_ => StartConfigRulesEvaluationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => StartConfigRulesEvaluationError::Unknown(String::from(body))
@@ -2506,7 +2506,7 @@ Unknown(String)
                 impl Error for StartConfigRulesEvaluationError {
                     fn description(&self) -> &str {
                         match *self {
-                            StartConfigRulesEvaluationError::NoSuchConfigRule(ref cause) => cause,StartConfigRulesEvaluationError::LimitExceeded(ref cause) => cause,StartConfigRulesEvaluationError::ResourceInUse(ref cause) => cause,StartConfigRulesEvaluationError::InvalidParameterValue(ref cause) => cause,StartConfigRulesEvaluationError::Validation(ref cause) => cause,StartConfigRulesEvaluationError::Credentials(ref err) => err.description(),StartConfigRulesEvaluationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartConfigRulesEvaluationError::Unknown(ref cause) => cause
+                            StartConfigRulesEvaluationError::InvalidParameterValue(ref cause) => cause,StartConfigRulesEvaluationError::LimitExceeded(ref cause) => cause,StartConfigRulesEvaluationError::NoSuchConfigRule(ref cause) => cause,StartConfigRulesEvaluationError::ResourceInUse(ref cause) => cause,StartConfigRulesEvaluationError::Validation(ref cause) => cause,StartConfigRulesEvaluationError::Credentials(ref err) => err.description(),StartConfigRulesEvaluationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartConfigRulesEvaluationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2514,10 +2514,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum StartConfigurationRecorderError {
                     
-///<p>You have specified a configuration recorder that does not exist.</p>
-NoSuchConfigurationRecorder(String),
 ///<p>There is no delivery channel available to record configurations.</p>
-NoAvailableDeliveryChannel(String),/// An error occurred dispatching the HTTP request
+NoAvailableDeliveryChannel(String),
+///<p>You have specified a configuration recorder that does not exist.</p>
+NoSuchConfigurationRecorder(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2536,7 +2536,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "NoSuchConfigurationRecorderException" => StartConfigurationRecorderError::NoSuchConfigurationRecorder(String::from(error_message)),"NoAvailableDeliveryChannelException" => StartConfigurationRecorderError::NoAvailableDeliveryChannel(String::from(error_message)),"ValidationException" => StartConfigurationRecorderError::Validation(error_message.to_string()),_ => StartConfigurationRecorderError::Unknown(String::from(body))
+                                    "NoAvailableDeliveryChannelException" => StartConfigurationRecorderError::NoAvailableDeliveryChannel(String::from(error_message)),"NoSuchConfigurationRecorderException" => StartConfigurationRecorderError::NoSuchConfigurationRecorder(String::from(error_message)),"ValidationException" => StartConfigurationRecorderError::Validation(error_message.to_string()),_ => StartConfigurationRecorderError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => StartConfigurationRecorderError::Unknown(String::from(body))
@@ -2567,7 +2567,7 @@ Unknown(String)
                 impl Error for StartConfigurationRecorderError {
                     fn description(&self) -> &str {
                         match *self {
-                            StartConfigurationRecorderError::NoSuchConfigurationRecorder(ref cause) => cause,StartConfigurationRecorderError::NoAvailableDeliveryChannel(ref cause) => cause,StartConfigurationRecorderError::Validation(ref cause) => cause,StartConfigurationRecorderError::Credentials(ref err) => err.description(),StartConfigurationRecorderError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartConfigurationRecorderError::Unknown(ref cause) => cause
+                            StartConfigurationRecorderError::NoAvailableDeliveryChannel(ref cause) => cause,StartConfigurationRecorderError::NoSuchConfigurationRecorder(ref cause) => cause,StartConfigurationRecorderError::Validation(ref cause) => cause,StartConfigurationRecorderError::Credentials(ref err) => err.description(),StartConfigurationRecorderError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartConfigurationRecorderError::Unknown(ref cause) => cause
                         }
                     }
                  }

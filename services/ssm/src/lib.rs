@@ -3680,12 +3680,12 @@ pub type Version = String;
                 #[derive(Debug, PartialEq)]
                 pub enum AddTagsToResourceError {
                     
-///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
-InvalidResourceType(String),
-///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
-InvalidResourceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
+///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
+InvalidResourceId(String),
+///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
+InvalidResourceType(String),
 ///<p>The <code>Targets</code> parameter includes too many tags. Remove one or more tags and try the command again.</p>
 TooManyTagsError(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -3706,7 +3706,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceType" => AddTagsToResourceError::InvalidResourceType(String::from(error_message)),"InvalidResourceId" => AddTagsToResourceError::InvalidResourceId(String::from(error_message)),"InternalServerError" => AddTagsToResourceError::InternalServerError(String::from(error_message)),"TooManyTagsError" => AddTagsToResourceError::TooManyTagsError(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => AddTagsToResourceError::InternalServerError(String::from(error_message)),"InvalidResourceId" => AddTagsToResourceError::InvalidResourceId(String::from(error_message)),"InvalidResourceType" => AddTagsToResourceError::InvalidResourceType(String::from(error_message)),"TooManyTagsError" => AddTagsToResourceError::TooManyTagsError(String::from(error_message)),"ValidationException" => AddTagsToResourceError::Validation(error_message.to_string()),_ => AddTagsToResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddTagsToResourceError::Unknown(String::from(body))
@@ -3737,7 +3737,7 @@ Unknown(String)
                 impl Error for AddTagsToResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsToResourceError::InvalidResourceType(ref cause) => cause,AddTagsToResourceError::InvalidResourceId(ref cause) => cause,AddTagsToResourceError::InternalServerError(ref cause) => cause,AddTagsToResourceError::TooManyTagsError(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
+                            AddTagsToResourceError::InternalServerError(ref cause) => cause,AddTagsToResourceError::InvalidResourceId(ref cause) => cause,AddTagsToResourceError::InvalidResourceType(ref cause) => cause,AddTagsToResourceError::TooManyTagsError(ref cause) => cause,AddTagsToResourceError::Validation(ref cause) => cause,AddTagsToResourceError::Credentials(ref err) => err.description(),AddTagsToResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3745,14 +3745,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CancelCommandError {
                     
+///<p>You cannot specify an instance ID in more than one association.</p>
+DuplicateInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///
 InvalidCommandId(String),
 ///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
-///<p>You cannot specify an instance ID in more than one association.</p>
-DuplicateInstanceId(String),/// An error occurred dispatching the HTTP request
+InvalidInstanceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3771,7 +3771,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => CancelCommandError::InternalServerError(String::from(error_message)),"InvalidCommandId" => CancelCommandError::InvalidCommandId(String::from(error_message)),"InvalidInstanceId" => CancelCommandError::InvalidInstanceId(String::from(error_message)),"DuplicateInstanceId" => CancelCommandError::DuplicateInstanceId(String::from(error_message)),"ValidationException" => CancelCommandError::Validation(error_message.to_string()),_ => CancelCommandError::Unknown(String::from(body))
+                                    "DuplicateInstanceId" => CancelCommandError::DuplicateInstanceId(String::from(error_message)),"InternalServerError" => CancelCommandError::InternalServerError(String::from(error_message)),"InvalidCommandId" => CancelCommandError::InvalidCommandId(String::from(error_message)),"InvalidInstanceId" => CancelCommandError::InvalidInstanceId(String::from(error_message)),"ValidationException" => CancelCommandError::Validation(error_message.to_string()),_ => CancelCommandError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CancelCommandError::Unknown(String::from(body))
@@ -3802,7 +3802,7 @@ Unknown(String)
                 impl Error for CancelCommandError {
                     fn description(&self) -> &str {
                         match *self {
-                            CancelCommandError::InternalServerError(ref cause) => cause,CancelCommandError::InvalidCommandId(ref cause) => cause,CancelCommandError::InvalidInstanceId(ref cause) => cause,CancelCommandError::DuplicateInstanceId(ref cause) => cause,CancelCommandError::Validation(ref cause) => cause,CancelCommandError::Credentials(ref err) => err.description(),CancelCommandError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelCommandError::Unknown(ref cause) => cause
+                            CancelCommandError::DuplicateInstanceId(ref cause) => cause,CancelCommandError::InternalServerError(ref cause) => cause,CancelCommandError::InvalidCommandId(ref cause) => cause,CancelCommandError::InvalidInstanceId(ref cause) => cause,CancelCommandError::Validation(ref cause) => cause,CancelCommandError::Credentials(ref err) => err.description(),CancelCommandError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CancelCommandError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3881,16 +3881,16 @@ InvalidDocument(String),
 InvalidDocumentVersion(String),
 ///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
-UnsupportedPlatformType(String),
 ///<p>The output location is not valid or does not exist.</p>
 InvalidOutputLocation(String),
 ///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
 InvalidParameters(String),
+///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
+InvalidSchedule(String),
 ///<p>The target is not valid or does not exist. It might not be configured for EC2 Systems Manager or you might not have permission to perform the operation.</p>
 InvalidTarget(String),
-///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
-InvalidSchedule(String),/// An error occurred dispatching the HTTP request
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
+UnsupportedPlatformType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3909,7 +3909,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "AssociationAlreadyExists" => CreateAssociationError::AssociationAlreadyExists(String::from(error_message)),"AssociationLimitExceeded" => CreateAssociationError::AssociationLimitExceeded(String::from(error_message)),"InternalServerError" => CreateAssociationError::InternalServerError(String::from(error_message)),"InvalidDocument" => CreateAssociationError::InvalidDocument(String::from(error_message)),"InvalidDocumentVersion" => CreateAssociationError::InvalidDocumentVersion(String::from(error_message)),"InvalidInstanceId" => CreateAssociationError::InvalidInstanceId(String::from(error_message)),"UnsupportedPlatformType" => CreateAssociationError::UnsupportedPlatformType(String::from(error_message)),"InvalidOutputLocation" => CreateAssociationError::InvalidOutputLocation(String::from(error_message)),"InvalidParameters" => CreateAssociationError::InvalidParameters(String::from(error_message)),"InvalidTarget" => CreateAssociationError::InvalidTarget(String::from(error_message)),"InvalidSchedule" => CreateAssociationError::InvalidSchedule(String::from(error_message)),"ValidationException" => CreateAssociationError::Validation(error_message.to_string()),_ => CreateAssociationError::Unknown(String::from(body))
+                                    "AssociationAlreadyExists" => CreateAssociationError::AssociationAlreadyExists(String::from(error_message)),"AssociationLimitExceeded" => CreateAssociationError::AssociationLimitExceeded(String::from(error_message)),"InternalServerError" => CreateAssociationError::InternalServerError(String::from(error_message)),"InvalidDocument" => CreateAssociationError::InvalidDocument(String::from(error_message)),"InvalidDocumentVersion" => CreateAssociationError::InvalidDocumentVersion(String::from(error_message)),"InvalidInstanceId" => CreateAssociationError::InvalidInstanceId(String::from(error_message)),"InvalidOutputLocation" => CreateAssociationError::InvalidOutputLocation(String::from(error_message)),"InvalidParameters" => CreateAssociationError::InvalidParameters(String::from(error_message)),"InvalidSchedule" => CreateAssociationError::InvalidSchedule(String::from(error_message)),"InvalidTarget" => CreateAssociationError::InvalidTarget(String::from(error_message)),"UnsupportedPlatformType" => CreateAssociationError::UnsupportedPlatformType(String::from(error_message)),"ValidationException" => CreateAssociationError::Validation(error_message.to_string()),_ => CreateAssociationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateAssociationError::Unknown(String::from(body))
@@ -3940,7 +3940,7 @@ Unknown(String)
                 impl Error for CreateAssociationError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateAssociationError::AssociationAlreadyExists(ref cause) => cause,CreateAssociationError::AssociationLimitExceeded(ref cause) => cause,CreateAssociationError::InternalServerError(ref cause) => cause,CreateAssociationError::InvalidDocument(ref cause) => cause,CreateAssociationError::InvalidDocumentVersion(ref cause) => cause,CreateAssociationError::InvalidInstanceId(ref cause) => cause,CreateAssociationError::UnsupportedPlatformType(ref cause) => cause,CreateAssociationError::InvalidOutputLocation(ref cause) => cause,CreateAssociationError::InvalidParameters(ref cause) => cause,CreateAssociationError::InvalidTarget(ref cause) => cause,CreateAssociationError::InvalidSchedule(ref cause) => cause,CreateAssociationError::Validation(ref cause) => cause,CreateAssociationError::Credentials(ref err) => err.description(),CreateAssociationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAssociationError::Unknown(ref cause) => cause
+                            CreateAssociationError::AssociationAlreadyExists(ref cause) => cause,CreateAssociationError::AssociationLimitExceeded(ref cause) => cause,CreateAssociationError::InternalServerError(ref cause) => cause,CreateAssociationError::InvalidDocument(ref cause) => cause,CreateAssociationError::InvalidDocumentVersion(ref cause) => cause,CreateAssociationError::InvalidInstanceId(ref cause) => cause,CreateAssociationError::InvalidOutputLocation(ref cause) => cause,CreateAssociationError::InvalidParameters(ref cause) => cause,CreateAssociationError::InvalidSchedule(ref cause) => cause,CreateAssociationError::InvalidTarget(ref cause) => cause,CreateAssociationError::UnsupportedPlatformType(ref cause) => cause,CreateAssociationError::Validation(ref cause) => cause,CreateAssociationError::Credentials(ref err) => err.description(),CreateAssociationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAssociationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3948,6 +3948,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateAssociationBatchError {
                     
+///<p>You can have at most 2,000 active associations.</p>
+AssociationLimitExceeded(String),
+///<p>You cannot specify an instance ID in more than one association.</p>
+DuplicateInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
@@ -3956,20 +3960,16 @@ InvalidDocument(String),
 InvalidDocumentVersion(String),
 ///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
-///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
-InvalidParameters(String),
-///<p>You cannot specify an instance ID in more than one association.</p>
-DuplicateInstanceId(String),
-///<p>You can have at most 2,000 active associations.</p>
-AssociationLimitExceeded(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
-UnsupportedPlatformType(String),
 ///<p>The output location is not valid or does not exist.</p>
 InvalidOutputLocation(String),
+///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
+InvalidParameters(String),
+///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
+InvalidSchedule(String),
 ///<p>The target is not valid or does not exist. It might not be configured for EC2 Systems Manager or you might not have permission to perform the operation.</p>
 InvalidTarget(String),
-///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
-InvalidSchedule(String),/// An error occurred dispatching the HTTP request
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
+UnsupportedPlatformType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3988,7 +3988,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => CreateAssociationBatchError::InternalServerError(String::from(error_message)),"InvalidDocument" => CreateAssociationBatchError::InvalidDocument(String::from(error_message)),"InvalidDocumentVersion" => CreateAssociationBatchError::InvalidDocumentVersion(String::from(error_message)),"InvalidInstanceId" => CreateAssociationBatchError::InvalidInstanceId(String::from(error_message)),"InvalidParameters" => CreateAssociationBatchError::InvalidParameters(String::from(error_message)),"DuplicateInstanceId" => CreateAssociationBatchError::DuplicateInstanceId(String::from(error_message)),"AssociationLimitExceeded" => CreateAssociationBatchError::AssociationLimitExceeded(String::from(error_message)),"UnsupportedPlatformType" => CreateAssociationBatchError::UnsupportedPlatformType(String::from(error_message)),"InvalidOutputLocation" => CreateAssociationBatchError::InvalidOutputLocation(String::from(error_message)),"InvalidTarget" => CreateAssociationBatchError::InvalidTarget(String::from(error_message)),"InvalidSchedule" => CreateAssociationBatchError::InvalidSchedule(String::from(error_message)),"ValidationException" => CreateAssociationBatchError::Validation(error_message.to_string()),_ => CreateAssociationBatchError::Unknown(String::from(body))
+                                    "AssociationLimitExceeded" => CreateAssociationBatchError::AssociationLimitExceeded(String::from(error_message)),"DuplicateInstanceId" => CreateAssociationBatchError::DuplicateInstanceId(String::from(error_message)),"InternalServerError" => CreateAssociationBatchError::InternalServerError(String::from(error_message)),"InvalidDocument" => CreateAssociationBatchError::InvalidDocument(String::from(error_message)),"InvalidDocumentVersion" => CreateAssociationBatchError::InvalidDocumentVersion(String::from(error_message)),"InvalidInstanceId" => CreateAssociationBatchError::InvalidInstanceId(String::from(error_message)),"InvalidOutputLocation" => CreateAssociationBatchError::InvalidOutputLocation(String::from(error_message)),"InvalidParameters" => CreateAssociationBatchError::InvalidParameters(String::from(error_message)),"InvalidSchedule" => CreateAssociationBatchError::InvalidSchedule(String::from(error_message)),"InvalidTarget" => CreateAssociationBatchError::InvalidTarget(String::from(error_message)),"UnsupportedPlatformType" => CreateAssociationBatchError::UnsupportedPlatformType(String::from(error_message)),"ValidationException" => CreateAssociationBatchError::Validation(error_message.to_string()),_ => CreateAssociationBatchError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateAssociationBatchError::Unknown(String::from(body))
@@ -4019,7 +4019,7 @@ Unknown(String)
                 impl Error for CreateAssociationBatchError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateAssociationBatchError::InternalServerError(ref cause) => cause,CreateAssociationBatchError::InvalidDocument(ref cause) => cause,CreateAssociationBatchError::InvalidDocumentVersion(ref cause) => cause,CreateAssociationBatchError::InvalidInstanceId(ref cause) => cause,CreateAssociationBatchError::InvalidParameters(ref cause) => cause,CreateAssociationBatchError::DuplicateInstanceId(ref cause) => cause,CreateAssociationBatchError::AssociationLimitExceeded(ref cause) => cause,CreateAssociationBatchError::UnsupportedPlatformType(ref cause) => cause,CreateAssociationBatchError::InvalidOutputLocation(ref cause) => cause,CreateAssociationBatchError::InvalidTarget(ref cause) => cause,CreateAssociationBatchError::InvalidSchedule(ref cause) => cause,CreateAssociationBatchError::Validation(ref cause) => cause,CreateAssociationBatchError::Credentials(ref err) => err.description(),CreateAssociationBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAssociationBatchError::Unknown(ref cause) => cause
+                            CreateAssociationBatchError::AssociationLimitExceeded(ref cause) => cause,CreateAssociationBatchError::DuplicateInstanceId(ref cause) => cause,CreateAssociationBatchError::InternalServerError(ref cause) => cause,CreateAssociationBatchError::InvalidDocument(ref cause) => cause,CreateAssociationBatchError::InvalidDocumentVersion(ref cause) => cause,CreateAssociationBatchError::InvalidInstanceId(ref cause) => cause,CreateAssociationBatchError::InvalidOutputLocation(ref cause) => cause,CreateAssociationBatchError::InvalidParameters(ref cause) => cause,CreateAssociationBatchError::InvalidSchedule(ref cause) => cause,CreateAssociationBatchError::InvalidTarget(ref cause) => cause,CreateAssociationBatchError::UnsupportedPlatformType(ref cause) => cause,CreateAssociationBatchError::Validation(ref cause) => cause,CreateAssociationBatchError::Credentials(ref err) => err.description(),CreateAssociationBatchError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateAssociationBatchError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4029,16 +4029,16 @@ Unknown(String)
                     
 ///<p>The specified SSM document already exists.</p>
 DocumentAlreadyExists(String),
-///<p>The size limit of an SSM document is 64 KB.</p>
-MaxDocumentSizeExceeded(String),
+///<p>You can have at most 200 active SSM documents.</p>
+DocumentLimitExceeded(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///<p>The content for the SSM document is not valid.</p>
 InvalidDocumentContent(String),
-///<p>You can have at most 200 active SSM documents.</p>
-DocumentLimitExceeded(String),
 ///<p>The version of the document schema is not supported.</p>
-InvalidDocumentSchemaVersion(String),/// An error occurred dispatching the HTTP request
+InvalidDocumentSchemaVersion(String),
+///<p>The size limit of an SSM document is 64 KB.</p>
+MaxDocumentSizeExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4057,7 +4057,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DocumentAlreadyExists" => CreateDocumentError::DocumentAlreadyExists(String::from(error_message)),"MaxDocumentSizeExceeded" => CreateDocumentError::MaxDocumentSizeExceeded(String::from(error_message)),"InternalServerError" => CreateDocumentError::InternalServerError(String::from(error_message)),"InvalidDocumentContent" => CreateDocumentError::InvalidDocumentContent(String::from(error_message)),"DocumentLimitExceeded" => CreateDocumentError::DocumentLimitExceeded(String::from(error_message)),"InvalidDocumentSchemaVersion" => CreateDocumentError::InvalidDocumentSchemaVersion(String::from(error_message)),"ValidationException" => CreateDocumentError::Validation(error_message.to_string()),_ => CreateDocumentError::Unknown(String::from(body))
+                                    "DocumentAlreadyExists" => CreateDocumentError::DocumentAlreadyExists(String::from(error_message)),"DocumentLimitExceeded" => CreateDocumentError::DocumentLimitExceeded(String::from(error_message)),"InternalServerError" => CreateDocumentError::InternalServerError(String::from(error_message)),"InvalidDocumentContent" => CreateDocumentError::InvalidDocumentContent(String::from(error_message)),"InvalidDocumentSchemaVersion" => CreateDocumentError::InvalidDocumentSchemaVersion(String::from(error_message)),"MaxDocumentSizeExceeded" => CreateDocumentError::MaxDocumentSizeExceeded(String::from(error_message)),"ValidationException" => CreateDocumentError::Validation(error_message.to_string()),_ => CreateDocumentError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateDocumentError::Unknown(String::from(body))
@@ -4088,7 +4088,7 @@ Unknown(String)
                 impl Error for CreateDocumentError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateDocumentError::DocumentAlreadyExists(ref cause) => cause,CreateDocumentError::MaxDocumentSizeExceeded(ref cause) => cause,CreateDocumentError::InternalServerError(ref cause) => cause,CreateDocumentError::InvalidDocumentContent(ref cause) => cause,CreateDocumentError::DocumentLimitExceeded(ref cause) => cause,CreateDocumentError::InvalidDocumentSchemaVersion(ref cause) => cause,CreateDocumentError::Validation(ref cause) => cause,CreateDocumentError::Credentials(ref err) => err.description(),CreateDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDocumentError::Unknown(ref cause) => cause
+                            CreateDocumentError::DocumentAlreadyExists(ref cause) => cause,CreateDocumentError::DocumentLimitExceeded(ref cause) => cause,CreateDocumentError::InternalServerError(ref cause) => cause,CreateDocumentError::InvalidDocumentContent(ref cause) => cause,CreateDocumentError::InvalidDocumentSchemaVersion(ref cause) => cause,CreateDocumentError::MaxDocumentSizeExceeded(ref cause) => cause,CreateDocumentError::Validation(ref cause) => cause,CreateDocumentError::Credentials(ref err) => err.description(),CreateDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDocumentError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4098,10 +4098,10 @@ Unknown(String)
                     
 ///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
 IdempotentParameterMismatch(String),
-///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
-ResourceLimitExceeded(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4120,7 +4120,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "IdempotentParameterMismatch" => CreateMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"ResourceLimitExceededException" => CreateMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"InternalServerError" => CreateMaintenanceWindowError::InternalServerError(String::from(error_message)),"ValidationException" => CreateMaintenanceWindowError::Validation(error_message.to_string()),_ => CreateMaintenanceWindowError::Unknown(String::from(body))
+                                    "IdempotentParameterMismatch" => CreateMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"InternalServerError" => CreateMaintenanceWindowError::InternalServerError(String::from(error_message)),"ResourceLimitExceededException" => CreateMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => CreateMaintenanceWindowError::Validation(error_message.to_string()),_ => CreateMaintenanceWindowError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateMaintenanceWindowError::Unknown(String::from(body))
@@ -4151,7 +4151,7 @@ Unknown(String)
                 impl Error for CreateMaintenanceWindowError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,CreateMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,CreateMaintenanceWindowError::InternalServerError(ref cause) => cause,CreateMaintenanceWindowError::Validation(ref cause) => cause,CreateMaintenanceWindowError::Credentials(ref err) => err.description(),CreateMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateMaintenanceWindowError::Unknown(ref cause) => cause
+                            CreateMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,CreateMaintenanceWindowError::InternalServerError(ref cause) => cause,CreateMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,CreateMaintenanceWindowError::Validation(ref cause) => cause,CreateMaintenanceWindowError::Credentials(ref err) => err.description(),CreateMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateMaintenanceWindowError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4161,10 +4161,10 @@ Unknown(String)
                     
 ///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
 IdempotentParameterMismatch(String),
-///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
-ResourceLimitExceeded(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4183,7 +4183,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "IdempotentParameterMismatch" => CreatePatchBaselineError::IdempotentParameterMismatch(String::from(error_message)),"ResourceLimitExceededException" => CreatePatchBaselineError::ResourceLimitExceeded(String::from(error_message)),"InternalServerError" => CreatePatchBaselineError::InternalServerError(String::from(error_message)),"ValidationException" => CreatePatchBaselineError::Validation(error_message.to_string()),_ => CreatePatchBaselineError::Unknown(String::from(body))
+                                    "IdempotentParameterMismatch" => CreatePatchBaselineError::IdempotentParameterMismatch(String::from(error_message)),"InternalServerError" => CreatePatchBaselineError::InternalServerError(String::from(error_message)),"ResourceLimitExceededException" => CreatePatchBaselineError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => CreatePatchBaselineError::Validation(error_message.to_string()),_ => CreatePatchBaselineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreatePatchBaselineError::Unknown(String::from(body))
@@ -4214,7 +4214,7 @@ Unknown(String)
                 impl Error for CreatePatchBaselineError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreatePatchBaselineError::IdempotentParameterMismatch(ref cause) => cause,CreatePatchBaselineError::ResourceLimitExceeded(ref cause) => cause,CreatePatchBaselineError::InternalServerError(ref cause) => cause,CreatePatchBaselineError::Validation(ref cause) => cause,CreatePatchBaselineError::Credentials(ref err) => err.description(),CreatePatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePatchBaselineError::Unknown(ref cause) => cause
+                            CreatePatchBaselineError::IdempotentParameterMismatch(ref cause) => cause,CreatePatchBaselineError::InternalServerError(ref cause) => cause,CreatePatchBaselineError::ResourceLimitExceeded(ref cause) => cause,CreatePatchBaselineError::Validation(ref cause) => cause,CreatePatchBaselineError::Credentials(ref err) => err.description(),CreatePatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePatchBaselineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4222,12 +4222,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteActivationError {
                     
-///<p>The activation ID is not valid. Verify the you entered the correct ActivationId or ActivationCode and try again.</p>
-InvalidActivationId(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The activation is not valid. The activation might have been deleted, or the ActivationId and the ActivationCode do not match.</p>
 InvalidActivation(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+///<p>The activation ID is not valid. Verify the you entered the correct ActivationId or ActivationCode and try again.</p>
+InvalidActivationId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4246,7 +4246,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidActivationId" => DeleteActivationError::InvalidActivationId(String::from(error_message)),"InvalidActivation" => DeleteActivationError::InvalidActivation(String::from(error_message)),"InternalServerError" => DeleteActivationError::InternalServerError(String::from(error_message)),"ValidationException" => DeleteActivationError::Validation(error_message.to_string()),_ => DeleteActivationError::Unknown(String::from(body))
+                                    "InternalServerError" => DeleteActivationError::InternalServerError(String::from(error_message)),"InvalidActivation" => DeleteActivationError::InvalidActivation(String::from(error_message)),"InvalidActivationId" => DeleteActivationError::InvalidActivationId(String::from(error_message)),"ValidationException" => DeleteActivationError::Validation(error_message.to_string()),_ => DeleteActivationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteActivationError::Unknown(String::from(body))
@@ -4277,7 +4277,7 @@ Unknown(String)
                 impl Error for DeleteActivationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteActivationError::InvalidActivationId(ref cause) => cause,DeleteActivationError::InvalidActivation(ref cause) => cause,DeleteActivationError::InternalServerError(ref cause) => cause,DeleteActivationError::Validation(ref cause) => cause,DeleteActivationError::Credentials(ref err) => err.description(),DeleteActivationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteActivationError::Unknown(ref cause) => cause
+                            DeleteActivationError::InternalServerError(ref cause) => cause,DeleteActivationError::InvalidActivation(ref cause) => cause,DeleteActivationError::InvalidActivationId(ref cause) => cause,DeleteActivationError::Validation(ref cause) => cause,DeleteActivationError::Credentials(ref err) => err.description(),DeleteActivationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteActivationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4352,14 +4352,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteDocumentError {
                     
+///<p>You must disassociate an SSM document from all instances before you can delete it.</p>
+AssociatedInstances(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
 ///<p>You attempted to delete a document while it is still shared. You must stop sharing the document before you can delete it.</p>
-InvalidDocumentOperation(String),
-///<p>You must disassociate an SSM document from all instances before you can delete it.</p>
-AssociatedInstances(String),/// An error occurred dispatching the HTTP request
+InvalidDocumentOperation(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4378,7 +4378,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => DeleteDocumentError::InternalServerError(String::from(error_message)),"InvalidDocument" => DeleteDocumentError::InvalidDocument(String::from(error_message)),"InvalidDocumentOperation" => DeleteDocumentError::InvalidDocumentOperation(String::from(error_message)),"AssociatedInstances" => DeleteDocumentError::AssociatedInstances(String::from(error_message)),"ValidationException" => DeleteDocumentError::Validation(error_message.to_string()),_ => DeleteDocumentError::Unknown(String::from(body))
+                                    "AssociatedInstances" => DeleteDocumentError::AssociatedInstances(String::from(error_message)),"InternalServerError" => DeleteDocumentError::InternalServerError(String::from(error_message)),"InvalidDocument" => DeleteDocumentError::InvalidDocument(String::from(error_message)),"InvalidDocumentOperation" => DeleteDocumentError::InvalidDocumentOperation(String::from(error_message)),"ValidationException" => DeleteDocumentError::Validation(error_message.to_string()),_ => DeleteDocumentError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteDocumentError::Unknown(String::from(body))
@@ -4409,7 +4409,7 @@ Unknown(String)
                 impl Error for DeleteDocumentError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteDocumentError::InternalServerError(ref cause) => cause,DeleteDocumentError::InvalidDocument(ref cause) => cause,DeleteDocumentError::InvalidDocumentOperation(ref cause) => cause,DeleteDocumentError::AssociatedInstances(ref cause) => cause,DeleteDocumentError::Validation(ref cause) => cause,DeleteDocumentError::Credentials(ref err) => err.description(),DeleteDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDocumentError::Unknown(ref cause) => cause
+                            DeleteDocumentError::AssociatedInstances(ref cause) => cause,DeleteDocumentError::InternalServerError(ref cause) => cause,DeleteDocumentError::InvalidDocument(ref cause) => cause,DeleteDocumentError::InvalidDocumentOperation(ref cause) => cause,DeleteDocumentError::Validation(ref cause) => cause,DeleteDocumentError::Credentials(ref err) => err.description(),DeleteDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteDocumentError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4537,10 +4537,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeletePatchBaselineError {
                     
-///<p>Error returned if an attempt is made to delete a patch baseline that is registered for a patch group.</p>
-ResourceInUse(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>Error returned if an attempt is made to delete a patch baseline that is registered for a patch group.</p>
+ResourceInUse(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4559,7 +4559,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceInUseException" => DeletePatchBaselineError::ResourceInUse(String::from(error_message)),"InternalServerError" => DeletePatchBaselineError::InternalServerError(String::from(error_message)),"ValidationException" => DeletePatchBaselineError::Validation(error_message.to_string()),_ => DeletePatchBaselineError::Unknown(String::from(body))
+                                    "InternalServerError" => DeletePatchBaselineError::InternalServerError(String::from(error_message)),"ResourceInUseException" => DeletePatchBaselineError::ResourceInUse(String::from(error_message)),"ValidationException" => DeletePatchBaselineError::Validation(error_message.to_string()),_ => DeletePatchBaselineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeletePatchBaselineError::Unknown(String::from(body))
@@ -4590,7 +4590,7 @@ Unknown(String)
                 impl Error for DeletePatchBaselineError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeletePatchBaselineError::ResourceInUse(ref cause) => cause,DeletePatchBaselineError::InternalServerError(ref cause) => cause,DeletePatchBaselineError::Validation(ref cause) => cause,DeletePatchBaselineError::Credentials(ref err) => err.description(),DeletePatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePatchBaselineError::Unknown(ref cause) => cause
+                            DeletePatchBaselineError::InternalServerError(ref cause) => cause,DeletePatchBaselineError::ResourceInUse(ref cause) => cause,DeletePatchBaselineError::Validation(ref cause) => cause,DeletePatchBaselineError::Credentials(ref err) => err.description(),DeletePatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePatchBaselineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4598,10 +4598,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeregisterManagedInstanceError {
                     
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4620,7 +4620,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidInstanceId" => DeregisterManagedInstanceError::InvalidInstanceId(String::from(error_message)),"InternalServerError" => DeregisterManagedInstanceError::InternalServerError(String::from(error_message)),"ValidationException" => DeregisterManagedInstanceError::Validation(error_message.to_string()),_ => DeregisterManagedInstanceError::Unknown(String::from(body))
+                                    "InternalServerError" => DeregisterManagedInstanceError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => DeregisterManagedInstanceError::InvalidInstanceId(String::from(error_message)),"ValidationException" => DeregisterManagedInstanceError::Validation(error_message.to_string()),_ => DeregisterManagedInstanceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeregisterManagedInstanceError::Unknown(String::from(body))
@@ -4651,7 +4651,7 @@ Unknown(String)
                 impl Error for DeregisterManagedInstanceError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeregisterManagedInstanceError::InvalidInstanceId(ref cause) => cause,DeregisterManagedInstanceError::InternalServerError(ref cause) => cause,DeregisterManagedInstanceError::Validation(ref cause) => cause,DeregisterManagedInstanceError::Credentials(ref err) => err.description(),DeregisterManagedInstanceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterManagedInstanceError::Unknown(ref cause) => cause
+                            DeregisterManagedInstanceError::InternalServerError(ref cause) => cause,DeregisterManagedInstanceError::InvalidInstanceId(ref cause) => cause,DeregisterManagedInstanceError::Validation(ref cause) => cause,DeregisterManagedInstanceError::Credentials(ref err) => err.description(),DeregisterManagedInstanceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterManagedInstanceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4659,10 +4659,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeregisterPatchBaselineForPatchGroupError {
                     
-///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
-InvalidResourceId(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
+InvalidResourceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4681,7 +4681,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceId" => DeregisterPatchBaselineForPatchGroupError::InvalidResourceId(String::from(error_message)),"InternalServerError" => DeregisterPatchBaselineForPatchGroupError::InternalServerError(String::from(error_message)),"ValidationException" => DeregisterPatchBaselineForPatchGroupError::Validation(error_message.to_string()),_ => DeregisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
+                                    "InternalServerError" => DeregisterPatchBaselineForPatchGroupError::InternalServerError(String::from(error_message)),"InvalidResourceId" => DeregisterPatchBaselineForPatchGroupError::InvalidResourceId(String::from(error_message)),"ValidationException" => DeregisterPatchBaselineForPatchGroupError::Validation(error_message.to_string()),_ => DeregisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeregisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
@@ -4712,7 +4712,7 @@ Unknown(String)
                 impl Error for DeregisterPatchBaselineForPatchGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeregisterPatchBaselineForPatchGroupError::InvalidResourceId(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::InternalServerError(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::Validation(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::Credentials(ref err) => err.description(),DeregisterPatchBaselineForPatchGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterPatchBaselineForPatchGroupError::Unknown(ref cause) => cause
+                            DeregisterPatchBaselineForPatchGroupError::InternalServerError(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::InvalidResourceId(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::Validation(ref cause) => cause,DeregisterPatchBaselineForPatchGroupError::Credentials(ref err) => err.description(),DeregisterPatchBaselineForPatchGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterPatchBaselineForPatchGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4842,12 +4842,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeActivationsError {
                     
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The filter name is not valid. Verify the you entered the correct name and try again.</p>
 InvalidFilter(String),
 ///<p>The specified token is not valid.</p>
-InvalidNextToken(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4866,7 +4866,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidFilter" => DescribeActivationsError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => DescribeActivationsError::InvalidNextToken(String::from(error_message)),"InternalServerError" => DescribeActivationsError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeActivationsError::Validation(error_message.to_string()),_ => DescribeActivationsError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeActivationsError::InternalServerError(String::from(error_message)),"InvalidFilter" => DescribeActivationsError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => DescribeActivationsError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeActivationsError::Validation(error_message.to_string()),_ => DescribeActivationsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeActivationsError::Unknown(String::from(body))
@@ -4897,7 +4897,7 @@ Unknown(String)
                 impl Error for DescribeActivationsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeActivationsError::InvalidFilter(ref cause) => cause,DescribeActivationsError::InvalidNextToken(ref cause) => cause,DescribeActivationsError::InternalServerError(ref cause) => cause,DescribeActivationsError::Validation(ref cause) => cause,DescribeActivationsError::Credentials(ref err) => err.description(),DescribeActivationsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeActivationsError::Unknown(ref cause) => cause
+                            DescribeActivationsError::InternalServerError(ref cause) => cause,DescribeActivationsError::InvalidFilter(ref cause) => cause,DescribeActivationsError::InvalidNextToken(ref cause) => cause,DescribeActivationsError::Validation(ref cause) => cause,DescribeActivationsError::Credentials(ref err) => err.description(),DescribeActivationsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeActivationsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4970,10 +4970,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeAutomationExecutionsError {
                     
-///<p>The specified token is not valid.</p>
-InvalidNextToken(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The specified token is not valid.</p>
+InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -4992,7 +4992,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidNextToken" => DescribeAutomationExecutionsError::InvalidNextToken(String::from(error_message)),"InternalServerError" => DescribeAutomationExecutionsError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeAutomationExecutionsError::Validation(error_message.to_string()),_ => DescribeAutomationExecutionsError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeAutomationExecutionsError::InternalServerError(String::from(error_message)),"InvalidNextToken" => DescribeAutomationExecutionsError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeAutomationExecutionsError::Validation(error_message.to_string()),_ => DescribeAutomationExecutionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeAutomationExecutionsError::Unknown(String::from(body))
@@ -5023,7 +5023,7 @@ Unknown(String)
                 impl Error for DescribeAutomationExecutionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeAutomationExecutionsError::InvalidNextToken(ref cause) => cause,DescribeAutomationExecutionsError::InternalServerError(ref cause) => cause,DescribeAutomationExecutionsError::Validation(ref cause) => cause,DescribeAutomationExecutionsError::Credentials(ref err) => err.description(),DescribeAutomationExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeAutomationExecutionsError::Unknown(ref cause) => cause
+                            DescribeAutomationExecutionsError::InternalServerError(ref cause) => cause,DescribeAutomationExecutionsError::InvalidNextToken(ref cause) => cause,DescribeAutomationExecutionsError::Validation(ref cause) => cause,DescribeAutomationExecutionsError::Credentials(ref err) => err.description(),DescribeAutomationExecutionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeAutomationExecutionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5279,12 +5279,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeEffectivePatchesForPatchBaselineError {
                     
-///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
-InvalidResourceId(String),
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
+InvalidResourceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5303,7 +5303,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceId" => DescribeEffectivePatchesForPatchBaselineError::InvalidResourceId(String::from(error_message)),"DoesNotExistException" => DescribeEffectivePatchesForPatchBaselineError::DoesNotExist(String::from(error_message)),"InternalServerError" => DescribeEffectivePatchesForPatchBaselineError::InternalServerError(String::from(error_message)),"ValidationException" => DescribeEffectivePatchesForPatchBaselineError::Validation(error_message.to_string()),_ => DescribeEffectivePatchesForPatchBaselineError::Unknown(String::from(body))
+                                    "DoesNotExistException" => DescribeEffectivePatchesForPatchBaselineError::DoesNotExist(String::from(error_message)),"InternalServerError" => DescribeEffectivePatchesForPatchBaselineError::InternalServerError(String::from(error_message)),"InvalidResourceId" => DescribeEffectivePatchesForPatchBaselineError::InvalidResourceId(String::from(error_message)),"ValidationException" => DescribeEffectivePatchesForPatchBaselineError::Validation(error_message.to_string()),_ => DescribeEffectivePatchesForPatchBaselineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeEffectivePatchesForPatchBaselineError::Unknown(String::from(body))
@@ -5334,7 +5334,7 @@ Unknown(String)
                 impl Error for DescribeEffectivePatchesForPatchBaselineError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeEffectivePatchesForPatchBaselineError::InvalidResourceId(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::DoesNotExist(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::InternalServerError(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::Validation(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::Credentials(ref err) => err.description(),DescribeEffectivePatchesForPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEffectivePatchesForPatchBaselineError::Unknown(ref cause) => cause
+                            DescribeEffectivePatchesForPatchBaselineError::DoesNotExist(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::InternalServerError(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::InvalidResourceId(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::Validation(ref cause) => cause,DescribeEffectivePatchesForPatchBaselineError::Credentials(ref err) => err.description(),DescribeEffectivePatchesForPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEffectivePatchesForPatchBaselineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5407,14 +5407,14 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
+///<p>The specified key is not valid.</p>
+InvalidFilterKey(String),
 ///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
-///<p>The specified token is not valid.</p>
-InvalidNextToken(String),
 ///<p>The specified filter value is not valid.</p>
 InvalidInstanceInformationFilterValue(String),
-///<p>The specified key is not valid.</p>
-InvalidFilterKey(String),/// An error occurred dispatching the HTTP request
+///<p>The specified token is not valid.</p>
+InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5433,7 +5433,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => DescribeInstanceInformationError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => DescribeInstanceInformationError::InvalidInstanceId(String::from(error_message)),"InvalidNextToken" => DescribeInstanceInformationError::InvalidNextToken(String::from(error_message)),"InvalidInstanceInformationFilterValue" => DescribeInstanceInformationError::InvalidInstanceInformationFilterValue(String::from(error_message)),"InvalidFilterKey" => DescribeInstanceInformationError::InvalidFilterKey(String::from(error_message)),"ValidationException" => DescribeInstanceInformationError::Validation(error_message.to_string()),_ => DescribeInstanceInformationError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeInstanceInformationError::InternalServerError(String::from(error_message)),"InvalidFilterKey" => DescribeInstanceInformationError::InvalidFilterKey(String::from(error_message)),"InvalidInstanceId" => DescribeInstanceInformationError::InvalidInstanceId(String::from(error_message)),"InvalidInstanceInformationFilterValue" => DescribeInstanceInformationError::InvalidInstanceInformationFilterValue(String::from(error_message)),"InvalidNextToken" => DescribeInstanceInformationError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeInstanceInformationError::Validation(error_message.to_string()),_ => DescribeInstanceInformationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeInstanceInformationError::Unknown(String::from(body))
@@ -5464,7 +5464,7 @@ Unknown(String)
                 impl Error for DescribeInstanceInformationError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeInstanceInformationError::InternalServerError(ref cause) => cause,DescribeInstanceInformationError::InvalidInstanceId(ref cause) => cause,DescribeInstanceInformationError::InvalidNextToken(ref cause) => cause,DescribeInstanceInformationError::InvalidInstanceInformationFilterValue(ref cause) => cause,DescribeInstanceInformationError::InvalidFilterKey(ref cause) => cause,DescribeInstanceInformationError::Validation(ref cause) => cause,DescribeInstanceInformationError::Credentials(ref err) => err.description(),DescribeInstanceInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstanceInformationError::Unknown(ref cause) => cause
+                            DescribeInstanceInformationError::InternalServerError(ref cause) => cause,DescribeInstanceInformationError::InvalidFilterKey(ref cause) => cause,DescribeInstanceInformationError::InvalidInstanceId(ref cause) => cause,DescribeInstanceInformationError::InvalidInstanceInformationFilterValue(ref cause) => cause,DescribeInstanceInformationError::InvalidNextToken(ref cause) => cause,DescribeInstanceInformationError::Validation(ref cause) => cause,DescribeInstanceInformationError::Credentials(ref err) => err.description(),DescribeInstanceInformationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstanceInformationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5598,10 +5598,10 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>The filter name is not valid. Verify the you entered the correct name and try again.</p>
 InvalidFilter(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -5622,7 +5622,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => DescribeInstancePatchesError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => DescribeInstancePatchesError::InvalidInstanceId(String::from(error_message)),"InvalidFilter" => DescribeInstancePatchesError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => DescribeInstancePatchesError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeInstancePatchesError::Validation(error_message.to_string()),_ => DescribeInstancePatchesError::Unknown(String::from(body))
+                                    "InternalServerError" => DescribeInstancePatchesError::InternalServerError(String::from(error_message)),"InvalidFilter" => DescribeInstancePatchesError::InvalidFilter(String::from(error_message)),"InvalidInstanceId" => DescribeInstancePatchesError::InvalidInstanceId(String::from(error_message)),"InvalidNextToken" => DescribeInstancePatchesError::InvalidNextToken(String::from(error_message)),"ValidationException" => DescribeInstancePatchesError::Validation(error_message.to_string()),_ => DescribeInstancePatchesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DescribeInstancePatchesError::Unknown(String::from(body))
@@ -5653,7 +5653,7 @@ Unknown(String)
                 impl Error for DescribeInstancePatchesError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeInstancePatchesError::InternalServerError(ref cause) => cause,DescribeInstancePatchesError::InvalidInstanceId(ref cause) => cause,DescribeInstancePatchesError::InvalidFilter(ref cause) => cause,DescribeInstancePatchesError::InvalidNextToken(ref cause) => cause,DescribeInstancePatchesError::Validation(ref cause) => cause,DescribeInstancePatchesError::Credentials(ref err) => err.description(),DescribeInstancePatchesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstancePatchesError::Unknown(ref cause) => cause
+                            DescribeInstancePatchesError::InternalServerError(ref cause) => cause,DescribeInstancePatchesError::InvalidFilter(ref cause) => cause,DescribeInstancePatchesError::InvalidInstanceId(ref cause) => cause,DescribeInstancePatchesError::InvalidNextToken(ref cause) => cause,DescribeInstancePatchesError::Validation(ref cause) => cause,DescribeInstancePatchesError::Credentials(ref err) => err.description(),DescribeInstancePatchesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstancePatchesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6580,10 +6580,10 @@ InternalServerError(String),
 InvalidFilter(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),
-///<p>The parameter type name is not valid.</p>
-InvalidTypeName(String),
 ///<p>The specified inventory item result attribute is not valid.</p>
-InvalidResultAttribute(String),/// An error occurred dispatching the HTTP request
+InvalidResultAttribute(String),
+///<p>The parameter type name is not valid.</p>
+InvalidTypeName(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6602,7 +6602,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => GetInventoryError::InternalServerError(String::from(error_message)),"InvalidFilter" => GetInventoryError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => GetInventoryError::InvalidNextToken(String::from(error_message)),"InvalidTypeNameException" => GetInventoryError::InvalidTypeName(String::from(error_message)),"InvalidResultAttributeException" => GetInventoryError::InvalidResultAttribute(String::from(error_message)),"ValidationException" => GetInventoryError::Validation(error_message.to_string()),_ => GetInventoryError::Unknown(String::from(body))
+                                    "InternalServerError" => GetInventoryError::InternalServerError(String::from(error_message)),"InvalidFilter" => GetInventoryError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => GetInventoryError::InvalidNextToken(String::from(error_message)),"InvalidResultAttributeException" => GetInventoryError::InvalidResultAttribute(String::from(error_message)),"InvalidTypeNameException" => GetInventoryError::InvalidTypeName(String::from(error_message)),"ValidationException" => GetInventoryError::Validation(error_message.to_string()),_ => GetInventoryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetInventoryError::Unknown(String::from(body))
@@ -6633,7 +6633,7 @@ Unknown(String)
                 impl Error for GetInventoryError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetInventoryError::InternalServerError(ref cause) => cause,GetInventoryError::InvalidFilter(ref cause) => cause,GetInventoryError::InvalidNextToken(ref cause) => cause,GetInventoryError::InvalidTypeName(ref cause) => cause,GetInventoryError::InvalidResultAttribute(ref cause) => cause,GetInventoryError::Validation(ref cause) => cause,GetInventoryError::Credentials(ref err) => err.description(),GetInventoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetInventoryError::Unknown(ref cause) => cause
+                            GetInventoryError::InternalServerError(ref cause) => cause,GetInventoryError::InvalidFilter(ref cause) => cause,GetInventoryError::InvalidNextToken(ref cause) => cause,GetInventoryError::InvalidResultAttribute(ref cause) => cause,GetInventoryError::InvalidTypeName(ref cause) => cause,GetInventoryError::Validation(ref cause) => cause,GetInventoryError::Credentials(ref err) => err.description(),GetInventoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetInventoryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6643,10 +6643,10 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The parameter type name is not valid.</p>
-InvalidTypeName(String),
 ///<p>The specified token is not valid.</p>
-InvalidNextToken(String),/// An error occurred dispatching the HTTP request
+InvalidNextToken(String),
+///<p>The parameter type name is not valid.</p>
+InvalidTypeName(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6665,7 +6665,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => GetInventorySchemaError::InternalServerError(String::from(error_message)),"InvalidTypeNameException" => GetInventorySchemaError::InvalidTypeName(String::from(error_message)),"InvalidNextToken" => GetInventorySchemaError::InvalidNextToken(String::from(error_message)),"ValidationException" => GetInventorySchemaError::Validation(error_message.to_string()),_ => GetInventorySchemaError::Unknown(String::from(body))
+                                    "InternalServerError" => GetInventorySchemaError::InternalServerError(String::from(error_message)),"InvalidNextToken" => GetInventorySchemaError::InvalidNextToken(String::from(error_message)),"InvalidTypeNameException" => GetInventorySchemaError::InvalidTypeName(String::from(error_message)),"ValidationException" => GetInventorySchemaError::Validation(error_message.to_string()),_ => GetInventorySchemaError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetInventorySchemaError::Unknown(String::from(body))
@@ -6696,7 +6696,7 @@ Unknown(String)
                 impl Error for GetInventorySchemaError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetInventorySchemaError::InternalServerError(ref cause) => cause,GetInventorySchemaError::InvalidTypeName(ref cause) => cause,GetInventorySchemaError::InvalidNextToken(ref cause) => cause,GetInventorySchemaError::Validation(ref cause) => cause,GetInventorySchemaError::Credentials(ref err) => err.description(),GetInventorySchemaError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetInventorySchemaError::Unknown(ref cause) => cause
+                            GetInventorySchemaError::InternalServerError(ref cause) => cause,GetInventorySchemaError::InvalidNextToken(ref cause) => cause,GetInventorySchemaError::InvalidTypeName(ref cause) => cause,GetInventorySchemaError::Validation(ref cause) => cause,GetInventorySchemaError::Credentials(ref err) => err.description(),GetInventorySchemaError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetInventorySchemaError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6889,10 +6889,10 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The parameter could not be found. Verify the name and try again.</p>
-ParameterNotFound(String),
 ///<p>The specified token is not valid.</p>
-InvalidNextToken(String),/// An error occurred dispatching the HTTP request
+InvalidNextToken(String),
+///<p>The parameter could not be found. Verify the name and try again.</p>
+ParameterNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6911,7 +6911,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => GetParameterHistoryError::InternalServerError(String::from(error_message)),"ParameterNotFound" => GetParameterHistoryError::ParameterNotFound(String::from(error_message)),"InvalidNextToken" => GetParameterHistoryError::InvalidNextToken(String::from(error_message)),"ValidationException" => GetParameterHistoryError::Validation(error_message.to_string()),_ => GetParameterHistoryError::Unknown(String::from(body))
+                                    "InternalServerError" => GetParameterHistoryError::InternalServerError(String::from(error_message)),"InvalidNextToken" => GetParameterHistoryError::InvalidNextToken(String::from(error_message)),"ParameterNotFound" => GetParameterHistoryError::ParameterNotFound(String::from(error_message)),"ValidationException" => GetParameterHistoryError::Validation(error_message.to_string()),_ => GetParameterHistoryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetParameterHistoryError::Unknown(String::from(body))
@@ -6942,7 +6942,7 @@ Unknown(String)
                 impl Error for GetParameterHistoryError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetParameterHistoryError::InternalServerError(ref cause) => cause,GetParameterHistoryError::ParameterNotFound(ref cause) => cause,GetParameterHistoryError::InvalidNextToken(ref cause) => cause,GetParameterHistoryError::Validation(ref cause) => cause,GetParameterHistoryError::Credentials(ref err) => err.description(),GetParameterHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetParameterHistoryError::Unknown(ref cause) => cause
+                            GetParameterHistoryError::InternalServerError(ref cause) => cause,GetParameterHistoryError::InvalidNextToken(ref cause) => cause,GetParameterHistoryError::ParameterNotFound(ref cause) => cause,GetParameterHistoryError::Validation(ref cause) => cause,GetParameterHistoryError::Credentials(ref err) => err.description(),GetParameterHistoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetParameterHistoryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7011,10 +7011,10 @@ Unknown(String)
                     
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
-///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
-InvalidResourceId(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
+InvalidResourceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7033,7 +7033,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DoesNotExistException" => GetPatchBaselineError::DoesNotExist(String::from(error_message)),"InvalidResourceId" => GetPatchBaselineError::InvalidResourceId(String::from(error_message)),"InternalServerError" => GetPatchBaselineError::InternalServerError(String::from(error_message)),"ValidationException" => GetPatchBaselineError::Validation(error_message.to_string()),_ => GetPatchBaselineError::Unknown(String::from(body))
+                                    "DoesNotExistException" => GetPatchBaselineError::DoesNotExist(String::from(error_message)),"InternalServerError" => GetPatchBaselineError::InternalServerError(String::from(error_message)),"InvalidResourceId" => GetPatchBaselineError::InvalidResourceId(String::from(error_message)),"ValidationException" => GetPatchBaselineError::Validation(error_message.to_string()),_ => GetPatchBaselineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => GetPatchBaselineError::Unknown(String::from(body))
@@ -7064,7 +7064,7 @@ Unknown(String)
                 impl Error for GetPatchBaselineError {
                     fn description(&self) -> &str {
                         match *self {
-                            GetPatchBaselineError::DoesNotExist(ref cause) => cause,GetPatchBaselineError::InvalidResourceId(ref cause) => cause,GetPatchBaselineError::InternalServerError(ref cause) => cause,GetPatchBaselineError::Validation(ref cause) => cause,GetPatchBaselineError::Credentials(ref err) => err.description(),GetPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPatchBaselineError::Unknown(ref cause) => cause
+                            GetPatchBaselineError::DoesNotExist(ref cause) => cause,GetPatchBaselineError::InternalServerError(ref cause) => cause,GetPatchBaselineError::InvalidResourceId(ref cause) => cause,GetPatchBaselineError::Validation(ref cause) => cause,GetPatchBaselineError::Credentials(ref err) => err.description(),GetPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetPatchBaselineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7196,10 +7196,10 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>The specified key is not valid.</p>
 InvalidFilterKey(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -7220,7 +7220,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ListCommandInvocationsError::InternalServerError(String::from(error_message)),"InvalidCommandId" => ListCommandInvocationsError::InvalidCommandId(String::from(error_message)),"InvalidInstanceId" => ListCommandInvocationsError::InvalidInstanceId(String::from(error_message)),"InvalidFilterKey" => ListCommandInvocationsError::InvalidFilterKey(String::from(error_message)),"InvalidNextToken" => ListCommandInvocationsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListCommandInvocationsError::Validation(error_message.to_string()),_ => ListCommandInvocationsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListCommandInvocationsError::InternalServerError(String::from(error_message)),"InvalidCommandId" => ListCommandInvocationsError::InvalidCommandId(String::from(error_message)),"InvalidFilterKey" => ListCommandInvocationsError::InvalidFilterKey(String::from(error_message)),"InvalidInstanceId" => ListCommandInvocationsError::InvalidInstanceId(String::from(error_message)),"InvalidNextToken" => ListCommandInvocationsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListCommandInvocationsError::Validation(error_message.to_string()),_ => ListCommandInvocationsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListCommandInvocationsError::Unknown(String::from(body))
@@ -7251,7 +7251,7 @@ Unknown(String)
                 impl Error for ListCommandInvocationsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListCommandInvocationsError::InternalServerError(ref cause) => cause,ListCommandInvocationsError::InvalidCommandId(ref cause) => cause,ListCommandInvocationsError::InvalidInstanceId(ref cause) => cause,ListCommandInvocationsError::InvalidFilterKey(ref cause) => cause,ListCommandInvocationsError::InvalidNextToken(ref cause) => cause,ListCommandInvocationsError::Validation(ref cause) => cause,ListCommandInvocationsError::Credentials(ref err) => err.description(),ListCommandInvocationsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCommandInvocationsError::Unknown(ref cause) => cause
+                            ListCommandInvocationsError::InternalServerError(ref cause) => cause,ListCommandInvocationsError::InvalidCommandId(ref cause) => cause,ListCommandInvocationsError::InvalidFilterKey(ref cause) => cause,ListCommandInvocationsError::InvalidInstanceId(ref cause) => cause,ListCommandInvocationsError::InvalidNextToken(ref cause) => cause,ListCommandInvocationsError::Validation(ref cause) => cause,ListCommandInvocationsError::Credentials(ref err) => err.description(),ListCommandInvocationsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCommandInvocationsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7263,10 +7263,10 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>The specified key is not valid.</p>
 InvalidFilterKey(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -7287,7 +7287,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ListCommandsError::InternalServerError(String::from(error_message)),"InvalidCommandId" => ListCommandsError::InvalidCommandId(String::from(error_message)),"InvalidInstanceId" => ListCommandsError::InvalidInstanceId(String::from(error_message)),"InvalidFilterKey" => ListCommandsError::InvalidFilterKey(String::from(error_message)),"InvalidNextToken" => ListCommandsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListCommandsError::Validation(error_message.to_string()),_ => ListCommandsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListCommandsError::InternalServerError(String::from(error_message)),"InvalidCommandId" => ListCommandsError::InvalidCommandId(String::from(error_message)),"InvalidFilterKey" => ListCommandsError::InvalidFilterKey(String::from(error_message)),"InvalidInstanceId" => ListCommandsError::InvalidInstanceId(String::from(error_message)),"InvalidNextToken" => ListCommandsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListCommandsError::Validation(error_message.to_string()),_ => ListCommandsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListCommandsError::Unknown(String::from(body))
@@ -7318,7 +7318,7 @@ Unknown(String)
                 impl Error for ListCommandsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListCommandsError::InternalServerError(ref cause) => cause,ListCommandsError::InvalidCommandId(ref cause) => cause,ListCommandsError::InvalidInstanceId(ref cause) => cause,ListCommandsError::InvalidFilterKey(ref cause) => cause,ListCommandsError::InvalidNextToken(ref cause) => cause,ListCommandsError::Validation(ref cause) => cause,ListCommandsError::Credentials(ref err) => err.description(),ListCommandsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCommandsError::Unknown(ref cause) => cause
+                            ListCommandsError::InternalServerError(ref cause) => cause,ListCommandsError::InvalidCommandId(ref cause) => cause,ListCommandsError::InvalidFilterKey(ref cause) => cause,ListCommandsError::InvalidInstanceId(ref cause) => cause,ListCommandsError::InvalidNextToken(ref cause) => cause,ListCommandsError::Validation(ref cause) => cause,ListCommandsError::Credentials(ref err) => err.description(),ListCommandsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListCommandsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7328,10 +7328,10 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The specified token is not valid.</p>
-InvalidNextToken(String),
 ///<p>The specified document does not exist.</p>
-InvalidDocument(String),/// An error occurred dispatching the HTTP request
+InvalidDocument(String),
+///<p>The specified token is not valid.</p>
+InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7350,7 +7350,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ListDocumentVersionsError::InternalServerError(String::from(error_message)),"InvalidNextToken" => ListDocumentVersionsError::InvalidNextToken(String::from(error_message)),"InvalidDocument" => ListDocumentVersionsError::InvalidDocument(String::from(error_message)),"ValidationException" => ListDocumentVersionsError::Validation(error_message.to_string()),_ => ListDocumentVersionsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListDocumentVersionsError::InternalServerError(String::from(error_message)),"InvalidDocument" => ListDocumentVersionsError::InvalidDocument(String::from(error_message)),"InvalidNextToken" => ListDocumentVersionsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListDocumentVersionsError::Validation(error_message.to_string()),_ => ListDocumentVersionsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListDocumentVersionsError::Unknown(String::from(body))
@@ -7381,7 +7381,7 @@ Unknown(String)
                 impl Error for ListDocumentVersionsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListDocumentVersionsError::InternalServerError(ref cause) => cause,ListDocumentVersionsError::InvalidNextToken(ref cause) => cause,ListDocumentVersionsError::InvalidDocument(ref cause) => cause,ListDocumentVersionsError::Validation(ref cause) => cause,ListDocumentVersionsError::Credentials(ref err) => err.description(),ListDocumentVersionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDocumentVersionsError::Unknown(ref cause) => cause
+                            ListDocumentVersionsError::InternalServerError(ref cause) => cause,ListDocumentVersionsError::InvalidDocument(ref cause) => cause,ListDocumentVersionsError::InvalidNextToken(ref cause) => cause,ListDocumentVersionsError::Validation(ref cause) => cause,ListDocumentVersionsError::Credentials(ref err) => err.description(),ListDocumentVersionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDocumentVersionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7391,10 +7391,10 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The specified token is not valid.</p>
-InvalidNextToken(String),
 ///<p>The specified key is not valid.</p>
-InvalidFilterKey(String),/// An error occurred dispatching the HTTP request
+InvalidFilterKey(String),
+///<p>The specified token is not valid.</p>
+InvalidNextToken(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7413,7 +7413,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ListDocumentsError::InternalServerError(String::from(error_message)),"InvalidNextToken" => ListDocumentsError::InvalidNextToken(String::from(error_message)),"InvalidFilterKey" => ListDocumentsError::InvalidFilterKey(String::from(error_message)),"ValidationException" => ListDocumentsError::Validation(error_message.to_string()),_ => ListDocumentsError::Unknown(String::from(body))
+                                    "InternalServerError" => ListDocumentsError::InternalServerError(String::from(error_message)),"InvalidFilterKey" => ListDocumentsError::InvalidFilterKey(String::from(error_message)),"InvalidNextToken" => ListDocumentsError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListDocumentsError::Validation(error_message.to_string()),_ => ListDocumentsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListDocumentsError::Unknown(String::from(body))
@@ -7444,7 +7444,7 @@ Unknown(String)
                 impl Error for ListDocumentsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListDocumentsError::InternalServerError(ref cause) => cause,ListDocumentsError::InvalidNextToken(ref cause) => cause,ListDocumentsError::InvalidFilterKey(ref cause) => cause,ListDocumentsError::Validation(ref cause) => cause,ListDocumentsError::Credentials(ref err) => err.description(),ListDocumentsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDocumentsError::Unknown(ref cause) => cause
+                            ListDocumentsError::InternalServerError(ref cause) => cause,ListDocumentsError::InvalidFilterKey(ref cause) => cause,ListDocumentsError::InvalidNextToken(ref cause) => cause,ListDocumentsError::Validation(ref cause) => cause,ListDocumentsError::Credentials(ref err) => err.description(),ListDocumentsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDocumentsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7454,14 +7454,14 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
-///<p>The parameter type name is not valid.</p>
-InvalidTypeName(String),
 ///<p>The filter name is not valid. Verify the you entered the correct name and try again.</p>
 InvalidFilter(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
-InvalidNextToken(String),/// An error occurred dispatching the HTTP request
+InvalidNextToken(String),
+///<p>The parameter type name is not valid.</p>
+InvalidTypeName(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7480,7 +7480,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ListInventoryEntriesError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => ListInventoryEntriesError::InvalidInstanceId(String::from(error_message)),"InvalidTypeNameException" => ListInventoryEntriesError::InvalidTypeName(String::from(error_message)),"InvalidFilter" => ListInventoryEntriesError::InvalidFilter(String::from(error_message)),"InvalidNextToken" => ListInventoryEntriesError::InvalidNextToken(String::from(error_message)),"ValidationException" => ListInventoryEntriesError::Validation(error_message.to_string()),_ => ListInventoryEntriesError::Unknown(String::from(body))
+                                    "InternalServerError" => ListInventoryEntriesError::InternalServerError(String::from(error_message)),"InvalidFilter" => ListInventoryEntriesError::InvalidFilter(String::from(error_message)),"InvalidInstanceId" => ListInventoryEntriesError::InvalidInstanceId(String::from(error_message)),"InvalidNextToken" => ListInventoryEntriesError::InvalidNextToken(String::from(error_message)),"InvalidTypeNameException" => ListInventoryEntriesError::InvalidTypeName(String::from(error_message)),"ValidationException" => ListInventoryEntriesError::Validation(error_message.to_string()),_ => ListInventoryEntriesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListInventoryEntriesError::Unknown(String::from(body))
@@ -7511,7 +7511,7 @@ Unknown(String)
                 impl Error for ListInventoryEntriesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListInventoryEntriesError::InternalServerError(ref cause) => cause,ListInventoryEntriesError::InvalidInstanceId(ref cause) => cause,ListInventoryEntriesError::InvalidTypeName(ref cause) => cause,ListInventoryEntriesError::InvalidFilter(ref cause) => cause,ListInventoryEntriesError::InvalidNextToken(ref cause) => cause,ListInventoryEntriesError::Validation(ref cause) => cause,ListInventoryEntriesError::Credentials(ref err) => err.description(),ListInventoryEntriesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListInventoryEntriesError::Unknown(ref cause) => cause
+                            ListInventoryEntriesError::InternalServerError(ref cause) => cause,ListInventoryEntriesError::InvalidFilter(ref cause) => cause,ListInventoryEntriesError::InvalidInstanceId(ref cause) => cause,ListInventoryEntriesError::InvalidNextToken(ref cause) => cause,ListInventoryEntriesError::InvalidTypeName(ref cause) => cause,ListInventoryEntriesError::Validation(ref cause) => cause,ListInventoryEntriesError::Credentials(ref err) => err.description(),ListInventoryEntriesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListInventoryEntriesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7519,12 +7519,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ListTagsForResourceError {
                     
-///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
-InvalidResourceType(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
 InvalidResourceId(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
+InvalidResourceType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7543,7 +7543,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceType" => ListTagsForResourceError::InvalidResourceType(String::from(error_message)),"InvalidResourceId" => ListTagsForResourceError::InvalidResourceId(String::from(error_message)),"InternalServerError" => ListTagsForResourceError::InternalServerError(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => ListTagsForResourceError::InternalServerError(String::from(error_message)),"InvalidResourceId" => ListTagsForResourceError::InvalidResourceId(String::from(error_message)),"InvalidResourceType" => ListTagsForResourceError::InvalidResourceType(String::from(error_message)),"ValidationException" => ListTagsForResourceError::Validation(error_message.to_string()),_ => ListTagsForResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListTagsForResourceError::Unknown(String::from(body))
@@ -7574,7 +7574,7 @@ Unknown(String)
                 impl Error for ListTagsForResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListTagsForResourceError::InvalidResourceType(ref cause) => cause,ListTagsForResourceError::InvalidResourceId(ref cause) => cause,ListTagsForResourceError::InternalServerError(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
+                            ListTagsForResourceError::InternalServerError(ref cause) => cause,ListTagsForResourceError::InvalidResourceId(ref cause) => cause,ListTagsForResourceError::InvalidResourceType(ref cause) => cause,ListTagsForResourceError::Validation(ref cause) => cause,ListTagsForResourceError::Credentials(ref err) => err.description(),ListTagsForResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7582,16 +7582,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyDocumentPermissionError {
                     
+///<p>You can have at most 200 active SSM documents.</p>
+DocumentLimitExceeded(String),
+///<p>The document cannot be shared with more AWS user accounts. You can share a document with a maximum of 20 accounts. You can publicly share up to five documents. If you need to increase this limit, contact AWS Support.</p>
+DocumentPermissionLimit(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
 ///<p>The permission type is not supported. <i>Share</i> is the only supported permission type.</p>
-InvalidPermissionType(String),
-///<p>The document cannot be shared with more AWS user accounts. You can share a document with a maximum of 20 accounts. You can publicly share up to five documents. If you need to increase this limit, contact AWS Support.</p>
-DocumentPermissionLimit(String),
-///<p>You can have at most 200 active SSM documents.</p>
-DocumentLimitExceeded(String),/// An error occurred dispatching the HTTP request
+InvalidPermissionType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7610,7 +7610,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => ModifyDocumentPermissionError::InternalServerError(String::from(error_message)),"InvalidDocument" => ModifyDocumentPermissionError::InvalidDocument(String::from(error_message)),"InvalidPermissionType" => ModifyDocumentPermissionError::InvalidPermissionType(String::from(error_message)),"DocumentPermissionLimit" => ModifyDocumentPermissionError::DocumentPermissionLimit(String::from(error_message)),"DocumentLimitExceeded" => ModifyDocumentPermissionError::DocumentLimitExceeded(String::from(error_message)),"ValidationException" => ModifyDocumentPermissionError::Validation(error_message.to_string()),_ => ModifyDocumentPermissionError::Unknown(String::from(body))
+                                    "DocumentLimitExceeded" => ModifyDocumentPermissionError::DocumentLimitExceeded(String::from(error_message)),"DocumentPermissionLimit" => ModifyDocumentPermissionError::DocumentPermissionLimit(String::from(error_message)),"InternalServerError" => ModifyDocumentPermissionError::InternalServerError(String::from(error_message)),"InvalidDocument" => ModifyDocumentPermissionError::InvalidDocument(String::from(error_message)),"InvalidPermissionType" => ModifyDocumentPermissionError::InvalidPermissionType(String::from(error_message)),"ValidationException" => ModifyDocumentPermissionError::Validation(error_message.to_string()),_ => ModifyDocumentPermissionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ModifyDocumentPermissionError::Unknown(String::from(body))
@@ -7641,7 +7641,7 @@ Unknown(String)
                 impl Error for ModifyDocumentPermissionError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyDocumentPermissionError::InternalServerError(ref cause) => cause,ModifyDocumentPermissionError::InvalidDocument(ref cause) => cause,ModifyDocumentPermissionError::InvalidPermissionType(ref cause) => cause,ModifyDocumentPermissionError::DocumentPermissionLimit(ref cause) => cause,ModifyDocumentPermissionError::DocumentLimitExceeded(ref cause) => cause,ModifyDocumentPermissionError::Validation(ref cause) => cause,ModifyDocumentPermissionError::Credentials(ref err) => err.description(),ModifyDocumentPermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyDocumentPermissionError::Unknown(ref cause) => cause
+                            ModifyDocumentPermissionError::DocumentLimitExceeded(ref cause) => cause,ModifyDocumentPermissionError::DocumentPermissionLimit(ref cause) => cause,ModifyDocumentPermissionError::InternalServerError(ref cause) => cause,ModifyDocumentPermissionError::InvalidDocument(ref cause) => cause,ModifyDocumentPermissionError::InvalidPermissionType(ref cause) => cause,ModifyDocumentPermissionError::Validation(ref cause) => cause,ModifyDocumentPermissionError::Credentials(ref err) => err.description(),ModifyDocumentPermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyDocumentPermissionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7649,22 +7649,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum PutInventoryError {
                     
+///<p>You have exceeded the limit for custom schemas. Delete one or more custom schemas and try again.</p>
+CustomSchemaCountLimitExceeded(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
 ///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
-///<p>The parameter type name is not valid.</p>
-InvalidTypeName(String),
 ///<p>One or more content items is not valid.</p>
 InvalidItemContent(String),
-///<p>The size of inventory data has exceeded the total size limit for the resource.</p>
-TotalSizeLimitExceeded(String),
-///<p>The inventory item size has exceeded the size limit.</p>
-ItemSizeLimitExceeded(String),
+///<p>The parameter type name is not valid.</p>
+InvalidTypeName(String),
 ///<p>The inventory item has invalid content. </p>
 ItemContentMismatch(String),
-///<p>You have exceeded the limit for custom schemas. Delete one or more custom schemas and try again.</p>
-CustomSchemaCountLimitExceeded(String),
+///<p>The inventory item size has exceeded the size limit.</p>
+ItemSizeLimitExceeded(String),
+///<p>The size of inventory data has exceeded the total size limit for the resource.</p>
+TotalSizeLimitExceeded(String),
 ///<p>Inventory item type schema version has to match supported versions in the service. Check output of <code>GetInventorySchema</code> to see the available schema version for each type.</p>
 UnsupportedInventorySchemaVersion(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -7685,7 +7685,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => PutInventoryError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => PutInventoryError::InvalidInstanceId(String::from(error_message)),"InvalidTypeNameException" => PutInventoryError::InvalidTypeName(String::from(error_message)),"InvalidItemContentException" => PutInventoryError::InvalidItemContent(String::from(error_message)),"TotalSizeLimitExceededException" => PutInventoryError::TotalSizeLimitExceeded(String::from(error_message)),"ItemSizeLimitExceededException" => PutInventoryError::ItemSizeLimitExceeded(String::from(error_message)),"ItemContentMismatchException" => PutInventoryError::ItemContentMismatch(String::from(error_message)),"CustomSchemaCountLimitExceededException" => PutInventoryError::CustomSchemaCountLimitExceeded(String::from(error_message)),"UnsupportedInventorySchemaVersionException" => PutInventoryError::UnsupportedInventorySchemaVersion(String::from(error_message)),"ValidationException" => PutInventoryError::Validation(error_message.to_string()),_ => PutInventoryError::Unknown(String::from(body))
+                                    "CustomSchemaCountLimitExceededException" => PutInventoryError::CustomSchemaCountLimitExceeded(String::from(error_message)),"InternalServerError" => PutInventoryError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => PutInventoryError::InvalidInstanceId(String::from(error_message)),"InvalidItemContentException" => PutInventoryError::InvalidItemContent(String::from(error_message)),"InvalidTypeNameException" => PutInventoryError::InvalidTypeName(String::from(error_message)),"ItemContentMismatchException" => PutInventoryError::ItemContentMismatch(String::from(error_message)),"ItemSizeLimitExceededException" => PutInventoryError::ItemSizeLimitExceeded(String::from(error_message)),"TotalSizeLimitExceededException" => PutInventoryError::TotalSizeLimitExceeded(String::from(error_message)),"UnsupportedInventorySchemaVersionException" => PutInventoryError::UnsupportedInventorySchemaVersion(String::from(error_message)),"ValidationException" => PutInventoryError::Validation(error_message.to_string()),_ => PutInventoryError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutInventoryError::Unknown(String::from(body))
@@ -7716,7 +7716,7 @@ Unknown(String)
                 impl Error for PutInventoryError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutInventoryError::InternalServerError(ref cause) => cause,PutInventoryError::InvalidInstanceId(ref cause) => cause,PutInventoryError::InvalidTypeName(ref cause) => cause,PutInventoryError::InvalidItemContent(ref cause) => cause,PutInventoryError::TotalSizeLimitExceeded(ref cause) => cause,PutInventoryError::ItemSizeLimitExceeded(ref cause) => cause,PutInventoryError::ItemContentMismatch(ref cause) => cause,PutInventoryError::CustomSchemaCountLimitExceeded(ref cause) => cause,PutInventoryError::UnsupportedInventorySchemaVersion(ref cause) => cause,PutInventoryError::Validation(ref cause) => cause,PutInventoryError::Credentials(ref err) => err.description(),PutInventoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutInventoryError::Unknown(ref cause) => cause
+                            PutInventoryError::CustomSchemaCountLimitExceeded(ref cause) => cause,PutInventoryError::InternalServerError(ref cause) => cause,PutInventoryError::InvalidInstanceId(ref cause) => cause,PutInventoryError::InvalidItemContent(ref cause) => cause,PutInventoryError::InvalidTypeName(ref cause) => cause,PutInventoryError::ItemContentMismatch(ref cause) => cause,PutInventoryError::ItemSizeLimitExceeded(ref cause) => cause,PutInventoryError::TotalSizeLimitExceeded(ref cause) => cause,PutInventoryError::UnsupportedInventorySchemaVersion(ref cause) => cause,PutInventoryError::Validation(ref cause) => cause,PutInventoryError::Credentials(ref err) => err.description(),PutInventoryError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutInventoryError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7728,12 +7728,12 @@ Unknown(String)
 InternalServerError(String),
 ///<p>The query key ID is not valid.</p>
 InvalidKeyId(String),
+///<p>The parameter already exists. You can't create duplicate parameters.</p>
+ParameterAlreadyExists(String),
 ///<p>You have exceeded the number of parameters for this AWS account. Delete one or more parameters and try again.</p>
 ParameterLimitExceeded(String),
 ///<p>There are concurrent updates for a resource that supports one update at a time.</p>
 TooManyUpdates(String),
-///<p>The parameter already exists. You can't create duplicate parameters.</p>
-ParameterAlreadyExists(String),
 ///<p>The parameter type is not supported.</p>
 UnsupportedParameterType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -7754,7 +7754,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => PutParameterError::InternalServerError(String::from(error_message)),"InvalidKeyId" => PutParameterError::InvalidKeyId(String::from(error_message)),"ParameterLimitExceeded" => PutParameterError::ParameterLimitExceeded(String::from(error_message)),"TooManyUpdates" => PutParameterError::TooManyUpdates(String::from(error_message)),"ParameterAlreadyExists" => PutParameterError::ParameterAlreadyExists(String::from(error_message)),"UnsupportedParameterType" => PutParameterError::UnsupportedParameterType(String::from(error_message)),"ValidationException" => PutParameterError::Validation(error_message.to_string()),_ => PutParameterError::Unknown(String::from(body))
+                                    "InternalServerError" => PutParameterError::InternalServerError(String::from(error_message)),"InvalidKeyId" => PutParameterError::InvalidKeyId(String::from(error_message)),"ParameterAlreadyExists" => PutParameterError::ParameterAlreadyExists(String::from(error_message)),"ParameterLimitExceeded" => PutParameterError::ParameterLimitExceeded(String::from(error_message)),"TooManyUpdates" => PutParameterError::TooManyUpdates(String::from(error_message)),"UnsupportedParameterType" => PutParameterError::UnsupportedParameterType(String::from(error_message)),"ValidationException" => PutParameterError::Validation(error_message.to_string()),_ => PutParameterError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => PutParameterError::Unknown(String::from(body))
@@ -7785,7 +7785,7 @@ Unknown(String)
                 impl Error for PutParameterError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutParameterError::InternalServerError(ref cause) => cause,PutParameterError::InvalidKeyId(ref cause) => cause,PutParameterError::ParameterLimitExceeded(ref cause) => cause,PutParameterError::TooManyUpdates(ref cause) => cause,PutParameterError::ParameterAlreadyExists(ref cause) => cause,PutParameterError::UnsupportedParameterType(ref cause) => cause,PutParameterError::Validation(ref cause) => cause,PutParameterError::Credentials(ref err) => err.description(),PutParameterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutParameterError::Unknown(ref cause) => cause
+                            PutParameterError::InternalServerError(ref cause) => cause,PutParameterError::InvalidKeyId(ref cause) => cause,PutParameterError::ParameterAlreadyExists(ref cause) => cause,PutParameterError::ParameterLimitExceeded(ref cause) => cause,PutParameterError::TooManyUpdates(ref cause) => cause,PutParameterError::UnsupportedParameterType(ref cause) => cause,PutParameterError::Validation(ref cause) => cause,PutParameterError::Credentials(ref err) => err.description(),PutParameterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutParameterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7793,12 +7793,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterDefaultPatchBaselineError {
                     
-///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
-InvalidResourceId(String),
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
+InvalidResourceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7817,7 +7817,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceId" => RegisterDefaultPatchBaselineError::InvalidResourceId(String::from(error_message)),"DoesNotExistException" => RegisterDefaultPatchBaselineError::DoesNotExist(String::from(error_message)),"InternalServerError" => RegisterDefaultPatchBaselineError::InternalServerError(String::from(error_message)),"ValidationException" => RegisterDefaultPatchBaselineError::Validation(error_message.to_string()),_ => RegisterDefaultPatchBaselineError::Unknown(String::from(body))
+                                    "DoesNotExistException" => RegisterDefaultPatchBaselineError::DoesNotExist(String::from(error_message)),"InternalServerError" => RegisterDefaultPatchBaselineError::InternalServerError(String::from(error_message)),"InvalidResourceId" => RegisterDefaultPatchBaselineError::InvalidResourceId(String::from(error_message)),"ValidationException" => RegisterDefaultPatchBaselineError::Validation(error_message.to_string()),_ => RegisterDefaultPatchBaselineError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterDefaultPatchBaselineError::Unknown(String::from(body))
@@ -7848,7 +7848,7 @@ Unknown(String)
                 impl Error for RegisterDefaultPatchBaselineError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterDefaultPatchBaselineError::InvalidResourceId(ref cause) => cause,RegisterDefaultPatchBaselineError::DoesNotExist(ref cause) => cause,RegisterDefaultPatchBaselineError::InternalServerError(ref cause) => cause,RegisterDefaultPatchBaselineError::Validation(ref cause) => cause,RegisterDefaultPatchBaselineError::Credentials(ref err) => err.description(),RegisterDefaultPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterDefaultPatchBaselineError::Unknown(ref cause) => cause
+                            RegisterDefaultPatchBaselineError::DoesNotExist(ref cause) => cause,RegisterDefaultPatchBaselineError::InternalServerError(ref cause) => cause,RegisterDefaultPatchBaselineError::InvalidResourceId(ref cause) => cause,RegisterDefaultPatchBaselineError::Validation(ref cause) => cause,RegisterDefaultPatchBaselineError::Credentials(ref err) => err.description(),RegisterDefaultPatchBaselineError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterDefaultPatchBaselineError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7860,12 +7860,12 @@ Unknown(String)
 AlreadyExists(String),
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
 InvalidResourceId(String),
 ///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
-ResourceLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7884,7 +7884,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "AlreadyExistsException" => RegisterPatchBaselineForPatchGroupError::AlreadyExists(String::from(error_message)),"DoesNotExistException" => RegisterPatchBaselineForPatchGroupError::DoesNotExist(String::from(error_message)),"InvalidResourceId" => RegisterPatchBaselineForPatchGroupError::InvalidResourceId(String::from(error_message)),"ResourceLimitExceededException" => RegisterPatchBaselineForPatchGroupError::ResourceLimitExceeded(String::from(error_message)),"InternalServerError" => RegisterPatchBaselineForPatchGroupError::InternalServerError(String::from(error_message)),"ValidationException" => RegisterPatchBaselineForPatchGroupError::Validation(error_message.to_string()),_ => RegisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
+                                    "AlreadyExistsException" => RegisterPatchBaselineForPatchGroupError::AlreadyExists(String::from(error_message)),"DoesNotExistException" => RegisterPatchBaselineForPatchGroupError::DoesNotExist(String::from(error_message)),"InternalServerError" => RegisterPatchBaselineForPatchGroupError::InternalServerError(String::from(error_message)),"InvalidResourceId" => RegisterPatchBaselineForPatchGroupError::InvalidResourceId(String::from(error_message)),"ResourceLimitExceededException" => RegisterPatchBaselineForPatchGroupError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => RegisterPatchBaselineForPatchGroupError::Validation(error_message.to_string()),_ => RegisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterPatchBaselineForPatchGroupError::Unknown(String::from(body))
@@ -7915,7 +7915,7 @@ Unknown(String)
                 impl Error for RegisterPatchBaselineForPatchGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterPatchBaselineForPatchGroupError::AlreadyExists(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::DoesNotExist(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::InvalidResourceId(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::ResourceLimitExceeded(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::InternalServerError(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::Validation(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::Credentials(ref err) => err.description(),RegisterPatchBaselineForPatchGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterPatchBaselineForPatchGroupError::Unknown(ref cause) => cause
+                            RegisterPatchBaselineForPatchGroupError::AlreadyExists(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::DoesNotExist(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::InternalServerError(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::InvalidResourceId(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::ResourceLimitExceeded(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::Validation(ref cause) => cause,RegisterPatchBaselineForPatchGroupError::Credentials(ref err) => err.description(),RegisterPatchBaselineForPatchGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterPatchBaselineForPatchGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7923,14 +7923,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterTargetWithMaintenanceWindowError {
                     
-///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
-IdempotentParameterMismatch(String),
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
-///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
-ResourceLimitExceeded(String),
+///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
+IdempotentParameterMismatch(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7949,7 +7949,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "IdempotentParameterMismatch" => RegisterTargetWithMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"DoesNotExistException" => RegisterTargetWithMaintenanceWindowError::DoesNotExist(String::from(error_message)),"ResourceLimitExceededException" => RegisterTargetWithMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"InternalServerError" => RegisterTargetWithMaintenanceWindowError::InternalServerError(String::from(error_message)),"ValidationException" => RegisterTargetWithMaintenanceWindowError::Validation(error_message.to_string()),_ => RegisterTargetWithMaintenanceWindowError::Unknown(String::from(body))
+                                    "DoesNotExistException" => RegisterTargetWithMaintenanceWindowError::DoesNotExist(String::from(error_message)),"IdempotentParameterMismatch" => RegisterTargetWithMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"InternalServerError" => RegisterTargetWithMaintenanceWindowError::InternalServerError(String::from(error_message)),"ResourceLimitExceededException" => RegisterTargetWithMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => RegisterTargetWithMaintenanceWindowError::Validation(error_message.to_string()),_ => RegisterTargetWithMaintenanceWindowError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterTargetWithMaintenanceWindowError::Unknown(String::from(body))
@@ -7980,7 +7980,7 @@ Unknown(String)
                 impl Error for RegisterTargetWithMaintenanceWindowError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterTargetWithMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::DoesNotExist(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::InternalServerError(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::Validation(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::Credentials(ref err) => err.description(),RegisterTargetWithMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTargetWithMaintenanceWindowError::Unknown(ref cause) => cause
+                            RegisterTargetWithMaintenanceWindowError::DoesNotExist(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::InternalServerError(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::Validation(ref cause) => cause,RegisterTargetWithMaintenanceWindowError::Credentials(ref err) => err.description(),RegisterTargetWithMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTargetWithMaintenanceWindowError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7988,14 +7988,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterTaskWithMaintenanceWindowError {
                     
-///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
-IdempotentParameterMismatch(String),
 ///<p>Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn’t exist.</p>
 DoesNotExist(String),
-///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
-ResourceLimitExceeded(String),
+///<p>Error returned when an idempotent operation is retried and the parameters don’t match the original call to the API with the same idempotency token. </p>
+IdempotentParameterMismatch(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).</p>
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8014,7 +8014,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "IdempotentParameterMismatch" => RegisterTaskWithMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"DoesNotExistException" => RegisterTaskWithMaintenanceWindowError::DoesNotExist(String::from(error_message)),"ResourceLimitExceededException" => RegisterTaskWithMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"InternalServerError" => RegisterTaskWithMaintenanceWindowError::InternalServerError(String::from(error_message)),"ValidationException" => RegisterTaskWithMaintenanceWindowError::Validation(error_message.to_string()),_ => RegisterTaskWithMaintenanceWindowError::Unknown(String::from(body))
+                                    "DoesNotExistException" => RegisterTaskWithMaintenanceWindowError::DoesNotExist(String::from(error_message)),"IdempotentParameterMismatch" => RegisterTaskWithMaintenanceWindowError::IdempotentParameterMismatch(String::from(error_message)),"InternalServerError" => RegisterTaskWithMaintenanceWindowError::InternalServerError(String::from(error_message)),"ResourceLimitExceededException" => RegisterTaskWithMaintenanceWindowError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => RegisterTaskWithMaintenanceWindowError::Validation(error_message.to_string()),_ => RegisterTaskWithMaintenanceWindowError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RegisterTaskWithMaintenanceWindowError::Unknown(String::from(body))
@@ -8045,7 +8045,7 @@ Unknown(String)
                 impl Error for RegisterTaskWithMaintenanceWindowError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterTaskWithMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::DoesNotExist(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::InternalServerError(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::Validation(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::Credentials(ref err) => err.description(),RegisterTaskWithMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTaskWithMaintenanceWindowError::Unknown(ref cause) => cause
+                            RegisterTaskWithMaintenanceWindowError::DoesNotExist(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::IdempotentParameterMismatch(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::InternalServerError(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::ResourceLimitExceeded(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::Validation(ref cause) => cause,RegisterTaskWithMaintenanceWindowError::Credentials(ref err) => err.description(),RegisterTaskWithMaintenanceWindowError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTaskWithMaintenanceWindowError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8053,12 +8053,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RemoveTagsFromResourceError {
                     
-///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
-InvalidResourceType(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
 ///<p>The resource ID is not valid. Verify that you entered the correct ID and try again.</p>
 InvalidResourceId(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+///<p>The resource type is not valid. If you are attempting to tag an instance, the instance must be a registered, managed instance.</p>
+InvalidResourceType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8077,7 +8077,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidResourceType" => RemoveTagsFromResourceError::InvalidResourceType(String::from(error_message)),"InvalidResourceId" => RemoveTagsFromResourceError::InvalidResourceId(String::from(error_message)),"InternalServerError" => RemoveTagsFromResourceError::InternalServerError(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
+                                    "InternalServerError" => RemoveTagsFromResourceError::InternalServerError(String::from(error_message)),"InvalidResourceId" => RemoveTagsFromResourceError::InvalidResourceId(String::from(error_message)),"InvalidResourceType" => RemoveTagsFromResourceError::InvalidResourceType(String::from(error_message)),"ValidationException" => RemoveTagsFromResourceError::Validation(error_message.to_string()),_ => RemoveTagsFromResourceError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => RemoveTagsFromResourceError::Unknown(String::from(body))
@@ -8108,7 +8108,7 @@ Unknown(String)
                 impl Error for RemoveTagsFromResourceError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTagsFromResourceError::InvalidResourceType(ref cause) => cause,RemoveTagsFromResourceError::InvalidResourceId(ref cause) => cause,RemoveTagsFromResourceError::InternalServerError(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
+                            RemoveTagsFromResourceError::InternalServerError(ref cause) => cause,RemoveTagsFromResourceError::InvalidResourceId(ref cause) => cause,RemoveTagsFromResourceError::InvalidResourceType(ref cause) => cause,RemoveTagsFromResourceError::Validation(ref cause) => cause,RemoveTagsFromResourceError::Credentials(ref err) => err.description(),RemoveTagsFromResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsFromResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8120,22 +8120,22 @@ Unknown(String)
 DuplicateInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
+///<p>One or more configuration items is not valid. Verify that a valid Amazon Resource Name (ARN) was provided for an Amazon SNS topic.</p>
+InvalidNotificationConfig(String),
 ///<p>The S3 bucket does not exist.</p>
 InvalidOutputFolder(String),
 ///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
 InvalidParameters(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
-UnsupportedPlatformType(String),
-///<p>The size limit of an SSM document is 64 KB.</p>
-MaxDocumentSizeExceeded(String),
 ///<p>The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/rc-sns.html">Getting Amazon SNS Notifications When a Command Changes Status</a> in the <i>Amazon Elastic Compute Cloud User Guide </i>.</p>
 InvalidRole(String),
-///<p>One or more configuration items is not valid. Verify that a valid Amazon Resource Name (ARN) was provided for an Amazon SNS topic.</p>
-InvalidNotificationConfig(String),/// An error occurred dispatching the HTTP request
+///<p>The size limit of an SSM document is 64 KB.</p>
+MaxDocumentSizeExceeded(String),
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
+UnsupportedPlatformType(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8154,7 +8154,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DuplicateInstanceId" => SendCommandError::DuplicateInstanceId(String::from(error_message)),"InternalServerError" => SendCommandError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => SendCommandError::InvalidInstanceId(String::from(error_message)),"InvalidDocument" => SendCommandError::InvalidDocument(String::from(error_message)),"InvalidOutputFolder" => SendCommandError::InvalidOutputFolder(String::from(error_message)),"InvalidParameters" => SendCommandError::InvalidParameters(String::from(error_message)),"UnsupportedPlatformType" => SendCommandError::UnsupportedPlatformType(String::from(error_message)),"MaxDocumentSizeExceeded" => SendCommandError::MaxDocumentSizeExceeded(String::from(error_message)),"InvalidRole" => SendCommandError::InvalidRole(String::from(error_message)),"InvalidNotificationConfig" => SendCommandError::InvalidNotificationConfig(String::from(error_message)),"ValidationException" => SendCommandError::Validation(error_message.to_string()),_ => SendCommandError::Unknown(String::from(body))
+                                    "DuplicateInstanceId" => SendCommandError::DuplicateInstanceId(String::from(error_message)),"InternalServerError" => SendCommandError::InternalServerError(String::from(error_message)),"InvalidDocument" => SendCommandError::InvalidDocument(String::from(error_message)),"InvalidInstanceId" => SendCommandError::InvalidInstanceId(String::from(error_message)),"InvalidNotificationConfig" => SendCommandError::InvalidNotificationConfig(String::from(error_message)),"InvalidOutputFolder" => SendCommandError::InvalidOutputFolder(String::from(error_message)),"InvalidParameters" => SendCommandError::InvalidParameters(String::from(error_message)),"InvalidRole" => SendCommandError::InvalidRole(String::from(error_message)),"MaxDocumentSizeExceeded" => SendCommandError::MaxDocumentSizeExceeded(String::from(error_message)),"UnsupportedPlatformType" => SendCommandError::UnsupportedPlatformType(String::from(error_message)),"ValidationException" => SendCommandError::Validation(error_message.to_string()),_ => SendCommandError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => SendCommandError::Unknown(String::from(body))
@@ -8185,7 +8185,7 @@ Unknown(String)
                 impl Error for SendCommandError {
                     fn description(&self) -> &str {
                         match *self {
-                            SendCommandError::DuplicateInstanceId(ref cause) => cause,SendCommandError::InternalServerError(ref cause) => cause,SendCommandError::InvalidInstanceId(ref cause) => cause,SendCommandError::InvalidDocument(ref cause) => cause,SendCommandError::InvalidOutputFolder(ref cause) => cause,SendCommandError::InvalidParameters(ref cause) => cause,SendCommandError::UnsupportedPlatformType(ref cause) => cause,SendCommandError::MaxDocumentSizeExceeded(ref cause) => cause,SendCommandError::InvalidRole(ref cause) => cause,SendCommandError::InvalidNotificationConfig(ref cause) => cause,SendCommandError::Validation(ref cause) => cause,SendCommandError::Credentials(ref err) => err.description(),SendCommandError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendCommandError::Unknown(ref cause) => cause
+                            SendCommandError::DuplicateInstanceId(ref cause) => cause,SendCommandError::InternalServerError(ref cause) => cause,SendCommandError::InvalidDocument(ref cause) => cause,SendCommandError::InvalidInstanceId(ref cause) => cause,SendCommandError::InvalidNotificationConfig(ref cause) => cause,SendCommandError::InvalidOutputFolder(ref cause) => cause,SendCommandError::InvalidParameters(ref cause) => cause,SendCommandError::InvalidRole(ref cause) => cause,SendCommandError::MaxDocumentSizeExceeded(ref cause) => cause,SendCommandError::UnsupportedPlatformType(ref cause) => cause,SendCommandError::Validation(ref cause) => cause,SendCommandError::Credentials(ref err) => err.description(),SendCommandError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SendCommandError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8195,14 +8195,14 @@ Unknown(String)
                     
 ///<p>An Automation document with the specified name could not be found.</p>
 AutomationDefinitionNotFound(String),
-///<p>The supplied parameters for invoking the specified Automation document are incorrect. For example, they may not match the set of parameters permitted for the specified Automation document.</p>
-InvalidAutomationExecutionParameters(String),
-///<p>The number of simultaneously running Automation executions exceeded the allowable limit.</p>
-AutomationExecutionLimitExceeded(String),
 ///<p>An Automation document with the specified name and version could not be found.</p>
 AutomationDefinitionVersionNotFound(String),
+///<p>The number of simultaneously running Automation executions exceeded the allowable limit.</p>
+AutomationExecutionLimitExceeded(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The supplied parameters for invoking the specified Automation document are incorrect. For example, they may not match the set of parameters permitted for the specified Automation document.</p>
+InvalidAutomationExecutionParameters(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8221,7 +8221,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "AutomationDefinitionNotFoundException" => StartAutomationExecutionError::AutomationDefinitionNotFound(String::from(error_message)),"InvalidAutomationExecutionParametersException" => StartAutomationExecutionError::InvalidAutomationExecutionParameters(String::from(error_message)),"AutomationExecutionLimitExceededException" => StartAutomationExecutionError::AutomationExecutionLimitExceeded(String::from(error_message)),"AutomationDefinitionVersionNotFoundException" => StartAutomationExecutionError::AutomationDefinitionVersionNotFound(String::from(error_message)),"InternalServerError" => StartAutomationExecutionError::InternalServerError(String::from(error_message)),"ValidationException" => StartAutomationExecutionError::Validation(error_message.to_string()),_ => StartAutomationExecutionError::Unknown(String::from(body))
+                                    "AutomationDefinitionNotFoundException" => StartAutomationExecutionError::AutomationDefinitionNotFound(String::from(error_message)),"AutomationDefinitionVersionNotFoundException" => StartAutomationExecutionError::AutomationDefinitionVersionNotFound(String::from(error_message)),"AutomationExecutionLimitExceededException" => StartAutomationExecutionError::AutomationExecutionLimitExceeded(String::from(error_message)),"InternalServerError" => StartAutomationExecutionError::InternalServerError(String::from(error_message)),"InvalidAutomationExecutionParametersException" => StartAutomationExecutionError::InvalidAutomationExecutionParameters(String::from(error_message)),"ValidationException" => StartAutomationExecutionError::Validation(error_message.to_string()),_ => StartAutomationExecutionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => StartAutomationExecutionError::Unknown(String::from(body))
@@ -8252,7 +8252,7 @@ Unknown(String)
                 impl Error for StartAutomationExecutionError {
                     fn description(&self) -> &str {
                         match *self {
-                            StartAutomationExecutionError::AutomationDefinitionNotFound(ref cause) => cause,StartAutomationExecutionError::InvalidAutomationExecutionParameters(ref cause) => cause,StartAutomationExecutionError::AutomationExecutionLimitExceeded(ref cause) => cause,StartAutomationExecutionError::AutomationDefinitionVersionNotFound(ref cause) => cause,StartAutomationExecutionError::InternalServerError(ref cause) => cause,StartAutomationExecutionError::Validation(ref cause) => cause,StartAutomationExecutionError::Credentials(ref err) => err.description(),StartAutomationExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartAutomationExecutionError::Unknown(ref cause) => cause
+                            StartAutomationExecutionError::AutomationDefinitionNotFound(ref cause) => cause,StartAutomationExecutionError::AutomationDefinitionVersionNotFound(ref cause) => cause,StartAutomationExecutionError::AutomationExecutionLimitExceeded(ref cause) => cause,StartAutomationExecutionError::InternalServerError(ref cause) => cause,StartAutomationExecutionError::InvalidAutomationExecutionParameters(ref cause) => cause,StartAutomationExecutionError::Validation(ref cause) => cause,StartAutomationExecutionError::Credentials(ref err) => err.description(),StartAutomationExecutionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),StartAutomationExecutionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8321,18 +8321,18 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateAssociationError {
                     
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),
-///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
-InvalidSchedule(String),
-///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
-InvalidParameters(String),
-///<p>The output location is not valid or does not exist.</p>
-InvalidOutputLocation(String),
-///<p>The document version is not valid or does not exist.</p>
-InvalidDocumentVersion(String),
 ///<p>The specified association does not exist.</p>
 AssociationDoesNotExist(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>The document version is not valid or does not exist.</p>
+InvalidDocumentVersion(String),
+///<p>The output location is not valid or does not exist.</p>
+InvalidOutputLocation(String),
+///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
+InvalidParameters(String),
+///<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>
+InvalidSchedule(String),
 ///<p>The update is not valid.</p>
 InvalidUpdate(String),
 ///<p>There are concurrent updates for a resource that supports one update at a time.</p>
@@ -8355,7 +8355,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => UpdateAssociationError::InternalServerError(String::from(error_message)),"InvalidSchedule" => UpdateAssociationError::InvalidSchedule(String::from(error_message)),"InvalidParameters" => UpdateAssociationError::InvalidParameters(String::from(error_message)),"InvalidOutputLocation" => UpdateAssociationError::InvalidOutputLocation(String::from(error_message)),"InvalidDocumentVersion" => UpdateAssociationError::InvalidDocumentVersion(String::from(error_message)),"AssociationDoesNotExist" => UpdateAssociationError::AssociationDoesNotExist(String::from(error_message)),"InvalidUpdate" => UpdateAssociationError::InvalidUpdate(String::from(error_message)),"TooManyUpdates" => UpdateAssociationError::TooManyUpdates(String::from(error_message)),"ValidationException" => UpdateAssociationError::Validation(error_message.to_string()),_ => UpdateAssociationError::Unknown(String::from(body))
+                                    "AssociationDoesNotExist" => UpdateAssociationError::AssociationDoesNotExist(String::from(error_message)),"InternalServerError" => UpdateAssociationError::InternalServerError(String::from(error_message)),"InvalidDocumentVersion" => UpdateAssociationError::InvalidDocumentVersion(String::from(error_message)),"InvalidOutputLocation" => UpdateAssociationError::InvalidOutputLocation(String::from(error_message)),"InvalidParameters" => UpdateAssociationError::InvalidParameters(String::from(error_message)),"InvalidSchedule" => UpdateAssociationError::InvalidSchedule(String::from(error_message)),"InvalidUpdate" => UpdateAssociationError::InvalidUpdate(String::from(error_message)),"TooManyUpdates" => UpdateAssociationError::TooManyUpdates(String::from(error_message)),"ValidationException" => UpdateAssociationError::Validation(error_message.to_string()),_ => UpdateAssociationError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateAssociationError::Unknown(String::from(body))
@@ -8386,7 +8386,7 @@ Unknown(String)
                 impl Error for UpdateAssociationError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateAssociationError::InternalServerError(ref cause) => cause,UpdateAssociationError::InvalidSchedule(ref cause) => cause,UpdateAssociationError::InvalidParameters(ref cause) => cause,UpdateAssociationError::InvalidOutputLocation(ref cause) => cause,UpdateAssociationError::InvalidDocumentVersion(ref cause) => cause,UpdateAssociationError::AssociationDoesNotExist(ref cause) => cause,UpdateAssociationError::InvalidUpdate(ref cause) => cause,UpdateAssociationError::TooManyUpdates(ref cause) => cause,UpdateAssociationError::Validation(ref cause) => cause,UpdateAssociationError::Credentials(ref err) => err.description(),UpdateAssociationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssociationError::Unknown(ref cause) => cause
+                            UpdateAssociationError::AssociationDoesNotExist(ref cause) => cause,UpdateAssociationError::InternalServerError(ref cause) => cause,UpdateAssociationError::InvalidDocumentVersion(ref cause) => cause,UpdateAssociationError::InvalidOutputLocation(ref cause) => cause,UpdateAssociationError::InvalidParameters(ref cause) => cause,UpdateAssociationError::InvalidSchedule(ref cause) => cause,UpdateAssociationError::InvalidUpdate(ref cause) => cause,UpdateAssociationError::TooManyUpdates(ref cause) => cause,UpdateAssociationError::Validation(ref cause) => cause,UpdateAssociationError::Credentials(ref err) => err.description(),UpdateAssociationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssociationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8394,14 +8394,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateAssociationStatusError {
                     
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
-///<p>The specified document does not exist.</p>
-InvalidDocument(String),
 ///<p>The specified association does not exist.</p>
 AssociationDoesNotExist(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>The specified document does not exist.</p>
+InvalidDocument(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),
 ///<p>The updated status is the same as the current status.</p>
 StatusUnchanged(String),
 ///<p>There are concurrent updates for a resource that supports one update at a time.</p>
@@ -8424,7 +8424,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => UpdateAssociationStatusError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => UpdateAssociationStatusError::InvalidInstanceId(String::from(error_message)),"InvalidDocument" => UpdateAssociationStatusError::InvalidDocument(String::from(error_message)),"AssociationDoesNotExist" => UpdateAssociationStatusError::AssociationDoesNotExist(String::from(error_message)),"StatusUnchanged" => UpdateAssociationStatusError::StatusUnchanged(String::from(error_message)),"TooManyUpdates" => UpdateAssociationStatusError::TooManyUpdates(String::from(error_message)),"ValidationException" => UpdateAssociationStatusError::Validation(error_message.to_string()),_ => UpdateAssociationStatusError::Unknown(String::from(body))
+                                    "AssociationDoesNotExist" => UpdateAssociationStatusError::AssociationDoesNotExist(String::from(error_message)),"InternalServerError" => UpdateAssociationStatusError::InternalServerError(String::from(error_message)),"InvalidDocument" => UpdateAssociationStatusError::InvalidDocument(String::from(error_message)),"InvalidInstanceId" => UpdateAssociationStatusError::InvalidInstanceId(String::from(error_message)),"StatusUnchanged" => UpdateAssociationStatusError::StatusUnchanged(String::from(error_message)),"TooManyUpdates" => UpdateAssociationStatusError::TooManyUpdates(String::from(error_message)),"ValidationException" => UpdateAssociationStatusError::Validation(error_message.to_string()),_ => UpdateAssociationStatusError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateAssociationStatusError::Unknown(String::from(body))
@@ -8455,7 +8455,7 @@ Unknown(String)
                 impl Error for UpdateAssociationStatusError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateAssociationStatusError::InternalServerError(ref cause) => cause,UpdateAssociationStatusError::InvalidInstanceId(ref cause) => cause,UpdateAssociationStatusError::InvalidDocument(ref cause) => cause,UpdateAssociationStatusError::AssociationDoesNotExist(ref cause) => cause,UpdateAssociationStatusError::StatusUnchanged(ref cause) => cause,UpdateAssociationStatusError::TooManyUpdates(ref cause) => cause,UpdateAssociationStatusError::Validation(ref cause) => cause,UpdateAssociationStatusError::Credentials(ref err) => err.description(),UpdateAssociationStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssociationStatusError::Unknown(ref cause) => cause
+                            UpdateAssociationStatusError::AssociationDoesNotExist(ref cause) => cause,UpdateAssociationStatusError::InternalServerError(ref cause) => cause,UpdateAssociationStatusError::InvalidDocument(ref cause) => cause,UpdateAssociationStatusError::InvalidInstanceId(ref cause) => cause,UpdateAssociationStatusError::StatusUnchanged(ref cause) => cause,UpdateAssociationStatusError::TooManyUpdates(ref cause) => cause,UpdateAssociationStatusError::Validation(ref cause) => cause,UpdateAssociationStatusError::Credentials(ref err) => err.description(),UpdateAssociationStatusError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssociationStatusError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8463,22 +8463,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateDocumentError {
                     
-///<p>The size limit of an SSM document is 64 KB.</p>
-MaxDocumentSizeExceeded(String),
 ///<p>The document has too many versions. Delete one or more document versions and try again.</p>
 DocumentVersionLimitExceeded(String),
-///<p>An error occurred on the server side.</p>
-InternalServerError(String),
 ///<p>The content of the association document matches another document. Change the content of the document and try again.</p>
 DuplicateDocumentContent(String),
+///<p>An error occurred on the server side.</p>
+InternalServerError(String),
+///<p>The specified document does not exist.</p>
+InvalidDocument(String),
 ///<p>The content for the SSM document is not valid.</p>
 InvalidDocumentContent(String),
-///<p>The document version is not valid or does not exist.</p>
-InvalidDocumentVersion(String),
 ///<p>The version of the document schema is not supported.</p>
 InvalidDocumentSchemaVersion(String),
-///<p>The specified document does not exist.</p>
-InvalidDocument(String),/// An error occurred dispatching the HTTP request
+///<p>The document version is not valid or does not exist.</p>
+InvalidDocumentVersion(String),
+///<p>The size limit of an SSM document is 64 KB.</p>
+MaxDocumentSizeExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8497,7 +8497,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "MaxDocumentSizeExceeded" => UpdateDocumentError::MaxDocumentSizeExceeded(String::from(error_message)),"DocumentVersionLimitExceeded" => UpdateDocumentError::DocumentVersionLimitExceeded(String::from(error_message)),"InternalServerError" => UpdateDocumentError::InternalServerError(String::from(error_message)),"DuplicateDocumentContent" => UpdateDocumentError::DuplicateDocumentContent(String::from(error_message)),"InvalidDocumentContent" => UpdateDocumentError::InvalidDocumentContent(String::from(error_message)),"InvalidDocumentVersion" => UpdateDocumentError::InvalidDocumentVersion(String::from(error_message)),"InvalidDocumentSchemaVersion" => UpdateDocumentError::InvalidDocumentSchemaVersion(String::from(error_message)),"InvalidDocument" => UpdateDocumentError::InvalidDocument(String::from(error_message)),"ValidationException" => UpdateDocumentError::Validation(error_message.to_string()),_ => UpdateDocumentError::Unknown(String::from(body))
+                                    "DocumentVersionLimitExceeded" => UpdateDocumentError::DocumentVersionLimitExceeded(String::from(error_message)),"DuplicateDocumentContent" => UpdateDocumentError::DuplicateDocumentContent(String::from(error_message)),"InternalServerError" => UpdateDocumentError::InternalServerError(String::from(error_message)),"InvalidDocument" => UpdateDocumentError::InvalidDocument(String::from(error_message)),"InvalidDocumentContent" => UpdateDocumentError::InvalidDocumentContent(String::from(error_message)),"InvalidDocumentSchemaVersion" => UpdateDocumentError::InvalidDocumentSchemaVersion(String::from(error_message)),"InvalidDocumentVersion" => UpdateDocumentError::InvalidDocumentVersion(String::from(error_message)),"MaxDocumentSizeExceeded" => UpdateDocumentError::MaxDocumentSizeExceeded(String::from(error_message)),"ValidationException" => UpdateDocumentError::Validation(error_message.to_string()),_ => UpdateDocumentError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateDocumentError::Unknown(String::from(body))
@@ -8528,7 +8528,7 @@ Unknown(String)
                 impl Error for UpdateDocumentError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateDocumentError::MaxDocumentSizeExceeded(ref cause) => cause,UpdateDocumentError::DocumentVersionLimitExceeded(ref cause) => cause,UpdateDocumentError::InternalServerError(ref cause) => cause,UpdateDocumentError::DuplicateDocumentContent(ref cause) => cause,UpdateDocumentError::InvalidDocumentContent(ref cause) => cause,UpdateDocumentError::InvalidDocumentVersion(ref cause) => cause,UpdateDocumentError::InvalidDocumentSchemaVersion(ref cause) => cause,UpdateDocumentError::InvalidDocument(ref cause) => cause,UpdateDocumentError::Validation(ref cause) => cause,UpdateDocumentError::Credentials(ref err) => err.description(),UpdateDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDocumentError::Unknown(ref cause) => cause
+                            UpdateDocumentError::DocumentVersionLimitExceeded(ref cause) => cause,UpdateDocumentError::DuplicateDocumentContent(ref cause) => cause,UpdateDocumentError::InternalServerError(ref cause) => cause,UpdateDocumentError::InvalidDocument(ref cause) => cause,UpdateDocumentError::InvalidDocumentContent(ref cause) => cause,UpdateDocumentError::InvalidDocumentSchemaVersion(ref cause) => cause,UpdateDocumentError::InvalidDocumentVersion(ref cause) => cause,UpdateDocumentError::MaxDocumentSizeExceeded(ref cause) => cause,UpdateDocumentError::Validation(ref cause) => cause,UpdateDocumentError::Credentials(ref err) => err.description(),UpdateDocumentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDocumentError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8540,10 +8540,10 @@ Unknown(String)
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
-///<p>The document version is not valid or does not exist.</p>
-InvalidDocumentVersion(String),
 ///<p>The version of the document schema is not supported.</p>
-InvalidDocumentSchemaVersion(String),/// An error occurred dispatching the HTTP request
+InvalidDocumentSchemaVersion(String),
+///<p>The document version is not valid or does not exist.</p>
+InvalidDocumentVersion(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8562,7 +8562,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InternalServerError" => UpdateDocumentDefaultVersionError::InternalServerError(String::from(error_message)),"InvalidDocument" => UpdateDocumentDefaultVersionError::InvalidDocument(String::from(error_message)),"InvalidDocumentVersion" => UpdateDocumentDefaultVersionError::InvalidDocumentVersion(String::from(error_message)),"InvalidDocumentSchemaVersion" => UpdateDocumentDefaultVersionError::InvalidDocumentSchemaVersion(String::from(error_message)),"ValidationException" => UpdateDocumentDefaultVersionError::Validation(error_message.to_string()),_ => UpdateDocumentDefaultVersionError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateDocumentDefaultVersionError::InternalServerError(String::from(error_message)),"InvalidDocument" => UpdateDocumentDefaultVersionError::InvalidDocument(String::from(error_message)),"InvalidDocumentSchemaVersion" => UpdateDocumentDefaultVersionError::InvalidDocumentSchemaVersion(String::from(error_message)),"InvalidDocumentVersion" => UpdateDocumentDefaultVersionError::InvalidDocumentVersion(String::from(error_message)),"ValidationException" => UpdateDocumentDefaultVersionError::Validation(error_message.to_string()),_ => UpdateDocumentDefaultVersionError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateDocumentDefaultVersionError::Unknown(String::from(body))
@@ -8593,7 +8593,7 @@ Unknown(String)
                 impl Error for UpdateDocumentDefaultVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateDocumentDefaultVersionError::InternalServerError(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocument(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocumentVersion(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocumentSchemaVersion(ref cause) => cause,UpdateDocumentDefaultVersionError::Validation(ref cause) => cause,UpdateDocumentDefaultVersionError::Credentials(ref err) => err.description(),UpdateDocumentDefaultVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDocumentDefaultVersionError::Unknown(ref cause) => cause
+                            UpdateDocumentDefaultVersionError::InternalServerError(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocument(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocumentSchemaVersion(ref cause) => cause,UpdateDocumentDefaultVersionError::InvalidDocumentVersion(ref cause) => cause,UpdateDocumentDefaultVersionError::Validation(ref cause) => cause,UpdateDocumentDefaultVersionError::Credentials(ref err) => err.description(),UpdateDocumentDefaultVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDocumentDefaultVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8662,10 +8662,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateManagedInstanceRoleError {
                     
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
-InvalidInstanceId(String),
 ///<p>An error occurred on the server side.</p>
-InternalServerError(String),/// An error occurred dispatching the HTTP request
+InternalServerError(String),
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+InvalidInstanceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8684,7 +8684,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidInstanceId" => UpdateManagedInstanceRoleError::InvalidInstanceId(String::from(error_message)),"InternalServerError" => UpdateManagedInstanceRoleError::InternalServerError(String::from(error_message)),"ValidationException" => UpdateManagedInstanceRoleError::Validation(error_message.to_string()),_ => UpdateManagedInstanceRoleError::Unknown(String::from(body))
+                                    "InternalServerError" => UpdateManagedInstanceRoleError::InternalServerError(String::from(error_message)),"InvalidInstanceId" => UpdateManagedInstanceRoleError::InvalidInstanceId(String::from(error_message)),"ValidationException" => UpdateManagedInstanceRoleError::Validation(error_message.to_string()),_ => UpdateManagedInstanceRoleError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateManagedInstanceRoleError::Unknown(String::from(body))
@@ -8715,7 +8715,7 @@ Unknown(String)
                 impl Error for UpdateManagedInstanceRoleError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateManagedInstanceRoleError::InvalidInstanceId(ref cause) => cause,UpdateManagedInstanceRoleError::InternalServerError(ref cause) => cause,UpdateManagedInstanceRoleError::Validation(ref cause) => cause,UpdateManagedInstanceRoleError::Credentials(ref err) => err.description(),UpdateManagedInstanceRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateManagedInstanceRoleError::Unknown(ref cause) => cause
+                            UpdateManagedInstanceRoleError::InternalServerError(ref cause) => cause,UpdateManagedInstanceRoleError::InvalidInstanceId(ref cause) => cause,UpdateManagedInstanceRoleError::Validation(ref cause) => cause,UpdateManagedInstanceRoleError::Credentials(ref err) => err.description(),UpdateManagedInstanceRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateManagedInstanceRoleError::Unknown(ref cause) => cause
                         }
                     }
                  }

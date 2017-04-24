@@ -5004,12 +5004,12 @@ struct ZoneNameDeserializer;
                     
 ///<p>A tag key was specified more than once.</p>
 DuplicateTagKeys(String),
-///<p>You've reached the limit on the number of tags per load balancer.</p>
-TooManyTags(String),
 ///<p>The specified load balancer does not exist.</p>
 LoadBalancerNotFound(String),
 ///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),/// An error occurred dispatching the HTTP request
+TargetGroupNotFound(String),
+///<p>You've reached the limit on the number of tags per load balancer.</p>
+TooManyTags(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5026,7 +5026,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "DuplicateTagKeysException" => AddTagsError::DuplicateTagKeys(String::from(parsed_error.message)),"TooManyTagsException" => AddTagsError::TooManyTags(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => AddTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => AddTagsError::TargetGroupNotFound(String::from(parsed_error.message)),_ => AddTagsError::Unknown(String::from(body))
+                                    "DuplicateTagKeysException" => AddTagsError::DuplicateTagKeys(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => AddTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => AddTagsError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyTagsException" => AddTagsError::TooManyTags(String::from(parsed_error.message)),_ => AddTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => AddTagsError::Unknown(body.to_string())
@@ -5058,7 +5058,7 @@ Unknown(String)
                 impl Error for AddTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsError::DuplicateTagKeys(ref cause) => cause,AddTagsError::TooManyTags(ref cause) => cause,AddTagsError::LoadBalancerNotFound(ref cause) => cause,AddTagsError::TargetGroupNotFound(ref cause) => cause,AddTagsError::Validation(ref cause) => cause,AddTagsError::Credentials(ref err) => err.description(),AddTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsError::Unknown(ref cause) => cause
+                            AddTagsError::DuplicateTagKeys(ref cause) => cause,AddTagsError::LoadBalancerNotFound(ref cause) => cause,AddTagsError::TargetGroupNotFound(ref cause) => cause,AddTagsError::TooManyTags(ref cause) => cause,AddTagsError::Validation(ref cause) => cause,AddTagsError::Credentials(ref err) => err.description(),AddTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5066,30 +5066,30 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateListenerError {
                     
-///<p>A listener with the specified port already exists.</p>
-DuplicateListener(String),
-///<p>You've reached the limit on the number of listeners per load balancer.</p>
-TooManyListeners(String),
-///<p>You've reached the limit on the number of certificates per listener.</p>
-TooManyCertificates(String),
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
-///<p>You've reached the limit on the number of load balancers per target group.</p>
-TargetGroupAssociationLimit(String),
-///<p>The requested configuration is not valid.</p>
-InvalidConfigurationRequest(String),
-///<p>The specified configuration is not valid with this protocol.</p>
-IncompatibleProtocols(String),
-///<p>The specified SSL policy does not exist.</p>
-SSLPolicyNotFound(String),
 ///<p>The specified certificate does not exist.</p>
 CertificateNotFound(String),
-///<p>The specified protocol is not supported.</p>
-UnsupportedProtocol(String),
+///<p>A listener with the specified port already exists.</p>
+DuplicateListener(String),
+///<p>The specified configuration is not valid with this protocol.</p>
+IncompatibleProtocols(String),
+///<p>The requested configuration is not valid.</p>
+InvalidConfigurationRequest(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),
+///<p>The specified SSL policy does not exist.</p>
+SSLPolicyNotFound(String),
+///<p>You've reached the limit on the number of load balancers per target group.</p>
+TargetGroupAssociationLimit(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),
+///<p>You've reached the limit on the number of certificates per listener.</p>
+TooManyCertificates(String),
+///<p>You've reached the limit on the number of listeners per load balancer.</p>
+TooManyListeners(String),
 ///<p>You've reached the limit on the number of times a target can be registered with a load balancer.</p>
-TooManyRegistrationsForTargetId(String),/// An error occurred dispatching the HTTP request
+TooManyRegistrationsForTargetId(String),
+///<p>The specified protocol is not supported.</p>
+UnsupportedProtocol(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5106,7 +5106,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "DuplicateListenerException" => CreateListenerError::DuplicateListener(String::from(parsed_error.message)),"TooManyListenersException" => CreateListenerError::TooManyListeners(String::from(parsed_error.message)),"TooManyCertificatesException" => CreateListenerError::TooManyCertificates(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => CreateListenerError::LoadBalancerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => CreateListenerError::TargetGroupNotFound(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => CreateListenerError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => CreateListenerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"IncompatibleProtocolsException" => CreateListenerError::IncompatibleProtocols(String::from(parsed_error.message)),"SSLPolicyNotFoundException" => CreateListenerError::SSLPolicyNotFound(String::from(parsed_error.message)),"CertificateNotFoundException" => CreateListenerError::CertificateNotFound(String::from(parsed_error.message)),"UnsupportedProtocolException" => CreateListenerError::UnsupportedProtocol(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => CreateListenerError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => CreateListenerError::Unknown(String::from(body))
+                                    "CertificateNotFoundException" => CreateListenerError::CertificateNotFound(String::from(parsed_error.message)),"DuplicateListenerException" => CreateListenerError::DuplicateListener(String::from(parsed_error.message)),"IncompatibleProtocolsException" => CreateListenerError::IncompatibleProtocols(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => CreateListenerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => CreateListenerError::LoadBalancerNotFound(String::from(parsed_error.message)),"SSLPolicyNotFoundException" => CreateListenerError::SSLPolicyNotFound(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => CreateListenerError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"TargetGroupNotFoundException" => CreateListenerError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyCertificatesException" => CreateListenerError::TooManyCertificates(String::from(parsed_error.message)),"TooManyListenersException" => CreateListenerError::TooManyListeners(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => CreateListenerError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),"UnsupportedProtocolException" => CreateListenerError::UnsupportedProtocol(String::from(parsed_error.message)),_ => CreateListenerError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateListenerError::Unknown(body.to_string())
@@ -5138,7 +5138,7 @@ Unknown(String)
                 impl Error for CreateListenerError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateListenerError::DuplicateListener(ref cause) => cause,CreateListenerError::TooManyListeners(ref cause) => cause,CreateListenerError::TooManyCertificates(ref cause) => cause,CreateListenerError::LoadBalancerNotFound(ref cause) => cause,CreateListenerError::TargetGroupNotFound(ref cause) => cause,CreateListenerError::TargetGroupAssociationLimit(ref cause) => cause,CreateListenerError::InvalidConfigurationRequest(ref cause) => cause,CreateListenerError::IncompatibleProtocols(ref cause) => cause,CreateListenerError::SSLPolicyNotFound(ref cause) => cause,CreateListenerError::CertificateNotFound(ref cause) => cause,CreateListenerError::UnsupportedProtocol(ref cause) => cause,CreateListenerError::TooManyRegistrationsForTargetId(ref cause) => cause,CreateListenerError::Validation(ref cause) => cause,CreateListenerError::Credentials(ref err) => err.description(),CreateListenerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateListenerError::Unknown(ref cause) => cause
+                            CreateListenerError::CertificateNotFound(ref cause) => cause,CreateListenerError::DuplicateListener(ref cause) => cause,CreateListenerError::IncompatibleProtocols(ref cause) => cause,CreateListenerError::InvalidConfigurationRequest(ref cause) => cause,CreateListenerError::LoadBalancerNotFound(ref cause) => cause,CreateListenerError::SSLPolicyNotFound(ref cause) => cause,CreateListenerError::TargetGroupAssociationLimit(ref cause) => cause,CreateListenerError::TargetGroupNotFound(ref cause) => cause,CreateListenerError::TooManyCertificates(ref cause) => cause,CreateListenerError::TooManyListeners(ref cause) => cause,CreateListenerError::TooManyRegistrationsForTargetId(ref cause) => cause,CreateListenerError::UnsupportedProtocol(ref cause) => cause,CreateListenerError::Validation(ref cause) => cause,CreateListenerError::Credentials(ref err) => err.description(),CreateListenerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateListenerError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5148,22 +5148,22 @@ Unknown(String)
                     
 ///<p>A load balancer with the specified name already exists for this account.</p>
 DuplicateLoadBalancerName(String),
-///<p>You've reached the limit on the number of load balancers for your AWS account.</p>
-TooManyLoadBalancers(String),
+///<p>A tag key was specified more than once.</p>
+DuplicateTagKeys(String),
 ///<p>The requested configuration is not valid.</p>
 InvalidConfigurationRequest(String),
-///<p>The specified subnet does not exist.</p>
-SubnetNotFound(String),
-///<p>The specified subnet is out of available addresses.</p>
-InvalidSubnet(String),
-///<p>The specified security group does not exist.</p>
-InvalidSecurityGroup(String),
 ///<p>The requested scheme is not valid.</p>
 InvalidScheme(String),
+///<p>The specified security group does not exist.</p>
+InvalidSecurityGroup(String),
+///<p>The specified subnet is out of available addresses.</p>
+InvalidSubnet(String),
+///<p>The specified subnet does not exist.</p>
+SubnetNotFound(String),
+///<p>You've reached the limit on the number of load balancers for your AWS account.</p>
+TooManyLoadBalancers(String),
 ///<p>You've reached the limit on the number of tags per load balancer.</p>
-TooManyTags(String),
-///<p>A tag key was specified more than once.</p>
-DuplicateTagKeys(String),/// An error occurred dispatching the HTTP request
+TooManyTags(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5180,7 +5180,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "DuplicateLoadBalancerNameException" => CreateLoadBalancerError::DuplicateLoadBalancerName(String::from(parsed_error.message)),"TooManyLoadBalancersException" => CreateLoadBalancerError::TooManyLoadBalancers(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => CreateLoadBalancerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"SubnetNotFoundException" => CreateLoadBalancerError::SubnetNotFound(String::from(parsed_error.message)),"InvalidSubnetException" => CreateLoadBalancerError::InvalidSubnet(String::from(parsed_error.message)),"InvalidSecurityGroupException" => CreateLoadBalancerError::InvalidSecurityGroup(String::from(parsed_error.message)),"InvalidSchemeException" => CreateLoadBalancerError::InvalidScheme(String::from(parsed_error.message)),"TooManyTagsException" => CreateLoadBalancerError::TooManyTags(String::from(parsed_error.message)),"DuplicateTagKeysException" => CreateLoadBalancerError::DuplicateTagKeys(String::from(parsed_error.message)),_ => CreateLoadBalancerError::Unknown(String::from(body))
+                                    "DuplicateLoadBalancerNameException" => CreateLoadBalancerError::DuplicateLoadBalancerName(String::from(parsed_error.message)),"DuplicateTagKeysException" => CreateLoadBalancerError::DuplicateTagKeys(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => CreateLoadBalancerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"InvalidSchemeException" => CreateLoadBalancerError::InvalidScheme(String::from(parsed_error.message)),"InvalidSecurityGroupException" => CreateLoadBalancerError::InvalidSecurityGroup(String::from(parsed_error.message)),"InvalidSubnetException" => CreateLoadBalancerError::InvalidSubnet(String::from(parsed_error.message)),"SubnetNotFoundException" => CreateLoadBalancerError::SubnetNotFound(String::from(parsed_error.message)),"TooManyLoadBalancersException" => CreateLoadBalancerError::TooManyLoadBalancers(String::from(parsed_error.message)),"TooManyTagsException" => CreateLoadBalancerError::TooManyTags(String::from(parsed_error.message)),_ => CreateLoadBalancerError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateLoadBalancerError::Unknown(body.to_string())
@@ -5212,7 +5212,7 @@ Unknown(String)
                 impl Error for CreateLoadBalancerError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateLoadBalancerError::DuplicateLoadBalancerName(ref cause) => cause,CreateLoadBalancerError::TooManyLoadBalancers(ref cause) => cause,CreateLoadBalancerError::InvalidConfigurationRequest(ref cause) => cause,CreateLoadBalancerError::SubnetNotFound(ref cause) => cause,CreateLoadBalancerError::InvalidSubnet(ref cause) => cause,CreateLoadBalancerError::InvalidSecurityGroup(ref cause) => cause,CreateLoadBalancerError::InvalidScheme(ref cause) => cause,CreateLoadBalancerError::TooManyTags(ref cause) => cause,CreateLoadBalancerError::DuplicateTagKeys(ref cause) => cause,CreateLoadBalancerError::Validation(ref cause) => cause,CreateLoadBalancerError::Credentials(ref err) => err.description(),CreateLoadBalancerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLoadBalancerError::Unknown(ref cause) => cause
+                            CreateLoadBalancerError::DuplicateLoadBalancerName(ref cause) => cause,CreateLoadBalancerError::DuplicateTagKeys(ref cause) => cause,CreateLoadBalancerError::InvalidConfigurationRequest(ref cause) => cause,CreateLoadBalancerError::InvalidScheme(ref cause) => cause,CreateLoadBalancerError::InvalidSecurityGroup(ref cause) => cause,CreateLoadBalancerError::InvalidSubnet(ref cause) => cause,CreateLoadBalancerError::SubnetNotFound(ref cause) => cause,CreateLoadBalancerError::TooManyLoadBalancers(ref cause) => cause,CreateLoadBalancerError::TooManyTags(ref cause) => cause,CreateLoadBalancerError::Validation(ref cause) => cause,CreateLoadBalancerError::Credentials(ref err) => err.description(),CreateLoadBalancerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateLoadBalancerError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5220,22 +5220,22 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateRuleError {
                     
-///<p>The specified priority is in use.</p>
-PriorityInUse(String),
-///<p>You've reached the limit on the number of target groups for your AWS account.</p>
-TooManyTargetGroups(String),
-///<p>You've reached the limit on the number of rules per load balancer.</p>
-TooManyRules(String),
-///<p>You've reached the limit on the number of load balancers per target group.</p>
-TargetGroupAssociationLimit(String),
-///<p>The specified listener does not exist.</p>
-ListenerNotFound(String),
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
 ///<p>The requested configuration is not valid.</p>
 InvalidConfigurationRequest(String),
+///<p>The specified listener does not exist.</p>
+ListenerNotFound(String),
+///<p>The specified priority is in use.</p>
+PriorityInUse(String),
+///<p>You've reached the limit on the number of load balancers per target group.</p>
+TargetGroupAssociationLimit(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),
 ///<p>You've reached the limit on the number of times a target can be registered with a load balancer.</p>
-TooManyRegistrationsForTargetId(String),/// An error occurred dispatching the HTTP request
+TooManyRegistrationsForTargetId(String),
+///<p>You've reached the limit on the number of rules per load balancer.</p>
+TooManyRules(String),
+///<p>You've reached the limit on the number of target groups for your AWS account.</p>
+TooManyTargetGroups(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5252,7 +5252,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "PriorityInUseException" => CreateRuleError::PriorityInUse(String::from(parsed_error.message)),"TooManyTargetGroupsException" => CreateRuleError::TooManyTargetGroups(String::from(parsed_error.message)),"TooManyRulesException" => CreateRuleError::TooManyRules(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => CreateRuleError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"ListenerNotFoundException" => CreateRuleError::ListenerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => CreateRuleError::TargetGroupNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => CreateRuleError::InvalidConfigurationRequest(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => CreateRuleError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => CreateRuleError::Unknown(String::from(body))
+                                    "InvalidConfigurationRequestException" => CreateRuleError::InvalidConfigurationRequest(String::from(parsed_error.message)),"ListenerNotFoundException" => CreateRuleError::ListenerNotFound(String::from(parsed_error.message)),"PriorityInUseException" => CreateRuleError::PriorityInUse(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => CreateRuleError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"TargetGroupNotFoundException" => CreateRuleError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => CreateRuleError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),"TooManyRulesException" => CreateRuleError::TooManyRules(String::from(parsed_error.message)),"TooManyTargetGroupsException" => CreateRuleError::TooManyTargetGroups(String::from(parsed_error.message)),_ => CreateRuleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateRuleError::Unknown(body.to_string())
@@ -5284,7 +5284,7 @@ Unknown(String)
                 impl Error for CreateRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateRuleError::PriorityInUse(ref cause) => cause,CreateRuleError::TooManyTargetGroups(ref cause) => cause,CreateRuleError::TooManyRules(ref cause) => cause,CreateRuleError::TargetGroupAssociationLimit(ref cause) => cause,CreateRuleError::ListenerNotFound(ref cause) => cause,CreateRuleError::TargetGroupNotFound(ref cause) => cause,CreateRuleError::InvalidConfigurationRequest(ref cause) => cause,CreateRuleError::TooManyRegistrationsForTargetId(ref cause) => cause,CreateRuleError::Validation(ref cause) => cause,CreateRuleError::Credentials(ref err) => err.description(),CreateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRuleError::Unknown(ref cause) => cause
+                            CreateRuleError::InvalidConfigurationRequest(ref cause) => cause,CreateRuleError::ListenerNotFound(ref cause) => cause,CreateRuleError::PriorityInUse(ref cause) => cause,CreateRuleError::TargetGroupAssociationLimit(ref cause) => cause,CreateRuleError::TargetGroupNotFound(ref cause) => cause,CreateRuleError::TooManyRegistrationsForTargetId(ref cause) => cause,CreateRuleError::TooManyRules(ref cause) => cause,CreateRuleError::TooManyTargetGroups(ref cause) => cause,CreateRuleError::Validation(ref cause) => cause,CreateRuleError::Credentials(ref err) => err.description(),CreateRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5470,10 +5470,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteRuleError {
                     
-///<p>The specified rule does not exist.</p>
-RuleNotFound(String),
 ///<p>This operation is not allowed.</p>
-OperationNotPermitted(String),/// An error occurred dispatching the HTTP request
+OperationNotPermitted(String),
+///<p>The specified rule does not exist.</p>
+RuleNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5490,7 +5490,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "RuleNotFoundException" => DeleteRuleError::RuleNotFound(String::from(parsed_error.message)),"OperationNotPermittedException" => DeleteRuleError::OperationNotPermitted(String::from(parsed_error.message)),_ => DeleteRuleError::Unknown(String::from(body))
+                                    "OperationNotPermittedException" => DeleteRuleError::OperationNotPermitted(String::from(parsed_error.message)),"RuleNotFoundException" => DeleteRuleError::RuleNotFound(String::from(parsed_error.message)),_ => DeleteRuleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteRuleError::Unknown(body.to_string())
@@ -5522,7 +5522,7 @@ Unknown(String)
                 impl Error for DeleteRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRuleError::RuleNotFound(ref cause) => cause,DeleteRuleError::OperationNotPermitted(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
+                            DeleteRuleError::OperationNotPermitted(ref cause) => cause,DeleteRuleError::RuleNotFound(ref cause) => cause,DeleteRuleError::Validation(ref cause) => cause,DeleteRuleError::Credentials(ref err) => err.description(),DeleteRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5588,10 +5588,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeregisterTargetsError {
                     
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
 ///<p>The specified target does not exist or is not in the same VPC as the target group.</p>
-InvalidTarget(String),/// An error occurred dispatching the HTTP request
+InvalidTarget(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5608,7 +5608,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TargetGroupNotFoundException" => DeregisterTargetsError::TargetGroupNotFound(String::from(parsed_error.message)),"InvalidTargetException" => DeregisterTargetsError::InvalidTarget(String::from(parsed_error.message)),_ => DeregisterTargetsError::Unknown(String::from(body))
+                                    "InvalidTargetException" => DeregisterTargetsError::InvalidTarget(String::from(parsed_error.message)),"TargetGroupNotFoundException" => DeregisterTargetsError::TargetGroupNotFound(String::from(parsed_error.message)),_ => DeregisterTargetsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeregisterTargetsError::Unknown(body.to_string())
@@ -5640,7 +5640,7 @@ Unknown(String)
                 impl Error for DeregisterTargetsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeregisterTargetsError::TargetGroupNotFound(ref cause) => cause,DeregisterTargetsError::InvalidTarget(ref cause) => cause,DeregisterTargetsError::Validation(ref cause) => cause,DeregisterTargetsError::Credentials(ref err) => err.description(),DeregisterTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterTargetsError::Unknown(ref cause) => cause
+                            DeregisterTargetsError::InvalidTarget(ref cause) => cause,DeregisterTargetsError::TargetGroupNotFound(ref cause) => cause,DeregisterTargetsError::Validation(ref cause) => cause,DeregisterTargetsError::Credentials(ref err) => err.description(),DeregisterTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeregisterTargetsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -5942,14 +5942,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTagsError {
                     
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
 ///<p>The specified listener does not exist.</p>
 ListenerNotFound(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),
 ///<p>The specified rule does not exist.</p>
-RuleNotFound(String),/// An error occurred dispatching the HTTP request
+RuleNotFound(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -5966,7 +5966,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => DescribeTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => DescribeTagsError::TargetGroupNotFound(String::from(parsed_error.message)),"ListenerNotFoundException" => DescribeTagsError::ListenerNotFound(String::from(parsed_error.message)),"RuleNotFoundException" => DescribeTagsError::RuleNotFound(String::from(parsed_error.message)),_ => DescribeTagsError::Unknown(String::from(body))
+                                    "ListenerNotFoundException" => DescribeTagsError::ListenerNotFound(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => DescribeTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"RuleNotFoundException" => DescribeTagsError::RuleNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => DescribeTagsError::TargetGroupNotFound(String::from(parsed_error.message)),_ => DescribeTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeTagsError::Unknown(body.to_string())
@@ -5998,7 +5998,7 @@ Unknown(String)
                 impl Error for DescribeTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTagsError::LoadBalancerNotFound(ref cause) => cause,DescribeTagsError::TargetGroupNotFound(ref cause) => cause,DescribeTagsError::ListenerNotFound(ref cause) => cause,DescribeTagsError::RuleNotFound(ref cause) => cause,DescribeTagsError::Validation(ref cause) => cause,DescribeTagsError::Credentials(ref err) => err.description(),DescribeTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTagsError::Unknown(ref cause) => cause
+                            DescribeTagsError::ListenerNotFound(ref cause) => cause,DescribeTagsError::LoadBalancerNotFound(ref cause) => cause,DescribeTagsError::RuleNotFound(ref cause) => cause,DescribeTagsError::TargetGroupNotFound(ref cause) => cause,DescribeTagsError::Validation(ref cause) => cause,DescribeTagsError::Credentials(ref err) => err.description(),DescribeTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6124,12 +6124,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeTargetHealthError {
                     
+///<p>The health of the specified targets could not be retrieved due to an internal error.</p>
+HealthUnavailable(String),
 ///<p>The specified target does not exist or is not in the same VPC as the target group.</p>
 InvalidTarget(String),
 ///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
-///<p>The health of the specified targets could not be retrieved due to an internal error.</p>
-HealthUnavailable(String),/// An error occurred dispatching the HTTP request
+TargetGroupNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6146,7 +6146,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidTargetException" => DescribeTargetHealthError::InvalidTarget(String::from(parsed_error.message)),"TargetGroupNotFoundException" => DescribeTargetHealthError::TargetGroupNotFound(String::from(parsed_error.message)),"HealthUnavailableException" => DescribeTargetHealthError::HealthUnavailable(String::from(parsed_error.message)),_ => DescribeTargetHealthError::Unknown(String::from(body))
+                                    "HealthUnavailableException" => DescribeTargetHealthError::HealthUnavailable(String::from(parsed_error.message)),"InvalidTargetException" => DescribeTargetHealthError::InvalidTarget(String::from(parsed_error.message)),"TargetGroupNotFoundException" => DescribeTargetHealthError::TargetGroupNotFound(String::from(parsed_error.message)),_ => DescribeTargetHealthError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeTargetHealthError::Unknown(body.to_string())
@@ -6178,7 +6178,7 @@ Unknown(String)
                 impl Error for DescribeTargetHealthError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeTargetHealthError::InvalidTarget(ref cause) => cause,DescribeTargetHealthError::TargetGroupNotFound(ref cause) => cause,DescribeTargetHealthError::HealthUnavailable(ref cause) => cause,DescribeTargetHealthError::Validation(ref cause) => cause,DescribeTargetHealthError::Credentials(ref err) => err.description(),DescribeTargetHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTargetHealthError::Unknown(ref cause) => cause
+                            DescribeTargetHealthError::HealthUnavailable(ref cause) => cause,DescribeTargetHealthError::InvalidTarget(ref cause) => cause,DescribeTargetHealthError::TargetGroupNotFound(ref cause) => cause,DescribeTargetHealthError::Validation(ref cause) => cause,DescribeTargetHealthError::Credentials(ref err) => err.description(),DescribeTargetHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeTargetHealthError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6186,30 +6186,30 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyListenerError {
                     
-///<p>A listener with the specified port already exists.</p>
-DuplicateListener(String),
-///<p>You've reached the limit on the number of listeners per load balancer.</p>
-TooManyListeners(String),
-///<p>You've reached the limit on the number of certificates per listener.</p>
-TooManyCertificates(String),
-///<p>The specified listener does not exist.</p>
-ListenerNotFound(String),
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
-///<p>You've reached the limit on the number of load balancers per target group.</p>
-TargetGroupAssociationLimit(String),
-///<p>The specified configuration is not valid with this protocol.</p>
-IncompatibleProtocols(String),
-///<p>The specified SSL policy does not exist.</p>
-SSLPolicyNotFound(String),
 ///<p>The specified certificate does not exist.</p>
 CertificateNotFound(String),
+///<p>A listener with the specified port already exists.</p>
+DuplicateListener(String),
+///<p>The specified configuration is not valid with this protocol.</p>
+IncompatibleProtocols(String),
 ///<p>The requested configuration is not valid.</p>
 InvalidConfigurationRequest(String),
-///<p>The specified protocol is not supported.</p>
-UnsupportedProtocol(String),
+///<p>The specified listener does not exist.</p>
+ListenerNotFound(String),
+///<p>The specified SSL policy does not exist.</p>
+SSLPolicyNotFound(String),
+///<p>You've reached the limit on the number of load balancers per target group.</p>
+TargetGroupAssociationLimit(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),
+///<p>You've reached the limit on the number of certificates per listener.</p>
+TooManyCertificates(String),
+///<p>You've reached the limit on the number of listeners per load balancer.</p>
+TooManyListeners(String),
 ///<p>You've reached the limit on the number of times a target can be registered with a load balancer.</p>
-TooManyRegistrationsForTargetId(String),/// An error occurred dispatching the HTTP request
+TooManyRegistrationsForTargetId(String),
+///<p>The specified protocol is not supported.</p>
+UnsupportedProtocol(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6226,7 +6226,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "DuplicateListenerException" => ModifyListenerError::DuplicateListener(String::from(parsed_error.message)),"TooManyListenersException" => ModifyListenerError::TooManyListeners(String::from(parsed_error.message)),"TooManyCertificatesException" => ModifyListenerError::TooManyCertificates(String::from(parsed_error.message)),"ListenerNotFoundException" => ModifyListenerError::ListenerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => ModifyListenerError::TargetGroupNotFound(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => ModifyListenerError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"IncompatibleProtocolsException" => ModifyListenerError::IncompatibleProtocols(String::from(parsed_error.message)),"SSLPolicyNotFoundException" => ModifyListenerError::SSLPolicyNotFound(String::from(parsed_error.message)),"CertificateNotFoundException" => ModifyListenerError::CertificateNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => ModifyListenerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"UnsupportedProtocolException" => ModifyListenerError::UnsupportedProtocol(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => ModifyListenerError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => ModifyListenerError::Unknown(String::from(body))
+                                    "CertificateNotFoundException" => ModifyListenerError::CertificateNotFound(String::from(parsed_error.message)),"DuplicateListenerException" => ModifyListenerError::DuplicateListener(String::from(parsed_error.message)),"IncompatibleProtocolsException" => ModifyListenerError::IncompatibleProtocols(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => ModifyListenerError::InvalidConfigurationRequest(String::from(parsed_error.message)),"ListenerNotFoundException" => ModifyListenerError::ListenerNotFound(String::from(parsed_error.message)),"SSLPolicyNotFoundException" => ModifyListenerError::SSLPolicyNotFound(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => ModifyListenerError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"TargetGroupNotFoundException" => ModifyListenerError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyCertificatesException" => ModifyListenerError::TooManyCertificates(String::from(parsed_error.message)),"TooManyListenersException" => ModifyListenerError::TooManyListeners(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => ModifyListenerError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),"UnsupportedProtocolException" => ModifyListenerError::UnsupportedProtocol(String::from(parsed_error.message)),_ => ModifyListenerError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyListenerError::Unknown(body.to_string())
@@ -6258,7 +6258,7 @@ Unknown(String)
                 impl Error for ModifyListenerError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyListenerError::DuplicateListener(ref cause) => cause,ModifyListenerError::TooManyListeners(ref cause) => cause,ModifyListenerError::TooManyCertificates(ref cause) => cause,ModifyListenerError::ListenerNotFound(ref cause) => cause,ModifyListenerError::TargetGroupNotFound(ref cause) => cause,ModifyListenerError::TargetGroupAssociationLimit(ref cause) => cause,ModifyListenerError::IncompatibleProtocols(ref cause) => cause,ModifyListenerError::SSLPolicyNotFound(ref cause) => cause,ModifyListenerError::CertificateNotFound(ref cause) => cause,ModifyListenerError::InvalidConfigurationRequest(ref cause) => cause,ModifyListenerError::UnsupportedProtocol(ref cause) => cause,ModifyListenerError::TooManyRegistrationsForTargetId(ref cause) => cause,ModifyListenerError::Validation(ref cause) => cause,ModifyListenerError::Credentials(ref err) => err.description(),ModifyListenerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyListenerError::Unknown(ref cause) => cause
+                            ModifyListenerError::CertificateNotFound(ref cause) => cause,ModifyListenerError::DuplicateListener(ref cause) => cause,ModifyListenerError::IncompatibleProtocols(ref cause) => cause,ModifyListenerError::InvalidConfigurationRequest(ref cause) => cause,ModifyListenerError::ListenerNotFound(ref cause) => cause,ModifyListenerError::SSLPolicyNotFound(ref cause) => cause,ModifyListenerError::TargetGroupAssociationLimit(ref cause) => cause,ModifyListenerError::TargetGroupNotFound(ref cause) => cause,ModifyListenerError::TooManyCertificates(ref cause) => cause,ModifyListenerError::TooManyListeners(ref cause) => cause,ModifyListenerError::TooManyRegistrationsForTargetId(ref cause) => cause,ModifyListenerError::UnsupportedProtocol(ref cause) => cause,ModifyListenerError::Validation(ref cause) => cause,ModifyListenerError::Credentials(ref err) => err.description(),ModifyListenerError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyListenerError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6266,10 +6266,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyLoadBalancerAttributesError {
                     
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
 ///<p>The requested configuration is not valid.</p>
-InvalidConfigurationRequest(String),/// An error occurred dispatching the HTTP request
+InvalidConfigurationRequest(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6286,7 +6286,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => ModifyLoadBalancerAttributesError::LoadBalancerNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => ModifyLoadBalancerAttributesError::InvalidConfigurationRequest(String::from(parsed_error.message)),_ => ModifyLoadBalancerAttributesError::Unknown(String::from(body))
+                                    "InvalidConfigurationRequestException" => ModifyLoadBalancerAttributesError::InvalidConfigurationRequest(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => ModifyLoadBalancerAttributesError::LoadBalancerNotFound(String::from(parsed_error.message)),_ => ModifyLoadBalancerAttributesError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyLoadBalancerAttributesError::Unknown(body.to_string())
@@ -6318,7 +6318,7 @@ Unknown(String)
                 impl Error for ModifyLoadBalancerAttributesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyLoadBalancerAttributesError::LoadBalancerNotFound(ref cause) => cause,ModifyLoadBalancerAttributesError::InvalidConfigurationRequest(ref cause) => cause,ModifyLoadBalancerAttributesError::Validation(ref cause) => cause,ModifyLoadBalancerAttributesError::Credentials(ref err) => err.description(),ModifyLoadBalancerAttributesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyLoadBalancerAttributesError::Unknown(ref cause) => cause
+                            ModifyLoadBalancerAttributesError::InvalidConfigurationRequest(ref cause) => cause,ModifyLoadBalancerAttributesError::LoadBalancerNotFound(ref cause) => cause,ModifyLoadBalancerAttributesError::Validation(ref cause) => cause,ModifyLoadBalancerAttributesError::Credentials(ref err) => err.description(),ModifyLoadBalancerAttributesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyLoadBalancerAttributesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6326,12 +6326,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyRuleError {
                     
-///<p>You've reached the limit on the number of load balancers per target group.</p>
-TargetGroupAssociationLimit(String),
-///<p>The specified rule does not exist.</p>
-RuleNotFound(String),
 ///<p>This operation is not allowed.</p>
 OperationNotPermitted(String),
+///<p>The specified rule does not exist.</p>
+RuleNotFound(String),
+///<p>You've reached the limit on the number of load balancers per target group.</p>
+TargetGroupAssociationLimit(String),
 ///<p>You've reached the limit on the number of times a target can be registered with a load balancer.</p>
 TooManyRegistrationsForTargetId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -6350,7 +6350,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TargetGroupAssociationLimitException" => ModifyRuleError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"RuleNotFoundException" => ModifyRuleError::RuleNotFound(String::from(parsed_error.message)),"OperationNotPermittedException" => ModifyRuleError::OperationNotPermitted(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => ModifyRuleError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => ModifyRuleError::Unknown(String::from(body))
+                                    "OperationNotPermittedException" => ModifyRuleError::OperationNotPermitted(String::from(parsed_error.message)),"RuleNotFoundException" => ModifyRuleError::RuleNotFound(String::from(parsed_error.message)),"TargetGroupAssociationLimitException" => ModifyRuleError::TargetGroupAssociationLimit(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => ModifyRuleError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => ModifyRuleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ModifyRuleError::Unknown(body.to_string())
@@ -6382,7 +6382,7 @@ Unknown(String)
                 impl Error for ModifyRuleError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyRuleError::TargetGroupAssociationLimit(ref cause) => cause,ModifyRuleError::RuleNotFound(ref cause) => cause,ModifyRuleError::OperationNotPermitted(ref cause) => cause,ModifyRuleError::TooManyRegistrationsForTargetId(ref cause) => cause,ModifyRuleError::Validation(ref cause) => cause,ModifyRuleError::Credentials(ref err) => err.description(),ModifyRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyRuleError::Unknown(ref cause) => cause
+                            ModifyRuleError::OperationNotPermitted(ref cause) => cause,ModifyRuleError::RuleNotFound(ref cause) => cause,ModifyRuleError::TargetGroupAssociationLimit(ref cause) => cause,ModifyRuleError::TooManyRegistrationsForTargetId(ref cause) => cause,ModifyRuleError::Validation(ref cause) => cause,ModifyRuleError::Credentials(ref err) => err.description(),ModifyRuleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyRuleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6506,14 +6506,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RegisterTargetsError {
                     
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
-///<p>You've reached the limit on the number of targets.</p>
-TooManyTargets(String),
 ///<p>The specified target does not exist or is not in the same VPC as the target group.</p>
 InvalidTarget(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),
 ///<p>You've reached the limit on the number of times a target can be registered with a load balancer.</p>
-TooManyRegistrationsForTargetId(String),/// An error occurred dispatching the HTTP request
+TooManyRegistrationsForTargetId(String),
+///<p>You've reached the limit on the number of targets.</p>
+TooManyTargets(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6530,7 +6530,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TargetGroupNotFoundException" => RegisterTargetsError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyTargetsException" => RegisterTargetsError::TooManyTargets(String::from(parsed_error.message)),"InvalidTargetException" => RegisterTargetsError::InvalidTarget(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => RegisterTargetsError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),_ => RegisterTargetsError::Unknown(String::from(body))
+                                    "InvalidTargetException" => RegisterTargetsError::InvalidTarget(String::from(parsed_error.message)),"TargetGroupNotFoundException" => RegisterTargetsError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyRegistrationsForTargetIdException" => RegisterTargetsError::TooManyRegistrationsForTargetId(String::from(parsed_error.message)),"TooManyTargetsException" => RegisterTargetsError::TooManyTargets(String::from(parsed_error.message)),_ => RegisterTargetsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RegisterTargetsError::Unknown(body.to_string())
@@ -6562,7 +6562,7 @@ Unknown(String)
                 impl Error for RegisterTargetsError {
                     fn description(&self) -> &str {
                         match *self {
-                            RegisterTargetsError::TargetGroupNotFound(ref cause) => cause,RegisterTargetsError::TooManyTargets(ref cause) => cause,RegisterTargetsError::InvalidTarget(ref cause) => cause,RegisterTargetsError::TooManyRegistrationsForTargetId(ref cause) => cause,RegisterTargetsError::Validation(ref cause) => cause,RegisterTargetsError::Credentials(ref err) => err.description(),RegisterTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTargetsError::Unknown(ref cause) => cause
+                            RegisterTargetsError::InvalidTarget(ref cause) => cause,RegisterTargetsError::TargetGroupNotFound(ref cause) => cause,RegisterTargetsError::TooManyRegistrationsForTargetId(ref cause) => cause,RegisterTargetsError::TooManyTargets(ref cause) => cause,RegisterTargetsError::Validation(ref cause) => cause,RegisterTargetsError::Credentials(ref err) => err.description(),RegisterTargetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RegisterTargetsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6570,14 +6570,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RemoveTagsError {
                     
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
-///<p>The specified target group does not exist.</p>
-TargetGroupNotFound(String),
 ///<p>The specified listener does not exist.</p>
 ListenerNotFound(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),
 ///<p>The specified rule does not exist.</p>
 RuleNotFound(String),
+///<p>The specified target group does not exist.</p>
+TargetGroupNotFound(String),
 ///<p>You've reached the limit on the number of tags per load balancer.</p>
 TooManyTags(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -6596,7 +6596,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => RemoveTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => RemoveTagsError::TargetGroupNotFound(String::from(parsed_error.message)),"ListenerNotFoundException" => RemoveTagsError::ListenerNotFound(String::from(parsed_error.message)),"RuleNotFoundException" => RemoveTagsError::RuleNotFound(String::from(parsed_error.message)),"TooManyTagsException" => RemoveTagsError::TooManyTags(String::from(parsed_error.message)),_ => RemoveTagsError::Unknown(String::from(body))
+                                    "ListenerNotFoundException" => RemoveTagsError::ListenerNotFound(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => RemoveTagsError::LoadBalancerNotFound(String::from(parsed_error.message)),"RuleNotFoundException" => RemoveTagsError::RuleNotFound(String::from(parsed_error.message)),"TargetGroupNotFoundException" => RemoveTagsError::TargetGroupNotFound(String::from(parsed_error.message)),"TooManyTagsException" => RemoveTagsError::TooManyTags(String::from(parsed_error.message)),_ => RemoveTagsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RemoveTagsError::Unknown(body.to_string())
@@ -6628,7 +6628,7 @@ Unknown(String)
                 impl Error for RemoveTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveTagsError::LoadBalancerNotFound(ref cause) => cause,RemoveTagsError::TargetGroupNotFound(ref cause) => cause,RemoveTagsError::ListenerNotFound(ref cause) => cause,RemoveTagsError::RuleNotFound(ref cause) => cause,RemoveTagsError::TooManyTags(ref cause) => cause,RemoveTagsError::Validation(ref cause) => cause,RemoveTagsError::Credentials(ref err) => err.description(),RemoveTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsError::Unknown(ref cause) => cause
+                            RemoveTagsError::ListenerNotFound(ref cause) => cause,RemoveTagsError::LoadBalancerNotFound(ref cause) => cause,RemoveTagsError::RuleNotFound(ref cause) => cause,RemoveTagsError::TargetGroupNotFound(ref cause) => cause,RemoveTagsError::TooManyTags(ref cause) => cause,RemoveTagsError::Validation(ref cause) => cause,RemoveTagsError::Credentials(ref err) => err.description(),RemoveTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6636,12 +6636,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetRulePrioritiesError {
                     
-///<p>The specified rule does not exist.</p>
-RuleNotFound(String),
+///<p>This operation is not allowed.</p>
+OperationNotPermitted(String),
 ///<p>The specified priority is in use.</p>
 PriorityInUse(String),
-///<p>This operation is not allowed.</p>
-OperationNotPermitted(String),/// An error occurred dispatching the HTTP request
+///<p>The specified rule does not exist.</p>
+RuleNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6658,7 +6658,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "RuleNotFoundException" => SetRulePrioritiesError::RuleNotFound(String::from(parsed_error.message)),"PriorityInUseException" => SetRulePrioritiesError::PriorityInUse(String::from(parsed_error.message)),"OperationNotPermittedException" => SetRulePrioritiesError::OperationNotPermitted(String::from(parsed_error.message)),_ => SetRulePrioritiesError::Unknown(String::from(body))
+                                    "OperationNotPermittedException" => SetRulePrioritiesError::OperationNotPermitted(String::from(parsed_error.message)),"PriorityInUseException" => SetRulePrioritiesError::PriorityInUse(String::from(parsed_error.message)),"RuleNotFoundException" => SetRulePrioritiesError::RuleNotFound(String::from(parsed_error.message)),_ => SetRulePrioritiesError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SetRulePrioritiesError::Unknown(body.to_string())
@@ -6690,7 +6690,7 @@ Unknown(String)
                 impl Error for SetRulePrioritiesError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetRulePrioritiesError::RuleNotFound(ref cause) => cause,SetRulePrioritiesError::PriorityInUse(ref cause) => cause,SetRulePrioritiesError::OperationNotPermitted(ref cause) => cause,SetRulePrioritiesError::Validation(ref cause) => cause,SetRulePrioritiesError::Credentials(ref err) => err.description(),SetRulePrioritiesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetRulePrioritiesError::Unknown(ref cause) => cause
+                            SetRulePrioritiesError::OperationNotPermitted(ref cause) => cause,SetRulePrioritiesError::PriorityInUse(ref cause) => cause,SetRulePrioritiesError::RuleNotFound(ref cause) => cause,SetRulePrioritiesError::Validation(ref cause) => cause,SetRulePrioritiesError::Credentials(ref err) => err.description(),SetRulePrioritiesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetRulePrioritiesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6698,12 +6698,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetSecurityGroupsError {
                     
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
 ///<p>The requested configuration is not valid.</p>
 InvalidConfigurationRequest(String),
 ///<p>The specified security group does not exist.</p>
-InvalidSecurityGroup(String),/// An error occurred dispatching the HTTP request
+InvalidSecurityGroup(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6720,7 +6720,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => SetSecurityGroupsError::LoadBalancerNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => SetSecurityGroupsError::InvalidConfigurationRequest(String::from(parsed_error.message)),"InvalidSecurityGroupException" => SetSecurityGroupsError::InvalidSecurityGroup(String::from(parsed_error.message)),_ => SetSecurityGroupsError::Unknown(String::from(body))
+                                    "InvalidConfigurationRequestException" => SetSecurityGroupsError::InvalidConfigurationRequest(String::from(parsed_error.message)),"InvalidSecurityGroupException" => SetSecurityGroupsError::InvalidSecurityGroup(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => SetSecurityGroupsError::LoadBalancerNotFound(String::from(parsed_error.message)),_ => SetSecurityGroupsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SetSecurityGroupsError::Unknown(body.to_string())
@@ -6752,7 +6752,7 @@ Unknown(String)
                 impl Error for SetSecurityGroupsError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetSecurityGroupsError::LoadBalancerNotFound(ref cause) => cause,SetSecurityGroupsError::InvalidConfigurationRequest(ref cause) => cause,SetSecurityGroupsError::InvalidSecurityGroup(ref cause) => cause,SetSecurityGroupsError::Validation(ref cause) => cause,SetSecurityGroupsError::Credentials(ref err) => err.description(),SetSecurityGroupsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetSecurityGroupsError::Unknown(ref cause) => cause
+                            SetSecurityGroupsError::InvalidConfigurationRequest(ref cause) => cause,SetSecurityGroupsError::InvalidSecurityGroup(ref cause) => cause,SetSecurityGroupsError::LoadBalancerNotFound(ref cause) => cause,SetSecurityGroupsError::Validation(ref cause) => cause,SetSecurityGroupsError::Credentials(ref err) => err.description(),SetSecurityGroupsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetSecurityGroupsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -6760,14 +6760,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum SetSubnetsError {
                     
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
 ///<p>The requested configuration is not valid.</p>
 InvalidConfigurationRequest(String),
-///<p>The specified subnet does not exist.</p>
-SubnetNotFound(String),
 ///<p>The specified subnet is out of available addresses.</p>
-InvalidSubnet(String),/// An error occurred dispatching the HTTP request
+InvalidSubnet(String),
+///<p>The specified load balancer does not exist.</p>
+LoadBalancerNotFound(String),
+///<p>The specified subnet does not exist.</p>
+SubnetNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -6784,7 +6784,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => SetSubnetsError::LoadBalancerNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => SetSubnetsError::InvalidConfigurationRequest(String::from(parsed_error.message)),"SubnetNotFoundException" => SetSubnetsError::SubnetNotFound(String::from(parsed_error.message)),"InvalidSubnetException" => SetSubnetsError::InvalidSubnet(String::from(parsed_error.message)),_ => SetSubnetsError::Unknown(String::from(body))
+                                    "InvalidConfigurationRequestException" => SetSubnetsError::InvalidConfigurationRequest(String::from(parsed_error.message)),"InvalidSubnetException" => SetSubnetsError::InvalidSubnet(String::from(parsed_error.message)),"LoadBalancerNotFoundException" => SetSubnetsError::LoadBalancerNotFound(String::from(parsed_error.message)),"SubnetNotFoundException" => SetSubnetsError::SubnetNotFound(String::from(parsed_error.message)),_ => SetSubnetsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => SetSubnetsError::Unknown(body.to_string())
@@ -6816,7 +6816,7 @@ Unknown(String)
                 impl Error for SetSubnetsError {
                     fn description(&self) -> &str {
                         match *self {
-                            SetSubnetsError::LoadBalancerNotFound(ref cause) => cause,SetSubnetsError::InvalidConfigurationRequest(ref cause) => cause,SetSubnetsError::SubnetNotFound(ref cause) => cause,SetSubnetsError::InvalidSubnet(ref cause) => cause,SetSubnetsError::Validation(ref cause) => cause,SetSubnetsError::Credentials(ref err) => err.description(),SetSubnetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetSubnetsError::Unknown(ref cause) => cause
+                            SetSubnetsError::InvalidConfigurationRequest(ref cause) => cause,SetSubnetsError::InvalidSubnet(ref cause) => cause,SetSubnetsError::LoadBalancerNotFound(ref cause) => cause,SetSubnetsError::SubnetNotFound(ref cause) => cause,SetSubnetsError::Validation(ref cause) => cause,SetSubnetsError::Credentials(ref err) => err.description(),SetSubnetsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetSubnetsError::Unknown(ref cause) => cause
                         }
                     }
                  }

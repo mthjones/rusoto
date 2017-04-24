@@ -7411,10 +7411,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ComposeEnvironmentsError {
                     
-///<p>The specified account has reached its limit of environments.</p>
-TooManyEnvironments(String),
 ///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),/// An error occurred dispatching the HTTP request
+InsufficientPrivileges(String),
+///<p>The specified account has reached its limit of environments.</p>
+TooManyEnvironments(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7431,7 +7431,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyEnvironmentsException" => ComposeEnvironmentsError::TooManyEnvironments(String::from(parsed_error.message)),"InsufficientPrivilegesException" => ComposeEnvironmentsError::InsufficientPrivileges(String::from(parsed_error.message)),_ => ComposeEnvironmentsError::Unknown(String::from(body))
+                                    "InsufficientPrivilegesException" => ComposeEnvironmentsError::InsufficientPrivileges(String::from(parsed_error.message)),"TooManyEnvironmentsException" => ComposeEnvironmentsError::TooManyEnvironments(String::from(parsed_error.message)),_ => ComposeEnvironmentsError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => ComposeEnvironmentsError::Unknown(body.to_string())
@@ -7463,7 +7463,7 @@ Unknown(String)
                 impl Error for ComposeEnvironmentsError {
                     fn description(&self) -> &str {
                         match *self {
-                            ComposeEnvironmentsError::TooManyEnvironments(ref cause) => cause,ComposeEnvironmentsError::InsufficientPrivileges(ref cause) => cause,ComposeEnvironmentsError::Validation(ref cause) => cause,ComposeEnvironmentsError::Credentials(ref err) => err.description(),ComposeEnvironmentsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ComposeEnvironmentsError::Unknown(ref cause) => cause
+                            ComposeEnvironmentsError::InsufficientPrivileges(ref cause) => cause,ComposeEnvironmentsError::TooManyEnvironments(ref cause) => cause,ComposeEnvironmentsError::Validation(ref cause) => cause,ComposeEnvironmentsError::Credentials(ref err) => err.description(),ComposeEnvironmentsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ComposeEnvironmentsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7529,16 +7529,16 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateApplicationVersionError {
                     
-///<p>The specified account has reached its limit of applications.</p>
-TooManyApplications(String),
-///<p>The specified account has reached its limit of application versions.</p>
-TooManyApplicationVersions(String),
+///<p>AWS CodeBuild is not available in the specified region.</p>
+CodeBuildNotInServiceRegion(String),
 ///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
 InsufficientPrivileges(String),
 ///<p>The specified S3 bucket does not belong to the S3 region in which the service is running. The following regions are supported:</p> <ul> <li> <p>IAD/us-east-1</p> </li> <li> <p>PDX/us-west-2</p> </li> <li> <p>DUB/eu-west-1</p> </li> </ul>
 S3LocationNotInServiceRegion(String),
-///<p>AWS CodeBuild is not available in the specified region.</p>
-CodeBuildNotInServiceRegion(String),/// An error occurred dispatching the HTTP request
+///<p>The specified account has reached its limit of application versions.</p>
+TooManyApplicationVersions(String),
+///<p>The specified account has reached its limit of applications.</p>
+TooManyApplications(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7555,7 +7555,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyApplicationsException" => CreateApplicationVersionError::TooManyApplications(String::from(parsed_error.message)),"TooManyApplicationVersionsException" => CreateApplicationVersionError::TooManyApplicationVersions(String::from(parsed_error.message)),"InsufficientPrivilegesException" => CreateApplicationVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"S3LocationNotInServiceRegionException" => CreateApplicationVersionError::S3LocationNotInServiceRegion(String::from(parsed_error.message)),"CodeBuildNotInServiceRegionException" => CreateApplicationVersionError::CodeBuildNotInServiceRegion(String::from(parsed_error.message)),_ => CreateApplicationVersionError::Unknown(String::from(body))
+                                    "CodeBuildNotInServiceRegionException" => CreateApplicationVersionError::CodeBuildNotInServiceRegion(String::from(parsed_error.message)),"InsufficientPrivilegesException" => CreateApplicationVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"S3LocationNotInServiceRegionException" => CreateApplicationVersionError::S3LocationNotInServiceRegion(String::from(parsed_error.message)),"TooManyApplicationVersionsException" => CreateApplicationVersionError::TooManyApplicationVersions(String::from(parsed_error.message)),"TooManyApplicationsException" => CreateApplicationVersionError::TooManyApplications(String::from(parsed_error.message)),_ => CreateApplicationVersionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateApplicationVersionError::Unknown(body.to_string())
@@ -7587,7 +7587,7 @@ Unknown(String)
                 impl Error for CreateApplicationVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateApplicationVersionError::TooManyApplications(ref cause) => cause,CreateApplicationVersionError::TooManyApplicationVersions(ref cause) => cause,CreateApplicationVersionError::InsufficientPrivileges(ref cause) => cause,CreateApplicationVersionError::S3LocationNotInServiceRegion(ref cause) => cause,CreateApplicationVersionError::CodeBuildNotInServiceRegion(ref cause) => cause,CreateApplicationVersionError::Validation(ref cause) => cause,CreateApplicationVersionError::Credentials(ref err) => err.description(),CreateApplicationVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateApplicationVersionError::Unknown(ref cause) => cause
+                            CreateApplicationVersionError::CodeBuildNotInServiceRegion(ref cause) => cause,CreateApplicationVersionError::InsufficientPrivileges(ref cause) => cause,CreateApplicationVersionError::S3LocationNotInServiceRegion(ref cause) => cause,CreateApplicationVersionError::TooManyApplicationVersions(ref cause) => cause,CreateApplicationVersionError::TooManyApplications(ref cause) => cause,CreateApplicationVersionError::Validation(ref cause) => cause,CreateApplicationVersionError::Credentials(ref err) => err.description(),CreateApplicationVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateApplicationVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7657,10 +7657,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateEnvironmentError {
                     
-///<p>The specified account has reached its limit of environments.</p>
-TooManyEnvironments(String),
 ///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),/// An error occurred dispatching the HTTP request
+InsufficientPrivileges(String),
+///<p>The specified account has reached its limit of environments.</p>
+TooManyEnvironments(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7677,7 +7677,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyEnvironmentsException" => CreateEnvironmentError::TooManyEnvironments(String::from(parsed_error.message)),"InsufficientPrivilegesException" => CreateEnvironmentError::InsufficientPrivileges(String::from(parsed_error.message)),_ => CreateEnvironmentError::Unknown(String::from(body))
+                                    "InsufficientPrivilegesException" => CreateEnvironmentError::InsufficientPrivileges(String::from(parsed_error.message)),"TooManyEnvironmentsException" => CreateEnvironmentError::TooManyEnvironments(String::from(parsed_error.message)),_ => CreateEnvironmentError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateEnvironmentError::Unknown(body.to_string())
@@ -7709,7 +7709,7 @@ Unknown(String)
                 impl Error for CreateEnvironmentError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateEnvironmentError::TooManyEnvironments(ref cause) => cause,CreateEnvironmentError::InsufficientPrivileges(ref cause) => cause,CreateEnvironmentError::Validation(ref cause) => cause,CreateEnvironmentError::Credentials(ref err) => err.description(),CreateEnvironmentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEnvironmentError::Unknown(ref cause) => cause
+                            CreateEnvironmentError::InsufficientPrivileges(ref cause) => cause,CreateEnvironmentError::TooManyEnvironments(ref cause) => cause,CreateEnvironmentError::Validation(ref cause) => cause,CreateEnvironmentError::Credentials(ref err) => err.description(),CreateEnvironmentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateEnvironmentError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7717,12 +7717,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateStorageLocationError {
                     
-///<p>The specified account has reached its limit of Amazon S3 buckets.</p>
-TooManyBuckets(String),
+///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
+InsufficientPrivileges(String),
 ///<p>The specified account does not have a subscription to Amazon S3.</p>
 S3SubscriptionRequired(String),
-///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),/// An error occurred dispatching the HTTP request
+///<p>The specified account has reached its limit of Amazon S3 buckets.</p>
+TooManyBuckets(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7739,7 +7739,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "TooManyBucketsException" => CreateStorageLocationError::TooManyBuckets(String::from(parsed_error.message)),"S3SubscriptionRequiredException" => CreateStorageLocationError::S3SubscriptionRequired(String::from(parsed_error.message)),"InsufficientPrivilegesException" => CreateStorageLocationError::InsufficientPrivileges(String::from(parsed_error.message)),_ => CreateStorageLocationError::Unknown(String::from(body))
+                                    "InsufficientPrivilegesException" => CreateStorageLocationError::InsufficientPrivileges(String::from(parsed_error.message)),"S3SubscriptionRequiredException" => CreateStorageLocationError::S3SubscriptionRequired(String::from(parsed_error.message)),"TooManyBucketsException" => CreateStorageLocationError::TooManyBuckets(String::from(parsed_error.message)),_ => CreateStorageLocationError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateStorageLocationError::Unknown(body.to_string())
@@ -7771,7 +7771,7 @@ Unknown(String)
                 impl Error for CreateStorageLocationError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateStorageLocationError::TooManyBuckets(ref cause) => cause,CreateStorageLocationError::S3SubscriptionRequired(ref cause) => cause,CreateStorageLocationError::InsufficientPrivileges(ref cause) => cause,CreateStorageLocationError::Validation(ref cause) => cause,CreateStorageLocationError::Credentials(ref err) => err.description(),CreateStorageLocationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStorageLocationError::Unknown(ref cause) => cause
+                            CreateStorageLocationError::InsufficientPrivileges(ref cause) => cause,CreateStorageLocationError::S3SubscriptionRequired(ref cause) => cause,CreateStorageLocationError::TooManyBuckets(ref cause) => cause,CreateStorageLocationError::Validation(ref cause) => cause,CreateStorageLocationError::Credentials(ref err) => err.description(),CreateStorageLocationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateStorageLocationError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -7837,14 +7837,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteApplicationVersionError {
                     
-///<p>Unable to delete the Amazon S3 source bundle associated with the application version. The application version was deleted successfully.</p>
-SourceBundleDeletion(String),
 ///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
 InsufficientPrivileges(String),
 ///<p>Unable to perform the specified operation because another operation that effects an element in this activity is already in progress.</p>
 OperationInProgress(String),
 ///<p>The specified S3 bucket does not belong to the S3 region in which the service is running. The following regions are supported:</p> <ul> <li> <p>IAD/us-east-1</p> </li> <li> <p>PDX/us-west-2</p> </li> <li> <p>DUB/eu-west-1</p> </li> </ul>
-S3LocationNotInServiceRegion(String),/// An error occurred dispatching the HTTP request
+S3LocationNotInServiceRegion(String),
+///<p>Unable to delete the Amazon S3 source bundle associated with the application version. The application version was deleted successfully.</p>
+SourceBundleDeletion(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -7861,7 +7861,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "SourceBundleDeletionException" => DeleteApplicationVersionError::SourceBundleDeletion(String::from(parsed_error.message)),"InsufficientPrivilegesException" => DeleteApplicationVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"OperationInProgressException" => DeleteApplicationVersionError::OperationInProgress(String::from(parsed_error.message)),"S3LocationNotInServiceRegionException" => DeleteApplicationVersionError::S3LocationNotInServiceRegion(String::from(parsed_error.message)),_ => DeleteApplicationVersionError::Unknown(String::from(body))
+                                    "InsufficientPrivilegesException" => DeleteApplicationVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"OperationInProgressException" => DeleteApplicationVersionError::OperationInProgress(String::from(parsed_error.message)),"S3LocationNotInServiceRegionException" => DeleteApplicationVersionError::S3LocationNotInServiceRegion(String::from(parsed_error.message)),"SourceBundleDeletionException" => DeleteApplicationVersionError::SourceBundleDeletion(String::from(parsed_error.message)),_ => DeleteApplicationVersionError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteApplicationVersionError::Unknown(body.to_string())
@@ -7893,7 +7893,7 @@ Unknown(String)
                 impl Error for DeleteApplicationVersionError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteApplicationVersionError::SourceBundleDeletion(ref cause) => cause,DeleteApplicationVersionError::InsufficientPrivileges(ref cause) => cause,DeleteApplicationVersionError::OperationInProgress(ref cause) => cause,DeleteApplicationVersionError::S3LocationNotInServiceRegion(ref cause) => cause,DeleteApplicationVersionError::Validation(ref cause) => cause,DeleteApplicationVersionError::Credentials(ref err) => err.description(),DeleteApplicationVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteApplicationVersionError::Unknown(ref cause) => cause
+                            DeleteApplicationVersionError::InsufficientPrivileges(ref cause) => cause,DeleteApplicationVersionError::OperationInProgress(ref cause) => cause,DeleteApplicationVersionError::S3LocationNotInServiceRegion(ref cause) => cause,DeleteApplicationVersionError::SourceBundleDeletion(ref cause) => cause,DeleteApplicationVersionError::Validation(ref cause) => cause,DeleteApplicationVersionError::Credentials(ref err) => err.description(),DeleteApplicationVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteApplicationVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8243,10 +8243,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeEnvironmentHealthError {
                     
-///<p>One or more input parameters is not valid. Please correct the input parameters and try the operation again.</p>
-InvalidRequest(String),
 ///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),/// An error occurred dispatching the HTTP request
+ElasticBeanstalkService(String),
+///<p>One or more input parameters is not valid. Please correct the input parameters and try the operation again.</p>
+InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8263,7 +8263,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidRequestException" => DescribeEnvironmentHealthError::InvalidRequest(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => DescribeEnvironmentHealthError::ElasticBeanstalkService(String::from(parsed_error.message)),_ => DescribeEnvironmentHealthError::Unknown(String::from(body))
+                                    "ElasticBeanstalkServiceException" => DescribeEnvironmentHealthError::ElasticBeanstalkService(String::from(parsed_error.message)),"InvalidRequestException" => DescribeEnvironmentHealthError::InvalidRequest(String::from(parsed_error.message)),_ => DescribeEnvironmentHealthError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeEnvironmentHealthError::Unknown(body.to_string())
@@ -8295,7 +8295,7 @@ Unknown(String)
                 impl Error for DescribeEnvironmentHealthError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeEnvironmentHealthError::InvalidRequest(ref cause) => cause,DescribeEnvironmentHealthError::ElasticBeanstalkService(ref cause) => cause,DescribeEnvironmentHealthError::Validation(ref cause) => cause,DescribeEnvironmentHealthError::Credentials(ref err) => err.description(),DescribeEnvironmentHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEnvironmentHealthError::Unknown(ref cause) => cause
+                            DescribeEnvironmentHealthError::ElasticBeanstalkService(ref cause) => cause,DescribeEnvironmentHealthError::InvalidRequest(ref cause) => cause,DescribeEnvironmentHealthError::Validation(ref cause) => cause,DescribeEnvironmentHealthError::Credentials(ref err) => err.description(),DescribeEnvironmentHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeEnvironmentHealthError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -8589,10 +8589,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DescribeInstancesHealthError {
                     
-///<p>One or more input parameters is not valid. Please correct the input parameters and try the operation again.</p>
-InvalidRequest(String),
 ///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),/// An error occurred dispatching the HTTP request
+ElasticBeanstalkService(String),
+///<p>One or more input parameters is not valid. Please correct the input parameters and try the operation again.</p>
+InvalidRequest(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -8609,7 +8609,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "InvalidRequestException" => DescribeInstancesHealthError::InvalidRequest(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => DescribeInstancesHealthError::ElasticBeanstalkService(String::from(parsed_error.message)),_ => DescribeInstancesHealthError::Unknown(String::from(body))
+                                    "ElasticBeanstalkServiceException" => DescribeInstancesHealthError::ElasticBeanstalkService(String::from(parsed_error.message)),"InvalidRequestException" => DescribeInstancesHealthError::InvalidRequest(String::from(parsed_error.message)),_ => DescribeInstancesHealthError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DescribeInstancesHealthError::Unknown(body.to_string())
@@ -8641,7 +8641,7 @@ Unknown(String)
                 impl Error for DescribeInstancesHealthError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeInstancesHealthError::InvalidRequest(ref cause) => cause,DescribeInstancesHealthError::ElasticBeanstalkService(ref cause) => cause,DescribeInstancesHealthError::Validation(ref cause) => cause,DescribeInstancesHealthError::Credentials(ref err) => err.description(),DescribeInstancesHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstancesHealthError::Unknown(ref cause) => cause
+                            DescribeInstancesHealthError::ElasticBeanstalkService(ref cause) => cause,DescribeInstancesHealthError::InvalidRequest(ref cause) => cause,DescribeInstancesHealthError::Validation(ref cause) => cause,DescribeInstancesHealthError::Credentials(ref err) => err.description(),DescribeInstancesHealthError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeInstancesHealthError::Unknown(ref cause) => cause
                         }
                     }
                  }

@@ -621,12 +621,12 @@ pub type WorkspaceState = String;
                 #[derive(Debug, PartialEq)]
                 pub enum CreateTagsError {
                     
-///<p>The resource could not be found.</p>
-ResourceNotFound(String),
 ///<p>One or more parameter values are not valid.</p>
 InvalidParameterValues(String),
 ///<p>Your resource limits have been exceeded.</p>
-ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
+ResourceLimitExceeded(String),
+///<p>The resource could not be found.</p>
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -645,7 +645,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => CreateTagsError::ResourceNotFound(String::from(error_message)),"InvalidParameterValuesException" => CreateTagsError::InvalidParameterValues(String::from(error_message)),"ResourceLimitExceededException" => CreateTagsError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => CreateTagsError::Validation(error_message.to_string()),_ => CreateTagsError::Unknown(String::from(body))
+                                    "InvalidParameterValuesException" => CreateTagsError::InvalidParameterValues(String::from(error_message)),"ResourceLimitExceededException" => CreateTagsError::ResourceLimitExceeded(String::from(error_message)),"ResourceNotFoundException" => CreateTagsError::ResourceNotFound(String::from(error_message)),"ValidationException" => CreateTagsError::Validation(error_message.to_string()),_ => CreateTagsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateTagsError::Unknown(String::from(body))
@@ -676,7 +676,7 @@ Unknown(String)
                 impl Error for CreateTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateTagsError::ResourceNotFound(ref cause) => cause,CreateTagsError::InvalidParameterValues(ref cause) => cause,CreateTagsError::ResourceLimitExceeded(ref cause) => cause,CreateTagsError::Validation(ref cause) => cause,CreateTagsError::Credentials(ref err) => err.description(),CreateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTagsError::Unknown(ref cause) => cause
+                            CreateTagsError::InvalidParameterValues(ref cause) => cause,CreateTagsError::ResourceLimitExceeded(ref cause) => cause,CreateTagsError::ResourceNotFound(ref cause) => cause,CreateTagsError::Validation(ref cause) => cause,CreateTagsError::Credentials(ref err) => err.description(),CreateTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -684,10 +684,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateWorkspacesError {
                     
-///<p>Your resource limits have been exceeded.</p>
-ResourceLimitExceeded(String),
 ///<p>One or more parameter values are not valid.</p>
-InvalidParameterValues(String),/// An error occurred dispatching the HTTP request
+InvalidParameterValues(String),
+///<p>Your resource limits have been exceeded.</p>
+ResourceLimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -706,7 +706,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceLimitExceededException" => CreateWorkspacesError::ResourceLimitExceeded(String::from(error_message)),"InvalidParameterValuesException" => CreateWorkspacesError::InvalidParameterValues(String::from(error_message)),"ValidationException" => CreateWorkspacesError::Validation(error_message.to_string()),_ => CreateWorkspacesError::Unknown(String::from(body))
+                                    "InvalidParameterValuesException" => CreateWorkspacesError::InvalidParameterValues(String::from(error_message)),"ResourceLimitExceededException" => CreateWorkspacesError::ResourceLimitExceeded(String::from(error_message)),"ValidationException" => CreateWorkspacesError::Validation(error_message.to_string()),_ => CreateWorkspacesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateWorkspacesError::Unknown(String::from(body))
@@ -737,7 +737,7 @@ Unknown(String)
                 impl Error for CreateWorkspacesError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateWorkspacesError::ResourceLimitExceeded(ref cause) => cause,CreateWorkspacesError::InvalidParameterValues(ref cause) => cause,CreateWorkspacesError::Validation(ref cause) => cause,CreateWorkspacesError::Credentials(ref err) => err.description(),CreateWorkspacesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateWorkspacesError::Unknown(ref cause) => cause
+                            CreateWorkspacesError::InvalidParameterValues(ref cause) => cause,CreateWorkspacesError::ResourceLimitExceeded(ref cause) => cause,CreateWorkspacesError::Validation(ref cause) => cause,CreateWorkspacesError::Credentials(ref err) => err.description(),CreateWorkspacesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateWorkspacesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -745,10 +745,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeleteTagsError {
                     
-///<p>The resource could not be found.</p>
-ResourceNotFound(String),
 ///<p>One or more parameter values are not valid.</p>
-InvalidParameterValues(String),/// An error occurred dispatching the HTTP request
+InvalidParameterValues(String),
+///<p>The resource could not be found.</p>
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -767,7 +767,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => DeleteTagsError::ResourceNotFound(String::from(error_message)),"InvalidParameterValuesException" => DeleteTagsError::InvalidParameterValues(String::from(error_message)),"ValidationException" => DeleteTagsError::Validation(error_message.to_string()),_ => DeleteTagsError::Unknown(String::from(body))
+                                    "InvalidParameterValuesException" => DeleteTagsError::InvalidParameterValues(String::from(error_message)),"ResourceNotFoundException" => DeleteTagsError::ResourceNotFound(String::from(error_message)),"ValidationException" => DeleteTagsError::Validation(error_message.to_string()),_ => DeleteTagsError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteTagsError::Unknown(String::from(body))
@@ -798,7 +798,7 @@ Unknown(String)
                 impl Error for DeleteTagsError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteTagsError::ResourceNotFound(ref cause) => cause,DeleteTagsError::InvalidParameterValues(ref cause) => cause,DeleteTagsError::Validation(ref cause) => cause,DeleteTagsError::Credentials(ref err) => err.description(),DeleteTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTagsError::Unknown(ref cause) => cause
+                            DeleteTagsError::InvalidParameterValues(ref cause) => cause,DeleteTagsError::ResourceNotFound(ref cause) => cause,DeleteTagsError::Validation(ref cause) => cause,DeleteTagsError::Credentials(ref err) => err.description(),DeleteTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteTagsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -1103,20 +1103,20 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyWorkspacePropertiesError {
                     
+///
+AccessDenied(String),
 ///<p>One or more parameter values are not valid.</p>
 InvalidParameterValues(String),
 ///<p>The specified WorkSpace has an invalid state for this operation.</p>
 InvalidResourceState(String),
 ///<p>The properties of this WorkSpace are currently being modified. Try again in a moment.</p>
 OperationInProgress(String),
-///<p>The WorkSpace does not have the supported configuration for this operation. For more information, see the <a href="http://docs.aws.amazon.com/workspaces/latest/adminguide">Amazon WorkSpaces Administration Guide</a>. </p>
-UnsupportedWorkspaceConfiguration(String),
 ///<p>The resource could not be found.</p>
 ResourceNotFound(String),
-///
-AccessDenied(String),
 ///<p>The specified resource is not available.</p>
-ResourceUnavailable(String),/// An error occurred dispatching the HTTP request
+ResourceUnavailable(String),
+///<p>The WorkSpace does not have the supported configuration for this operation. For more information, see the <a href="http://docs.aws.amazon.com/workspaces/latest/adminguide">Amazon WorkSpaces Administration Guide</a>. </p>
+UnsupportedWorkspaceConfiguration(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -1135,7 +1135,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidParameterValuesException" => ModifyWorkspacePropertiesError::InvalidParameterValues(String::from(error_message)),"InvalidResourceStateException" => ModifyWorkspacePropertiesError::InvalidResourceState(String::from(error_message)),"OperationInProgressException" => ModifyWorkspacePropertiesError::OperationInProgress(String::from(error_message)),"UnsupportedWorkspaceConfigurationException" => ModifyWorkspacePropertiesError::UnsupportedWorkspaceConfiguration(String::from(error_message)),"ResourceNotFoundException" => ModifyWorkspacePropertiesError::ResourceNotFound(String::from(error_message)),"AccessDeniedException" => ModifyWorkspacePropertiesError::AccessDenied(String::from(error_message)),"ResourceUnavailableException" => ModifyWorkspacePropertiesError::ResourceUnavailable(String::from(error_message)),"ValidationException" => ModifyWorkspacePropertiesError::Validation(error_message.to_string()),_ => ModifyWorkspacePropertiesError::Unknown(String::from(body))
+                                    "AccessDeniedException" => ModifyWorkspacePropertiesError::AccessDenied(String::from(error_message)),"InvalidParameterValuesException" => ModifyWorkspacePropertiesError::InvalidParameterValues(String::from(error_message)),"InvalidResourceStateException" => ModifyWorkspacePropertiesError::InvalidResourceState(String::from(error_message)),"OperationInProgressException" => ModifyWorkspacePropertiesError::OperationInProgress(String::from(error_message)),"ResourceNotFoundException" => ModifyWorkspacePropertiesError::ResourceNotFound(String::from(error_message)),"ResourceUnavailableException" => ModifyWorkspacePropertiesError::ResourceUnavailable(String::from(error_message)),"UnsupportedWorkspaceConfigurationException" => ModifyWorkspacePropertiesError::UnsupportedWorkspaceConfiguration(String::from(error_message)),"ValidationException" => ModifyWorkspacePropertiesError::Validation(error_message.to_string()),_ => ModifyWorkspacePropertiesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ModifyWorkspacePropertiesError::Unknown(String::from(body))
@@ -1166,7 +1166,7 @@ Unknown(String)
                 impl Error for ModifyWorkspacePropertiesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ModifyWorkspacePropertiesError::InvalidParameterValues(ref cause) => cause,ModifyWorkspacePropertiesError::InvalidResourceState(ref cause) => cause,ModifyWorkspacePropertiesError::OperationInProgress(ref cause) => cause,ModifyWorkspacePropertiesError::UnsupportedWorkspaceConfiguration(ref cause) => cause,ModifyWorkspacePropertiesError::ResourceNotFound(ref cause) => cause,ModifyWorkspacePropertiesError::AccessDenied(ref cause) => cause,ModifyWorkspacePropertiesError::ResourceUnavailable(ref cause) => cause,ModifyWorkspacePropertiesError::Validation(ref cause) => cause,ModifyWorkspacePropertiesError::Credentials(ref err) => err.description(),ModifyWorkspacePropertiesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyWorkspacePropertiesError::Unknown(ref cause) => cause
+                            ModifyWorkspacePropertiesError::AccessDenied(ref cause) => cause,ModifyWorkspacePropertiesError::InvalidParameterValues(ref cause) => cause,ModifyWorkspacePropertiesError::InvalidResourceState(ref cause) => cause,ModifyWorkspacePropertiesError::OperationInProgress(ref cause) => cause,ModifyWorkspacePropertiesError::ResourceNotFound(ref cause) => cause,ModifyWorkspacePropertiesError::ResourceUnavailable(ref cause) => cause,ModifyWorkspacePropertiesError::UnsupportedWorkspaceConfiguration(ref cause) => cause,ModifyWorkspacePropertiesError::Validation(ref cause) => cause,ModifyWorkspacePropertiesError::Credentials(ref err) => err.description(),ModifyWorkspacePropertiesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyWorkspacePropertiesError::Unknown(ref cause) => cause
                         }
                     }
                  }
