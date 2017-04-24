@@ -2,14 +2,14 @@
 
 extern crate chrono;
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 
 use std::fs::File;
 use std::io::Read;
 use std::collections::HashMap;
 
-use rusoto::{DispatchSignedRequest, HttpResponse, HttpDispatchError, SignedRequest};
-use rusoto::{ProvideAwsCredentials, CredentialsError, AwsCredentials};
+use rusoto_core::{DispatchSignedRequest, HttpResponse, HttpDispatchError, SignedRequest};
+use rusoto_core::{ProvideAwsCredentials, CredentialsError, AwsCredentials};
 use chrono::{Duration, UTC};
 use hyper::status::StatusCode;
 
