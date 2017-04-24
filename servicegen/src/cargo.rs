@@ -1,20 +1,20 @@
 use toml;
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize)]
 pub struct Manifest {
     pub package: Metadata,
-    pub badges: Option<HashMap<String, Badge>>,
+    pub badges: Option<BTreeMap<String, Badge>>,
     #[serde(rename="build-dependencies")]
     #[serde(serialize_with = "toml::ser::tables_last")]
-    pub build_dependencies: HashMap<String, Dependency>,
+    pub build_dependencies: BTreeMap<String, Dependency>,
     #[serde(serialize_with = "toml::ser::tables_last")]
-    pub dependencies: HashMap<String, Dependency>,
+    pub dependencies: BTreeMap<String, Dependency>,
     #[serde(rename="dev-dependencies")]
     #[serde(serialize_with = "toml::ser::tables_last")]
-    pub dev_dependencies: HashMap<String, Dependency>,
-    pub features: Option<HashMap<String, Vec<String>>>
+    pub dev_dependencies: BTreeMap<String, Dependency>,
+    pub features: Option<BTreeMap<String, Vec<String>>>
 }
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize)]

@@ -10,7 +10,7 @@ extern crate toml;
 
 mod cargo;
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fs::{self, OpenOptions};
 use std::io::{self, Read, Write, BufWriter};
 use std::path::Path;
@@ -21,8 +21,8 @@ use clap::{Arg, App};
 
 use rusoto_codegen::botocore::Service;
 
-fn get_dependencies(service: &Service, core_version: &str) -> HashMap<String, cargo::Dependency> {
-    let mut dependencies = HashMap::new();
+fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, cargo::Dependency> {
+    let mut dependencies = BTreeMap::new();
 
     dependencies.insert("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into()));
 

@@ -13,10 +13,10 @@ homepage = "https://www.rusoto.org/"
 [build-dependencies]
 
 [dependencies]
-serde_json = "0.9.4"
-serde_derive = "0.9.5"
 hyper = "0.10.0"
 serde = "0.9.5"
+serde_derive = "0.9.5"
+serde_json = "0.9.4"
 
 [dependencies.rusoto]
 version = "0.24.0"

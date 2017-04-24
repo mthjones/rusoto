@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fs;
 use std::io::Write;
 use std::path::Path;
@@ -25,7 +25,7 @@ pub fn generate_tests(writer: &mut FileWriter, service: &Service) -> IoResult {
 }
 
 fn generate_tests_body(service: &Service) -> Option<String> {
-    let responses: HashMap<String, Response> = find_responses();
+    let responses: BTreeMap<String, Response> = find_responses();
 
     let our_responses: Vec<Response> = responses.values()
         .into_iter()
@@ -143,8 +143,8 @@ pub fn find_responses_in_dir(dir_path: &Path) -> Vec<Response> {
         .collect()
 }
 
-pub fn find_responses() -> HashMap<String, Response> {
-    let mut responses = HashMap::new();
+pub fn find_responses() -> BTreeMap<String, Response> {
+    let mut responses = BTreeMap::new();
 
     for r in find_responses_in_dir(Path::new(BOTOCORE_TESTS_DIR)) {
         responses.insert(r.file_name.clone(), r);
