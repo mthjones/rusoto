@@ -48,122 +48,121 @@ extern crate rusoto_core;
 pub use rusoto_core::*;
 
 #[cfg(feature = "acm")]
-pub extern crate rusoto_acm;
+pub extern crate rusoto_acm as acm;
 #[cfg(feature = "autoscaling")]
-pub extern crate rusoto_autoscaling;
-#[allow(unused_imports)]
+pub extern crate rusoto_autoscaling as autoscaling;
 #[cfg(feature = "cloudformation")]
-pub extern crate rusoto_cloudformation;
+pub extern crate rusoto_cloudformation as cloudformation;
 #[cfg(feature = "cloudfront")]
-pub extern crate rusoto_cloudfront;
+pub extern crate rusoto_cloudfront as cloudfront;
 #[cfg(feature = "cloudhsm")]
-pub extern crate rusoto_cloudhsm;
+pub extern crate rusoto_cloudhsm as cloudhsm;
 #[cfg(feature = "cloudsearch")]
-pub extern crate rusoto_cloudsearch;
+pub extern crate rusoto_cloudsearch as cloudsearch;
 #[cfg(feature = "cloudtrail")]
-pub extern crate rusoto_cloudtrail;
+pub extern crate rusoto_cloudtrail as cloudtrail;
 #[cfg(feature = "cloudwatch")]
-pub extern crate rusoto_cloudwatch;
+pub extern crate rusoto_cloudwatch as cloudwatch;
 #[cfg(feature = "codecommit")]
-pub extern crate rusoto_codecommit;
+pub extern crate rusoto_codecommit as codecommit;
 #[cfg(feature = "codedeploy")]
-pub extern crate rusoto_codedeploy;
+pub extern crate rusoto_codedeploy as codedeploy;
 #[cfg(feature = "codepipeline")]
-pub extern crate rusoto_codepipeline;
+pub extern crate rusoto_codepipeline as codepipeline;
 #[cfg(feature = "cognito-identity")]
-pub extern crate rusoto_cognito_identity;
+pub extern crate rusoto_cognito_identity as cognitoidentity;
 #[cfg(feature = "config")]
-pub extern crate rusoto_config;
+pub extern crate rusoto_config as config;
 #[cfg(feature = "datapipeline")]
-pub extern crate rusoto_datapipeline;
+pub extern crate rusoto_datapipeline as datapipeline;
 #[cfg(feature = "devicefarm")]
-pub extern crate rusoto_devicefarm;
+pub extern crate rusoto_devicefarm as devicefarm;
 #[cfg(feature = "directconnect")]
-pub extern crate rusoto_directconnect;
+pub extern crate rusoto_directconnect as directconnect;
 #[cfg(feature = "ds")]
-pub extern crate rusoto_ds;
+pub extern crate rusoto_ds as ds;
 #[cfg(feature = "dynamodb")]
-pub extern crate rusoto_dynamodb;
+pub extern crate rusoto_dynamodb as dynamodb;
 #[cfg(feature = "dynamodbstreams")]
-pub extern crate rusoto_dynamodbstreams;
+pub extern crate rusoto_dynamodbstreams as dynamodbstreams;
 #[cfg(feature = "ec2")]
-pub extern crate rusoto_ec2;
+pub extern crate rusoto_ec2 as ec2;
 #[cfg(feature = "ecr")]
-pub extern crate rusoto_ecr;
+pub extern crate rusoto_ecr as ecr;
 #[cfg(feature = "ecs")]
-pub extern crate rusoto_ecs;
+pub extern crate rusoto_ecs as ecs;
 #[cfg(feature = "emr")]
-pub extern crate rusoto_emr;
+pub extern crate rusoto_emr as emr;
 #[cfg(feature = "elasticache")]
-pub extern crate rusoto_elasticache;
+pub extern crate rusoto_elasticache as elasticache;
 #[cfg(feature = "elasticbeanstalk")]
-pub extern crate rusoto_elasticbeanstalk;
+pub extern crate rusoto_elasticbeanstalk as elasticbeanstalk;
 #[cfg(feature = "elastictranscoder")]
-pub extern crate rusoto_elastictranscoder;
+pub extern crate rusoto_elastictranscoder as elastictranscoder;
 #[cfg(feature = "elb")]
-pub extern crate rusoto_elb;
+pub extern crate rusoto_elb as elb;
 #[cfg(feature = "elbv2")]
-pub extern crate rusoto_elbv2;
+pub extern crate rusoto_elbv2 as elbv2;
 #[cfg(feature = "events")]
-pub extern crate rusoto_events;
+pub extern crate rusoto_events as events;
 #[cfg(feature = "firehose")]
-pub extern crate rusoto_firehose;
+pub extern crate rusoto_firehose as firehose;
 #[cfg(feature = "iam")]
-pub extern crate rusoto_iam;
+pub extern crate rusoto_iam as iam;
 #[cfg(feature = "importexport")]
-pub extern crate rusoto_importexport;
+pub extern crate rusoto_importexport as importexport;
 #[cfg(feature = "inspector")]
-pub extern crate rusoto_inspector;
+pub extern crate rusoto_inspector as inspector;
 #[cfg(feature = "iot")]
-pub extern crate rusoto_iot;
+pub extern crate rusoto_iot as iot;
 #[cfg(feature = "kinesis")]
-pub extern crate rusoto_kinesis;
+pub extern crate rusoto_kinesis as kinesis;
 #[cfg(feature = "kms")]
-pub extern crate rusoto_kms;
+pub extern crate rusoto_kms as kms;
 #[cfg(feature = "lambda")]
-pub extern crate rusoto_lambda;
+pub extern crate rusoto_lambda as lambda;
 #[cfg(feature = "logs")]
-pub extern crate rusoto_logs;
+pub extern crate rusoto_logs as logs;
 #[cfg(feature = "machinelearning")]
-pub extern crate rusoto_machinelearning;
+pub extern crate rusoto_machinelearning as machinelearning;
 #[cfg(feature = "marketplacecommerceanalytics")]
-pub extern crate rusoto_marketplacecommerceanalytics;
+pub extern crate rusoto_marketplacecommerceanalytics as marketplacecommerceanalytics;
 #[cfg(feature = "opsworks")]
-pub extern crate rusoto_opsworks;
+pub extern crate rusoto_opsworks as opsworks;
 #[cfg(feature = "redshift")]
-pub extern crate rusoto_redshift;
+pub extern crate rusoto_redshift as redshift;
 #[cfg(feature = "rds")]
-pub extern crate rusoto_rds;
+pub extern crate rusoto_rds as rds;
 #[cfg(feature = "route53")]
-pub extern crate rusoto_route53;
+pub extern crate rusoto_route53 as route53;
 #[cfg(feature = "route53domains")]
-pub extern crate rusoto_route53domains;
+pub extern crate rusoto_route53domains as route53domains;
 #[cfg(feature = "s3")]
-pub extern crate rusoto_s3;
+pub extern crate rusoto_s3 as s3;
 #[cfg(feature = "sdb")]
-pub extern crate rusoto_sdb;
+pub extern crate rusoto_sdb as sdb;
 #[cfg(feature = "ses")]
-pub extern crate rusoto_ses;
+pub extern crate rusoto_ses as ses;
 #[cfg(feature = "sns")]
-pub extern crate rusoto_sns;
+pub extern crate rusoto_sns as sns;
 #[cfg(feature = "sqs")]
-pub extern crate rusoto_sqs;
+pub extern crate rusoto_sqs as sqs;
 #[cfg(feature = "ssm")]
-pub extern crate rusoto_ssm;
+pub extern crate rusoto_ssm as ssm;
 #[cfg(feature = "storagegateway")]
-pub extern crate rusoto_storagegateway;
+pub extern crate rusoto_storagegateway as storagegateway;
 #[cfg(feature = "sts")]
-pub extern crate rusoto_sts;
+pub extern crate rusoto_sts as sts;
 #[cfg(feature = "swf")]
-pub extern crate rusoto_swf;
+pub extern crate rusoto_swf as swf;
 #[cfg(feature = "waf")]
-pub extern crate rusoto_waf;
+pub extern crate rusoto_waf as waf;
 #[cfg(feature = "workspaces")]
-pub extern crate rusoto_workspaces;
+pub extern crate rusoto_workspaces as workspaces;
 
 /*
 #[cfg(feature = "gamelift")]
-pub extern crate rusoto_gamelift;
+pub extern crate rusoto_gamelift as gamelift;
 #[cfg(feature = "support")]
-pub extern crate rusoto_support;
+pub extern crate rusoto_support as support;
 */
