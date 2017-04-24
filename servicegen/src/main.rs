@@ -130,25 +130,25 @@ fn main() {
 
     fs::create_dir(out_dir).expect("Unable to create output directory");
     
-    let services: Vec<io::Result<Service>> = matches.values_of("services").unwrap().map(|s| {
+    let services: Vec<(String, io::Result<Service>)> = matches.values_of("services").unwrap().map(|s| {
         let mut service_parts = s.splitn(2, "@");
-        let name = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s));
+        let name = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s)).to_owned();
         if let Some(version) = service_parts.next() {
-            Service::load(name, version)
+            (name.clone(), Service::load(&name, version))
         } else {
-            Service::load_latest(name)
+            (name.clone(), Service::load_latest(&name))
         }
     }).collect();
 
-    services.par_iter().for_each(|service| {
+    services.par_iter().for_each(|&(ref name, ref service)| {
         if let Err(ref e) = *service {
-            println!("Failed to load service: {}", e);
+            println!("Failed to load service {}: {}", name, e);
             return;
         }
         
         let service = service.as_ref().unwrap();
 
-        let crate_dir = out_dir.join(&service.metadata.endpoint_prefix);
+        let crate_dir = out_dir.join(&name);
 
         println!("Generating crate for {} @ {}...", service.metadata.service_full_name, service.metadata.api_version);
 
@@ -168,12 +168,12 @@ fn main() {
                     "Matthew Mayer <matthewkmayer@gmail.com>".into(),
                     "Nikita Pekin <contact@nikitapek.in>".into()
                 ]),
-                description: Some(format!("AWS SDK for Rust - {}", &service.metadata.service_full_name)),
+                description: Some(format!("AWS SDK for Rust - {} @ {}", &service.metadata.service_full_name, &service.metadata.api_version)),
                 documentation: Some("http://rusoto.github.io/rusoto/rusoto/index.html".into()),
-                keywords: Some(vec!["AWS".into(), "Amazon".into(), service.metadata.service_full_name.clone(), service.metadata.endpoint_prefix.clone()]),
+                keywords: Some(vec!["AWS".into(), "Amazon".into(), name.clone(), service.metadata.service_full_name.clone(), service.metadata.endpoint_prefix.clone()]),
                 license: Some("MIT".into()),
-                name: format!("rusoto_{}", &service.metadata.endpoint_prefix),
-                readme: Some("README.md".into()),
+                name: format!("rusoto_{}", &name),
+                readme: None,
                 repository: Some("https://github.com/rusoto/rusoto".into()),
                 version: version.clone(),
                 homepage: Some("https://www.rusoto.org/".into()),
