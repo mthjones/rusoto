@@ -1,4 +1,4 @@
-use std::collections::{HashSet, BTreeMap};
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::Path;
@@ -164,7 +164,7 @@ pub struct Output {
     pub shape: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Deserialize, PartialEq, Eq)]
 pub struct Error {
     pub documentation: Option<String>,
     pub error: Option<HttpError>,
@@ -179,7 +179,7 @@ impl Error {
     }
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Deserialize, PartialEq, Eq)]
 pub struct HttpError {
     pub code: Option<String>,
     #[serde(rename="httpStatusCode")]
@@ -369,7 +369,7 @@ impl<'a> Operation {
 
     // botocore duplicates errors in a few places
     // return a unique set
-    pub fn errors(&'a self) -> HashSet<&'a Error> {
+    pub fn errors(&'a self) -> Vec<&'a Error> {
         self.errors.as_ref().unwrap().iter().collect()
     }
 }
