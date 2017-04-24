@@ -1,0 +1,489 @@
+[package]
+authors = [
+    "Anthony DiMarco <ocramida@gmail.com>",
+    "Jimmy Cuadra <jimmy@jimmycuadra.com>",
+    "Matthew Mayer <matthewkmayer@gmail.com>",
+    "Nikita Pekin <contact@nikitapek.in>"
+]
+description = "AWS SDK for Rust"
+documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
+exclude = [".gitignore", ".travis.yml", "docgen.sh", "helpers/**/*", "codegen/**/*"]
+keywords = ["AWS", "Amazon"]
+license = "MIT"
+name = "rusoto"
+readme = "README.md"
+repository = "https://github.com/rusoto/rusoto"
+version = "0.24.0"
+homepage = "https://www.rusoto.org/"
+
+[badges]
+travis-ci = { repository = "rusoto/rusoto", branch = "master" }
+appveyor = { repository = "rusoto/rusoto", branch = "master" }
+
+[dependencies.rusoto_core]
+path = "core"
+version = "0.24.0"
+
+[dependencies.rusoto_acm]
+optional = true
+path = "../services/acm"
+version = "0.24.0"
+
+[dependencies.rusoto_autoscaling]
+optional = true
+path = "../services/autoscaling"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudformation]
+optional = true
+path = "../services/cloudformation"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudfront]
+optional = true
+path = "../services/cloudfront"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudhsm]
+optional = true
+path = "../services/cloudhsm"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudsearch]
+optional = true
+path = "../services/cloudsearch"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudtrail]
+optional = true
+path = "../services/cloudtrail"
+version = "0.24.0"
+
+[dependencies.rusoto_cloudwatch]
+optional = true
+path = "../services/cloudwatch"
+version = "0.24.0"
+
+[dependencies.rusoto_codecommit]
+optional = true
+path = "../services/codecommit"
+version = "0.24.0"
+
+[dependencies.rusoto_codedeploy]
+optional = true
+path = "../services/codedeploy"
+version = "0.24.0"
+
+[dependencies.rusoto_codepipeline]
+optional = true
+path = "../services/codepipeline"
+version = "0.24.0"
+
+[dependencies.rusoto_cognito-identity]
+optional = true
+path = "../services/cognito-identity"
+version = "0.24.0"
+
+[dependencies.rusoto_config]
+optional = true
+path = "../services/config"
+version = "0.24.0"
+
+[dependencies.rusoto_datapipeline]
+optional = true
+path = "../services/datapipeline"
+version = "0.24.0"
+
+[dependencies.rusoto_devicefarm]
+optional = true
+path = "../services/devicefarm"
+version = "0.24.0"
+
+[dependencies.rusoto_directconnect]
+optional = true
+path = "../services/directconnect"
+version = "0.24.0"
+
+[dependencies.rusoto_ds]
+optional = true
+path = "../services/ds"
+version = "0.24.0"
+
+[dependencies.rusoto_dynamodb]
+optional = true
+path = "../services/dynamodb"
+version = "0.24.0"
+
+[dependencies.rusoto_dynamodbstreams]
+optional = true
+path = "../services/dynamodbstreams"
+version = "0.24.0"
+
+[dependencies.rusoto_ec2]
+optional = true
+path = "../services/ec2"
+version = "0.24.0"
+
+[dependencies.rusoto_ecr]
+optional = true
+path = "../services/ecr"
+version = "0.24.0"
+
+[dependencies.rusoto_ecs]
+optional = true
+path = "../services/ecs"
+version = "0.24.0"
+
+[dependencies.rusoto_elasticache]
+optional = true
+path = "../services/elasticache"
+version = "0.24.0"
+
+[dependencies.rusoto_elasticbeanstalk]
+optional = true
+path = "../services/elasticbeanstalk"
+version = "0.24.0"
+
+[dependencies.rusoto_elastictranscoder]
+optional = true
+path = "../services/elastictranscoder"
+version = "0.24.0"
+
+[dependencies.rusoto_elb]
+optional = true
+path = "../services/elb"
+version = "0.24.0"
+
+[dependencies.rusoto_elbv2]
+optional = true
+path = "../services/elbv2"
+version = "0.24.0"
+
+[dependencies.rusoto_emr]
+optional = true
+path = "../services/emr"
+version = "0.24.0"
+
+[dependencies.rusoto_events]
+optional = true
+path = "../services/events"
+version = "0.24.0"
+
+[dependencies.rusoto_firehose]
+optional = true
+path = "../services/firehose"
+version = "0.24.0"
+
+[dependencies.rusoto_iam]
+optional = true
+path = "../services/iam"
+version = "0.24.0"
+
+[dependencies.rusoto_importexport]
+optional = true
+path = "../services/importexport"
+version = "0.24.0"
+
+[dependencies.rusoto_inspector]
+optional = true
+path = "../services/inspector"
+version = "0.24.0"
+
+[dependencies.rusoto_iot]
+optional = true
+path = "../services/iot"
+version = "0.24.0"
+
+[dependencies.rusoto_kinesis]
+optional = true
+path = "../services/kinesis"
+version = "0.24.0"
+
+[dependencies.rusoto_kms]
+optional = true
+path = "../services/kms"
+version = "0.24.0"
+
+[dependencies.rusoto_lambda]
+optional = true
+path = "../services/lambda"
+version = "0.24.0"
+
+[dependencies.rusoto_logs]
+optional = true
+path = "../services/logs"
+version = "0.24.0"
+
+[dependencies.rusoto_machinelearning]
+optional = true
+path = "../services/machinelearning"
+version = "0.24.0"
+
+[dependencies.rusoto_marketplacecommerceanalytics]
+optional = true
+path = "../services/marketplacecommerceanalytics"
+version = "0.24.0"
+
+[dependencies.rusoto_opsworks]
+optional = true
+path = "../services/opsworks"
+version = "0.24.0"
+
+[dependencies.rusoto_redshift]
+optional = true
+path = "../services/redshift"
+version = "0.24.0"
+
+[dependencies.rusoto_rds]
+optional = true
+path = "../services/rds"
+version = "0.24.0"
+
+[dependencies.rusoto_route53]
+optional = true
+path = "../services/route53"
+version = "0.24.0"
+
+[dependencies.rusoto_route53domains]
+optional = true
+path = "../services/route53domains"
+version = "0.24.0"
+
+[dependencies.rusoto_s3]
+optional = true
+path = "../services/s3"
+version = "0.24.0"
+
+[dependencies.rusoto_sdb]
+optional = true
+path = "../services/sdb"
+version = "0.24.0"
+
+[dependencies.rusoto_ses]
+optional = true
+path = "../services/ses"
+version = "0.24.0"
+
+[dependencies.rusoto_sns]
+optional = true
+path = "../services/sns"
+version = "0.24.0"
+
+[dependencies.rusoto_sqs]
+optional = true
+path = "../services/sqs"
+version = "0.24.0"
+
+[dependencies.rusoto_ssm]
+optional = true
+path = "../services/ssm"
+version = "0.24.0"
+
+[dependencies.rusoto_storagegateway]
+optional = true
+path = "../services/storagegateway"
+version = "0.24.0"
+
+[dependencies.rusoto_sts]
+optional = true
+path = "../services/sts"
+version = "0.24.0"
+
+[dependencies.rusoto_swf]
+optional = true
+path = "../services/swf"
+version = "0.24.0"
+
+[dependencies.rusoto_waf]
+optional = true
+path = "../services/waf"
+version = "0.24.0"
+
+[dependencies.rusoto_workspaces]
+optional = true
+path = "../services/workspaces"
+version = "0.24.0"
+
+[dependencies.clippy]
+optional = true
+version = "0.0"
+
+[dev-dependencies]
+env_logger = "0.4.0"
+rand = "^0.3.14"
+
+[features]
+all = [
+		"acm",
+	   	"autoscaling",
+	   	"cloudformation",
+	   	"cloudfront",
+	   	"cloudhsm",
+	   	"cloudsearch",
+	   	"cloudtrail",
+	   	"cloudwatch",
+	   	"codecommit",
+	   	"codedeploy",
+	   	"codepipeline",
+	   	"cognito-identity",
+	   	"config",
+	   	"datapipeline",
+	   	"devicefarm",
+	   	"directconnect",
+	   	"ds",
+	   	"dynamodb",
+	   	"dynamodbstreams",
+	   	"ec2",
+	   	"ecr",
+	   	"ecs",
+	   	"elasticache",
+	   	"elasticbeanstalk",
+	   	"elastictranscoder",
+	   	"elb",
+	   	"elbv2",
+	   	"emr",
+	   	"events",
+	   	"firehose",
+	   	"iam",
+	   	"importexport",
+	   	"inspector",
+	   	"iot",
+	   	"kinesis",
+	   	"kms",
+	   	"lambda",
+	   	"logs",
+	   	"machinelearning",
+	   	"marketplacecommerceanalytics",
+	   	"opsworks",
+	   	"redshift",
+	   	"rds",
+	   	"route53",
+	   	"route53domains",
+	   	"s3",
+	   	"sdb",
+	   	"ses",
+	   	"sns",
+	   	"sqs",
+	   	"ssm",
+	   	"storagegateway",
+        "sts",
+	   	"swf",
+	   	"waf",
+	   	"workspaces"
+	]
+acm = ["rusoto_acm"]
+autoscaling = ["rusoto_autoscaling"]
+cloudformation = ["rusoto_cloudformation"]
+cloudfront = ["rusoto_cloudfront"]
+cloudhsm = ["rusoto_cloudhsm"]
+cloudsearch = ["rusoto_cloudsearch"]
+cloudtrail = ["rusoto_cloudtrail"]
+cloudwatch = ["rusoto_cloudwatch"]
+codecommit = ["rusoto_codecommit"]
+codedeploy = ["rusoto_codedeploy"]
+codepipeline = ["rusoto_codepipeline"]
+cognito-identity = ["rusoto_cognito-identity"]
+config = ["rusoto_config"]
+datapipeline = ["rusoto_datapipeline"]
+devicefarm = ["rusoto_devicefarm"]
+directconnect = ["rusoto_directconnect"]
+ds = ["rusoto_ds"]
+dynamodb = ["rusoto_dynamodb"]
+dynamodbstreams = ["rusoto_dynamodbstreams"]
+ec2 = ["rusoto_ec2"]
+ecr = ["rusoto_ecr"]
+ecs = ["rusoto_ecs"]
+elasticache = ["rusoto_elasticache"]
+elasticbeanstalk = ["rusoto_elasticbeanstalk"]
+elastictranscoder = ["rusoto_elastictranscoder"]
+elb = ["rusoto_elb"]
+elbv2 = ["rusoto_elbv2"]
+emr = ["rusoto_emr"]
+events = ["rusoto_events"]
+firehose = ["rusoto_firehose"]
+iam = ["rusoto_iam"]
+importexport = ["rusoto_importexport"]
+inspector = ["rusoto_inspector"]
+iot = ["rusoto_iot"]
+kinesis = ["rusoto_kinesis"]
+kms = ["rusoto_kms"]
+lambda = ["rusoto_lambda"]
+logs = ["rusoto_logs"]
+machinelearning = ["rusoto_machinelearning"]
+marketplacecommerceanalytics = ["rusoto_marketplacecommerceanalytics"]
+opsworks = ["rusoto_opsworks"]
+redshift = ["rusoto_redshift"]
+rds = ["rusoto_rds"]
+route53 = ["rusoto_route53"]
+route53domains = ["rusoto_route53domains"]
+s3 = ["rusoto_s3"]
+sdb = ["rusoto_sdb"]
+ses = ["rusoto_ses"]
+sns = ["rusoto_sns"]
+sqs = ["rusoto_sqs"]
+ssm = ["rusoto_ssm"]
+storagegateway = ["rusoto_storagegateway"]
+sts = ["rusoto_sts"]
+swf = ["rusoto_swf"]
+waf = ["rusoto_waf"]
+workspaces = ["rusoto_workspaces"]
+nightly-testing = ["clippy", "rusoto_core/nightly-testing"]
+packagea = [
+	"acm",
+	"autoscaling",
+	"cloudformation",
+	"cloudfront",
+	"cloudhsm",
+	"cloudsearch",
+	"cloudtrail",
+	"cloudwatch",
+	"codecommit",
+	"codedeploy",
+	"codepipeline",
+	"cognito-identity",
+	"config",
+	"datapipeline",
+	"devicefarm",
+	"directconnect",
+	"ds",
+	"dynamodb",
+	"dynamodbstreams",
+	"ec2",
+	"ecr",
+	"ecs",
+	"elasticache",
+	"elasticbeanstalk",
+	"elastictranscoder",
+	"elb",
+	"elbv2",
+	"emr",
+	"events",
+	"firehose"
+]
+packageb = [
+	"iam",
+	"importexport",
+	"inspector",
+	"iot",
+	"kinesis",
+	"kms",
+	"lambda",
+	"logs",
+	"machinelearning",
+	"marketplacecommerceanalytics",
+	"opsworks",
+	"redshift",
+	"rds",
+	"route53",
+	"route53domains",
+	"s3",
+	"sdb",
+	"ses",
+	"sns",
+	"sqs",
+	"ssm",
+	"storagegateway",
+	"swf",
+	"waf",
+	"workspaces"
+]
