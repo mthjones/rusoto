@@ -173,6 +173,7 @@ fn main() {
         let service = service.as_ref().unwrap();
 
         let crate_dir = out_dir.join(&name);
+        let crate_name = format!("rusoto_{}", &name);
 
         println!("Generating crate for {} @ {}...", service.metadata.service_full_name, service.metadata.api_version);
 
@@ -196,7 +197,7 @@ fn main() {
                 documentation: Some("http://rusoto.github.io/rusoto/rusoto/index.html".into()),
                 keywords: Some(vec!["AWS".into(), "Amazon".into(), name.clone(), service.metadata.service_full_name.clone(), service.metadata.endpoint_prefix.clone()]),
                 license: Some("MIT".into()),
-                name: format!("rusoto_{}", &name),
+                name: crate_name.clone(),
                 readme: None,
                 repository: Some("https://github.com/rusoto/rusoto".into()),
                 version: version.clone(),
@@ -230,21 +231,46 @@ fn main() {
 
         cargo_manifest.write_all(toml::to_string(&manifest).unwrap().as_bytes()).unwrap();
 
-        let src_dir = crate_dir.join("src");
+        {
+            let src_dir = crate_dir.join("src");
 
-        fs::create_dir(&src_dir).expect(&format!("Unable to create directory at {}", src_dir.display()));
+            fs::create_dir(&src_dir).expect(&format!("Unable to create directory at {}", src_dir.display()));
 
-        let lib_file = OpenOptions::new()
-            .write(true)
-            .create_new(true)
-            .open(src_dir.join("lib.rs"))
-            .expect("Unable to write lib.rs");
-        
-        let mut writer = BufWriter::new(lib_file);
+            let lib_file = OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(src_dir.join("lib.rs"))
+                .expect("Unable to write lib.rs");
+            
+            let mut writer = BufWriter::new(lib_file);
 
-        writer.write_all(extern_crates.as_bytes()).unwrap();
-        writer.write_all(b"\n").unwrap();
+            writer.write_all(extern_crates.as_bytes()).unwrap();
+            writer.write_all(b"\n").unwrap();
 
-        rusoto_codegen::generator::generate_source2(&service, &mut writer).unwrap();
+            rusoto_codegen::generator::generate_source2(&service, &mut writer).unwrap();
+        }
+
+        {
+            if let Some(generated_tests) = rusoto_codegen::generator::tests::generate_tests_body(&crate_name, &service) {
+                let tests_dir = crate_dir.join("tests");
+
+                fs::create_dir(&tests_dir).expect(&format!("Unable to create directory at {}", tests_dir.display()));
+
+                let response_parsing_tests_file = OpenOptions::new()
+                    .write(true)
+                    .create_new(true)
+                    .open(tests_dir.join("response_parsing.rs"))
+                    .expect("Unable to write response_parsing.rs");
+                
+                let mut writer = BufWriter::new(response_parsing_tests_file);
+                writer.write_all(generated_tests.as_bytes()).expect("Unable to write response parsing tests");
+
+                let responses_dir = tests_dir.join("responses");
+
+                fs::create_dir(&responses_dir).expect(&format!("Unable to create directory at {}", responses_dir.display()));
+
+                rusoto_codegen::generator::tests::copy_test_response_files(&service, &responses_dir).expect("Failed to copy response parsing test resources");
+            }
+        }
     });
 }

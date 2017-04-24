@@ -10,14 +10,14 @@ use self::query::QueryGenerator;
 use self::rest_json::RestJsonGenerator;
 use self::rest_xml::RestXmlGenerator;
 use self::error_types::{GenerateErrorTypes, JsonErrorTypes, XmlErrorTypes};
-use self::tests::generate_tests;
+// use self::tests::generate_tests;
 use self::type_filter::filter_types;
 
 mod error_types;
 mod json;
 mod query;
 mod rest_json;
-mod tests;
+pub mod tests;
 mod rest_xml;
 mod xml_payload_parser;
 mod rest_response_parser;
@@ -130,7 +130,7 @@ fn generate<P, E>(writer: &mut FileWriter, service: &Service, protocol_generator
     generate_types(writer, service, &protocol_generator)?;
     error_type_generator.generate_error_types(writer, service)?;
     generate_client(writer, service, &protocol_generator)?;
-    generate_tests(writer, service)?;
+    // generate_tests(writer, service)?;
 
     Ok(())
 
