@@ -1,3 +1,6 @@
 [submodule "codegen/botocore"]
 	path = codegen/botocore
 	url = https://github.com/boto/botocore.git
+[submodule "servicegen/codegen/botocore"]
+	path = servicegen/codegen/botocore
+	url = https://github.com/boto/botocore.git

@@ -1,6 +1,13 @@
-use std::collections::{HashSet, BTreeMap};
+use std::collections::BTreeMap;
+use std::fs::File;
+use std::io::{self, BufReader};
+use std::path::Path;
+
+use serde_json;
 
 use serialization::{ShapesMap, ShapeName};
+
+const BOTOCORE_DIR: &'static str = concat!(env!("CARGO_MANIFEST_DIR"), "/botocore/botocore/data/");
 
 #[derive(Debug, Deserialize)]
 pub struct Service {
@@ -14,6 +21,30 @@ pub struct Service {
 }
 
 impl Service {
+    pub fn load(name: &str, version: &str) -> io::Result<Self> {
+        let input_path = Path::new(BOTOCORE_DIR)
+            .join(format!("{}/{}/service-2.json", name, version));
+
+        let input_file = BufReader::new(File::open(&input_path)?);
+
+        let service: Service = serde_json::from_reader(input_file).expect(&format!(
+            "Could not convert JSON in {:?} to Service",
+            input_path,
+        ));
+
+        Ok(service)
+    }
+
+    pub fn load_latest(name: &str) -> io::Result<Self> {
+        let max_version = Path::new(BOTOCORE_DIR).join(name).read_dir()?
+            .filter_map(|e| e.ok())
+            .filter(|e| e.path().is_dir())
+            .map(|e| e.path().file_name().unwrap().to_os_string())
+            .max().unwrap();
+
+        Self::load(name, max_version.to_str().unwrap())
+    }
+
     pub fn client_type_name(&self) -> String {
         format!("{}Client", self.service_type_name())
     }
@@ -133,7 +164,7 @@ pub struct Output {
     pub shape: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Deserialize, PartialEq, Eq)]
 pub struct Error {
     pub documentation: Option<String>,
     pub error: Option<HttpError>,
@@ -148,7 +179,7 @@ impl Error {
     }
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Deserialize, PartialEq, Eq)]
 pub struct HttpError {
     pub code: Option<String>,
     #[serde(rename="httpStatusCode")]
@@ -338,7 +369,7 @@ impl<'a> Operation {
 
     // botocore duplicates errors in a few places
     // return a unique set
-    pub fn errors(&'a self) -> HashSet<&'a Error> {
+    pub fn errors(&'a self) -> Vec<&'a Error> {
         self.errors.as_ref().unwrap().iter().collect()
     }
 }

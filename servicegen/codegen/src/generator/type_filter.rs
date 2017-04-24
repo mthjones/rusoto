@@ -1,10 +1,9 @@
-use std::collections::HashSet;
 use botocore::{Service, ShapeType, Shape};
 use super::mutate_type_name;
 
-pub fn filter_types(service: &Service) -> (HashSet<String>, HashSet<String>) {
-    let mut deserialized_types: HashSet<String> = HashSet::new();
-    let mut serialized_types: HashSet<String> = HashSet::new();
+pub fn filter_types(service: &Service) -> (Vec<String>, Vec<String>) {
+    let mut deserialized_types = Vec::new();
+    let mut serialized_types = Vec::new();
     for operation in service.operations.values() {
         if let Some(ref output) = operation.output {
 
@@ -24,8 +23,8 @@ pub fn filter_types(service: &Service) -> (HashSet<String>, HashSet<String>) {
     (serialized_types, deserialized_types)
 }
 
-fn recurse_find_shapes(service: &Service, types: &mut HashSet<String>, shape_name: &str) {
-    types.insert(mutate_type_name(shape_name).to_owned());
+fn recurse_find_shapes(service: &Service, types: &mut Vec<String>, shape_name: &str) {
+    types.push(mutate_type_name(shape_name).to_owned());
     let shape = service.shapes.get(shape_name).expect("Shape type missing from service definition");
     match shape.shape_type {
         ShapeType::Structure => {
