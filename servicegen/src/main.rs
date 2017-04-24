@@ -11,15 +11,20 @@ extern crate toml;
 mod cargo;
 
 use std::collections::BTreeMap;
-use std::fs::{self, OpenOptions};
-use std::io::{self, Read, Write, BufWriter};
+use std::fs::{self, File, OpenOptions};
+use std::io::{Read, Write, BufWriter};
 use std::path::Path;
 
 use rayon::prelude::*;
 
-use clap::{Arg, App};
+use clap::{Arg, ArgGroup, App};
 
 use rusoto_codegen::botocore::Service;
+
+#[derive(Deserialize)]
+struct ServiceConfig {
+    pub version: String
+}
 
 fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, cargo::Dependency> {
     let mut dependencies = BTreeMap::new();
@@ -91,10 +96,16 @@ fn main() {
         .version(crate_version!())
         .author(crate_authors!())
         .about(crate_description!())
-        .arg(Arg::with_name("services")
+        .arg(Arg::with_name("services_list")
             .long("services")
             .use_delimiter(true)
-            .takes_value(true)
+            .takes_value(true))
+        .arg(Arg::with_name("services_config")
+            .long("config")
+            .short("c")
+            .takes_value(true))
+        .group(ArgGroup::with_name("services")
+            .args(&["services_list", "services_config"])
             .required(true))
         .arg(Arg::with_name("out_dir")
             .long("outdir")
@@ -129,19 +140,32 @@ fn main() {
     }
 
     fs::create_dir(out_dir).expect("Unable to create output directory");
-    
-    let services: Vec<(String, io::Result<Service>)> = matches.values_of("services").unwrap().map(|s| {
-        let mut service_parts = s.splitn(2, "@");
-        let name = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s)).to_owned();
-        if let Some(version) = service_parts.next() {
-            (name.clone(), Service::load(&name, version))
-        } else {
-            (name.clone(), Service::load_latest(&name))
-        }
-    }).collect();
 
-    services.par_iter().for_each(|&(ref name, ref service)| {
-        if let Err(ref e) = *service {
+    let service_versions: Vec<(String, String)> = {
+        if let Some(services) = matches.values_of("services_list") {
+            services.map(|s| {
+                let mut service_parts = s.splitn(2, "@");
+                let name = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s)).to_owned();
+                let version = service_parts.next().expect(&format!("Invalid service value {}. Must be in format name@version.", s)).to_owned();
+                (name, version)
+            }).collect()
+        } else if let Some(services_config) = matches.value_of("services_config") {
+            let contents = File::open(services_config).and_then(|mut f| {
+                let mut contents = String::new();
+                f.read_to_string(&mut contents).map(|_| contents)
+            }).expect("Unable to read services configuration file.");
+
+            let parsed: BTreeMap<String, ServiceConfig> = serde_json::from_str(&contents).expect("Unable to parse services configuration file.");
+            parsed.iter().map(|(k, v)| (k.clone(), v.version.clone())).collect()
+        } else {
+            unreachable!("Arg parsing failed. Did not have services config or services list.");
+        }
+    };
+
+    service_versions.par_iter().for_each(|&(ref name, ref service_version)| {
+        let service = Service::load(name, service_version);
+
+        if let Err(ref e) = service {
             println!("Failed to load service {}: {}", name, e);
             return;
         }
