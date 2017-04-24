@@ -1,9 +1,9 @@
-extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
 extern crate hyper;
 extern crate rusoto;
+extern crate serde;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
@@ -331,12 +331,12 @@ pub type ValidationEmailList = Vec<String>;
                     
 ///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
 ResourceNotFound(String),
+///<p>The request contains too many tags. Try the request again with fewer tags.</p>
+TooManyTags(String),
 ///<p>One or both of the values that make up the key-value pair is not valid. For example, you cannot specify a tag value that begins with <code>aws:</code>.</p>
 InvalidTag(String),
 ///<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>
-InvalidArn(String),
-///<p>The request contains too many tags. Try the request again with fewer tags.</p>
-TooManyTags(String),/// An error occurred dispatching the HTTP request
+InvalidArn(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -355,7 +355,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidTagException" => AddTagsToCertificateError::InvalidTag(String::from(error_message)),"ResourceNotFoundException" => AddTagsToCertificateError::ResourceNotFound(String::from(error_message)),"TooManyTagsException" => AddTagsToCertificateError::TooManyTags(String::from(error_message)),"InvalidArnException" => AddTagsToCertificateError::InvalidArn(String::from(error_message)),"ValidationException" => AddTagsToCertificateError::Validation(error_message.to_string()),_ => AddTagsToCertificateError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => AddTagsToCertificateError::ResourceNotFound(String::from(error_message)),"InvalidArnException" => AddTagsToCertificateError::InvalidArn(String::from(error_message)),"InvalidTagException" => AddTagsToCertificateError::InvalidTag(String::from(error_message)),"TooManyTagsException" => AddTagsToCertificateError::TooManyTags(String::from(error_message)),"ValidationException" => AddTagsToCertificateError::Validation(error_message.to_string()),_ => AddTagsToCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => AddTagsToCertificateError::Unknown(String::from(body))
@@ -386,7 +386,7 @@ Unknown(String)
                 impl Error for AddTagsToCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddTagsToCertificateError::InvalidTag(ref cause) => cause,AddTagsToCertificateError::ResourceNotFound(ref cause) => cause,AddTagsToCertificateError::InvalidArn(ref cause) => cause,AddTagsToCertificateError::TooManyTags(ref cause) => cause,AddTagsToCertificateError::Validation(ref cause) => cause,AddTagsToCertificateError::Credentials(ref err) => err.description(),AddTagsToCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToCertificateError::Unknown(ref cause) => cause
+                            AddTagsToCertificateError::TooManyTags(ref cause) => cause,AddTagsToCertificateError::ResourceNotFound(ref cause) => cause,AddTagsToCertificateError::InvalidArn(ref cause) => cause,AddTagsToCertificateError::InvalidTag(ref cause) => cause,AddTagsToCertificateError::Validation(ref cause) => cause,AddTagsToCertificateError::Credentials(ref err) => err.description(),AddTagsToCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddTagsToCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -418,7 +418,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidArnException" => DeleteCertificateError::InvalidArn(String::from(error_message)),"ResourceNotFoundException" => DeleteCertificateError::ResourceNotFound(String::from(error_message)),"ResourceInUseException" => DeleteCertificateError::ResourceInUse(String::from(error_message)),"ValidationException" => DeleteCertificateError::Validation(error_message.to_string()),_ => DeleteCertificateError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => DeleteCertificateError::ResourceNotFound(String::from(error_message)),"InvalidArnException" => DeleteCertificateError::InvalidArn(String::from(error_message)),"ResourceInUseException" => DeleteCertificateError::ResourceInUse(String::from(error_message)),"ValidationException" => DeleteCertificateError::Validation(error_message.to_string()),_ => DeleteCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => DeleteCertificateError::Unknown(String::from(body))
@@ -449,7 +449,7 @@ Unknown(String)
                 impl Error for DeleteCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteCertificateError::ResourceNotFound(ref cause) => cause,DeleteCertificateError::ResourceInUse(ref cause) => cause,DeleteCertificateError::InvalidArn(ref cause) => cause,DeleteCertificateError::Validation(ref cause) => cause,DeleteCertificateError::Credentials(ref err) => err.description(),DeleteCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCertificateError::Unknown(ref cause) => cause
+                            DeleteCertificateError::ResourceNotFound(ref cause) => cause,DeleteCertificateError::InvalidArn(ref cause) => cause,DeleteCertificateError::ResourceInUse(ref cause) => cause,DeleteCertificateError::Validation(ref cause) => cause,DeleteCertificateError::Credentials(ref err) => err.description(),DeleteCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -510,7 +510,7 @@ Unknown(String)
                 impl Error for DescribeCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            DescribeCertificateError::InvalidArn(ref cause) => cause,DescribeCertificateError::ResourceNotFound(ref cause) => cause,DescribeCertificateError::Validation(ref cause) => cause,DescribeCertificateError::Credentials(ref err) => err.description(),DescribeCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCertificateError::Unknown(ref cause) => cause
+                            DescribeCertificateError::ResourceNotFound(ref cause) => cause,DescribeCertificateError::InvalidArn(ref cause) => cause,DescribeCertificateError::Validation(ref cause) => cause,DescribeCertificateError::Credentials(ref err) => err.description(),DescribeCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribeCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -518,12 +518,12 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum GetCertificateError {
                     
+///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
+ResourceNotFound(String),
 ///<p>The certificate request is in process and the certificate in your account has not yet been issued.</p>
 RequestInProgress(String),
 ///<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>
-InvalidArn(String),
-///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+InvalidArn(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -581,10 +581,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ImportCertificateError {
                     
-///<p>An ACM limit has been exceeded. For example, you may have input more domains than are allowed or you've requested too many certificates for your account. See the exception message returned by ACM to determine which limit you have violated. For more information about ACM limits, see the <a href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a> topic.</p>
-LimitExceeded(String),
 ///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+ResourceNotFound(String),
+///<p>An ACM limit has been exceeded. For example, you may have input more domains than are allowed or you've requested too many certificates for your account. See the exception message returned by ACM to determine which limit you have violated. For more information about ACM limits, see the <a href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a> topic.</p>
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -603,7 +603,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ResourceNotFoundException" => ImportCertificateError::ResourceNotFound(String::from(error_message)),"LimitExceededException" => ImportCertificateError::LimitExceeded(String::from(error_message)),"ValidationException" => ImportCertificateError::Validation(error_message.to_string()),_ => ImportCertificateError::Unknown(String::from(body))
+                                    "LimitExceededException" => ImportCertificateError::LimitExceeded(String::from(error_message)),"ResourceNotFoundException" => ImportCertificateError::ResourceNotFound(String::from(error_message)),"ValidationException" => ImportCertificateError::Validation(error_message.to_string()),_ => ImportCertificateError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ImportCertificateError::Unknown(String::from(body))
@@ -634,7 +634,7 @@ Unknown(String)
                 impl Error for ImportCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            ImportCertificateError::ResourceNotFound(ref cause) => cause,ImportCertificateError::LimitExceeded(ref cause) => cause,ImportCertificateError::Validation(ref cause) => cause,ImportCertificateError::Credentials(ref err) => err.description(),ImportCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ImportCertificateError::Unknown(ref cause) => cause
+                            ImportCertificateError::LimitExceeded(ref cause) => cause,ImportCertificateError::ResourceNotFound(ref cause) => cause,ImportCertificateError::Validation(ref cause) => cause,ImportCertificateError::Credentials(ref err) => err.description(),ImportCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ImportCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -752,7 +752,7 @@ Unknown(String)
                 impl Error for ListTagsForCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListTagsForCertificateError::InvalidArn(ref cause) => cause,ListTagsForCertificateError::ResourceNotFound(ref cause) => cause,ListTagsForCertificateError::Validation(ref cause) => cause,ListTagsForCertificateError::Credentials(ref err) => err.description(),ListTagsForCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForCertificateError::Unknown(ref cause) => cause
+                            ListTagsForCertificateError::ResourceNotFound(ref cause) => cause,ListTagsForCertificateError::InvalidArn(ref cause) => cause,ListTagsForCertificateError::Validation(ref cause) => cause,ListTagsForCertificateError::Credentials(ref err) => err.description(),ListTagsForCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsForCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -762,10 +762,10 @@ Unknown(String)
                     
 ///<p>One or both of the values that make up the key-value pair is not valid. For example, you cannot specify a tag value that begins with <code>aws:</code>.</p>
 InvalidTag(String),
-///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
-ResourceNotFound(String),
 ///<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>
-InvalidArn(String),/// An error occurred dispatching the HTTP request
+InvalidArn(String),
+///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
+ResourceNotFound(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -823,10 +823,10 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum RequestCertificateError {
                     
-///<p>An ACM limit has been exceeded. For example, you may have input more domains than are allowed or you've requested too many certificates for your account. See the exception message returned by ACM to determine which limit you have violated. For more information about ACM limits, see the <a href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a> topic.</p>
-LimitExceeded(String),
 ///<p>One or more values in the <a>DomainValidationOption</a> structure is incorrect.</p>
-InvalidDomainValidationOptions(String),/// An error occurred dispatching the HTTP request
+InvalidDomainValidationOptions(String),
+///<p>An ACM limit has been exceeded. For example, you may have input more domains than are allowed or you've requested too many certificates for your account. See the exception message returned by ACM to determine which limit you have violated. For more information about ACM limits, see the <a href="http://docs.aws.amazon.com/acm/latest/userguide/acm-limits.html">Limits</a> topic.</p>
+LimitExceeded(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -876,7 +876,7 @@ Unknown(String)
                 impl Error for RequestCertificateError {
                     fn description(&self) -> &str {
                         match *self {
-                            RequestCertificateError::InvalidDomainValidationOptions(ref cause) => cause,RequestCertificateError::LimitExceeded(ref cause) => cause,RequestCertificateError::Validation(ref cause) => cause,RequestCertificateError::Credentials(ref err) => err.description(),RequestCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RequestCertificateError::Unknown(ref cause) => cause
+                            RequestCertificateError::LimitExceeded(ref cause) => cause,RequestCertificateError::InvalidDomainValidationOptions(ref cause) => cause,RequestCertificateError::Validation(ref cause) => cause,RequestCertificateError::Credentials(ref err) => err.description(),RequestCertificateError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RequestCertificateError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -884,14 +884,14 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum ResendValidationEmailError {
                     
-///<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>
-InvalidArn(String),
 ///<p>One or more values in the <a>DomainValidationOption</a> structure is incorrect.</p>
 InvalidDomainValidationOptions(String),
+///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
+ResourceNotFound(String),
 ///<p>Processing has reached an invalid state. For example, this exception can occur if the specified domain is not using email validation, or the current certificate status does not permit the requested operation. See the exception message returned by ACM to determine which state is not valid.</p>
 InvalidState(String),
-///<p>The specified certificate cannot be found in the caller's account, or the caller's account cannot be found.</p>
-ResourceNotFound(String),/// An error occurred dispatching the HTTP request
+///<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>
+InvalidArn(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -910,7 +910,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "InvalidDomainValidationOptionsException" => ResendValidationEmailError::InvalidDomainValidationOptions(String::from(error_message)),"InvalidArnException" => ResendValidationEmailError::InvalidArn(String::from(error_message)),"ResourceNotFoundException" => ResendValidationEmailError::ResourceNotFound(String::from(error_message)),"InvalidStateException" => ResendValidationEmailError::InvalidState(String::from(error_message)),"ValidationException" => ResendValidationEmailError::Validation(error_message.to_string()),_ => ResendValidationEmailError::Unknown(String::from(body))
+                                    "ResourceNotFoundException" => ResendValidationEmailError::ResourceNotFound(String::from(error_message)),"InvalidDomainValidationOptionsException" => ResendValidationEmailError::InvalidDomainValidationOptions(String::from(error_message)),"InvalidStateException" => ResendValidationEmailError::InvalidState(String::from(error_message)),"InvalidArnException" => ResendValidationEmailError::InvalidArn(String::from(error_message)),"ValidationException" => ResendValidationEmailError::Validation(error_message.to_string()),_ => ResendValidationEmailError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ResendValidationEmailError::Unknown(String::from(body))
@@ -941,7 +941,7 @@ Unknown(String)
                 impl Error for ResendValidationEmailError {
                     fn description(&self) -> &str {
                         match *self {
-                            ResendValidationEmailError::InvalidState(ref cause) => cause,ResendValidationEmailError::InvalidDomainValidationOptions(ref cause) => cause,ResendValidationEmailError::InvalidArn(ref cause) => cause,ResendValidationEmailError::ResourceNotFound(ref cause) => cause,ResendValidationEmailError::Validation(ref cause) => cause,ResendValidationEmailError::Credentials(ref err) => err.description(),ResendValidationEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResendValidationEmailError::Unknown(ref cause) => cause
+                            ResendValidationEmailError::InvalidDomainValidationOptions(ref cause) => cause,ResendValidationEmailError::ResourceNotFound(ref cause) => cause,ResendValidationEmailError::InvalidState(ref cause) => cause,ResendValidationEmailError::InvalidArn(ref cause) => cause,ResendValidationEmailError::Validation(ref cause) => cause,ResendValidationEmailError::Credentials(ref err) => err.description(),ResendValidationEmailError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ResendValidationEmailError::Unknown(ref cause) => cause
                         }
                     }
                  }

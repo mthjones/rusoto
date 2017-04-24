@@ -21,13 +21,13 @@ use clap::{Arg, App};
 
 use rusoto_codegen::botocore::Service;
 
-fn get_dependencies(service: &Service) -> HashMap<String, cargo::Dependency> {
+fn get_dependencies(service: &Service, core_version: &str) -> HashMap<String, cargo::Dependency> {
     let mut dependencies = HashMap::new();
 
     dependencies.insert("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into()));
     dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
         path: Some("../../core".into()),
-        version: None,
+        version: Some(core_version.to_owned()),
         optional: None,
         default_features: None,
     });
@@ -66,20 +66,20 @@ fn get_dependencies(service: &Service) -> HashMap<String, cargo::Dependency> {
 
 fn main() {
     let matches = App::new("Rusoto Service Crate Generator")
-                    .version(crate_version!())
-                    .author(crate_authors!())
-                    .about(crate_description!())
-                    .arg(Arg::with_name("services")
-                        .long("services")
-                        .use_delimiter(true)
-                        .takes_value(true)
-                        .required(true))
-                    .arg(Arg::with_name("out_dir")
-                        .long("outdir")
-                        .short("o")
-                        .takes_value(true)
-                        .required(true))
-                    .get_matches();
+        .version(crate_version!())
+        .author(crate_authors!())
+        .about(crate_description!())
+        .arg(Arg::with_name("services")
+            .long("services")
+            .use_delimiter(true)
+            .takes_value(true)
+            .required(true))
+        .arg(Arg::with_name("out_dir")
+            .long("outdir")
+            .short("o")
+            .takes_value(true)
+            .required(true))
+        .get_matches();
     
     let core_manifest_raw = OpenOptions::new()
         .read(true)
@@ -157,7 +157,7 @@ fn main() {
                 homepage: Some("https://www.rusoto.org/".into()),
                 ..cargo::Metadata::default()
             },
-            dependencies: get_dependencies(&service),
+            dependencies: get_dependencies(&service, &version),
             dev_dependencies: vec![
                 ("rusoto_mock".to_owned(), cargo::Dependency::Extended {
                     path: Some("../../mock".into()),
