@@ -46,6 +46,7 @@ pub enum Dependency {
         path: Option<String>,
         optional: Option<bool>,
         #[serde(rename="default-features")]
-        default_features: Option<bool>
+        default_features: Option<bool>,
+        features: Option<Vec<String>>,
     }
 }

@@ -59,6 +59,8 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate time;
 extern crate url;
+#[cfg(feature="xml")]
+extern crate xml;
 
 pub use region::{ParseRegionError, Region};
 pub use rusoto_credential::{AwsCredentials, ChainProvider, ContainerProvider, CredentialsError,

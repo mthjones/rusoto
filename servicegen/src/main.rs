@@ -25,30 +25,52 @@ fn get_dependencies(service: &Service, core_version: &str) -> HashMap<String, ca
     let mut dependencies = HashMap::new();
 
     dependencies.insert("hyper".to_owned(), cargo::Dependency::Simple("0.10.0".into()));
-    dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
-        path: Some("../../core".into()),
-        version: Some(core_version.to_owned()),
-        optional: None,
-        default_features: None,
-    });
 
     match &service.metadata.protocol[..] {
         "json" => {
             dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
+            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+                path: Some("../../core".into()),
+                version: Some(core_version.to_owned()),
+                optional: None,
+                default_features: None,
+                features: None
+            });
         },
         "query" | "ec2" => {
             dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
+            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+                path: Some("../../core".into()),
+                version: Some(core_version.to_owned()),
+                optional: None,
+                default_features: None,
+                features: Some(vec!["xml".into()])
+            });
         },
         "rest-json" => {
             dependencies.insert("log".to_owned(), cargo::Dependency::Simple("0.3.6".into()));
             dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
+            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+                path: Some("../../core".into()),
+                version: Some(core_version.to_owned()),
+                optional: None,
+                default_features: None,
+                features: None
+            });
         },
         "rest-xml" => {
             dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
+            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+                path: Some("../../core".into()),
+                version: Some(core_version.to_owned()),
+                optional: None,
+                default_features: None,
+                features: Some(vec!["xml".into()])
+            });
         },
         protocol => panic!("Unknown protocol {}", protocol),
     }
@@ -164,6 +186,7 @@ fn main() {
                     version: None,
                     optional: None,
                     default_features: None,
+                    features: None
                 })
             ].into_iter().collect(),
             ..cargo::Manifest::default()
