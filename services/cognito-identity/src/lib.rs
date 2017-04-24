@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 pub type ARNString = String;
@@ -33,16 +33,11 @@ pub client_id: Option<CognitoIdentityProviderClientId>,
 #[doc="<p>The provider name for an Amazon Cognito Identity User Pool. For example, <code>cognito-idp.us-east-1.amazonaws.com/us-east-1_123456789</code>.</p>"]
 #[serde(rename="ProviderName")]
 pub provider_name: Option<CognitoIdentityProviderName>,
-#[doc="<p>TRUE if server-side token validation is enabled for the identity provider’s token.</p>"]
-#[serde(rename="ServerSideTokenCheck")]
-#[serde(skip_serializing_if="::std::option::Option::is_none")]
-pub server_side_token_check: Option<CognitoIdentityProviderTokenCheck>,
             }
             
 pub type CognitoIdentityProviderClientId = String;
 pub type CognitoIdentityProviderList = Vec<CognitoIdentityProvider>;
 pub type CognitoIdentityProviderName = String;
-pub type CognitoIdentityProviderTokenCheck = bool;
 #[doc="<p>Input to the CreateIdentityPool action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct CreateIdentityPoolInput {

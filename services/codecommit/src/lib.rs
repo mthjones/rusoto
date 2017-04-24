@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 pub type AccountId = String;
@@ -40,21 +40,6 @@ pub repositories: Option<RepositoryMetadataList>,
 pub repositories_not_found: Option<RepositoryNotFoundList>,
             }
             
-pub type Blob = Vec<u8>;
-#[doc="<p>Returns information about a specific Git blob object.</p>"]
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct BlobMetadata {
-                #[doc="<p>The full ID of the blob.</p>"]
-#[serde(rename="blobId")]
-pub blob_id: Option<ObjectId>,
-#[doc="<p>The file mode permissions of the blob. File mode permission codes include:</p> <ul> <li> <p> <code>100644</code> indicates read/write</p> </li> <li> <p> <code>100755</code> indicates read/write/execute</p> </li> <li> <p> <code>160000</code> indicates a submodule</p> </li> <li> <p> <code>120000</code> indicates a symlink</p> </li> </ul>"]
-#[serde(rename="mode")]
-pub mode: Option<Mode>,
-#[doc="<p>The path to the blob and any associated file name, if any.</p>"]
-#[serde(rename="path")]
-pub path: Option<Path>,
-            }
-            
 #[doc="<p>Returns information about a branch.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct BranchInfo {
@@ -68,7 +53,6 @@ pub commit_id: Option<CommitId>,
             
 pub type BranchName = String;
 pub type BranchNameList = Vec<BranchName>;
-pub type ChangeTypeEnum = String;
 pub type CloneUrlHttp = String;
 pub type CloneUrlSsh = String;
 #[doc="<p>Returns information about a specific commit.</p>"]
@@ -77,13 +61,13 @@ pub type CloneUrlSsh = String;
                 #[doc="<p>Any additional data associated with the specified commit.</p>"]
 #[serde(rename="additionalData")]
 pub additional_data: Option<AdditionalData>,
-#[doc="<p>Information about the author of the specified commit. Information includes the date in timestamp format with GMT offset, the name of the author, and the email address for the author, as configured in Git.</p>"]
+#[doc="<p>Information about the author of the specified commit.</p>"]
 #[serde(rename="author")]
 pub author: Option<UserInfo>,
-#[doc="<p>Information about the person who committed the specified commit, also known as the committer. Information includes the date in timestamp format with GMT offset, the name of the committer, and the email address for the committer, as configured in Git.</p> <p>For more information about the difference between an author and a committer in Git, see <a href=\"http://git-scm.com/book/ch2-3.html\">Viewing the Commit History</a> in Pro Git by Scott Chacon and Ben Straub.</p>"]
+#[doc="<p>Information about the person who committed the specified commit, also known as the committer. For more information about the difference between an author and a committer in Git, see <a href=\"http://git-scm.com/book/ch2-3.html\">Viewing the Commit History</a> in Pro Git by Scott Chacon and Ben Straub.</p>"]
 #[serde(rename="committer")]
 pub committer: Option<UserInfo>,
-#[doc="<p>The commit message associated with the specified commit.</p>"]
+#[doc="<p>The message associated with the specified commit.</p>"]
 #[serde(rename="message")]
 pub message: Option<Message>,
 #[doc="<p>The parent list for the specified commit.</p>"]
@@ -95,7 +79,6 @@ pub tree_id: Option<ObjectId>,
             }
             
 pub type CommitId = String;
-pub type CommitName = String;
 #[doc="<p>Represents the input of a create branch operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct CreateBranchInput {
@@ -113,10 +96,10 @@ pub repository_name: RepositoryName,
 #[doc="<p>Represents the input of a create repository operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct CreateRepositoryInput {
-                #[doc="<p>A comment or description about the new repository.</p> <note> <p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p> </note>"]
+                #[doc="<p>A comment or description about the new repository.</p> <note><p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p></note>"]
 #[serde(rename="repositoryDescription")]
 pub repository_description: Option<RepositoryDescription>,
-#[doc="<p>The name of the new repository to be created.</p> <note> <p>The repository name must be unique across the calling AWS account. In addition, repository names are limited to 100 alphanumeric, dash, and underscore characters, and cannot include certain characters. For a full description of the limits on repository names, see <a href=\"http://docs.aws.amazon.com/codecommit/latest/userguide/limits.html\">Limits</a> in the AWS CodeCommit User Guide. The suffix \".git\" is prohibited.</p> </note>"]
+#[doc="<p>The name of the new repository to be created.</p> <note><p>The repository name must be unique across the calling AWS account. In addition, repository names are limited to 100 alphanumeric, dash, and underscore characters, and cannot include certain characters. For a full description of the limits on repository names, see <a href=\"http://docs.aws.amazon.com/codecommit/latest/userguide/limits.html\">Limits</a> in the AWS CodeCommit User Guide. The suffix \".git\" is prohibited.</p></note>"]
 #[serde(rename="repositoryName")]
 pub repository_name: RepositoryName,
             }
@@ -147,46 +130,7 @@ pub repository_name: RepositoryName,
 pub repository_id: Option<RepositoryId>,
             }
             
-#[doc="<p>Returns information about a set of differences for a commit specifier.</p>"]
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct Difference {
-                #[doc="<p>Information about an <code>afterBlob</code> data type object, including the ID, the file mode permission code, and the path.</p>"]
-#[serde(rename="afterBlob")]
-pub after_blob: Option<BlobMetadata>,
-#[doc="<p>Information about a <code>beforeBlob</code> data type object, including the ID, the file mode permission code, and the path.</p>"]
-#[serde(rename="beforeBlob")]
-pub before_blob: Option<BlobMetadata>,
-#[doc="<p>Whether the change type of the difference is an addition (A), deletion (D), or modification (M).</p>"]
-#[serde(rename="changeType")]
-pub change_type: Option<ChangeTypeEnum>,
-            }
-            
-pub type DifferenceList = Vec<Difference>;
 pub type Email = String;
-#[doc="<p>Represents the input of a get blob operation.</p>"]
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct GetBlobInput {
-                #[doc="<p>The ID of the blob, which is its SHA-1 pointer.</p>"]
-#[serde(rename="blobId")]
-pub blob_id: ObjectId,
-#[doc="<p>The name of the repository that contains the blob.</p>"]
-#[serde(rename="repositoryName")]
-pub repository_name: RepositoryName,
-            }
-            
-#[doc="<p>Represents the output of a get blob operation.</p>"]
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct GetBlobOutput {
-                #[doc="<p>The content of the blob, usually a file.</p>"]
-#[serde(rename="content")]
-#[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
-                            default,
-                        )]
-pub content: Blob,
-            }
-            
 #[doc="<p>Represents the input of a get branch operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct GetBranchInput {
@@ -220,44 +164,9 @@ pub repository_name: RepositoryName,
 #[doc="<p>Represents the output of a get commit operation.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct GetCommitOutput {
-                #[doc="<p>A commit data type object that contains information about the specified commit.</p>"]
+                #[doc="<p>Information about the specified commit.</p>"]
 #[serde(rename="commit")]
 pub commit: Commit,
-            }
-            
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct GetDifferencesInput {
-                #[doc="<p>A non-negative integer used to limit the number of returned results.</p>"]
-#[serde(rename="MaxResults")]
-pub max_results: Option<Limit>,
-#[doc="<p>An enumeration token that when provided in a request, returns the next batch of the results.</p>"]
-#[serde(rename="NextToken")]
-pub next_token: Option<NextToken>,
-#[doc="<p>The branch, tag, HEAD, or other fully qualified reference used to identify a commit.</p>"]
-#[serde(rename="afterCommitSpecifier")]
-pub after_commit_specifier: CommitName,
-#[doc="<p>The file path in which to check differences. Limits the results to this path. Can also be used to specify the changed name of a directory or folder, if it has changed. If not specified, differences will be shown for all paths.</p>"]
-#[serde(rename="afterPath")]
-pub after_path: Option<Path>,
-#[doc="<p>The branch, tag, HEAD, or other fully qualified reference used to identify a commit. For example, the full commit ID. Optional. If not specified, all changes prior to the <code>afterCommitSpecifier</code> value will be shown. If you do not use <code>beforeCommitSpecifier</code> in your request, consider limiting the results with <code>maxResults</code>.</p>"]
-#[serde(rename="beforeCommitSpecifier")]
-pub before_commit_specifier: Option<CommitName>,
-#[doc="<p>The file path in which to check for differences. Limits the results to this path. Can also be used to specify the previous name of a directory or folder. If <code>beforePath</code> and <code>afterPath</code> are not specified, differences will be shown for all paths.</p>"]
-#[serde(rename="beforePath")]
-pub before_path: Option<Path>,
-#[doc="<p>The name of the repository where you want to get differences.</p>"]
-#[serde(rename="repositoryName")]
-pub repository_name: RepositoryName,
-            }
-            
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct GetDifferencesOutput {
-                #[doc="<p>An enumeration token that can be used in a request to return the next batch of the results.</p>"]
-#[serde(rename="NextToken")]
-pub next_token: Option<NextToken>,
-#[doc="<p>A differences data type object that contains information about the differences, including whether the difference is added, modified, or deleted (A, D, M).</p>"]
-#[serde(rename="differences")]
-pub differences: Option<DifferenceList>,
             }
             
 #[doc="<p>Represents the input of a get repository operation.</p>"]
@@ -281,7 +190,7 @@ pub repository_metadata: Option<RepositoryMetadata>,
             pub struct GetRepositoryTriggersInput {
                 #[doc="<p>The name of the repository for which the trigger is configured.</p>"]
 #[serde(rename="repositoryName")]
-pub repository_name: RepositoryName,
+pub repository_name: Option<RepositoryName>,
             }
             
 #[doc="<p>Represents the output of a get repository triggers operation.</p>"]
@@ -296,11 +205,10 @@ pub triggers: Option<RepositoryTriggersList>,
             }
             
 pub type LastModifiedDate = f64;
-pub type Limit = i64;
 #[doc="<p>Represents the input of a list branches operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct ListBranchesInput {
-                #[doc="<p>An enumeration token that allows the operation to batch the results.</p>"]
+                #[doc="<p>An enumeration token that allows the operation to batch the results. </p>"]
 #[serde(rename="nextToken")]
 pub next_token: Option<NextToken>,
 #[doc="<p>The name of the repository that contains the branches.</p>"]
@@ -314,7 +222,7 @@ pub repository_name: RepositoryName,
                 #[doc="<p>The list of branch names.</p>"]
 #[serde(rename="branches")]
 pub branches: Option<BranchNameList>,
-#[doc="<p>An enumeration token that returns the batch of the results.</p>"]
+#[doc="<p>An enumeration token that returns the batch of the results. </p>"]
 #[serde(rename="nextToken")]
 pub next_token: Option<NextToken>,
             }
@@ -345,28 +253,26 @@ pub repositories: Option<RepositoryNameIdPairList>,
             }
             
 pub type Message = String;
-pub type Mode = String;
 pub type Name = String;
 pub type NextToken = String;
 pub type ObjectId = String;
 pub type OrderEnum = String;
 pub type ParentList = Vec<ObjectId>;
-pub type Path = String;
-#[doc="<p>Represents the input ofa put repository triggers operation.</p>"]
+#[doc="<p>Represents the input ofa put repository triggers operation. </p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct PutRepositoryTriggersInput {
-                #[doc="<p>The name of the repository where you want to create or update the trigger.</p>"]
+                #[doc="<p>The name of the repository where you want to create or update the trigger. </p>"]
 #[serde(rename="repositoryName")]
-pub repository_name: RepositoryName,
-#[doc="<p>The JSON block of configuration information for each trigger.</p>"]
+pub repository_name: Option<RepositoryName>,
+#[doc="<p>The JSON block of configuration information for each trigger. </p>"]
 #[serde(rename="triggers")]
-pub triggers: RepositoryTriggersList,
+pub triggers: Option<RepositoryTriggersList>,
             }
             
-#[doc="<p>Represents the output of a put repository triggers operation.</p>"]
+#[doc="<p>Represents the output of a put repository triggers operation. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct PutRepositoryTriggersOutput {
-                #[doc="<p>The system-generated unique ID for the create or update operation.</p>"]
+                #[doc="<p>The system-generated unique ID for the create or update operation. </p>"]
 #[serde(rename="configurationId")]
 pub configuration_id: Option<RepositoryTriggersConfigurationId>,
             }
@@ -435,13 +341,13 @@ pub branches: Option<BranchNameList>,
 pub custom_data: Option<RepositoryTriggerCustomData>,
 #[doc="<p>The ARN of the resource that is the target for a trigger. For example, the ARN of a topic in Amazon Simple Notification Service (SNS).</p>"]
 #[serde(rename="destinationArn")]
-pub destination_arn: Arn,
-#[doc="<p>The repository events that will cause the trigger to run actions in another service, such as sending a notification through Amazon Simple Notification Service (SNS). </p> <note> <p>The valid value \"all\" cannot be used with any other values.</p> </note>"]
+pub destination_arn: Option<Arn>,
+#[doc="<p>The repository events that will cause the trigger to run actions in another service, such as sending a notification through Amazon Simple Notification Service (SNS). If no events are specified, the trigger will run for all repository events.</p>"]
 #[serde(rename="events")]
-pub events: RepositoryTriggerEventList,
+pub events: Option<RepositoryTriggerEventList>,
 #[doc="<p>The name of the trigger.</p>"]
 #[serde(rename="name")]
-pub name: RepositoryTriggerName,
+pub name: Option<RepositoryTriggerName>,
             }
             
 pub type RepositoryTriggerCustomData = String;
@@ -470,10 +376,10 @@ pub type SortByEnum = String;
             pub struct TestRepositoryTriggersInput {
                 #[doc="<p>The name of the repository in which to test the triggers.</p>"]
 #[serde(rename="repositoryName")]
-pub repository_name: RepositoryName,
+pub repository_name: Option<RepositoryName>,
 #[doc="<p>The list of triggers to test.</p>"]
 #[serde(rename="triggers")]
-pub triggers: RepositoryTriggersList,
+pub triggers: Option<RepositoryTriggersList>,
             }
             
 #[doc="<p>Represents the output of a test repository triggers operation.</p>"]
@@ -542,7 +448,7 @@ pub name: Option<Name>,
 RepositoryNamesRequired(String),
 ///<p>The maximum number of allowed repository names was exceeded. Currently, this number is 25.</p>
 MaximumRepositoryNamesExceeded(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>An encryption integrity check failed.</p>
 EncryptionIntegrityChecksFailed(String),
@@ -613,7 +519,7 @@ Unknown(String)
                     
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
@@ -700,7 +606,7 @@ Unknown(String)
 RepositoryNameExists(String),
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The specified repository description is not valid.</p>
 InvalidRepositoryDescription(String),
@@ -775,7 +681,7 @@ Unknown(String)
                     
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>An encryption integrity check failed.</p>
 EncryptionIntegrityChecksFailed(String),
@@ -840,87 +746,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by GetBlob
-                #[derive(Debug, PartialEq)]
-                pub enum GetBlobError {
-                    
-///<p>A repository name is required but was not specified.</p>
-RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
-InvalidRepositoryName(String),
-///<p>The specified repository does not exist.</p>
-RepositoryDoesNotExist(String),
-///<p>A blob ID is required but was not specified.</p>
-BlobIdRequired(String),
-///<p>The specified blob is not valid.</p>
-InvalidBlobId(String),
-///<p>The specified blob does not exist.</p>
-BlobIdDoesNotExist(String),
-///<p>An encryption integrity check failed.</p>
-EncryptionIntegrityChecksFailed(String),
-///<p>An encryption key could not be accessed.</p>
-EncryptionKeyAccessDenied(String),
-///<p>The encryption key is disabled.</p>
-EncryptionKeyDisabled(String),
-///<p>No encryption key was found.</p>
-EncryptionKeyNotFound(String),
-///<p>The encryption key is not available.</p>
-EncryptionKeyUnavailable(String),
-///<p>The specified file exceeds the file size limit for AWS CodeCommit. For more information about limits in AWS CodeCommit, see <a href="http://docs.aws.amazon.com/codecommit/latest/userguide/limits.html">AWS CodeCommit User Guide</a>.</p>
-FileTooLarge(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl GetBlobError {
-                    pub fn from_body(body: &str) -> GetBlobError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "RepositoryNameRequiredException" => GetBlobError::RepositoryNameRequired(String::from(error_message)),"InvalidRepositoryNameException" => GetBlobError::InvalidRepositoryName(String::from(error_message)),"RepositoryDoesNotExistException" => GetBlobError::RepositoryDoesNotExist(String::from(error_message)),"BlobIdRequiredException" => GetBlobError::BlobIdRequired(String::from(error_message)),"InvalidBlobIdException" => GetBlobError::InvalidBlobId(String::from(error_message)),"BlobIdDoesNotExistException" => GetBlobError::BlobIdDoesNotExist(String::from(error_message)),"EncryptionIntegrityChecksFailedException" => GetBlobError::EncryptionIntegrityChecksFailed(String::from(error_message)),"EncryptionKeyAccessDeniedException" => GetBlobError::EncryptionKeyAccessDenied(String::from(error_message)),"EncryptionKeyDisabledException" => GetBlobError::EncryptionKeyDisabled(String::from(error_message)),"EncryptionKeyNotFoundException" => GetBlobError::EncryptionKeyNotFound(String::from(error_message)),"EncryptionKeyUnavailableException" => GetBlobError::EncryptionKeyUnavailable(String::from(error_message)),"FileTooLargeException" => GetBlobError::FileTooLarge(String::from(error_message)),"ValidationException" => GetBlobError::Validation(error_message.to_string()),_ => GetBlobError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => GetBlobError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for GetBlobError {
-                    fn from(err: serde_json::error::Error) -> GetBlobError {
-                        GetBlobError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for GetBlobError {
-                    fn from(err: CredentialsError) -> GetBlobError {
-                        GetBlobError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for GetBlobError {
-                    fn from(err: HttpDispatchError) -> GetBlobError {
-                        GetBlobError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for GetBlobError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for GetBlobError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            GetBlobError::RepositoryNameRequired(ref cause) => cause,GetBlobError::InvalidRepositoryName(ref cause) => cause,GetBlobError::RepositoryDoesNotExist(ref cause) => cause,GetBlobError::BlobIdRequired(ref cause) => cause,GetBlobError::InvalidBlobId(ref cause) => cause,GetBlobError::BlobIdDoesNotExist(ref cause) => cause,GetBlobError::EncryptionIntegrityChecksFailed(ref cause) => cause,GetBlobError::EncryptionKeyAccessDenied(ref cause) => cause,GetBlobError::EncryptionKeyDisabled(ref cause) => cause,GetBlobError::EncryptionKeyNotFound(ref cause) => cause,GetBlobError::EncryptionKeyUnavailable(ref cause) => cause,GetBlobError::FileTooLarge(ref cause) => cause,GetBlobError::Validation(ref cause) => cause,GetBlobError::Credentials(ref err) => err.description(),GetBlobError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetBlobError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by GetBranch
                 #[derive(Debug, PartialEq)]
                 pub enum GetBranchError {
@@ -929,7 +754,7 @@ Unknown(String)
 RepositoryNameRequired(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>A branch name is required but was not specified.</p>
 BranchNameRequired(String),
@@ -1006,7 +831,7 @@ Unknown(String)
                     
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
@@ -1079,95 +904,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by GetDifferences
-                #[derive(Debug, PartialEq)]
-                pub enum GetDifferencesError {
-                    
-///<p>A repository name is required but was not specified.</p>
-RepositoryNameRequired(String),
-///<p>The specified repository does not exist.</p>
-RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
-InvalidRepositoryName(String),
-///<p>The specified continuation token is not valid.</p>
-InvalidContinuationToken(String),
-///<p>The specified number of maximum results is not valid.</p>
-InvalidMaxResults(String),
-///<p>The specified commit ID is not valid.</p>
-InvalidCommitId(String),
-///<p>A commit was not specified.</p>
-CommitRequired(String),
-///<p>The specified commit is not valid.</p>
-InvalidCommit(String),
-///<p>The specified commit does not exist or no commit was specified, and the specified repository has no default branch.</p>
-CommitDoesNotExist(String),
-///<p>The specified path is not valid.</p>
-InvalidPath(String),
-///<p>The specified path does not exist.</p>
-PathDoesNotExist(String),
-///<p>An encryption integrity check failed.</p>
-EncryptionIntegrityChecksFailed(String),
-///<p>An encryption key could not be accessed.</p>
-EncryptionKeyAccessDenied(String),
-///<p>The encryption key is disabled.</p>
-EncryptionKeyDisabled(String),
-///<p>No encryption key was found.</p>
-EncryptionKeyNotFound(String),
-///<p>The encryption key is not available.</p>
-EncryptionKeyUnavailable(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl GetDifferencesError {
-                    pub fn from_body(body: &str) -> GetDifferencesError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "RepositoryNameRequiredException" => GetDifferencesError::RepositoryNameRequired(String::from(error_message)),"RepositoryDoesNotExistException" => GetDifferencesError::RepositoryDoesNotExist(String::from(error_message)),"InvalidRepositoryNameException" => GetDifferencesError::InvalidRepositoryName(String::from(error_message)),"InvalidContinuationTokenException" => GetDifferencesError::InvalidContinuationToken(String::from(error_message)),"InvalidMaxResultsException" => GetDifferencesError::InvalidMaxResults(String::from(error_message)),"InvalidCommitIdException" => GetDifferencesError::InvalidCommitId(String::from(error_message)),"CommitRequiredException" => GetDifferencesError::CommitRequired(String::from(error_message)),"InvalidCommitException" => GetDifferencesError::InvalidCommit(String::from(error_message)),"CommitDoesNotExistException" => GetDifferencesError::CommitDoesNotExist(String::from(error_message)),"InvalidPathException" => GetDifferencesError::InvalidPath(String::from(error_message)),"PathDoesNotExistException" => GetDifferencesError::PathDoesNotExist(String::from(error_message)),"EncryptionIntegrityChecksFailedException" => GetDifferencesError::EncryptionIntegrityChecksFailed(String::from(error_message)),"EncryptionKeyAccessDeniedException" => GetDifferencesError::EncryptionKeyAccessDenied(String::from(error_message)),"EncryptionKeyDisabledException" => GetDifferencesError::EncryptionKeyDisabled(String::from(error_message)),"EncryptionKeyNotFoundException" => GetDifferencesError::EncryptionKeyNotFound(String::from(error_message)),"EncryptionKeyUnavailableException" => GetDifferencesError::EncryptionKeyUnavailable(String::from(error_message)),"ValidationException" => GetDifferencesError::Validation(error_message.to_string()),_ => GetDifferencesError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => GetDifferencesError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for GetDifferencesError {
-                    fn from(err: serde_json::error::Error) -> GetDifferencesError {
-                        GetDifferencesError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for GetDifferencesError {
-                    fn from(err: CredentialsError) -> GetDifferencesError {
-                        GetDifferencesError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for GetDifferencesError {
-                    fn from(err: HttpDispatchError) -> GetDifferencesError {
-                        GetDifferencesError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for GetDifferencesError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for GetDifferencesError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            GetDifferencesError::RepositoryNameRequired(ref cause) => cause,GetDifferencesError::RepositoryDoesNotExist(ref cause) => cause,GetDifferencesError::InvalidRepositoryName(ref cause) => cause,GetDifferencesError::InvalidContinuationToken(ref cause) => cause,GetDifferencesError::InvalidMaxResults(ref cause) => cause,GetDifferencesError::InvalidCommitId(ref cause) => cause,GetDifferencesError::CommitRequired(ref cause) => cause,GetDifferencesError::InvalidCommit(ref cause) => cause,GetDifferencesError::CommitDoesNotExist(ref cause) => cause,GetDifferencesError::InvalidPath(ref cause) => cause,GetDifferencesError::PathDoesNotExist(ref cause) => cause,GetDifferencesError::EncryptionIntegrityChecksFailed(ref cause) => cause,GetDifferencesError::EncryptionKeyAccessDenied(ref cause) => cause,GetDifferencesError::EncryptionKeyDisabled(ref cause) => cause,GetDifferencesError::EncryptionKeyNotFound(ref cause) => cause,GetDifferencesError::EncryptionKeyUnavailable(ref cause) => cause,GetDifferencesError::Validation(ref cause) => cause,GetDifferencesError::Credentials(ref err) => err.description(),GetDifferencesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),GetDifferencesError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by GetRepository
                 #[derive(Debug, PartialEq)]
                 pub enum GetRepositoryError {
@@ -1176,7 +912,7 @@ Unknown(String)
 RepositoryNameRequired(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>An encryption integrity check failed.</p>
 EncryptionIntegrityChecksFailed(String),
@@ -1247,7 +983,7 @@ Unknown(String)
                     
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
@@ -1322,7 +1058,7 @@ Unknown(String)
 RepositoryNameRequired(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>An encryption integrity check failed.</p>
 EncryptionIntegrityChecksFailed(String),
@@ -1460,7 +1196,7 @@ Unknown(String)
 RepositoryDoesNotExist(String),
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The list of triggers for the repository is required but was not specified.</p>
 RepositoryTriggersListRequired(String),
@@ -1474,7 +1210,7 @@ InvalidRepositoryTriggerDestinationArn(String),
 InvalidRepositoryTriggerRegion(String),
 ///<p>The custom data provided for the trigger is not valid.</p>
 InvalidRepositoryTriggerCustomData(String),
-///<p>The number of branches for the trigger was exceeded.</p>
+///<p>The number of branches for the trigger was exceeded. </p>
 MaximumBranchesExceeded(String),
 ///<p>One or more branch names specified for the trigger is not valid.</p>
 InvalidRepositoryTriggerBranchName(String),
@@ -1482,7 +1218,7 @@ InvalidRepositoryTriggerBranchName(String),
 InvalidRepositoryTriggerEvents(String),
 ///<p>A name for the trigger is required but was not specified.</p>
 RepositoryTriggerNameRequired(String),
-///<p>A destination ARN for the target service for the trigger is required but was not specified.</p>
+///<p>A destination ARN for the target service for the trigger is required but was not specified. </p>
 RepositoryTriggerDestinationArnRequired(String),
 ///<p>At least one branch name is required but was not specified in the trigger configuration.</p>
 RepositoryTriggerBranchNameListRequired(String),
@@ -1559,7 +1295,7 @@ Unknown(String)
 RepositoryDoesNotExist(String),
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The list of triggers for the repository is required but was not specified.</p>
 RepositoryTriggersListRequired(String),
@@ -1573,7 +1309,7 @@ InvalidRepositoryTriggerDestinationArn(String),
 InvalidRepositoryTriggerRegion(String),
 ///<p>The custom data provided for the trigger is not valid.</p>
 InvalidRepositoryTriggerCustomData(String),
-///<p>The number of branches for the trigger was exceeded.</p>
+///<p>The number of branches for the trigger was exceeded. </p>
 MaximumBranchesExceeded(String),
 ///<p>One or more branch names specified for the trigger is not valid.</p>
 InvalidRepositoryTriggerBranchName(String),
@@ -1581,7 +1317,7 @@ InvalidRepositoryTriggerBranchName(String),
 InvalidRepositoryTriggerEvents(String),
 ///<p>A name for the trigger is required but was not specified.</p>
 RepositoryTriggerNameRequired(String),
-///<p>A destination ARN for the target service for the trigger is required but was not specified.</p>
+///<p>A destination ARN for the target service for the trigger is required but was not specified. </p>
 RepositoryTriggerDestinationArnRequired(String),
 ///<p>At least one branch name is required but was not specified in the trigger configuration.</p>
 RepositoryTriggerBranchNameListRequired(String),
@@ -1658,7 +1394,7 @@ Unknown(String)
 RepositoryNameRequired(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>A branch name is required but was not specified.</p>
 BranchNameRequired(String),
@@ -1737,7 +1473,7 @@ Unknown(String)
 RepositoryNameRequired(String),
 ///<p>The specified repository does not exist.</p>
 RepositoryDoesNotExist(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),
 ///<p>The specified repository description is not valid.</p>
 InvalidRepositoryDescription(String),
@@ -1814,7 +1550,7 @@ RepositoryDoesNotExist(String),
 RepositoryNameExists(String),
 ///<p>A repository name is required but was not specified.</p>
 RepositoryNameRequired(String),
-///<p>At least one specified repository name is not valid.</p> <note> <p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p> </note>
+///<p>At least one specified repository name is not valid.</p> <note><p>This exception only occurs when a specified repository name is not valid. Other exceptions occur when a required repository parameter is missing, or when a specified repository does not exist.</p></note>
 InvalidRepositoryName(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
@@ -1887,7 +1623,7 @@ Unknown(String)
 
         
 
-                #[doc="<p>Returns information about one or more repositories.</p> <note> <p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p> </note>"]
+                #[doc="<p>Returns information about one or more repositories.</p> <note><p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p></note>"]
                 pub fn batch_get_repositories(&self, input: &BatchGetRepositoriesInput)  -> Result<BatchGetRepositoriesOutput, BatchGetRepositoriesError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     
@@ -1909,7 +1645,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Creates a new branch in a repository and points the branch to a commit.</p> <note> <p>Calling the create branch operation does not set a repository's default branch. To do this, call the update default branch operation.</p> </note>"]
+                #[doc="<p>Creates a new branch in a repository and points the branch to a commit.</p> <note><p>Calling the create branch operation does not set a repository's default branch. To do this, call the update default branch operation.</p></note>"]
                 pub fn create_branch(&self, input: &CreateBranchInput)  -> Result<(), CreateBranchError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     
@@ -1953,7 +1689,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Deletes a repository. If a specified repository was already deleted, a null repository ID will be returned.</p> <important><p>Deleting a repository also deletes all associated objects and metadata. After a repository is deleted, all future push calls to the deleted repository will fail.</p> </important>"]
+                #[doc="<p>Deletes a repository. If a specified repository was already deleted, a null repository ID will be returned.</p> <important>Deleting a repository also deletes all associated objects and metadata. After a repository is deleted, all future push calls to the deleted repository will fail.</important>"]
                 pub fn delete_repository(&self, input: &DeleteRepositoryInput)  -> Result<DeleteRepositoryOutput, DeleteRepositoryError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     
@@ -1971,28 +1707,6 @@ Unknown(String)
                             Ok(serde_json::from_str::<DeleteRepositoryOutput>(String::from_utf8_lossy(&response.body).as_ref()).unwrap())
                         }
                         _ => Err(DeleteRepositoryError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>Returns the base-64 encoded content of an individual blob within a repository.</p>"]
-                pub fn get_blob(&self, input: &GetBlobInput)  -> Result<GetBlobOutput, GetBlobError> {
-                    let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
-                    
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    request.add_header("x-amz-target", "CodeCommit_20150413.GetBlob");
-                    let encoded = serde_json::to_string(input).unwrap();
-         request.set_payload(Some(encoded.into_bytes()));
-         
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let response = try!(self.dispatcher.dispatch(&request));
-
-                    match response.status {
-                        StatusCode::Ok => {
-                            Ok(serde_json::from_str::<GetBlobOutput>(String::from_utf8_lossy(&response.body).as_ref()).unwrap())
-                        }
-                        _ => Err(GetBlobError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
                     }
                 }
                 
@@ -2041,29 +1755,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Returns information about the differences in a valid commit specifier (such as a branch, tag, HEAD, commit ID or other fully qualified reference). Results can be limited to a specified path.</p>"]
-                pub fn get_differences(&self, input: &GetDifferencesInput)  -> Result<GetDifferencesOutput, GetDifferencesError> {
-                    let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
-                    
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    request.add_header("x-amz-target", "CodeCommit_20150413.GetDifferences");
-                    let encoded = serde_json::to_string(input).unwrap();
-         request.set_payload(Some(encoded.into_bytes()));
-         
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let response = try!(self.dispatcher.dispatch(&request));
-
-                    match response.status {
-                        StatusCode::Ok => {
-                            Ok(serde_json::from_str::<GetDifferencesOutput>(String::from_utf8_lossy(&response.body).as_ref()).unwrap())
-                        }
-                        _ => Err(GetDifferencesError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>Returns information about a repository.</p> <note> <p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p> </note>"]
+                #[doc="<p>Returns information about a repository.</p> <note><p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p></note>"]
                 pub fn get_repository(&self, input: &GetRepositoryInput)  -> Result<GetRepositoryOutput, GetRepositoryError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     
@@ -2195,7 +1887,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Sets or changes the default branch name for the specified repository.</p> <note> <p>If you use this operation to change the default branch name to the current default branch name, a success message is returned even though the default branch did not change.</p> </note>"]
+                #[doc="<p>Sets or changes the default branch name for the specified repository.</p> <note><p>If you use this operation to change the default branch name to the current default branch name, a success message is returned even though the default branch did not change.</p></note>"]
                 pub fn update_default_branch(&self, input: &UpdateDefaultBranchInput)  -> Result<(), UpdateDefaultBranchError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     
@@ -2217,7 +1909,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Sets or changes the comment or description for a repository.</p> <note> <p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p> </note>"]
+                #[doc="<p>Sets or changes the comment or description for a repository.</p> <note><p>The description field for a repository accepts all HTML characters and all valid Unicode characters. Applications that do not HTML-encode the description and display it in a web page could expose users to potentially malicious code. Make sure that you HTML-encode the description field in any application that uses this API to display the repository description on a web page.</p></note>"]
                 pub fn update_repository_description(&self, input: &UpdateRepositoryDescriptionInput)  -> Result<(), UpdateRepositoryDescriptionError> {
                     let mut request = SignedRequest::new("POST", "codecommit", self.region, "/");
                     

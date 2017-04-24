@@ -30,11 +30,11 @@ pub fn generate_tests_body(crate_name: &str, service: &Service) -> Option<String
         Some(format!("
                 extern crate {crate_name};
                 extern crate rusoto_mock;
-                extern crate rusoto;
+                extern crate rusoto_core;
 
                 use {crate_name}::*;
                 use rusoto_mock::*;
-                use rusoto::Region as rusoto_region;
+                use rusoto_core::Region as rusoto_region;
 
                 {test_bodies}",
                     crate_name = crate_name,

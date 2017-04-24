@@ -1,26 +1,26 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate xml;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
 use std::str::FromStr;
             use xml::EventReader;
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::reader::XmlEvent;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
-            use rusoto::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
+            use rusoto_core::xmlerror::*;
 
             enum DeserializerNext {
                 Close,
@@ -154,6 +154,7 @@ ActionSerializer::serialize(params, &key, obj);
                 }
             }
             
+#[doc="<p>Contains the parameters for AddTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct AddTagsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the resource.</p>"]
@@ -186,6 +187,7 @@ TagListSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of AddTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct AddTagsOutput;
             
@@ -553,6 +555,7 @@ struct ConditionFieldNameDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for CreateListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateListenerInput {
                 #[doc="<p>The SSL server certificate. You must provide exactly one certificate if the protocol is HTTPS.</p>"]
@@ -601,6 +604,7 @@ if let Some(ref field_value) = obj.ssl_policy {
                 }
             }
             
+#[doc="<p>Contains the output of CreateListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateListenerOutput {
                 #[doc="<p>Information about the listener.</p>"]
@@ -643,11 +647,10 @@ struct CreateListenerOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for CreateLoadBalancer.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateLoadBalancerInput {
-                #[doc="<p>The type of IP addresses used by the subnets for your load balancer. The possible values are <code>ipv4</code> (for IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses). Internal load balancers must use <code>ipv4</code>.</p>"]
-pub ip_address_type: Option<IpAddressType>,
-#[doc="<p>The name of the load balancer.</p> <p>This name must be unique per region per account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen.</p>"]
+                #[doc="<p>The name of the load balancer.</p> <p>This name must be unique within your AWS account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen.</p>"]
 pub name: LoadBalancerName,
 #[doc="<p>The nodes of an Internet-facing load balancer have public IP addresses. The DNS name of an Internet-facing load balancer is publicly resolvable to the public IP addresses of the nodes. Therefore, Internet-facing load balancers can route requests from clients over the Internet.</p> <p>The nodes of an internal load balancer have only private IP addresses. The DNS name of an internal load balancer is publicly resolvable to the private IP addresses of the nodes. Therefore, internal load balancers can only route requests from clients with access to the VPC for the load balancer.</p> <p>The default is an Internet-facing load balancer.</p>"]
 pub scheme: Option<LoadBalancerSchemeEnum>,
@@ -669,10 +672,7 @@ pub tags: Option<TagList>,
             prefix.push_str(".");
         }
 
-        if let Some(ref field_value) = obj.ip_address_type {
-                params.put(&format!("{}{}", prefix, "IpAddressType"), &field_value);
-            }
-params.put(&format!("{}{}", prefix, "Name"), &obj.name);
+        params.put(&format!("{}{}", prefix, "Name"), &obj.name);
 if let Some(ref field_value) = obj.scheme {
                 params.put(&format!("{}{}", prefix, "Scheme"), &field_value);
             }
@@ -699,6 +699,7 @@ if let Some(ref field_value) = obj.tags {
                 }
             }
             
+#[doc="<p>Contains the output of CreateLoadBalancer.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateLoadBalancerOutput {
                 #[doc="<p>Information about the load balancer.</p>"]
@@ -741,11 +742,12 @@ struct CreateLoadBalancerOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for CreateRule.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateRuleInput {
                 #[doc="<p>An action. Each action has the type <code>forward</code> and specifies a target group.</p>"]
 pub actions: Actions,
-#[doc="<p>A condition. Each condition specifies a field name and a single value.</p> <p>If the field name is <code>host-header</code>, you can specify a single host name (for example, my.example.com). A host name is case insensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>- .</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul> <p>If the field name is <code>path-pattern</code>, you can specify a single path pattern. A path pattern is case sensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>_ - . $ / ~ \" ' @ : +</p> </li> <li> <p>&amp; (using &amp;amp;)</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul>"]
+#[doc="<p>A condition. Each condition has the field <code>path-pattern</code> and specifies one path pattern. A path pattern is case sensitive, can be up to 255 characters in length, and can contain any of the following characters:</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>_ - . $ / ~ \" ' @ : +</p> </li> <li> <p>&amp; (using &amp;amp;)</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul>"]
 pub conditions: RuleConditionList,
 #[doc="<p>The Amazon Resource Name (ARN) of the listener.</p>"]
 pub listener_arn: ListenerArn,
@@ -779,6 +781,7 @@ params.put(&format!("{}{}", prefix, "Priority"), &obj.priority.to_string());
                 }
             }
             
+#[doc="<p>Contains the output of CreateRule.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateRuleOutput {
                 #[doc="<p>Information about the rule.</p>"]
@@ -821,6 +824,7 @@ struct CreateRuleOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for CreateTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateTargetGroupInput {
                 #[doc="<p>The approximate amount of time, in seconds, between health checks of an individual target. The default is 30 seconds.</p>"]
@@ -837,7 +841,7 @@ pub health_check_timeout_seconds: Option<HealthCheckTimeoutSeconds>,
 pub healthy_threshold_count: Option<HealthCheckThresholdCount>,
 #[doc="<p>The HTTP codes to use when checking for a successful response from a target. The default is 200.</p>"]
 pub matcher: Option<Matcher>,
-#[doc="<p>The name of the target group.</p> <p>This name must be unique per region per account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen.</p>"]
+#[doc="<p>The name of the target group.</p>"]
 pub name: TargetGroupName,
 #[doc="<p>The port on which the targets receive traffic. This port is used unless you specify a port override when registering the target.</p>"]
 pub port: Port,
@@ -895,6 +899,7 @@ params.put(&format!("{}{}", prefix, "VpcId"), &obj.vpc_id);
                 }
             }
             
+#[doc="<p>Contains the output of CreateTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateTargetGroupOutput {
                 #[doc="<p>Information about the target group.</p>"]
@@ -965,6 +970,7 @@ struct DNSNameDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DeleteListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteListenerInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the listener.</p>"]
@@ -986,6 +992,7 @@ pub listener_arn: ListenerArn,
                 }
             }
             
+#[doc="<p>Contains the output of DeleteListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteListenerOutput;
             
@@ -1004,6 +1011,7 @@ struct DeleteListenerOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for DeleteLoadBalancer.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteLoadBalancerInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
@@ -1025,6 +1033,7 @@ pub load_balancer_arn: LoadBalancerArn,
                 }
             }
             
+#[doc="<p>Contains the output of DeleteLoadBalancer.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteLoadBalancerOutput;
             
@@ -1043,6 +1052,7 @@ struct DeleteLoadBalancerOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for DeleteRule.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteRuleInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the rule.</p>"]
@@ -1064,6 +1074,7 @@ pub rule_arn: RuleArn,
                 }
             }
             
+#[doc="<p>Contains the output of DeleteRule.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteRuleOutput;
             
@@ -1082,6 +1093,7 @@ struct DeleteRuleOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for DeleteTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteTargetGroupInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
@@ -1103,6 +1115,7 @@ pub target_group_arn: TargetGroupArn,
                 }
             }
             
+#[doc="<p>Contains the output of DeleteTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeleteTargetGroupOutput;
             
@@ -1121,6 +1134,7 @@ struct DeleteTargetGroupOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for DeregisterTargets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeregisterTargetsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
@@ -1149,6 +1163,7 @@ TargetDescriptionsSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of DeregisterTargets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DeregisterTargetsOutput;
             
@@ -1167,6 +1182,7 @@ struct DeregisterTargetsOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for DescribeListeners.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeListenersInput {
                 #[doc="<p>The Amazon Resource Names (ARN) of the listeners.</p>"]
@@ -1209,6 +1225,7 @@ if let Some(ref field_value) = obj.page_size {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeListeners.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeListenersOutput {
                 #[doc="<p>Information about the listeners.</p>"]
@@ -1256,6 +1273,7 @@ struct DescribeListenersOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeLoadBalancerAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeLoadBalancerAttributesInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
@@ -1277,6 +1295,7 @@ pub load_balancer_arn: LoadBalancerArn,
                 }
             }
             
+#[doc="<p>Contains the output of DescribeLoadBalancerAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeLoadBalancerAttributesOutput {
                 #[doc="<p>Information about the load balancer attributes.</p>"]
@@ -1319,9 +1338,10 @@ struct DescribeLoadBalancerAttributesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeLoadBalancers.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeLoadBalancersInput {
-                #[doc="<p>The Amazon Resource Names (ARN) of the load balancers. You can specify up to 20 load balancers in a single call.</p>"]
+                #[doc="<p>The Amazon Resource Names (ARN) of the load balancers.</p>"]
 pub load_balancer_arns: Option<LoadBalancerArns>,
 #[doc="<p>The marker for the next set of results. (You received this marker from a previous call.)</p>"]
 pub marker: Option<Marker>,
@@ -1365,6 +1385,7 @@ if let Some(ref field_value) = obj.page_size {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeLoadBalancers.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeLoadBalancersOutput {
                 #[doc="<p>Information about the load balancers.</p>"]
@@ -1412,6 +1433,7 @@ struct DescribeLoadBalancersOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeRules.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeRulesInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the listener.</p>"]
@@ -1444,6 +1466,7 @@ if let Some(ref field_value) = obj.rule_arns {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeRules.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeRulesOutput {
                 #[doc="<p>Information about the rules.</p>"]
@@ -1486,6 +1509,7 @@ struct DescribeRulesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeSSLPolicies.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeSSLPoliciesInput {
                 #[doc="<p>The marker for the next set of results. (You received this marker from a previous call.)</p>"]
@@ -1523,6 +1547,7 @@ if let Some(ref field_value) = obj.page_size {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeSSLPolicies.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeSSLPoliciesOutput {
                 #[doc="<p>The marker to use when requesting the next set of results. If there are no additional results, the string is empty.</p>"]
@@ -1570,6 +1595,7 @@ struct DescribeSSLPoliciesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTagsInput {
                 #[doc="<p>The Amazon Resource Names (ARN) of the resources.</p>"]
@@ -1595,6 +1621,7 @@ pub resource_arns: ResourceArns,
                 }
             }
             
+#[doc="<p>Contains the output of DescribeTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTagsOutput {
                 #[doc="<p>Information about the tags.</p>"]
@@ -1637,6 +1664,7 @@ struct DescribeTagsOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeTargetGroupAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetGroupAttributesInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
@@ -1658,6 +1686,7 @@ pub target_group_arn: TargetGroupArn,
                 }
             }
             
+#[doc="<p>Contains the output of DescribeTargetGroupAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetGroupAttributesOutput {
                 #[doc="<p>Information about the target group attributes</p>"]
@@ -1700,6 +1729,7 @@ struct DescribeTargetGroupAttributesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeTargetGroups.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetGroupsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
@@ -1751,6 +1781,7 @@ if let Some(ref field_value) = obj.target_group_arns {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeTargetGroups.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetGroupsOutput {
                 #[doc="<p>The marker to use when requesting the next set of results. If there are no additional results, the string is empty.</p>"]
@@ -1798,6 +1829,7 @@ struct DescribeTargetGroupsOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for DescribeTargetHealth.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetHealthInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
@@ -1828,6 +1860,7 @@ if let Some(ref field_value) = obj.targets {
                 }
             }
             
+#[doc="<p>Contains the output of DescribeTargetHealth.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeTargetHealthOutput {
                 #[doc="<p>Information about the health of the targets.</p>"]
@@ -1946,20 +1979,6 @@ struct HttpCodeDeserializer;
                 #[allow(unused_variables)]
                 fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
                 -> Result<HttpCode, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type IpAddressType = String;
-struct IpAddressTypeDeserializer;
-            impl IpAddressTypeDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<IpAddressType, XmlParseError> {
                     try!(start_element(tag_name, stack));
         let obj = try!(characters(stack));
         try!(end_element(tag_name, stack));
@@ -2179,8 +2198,6 @@ pub canonical_hosted_zone_id: Option<CanonicalHostedZoneId>,
 pub created_time: Option<CreatedTime>,
 #[doc="<p>The public DNS name of the load balancer.</p>"]
 pub dns_name: Option<DNSName>,
-#[doc="<p>The type of IP addresses used by the subnets for your load balancer. The possible values are <code>ipv4</code> (for IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses).</p>"]
-pub ip_address_type: Option<IpAddressType>,
 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
 pub load_balancer_arn: Option<LoadBalancerArn>,
 #[doc="<p>The name of the load balancer.</p>"]
@@ -2227,9 +2244,6 @@ struct LoadBalancerDeserializer;
             }
 "DNSName" => {
                 obj.dns_name = Some(try!(DNSNameDeserializer::deserialize("DNSName", stack)));
-            }
-"IpAddressType" => {
-                obj.ip_address_type = Some(try!(IpAddressTypeDeserializer::deserialize("IpAddressType", stack)));
             }
 "LoadBalancerArn" => {
                 obj.load_balancer_arn = Some(try!(LoadBalancerArnDeserializer::deserialize("LoadBalancerArn", stack)));
@@ -2645,7 +2659,7 @@ struct MarkerDeserializer;
 #[doc="<p>Information to use when checking for a successful response from a target.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct Matcher {
-                #[doc="<p>The HTTP codes. You can specify values between 200 and 499. The default value is 200. You can specify multiple values (for example, \"200,202\") or a range of values (for example, \"200-299\").</p>"]
+                #[doc="<p>The HTTP codes. The default value is 200. You can specify multiple values (for example, \"200,202\") or a range of values (for example, \"200-299\").</p>"]
 pub http_code: HttpCode,
             }
             
@@ -2700,6 +2714,7 @@ struct MatcherDeserializer;
                 }
             }
             
+#[doc="<p>Contains the parameters for ModifyListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyListenerInput {
                 #[doc="<p>The SSL server certificate.</p>"]
@@ -2712,7 +2727,7 @@ pub listener_arn: ListenerArn,
 pub port: Option<Port>,
 #[doc="<p>The protocol for connections from clients to the load balancer.</p>"]
 pub protocol: Option<ProtocolEnum>,
-#[doc="<p>The security policy that defines which protocols and ciphers are supported. For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies\">Security Policies</a> in the <i>Application Load Balancers Guide</i>.</p>"]
+#[doc="<p>The security policy that defines which ciphers and protocols are supported.</p>"]
 pub ssl_policy: Option<SslPolicyName>,
             }
             
@@ -2754,6 +2769,7 @@ if let Some(ref field_value) = obj.ssl_policy {
                 }
             }
             
+#[doc="<p>Contains the output of ModifyListener.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyListenerOutput {
                 #[doc="<p>Information about the modified listeners.</p>"]
@@ -2796,6 +2812,7 @@ struct ModifyListenerOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for ModifyLoadBalancerAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyLoadBalancerAttributesInput {
                 #[doc="<p>The load balancer attributes.</p>"]
@@ -2824,6 +2841,7 @@ params.put(&format!("{}{}", prefix, "LoadBalancerArn"), &obj.load_balancer_arn);
                 }
             }
             
+#[doc="<p>Contains the output of ModifyLoadBalancerAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyLoadBalancerAttributesOutput {
                 #[doc="<p>Information about the load balancer attributes.</p>"]
@@ -2866,6 +2884,7 @@ struct ModifyLoadBalancerAttributesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for ModifyRules.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyRuleInput {
                 #[doc="<p>The actions.</p>"]
@@ -2905,6 +2924,7 @@ params.put(&format!("{}{}", prefix, "RuleArn"), &obj.rule_arn);
                 }
             }
             
+#[doc="<p>Contains the output of ModifyRules.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyRuleOutput {
                 #[doc="<p>Information about the rule.</p>"]
@@ -2947,6 +2967,7 @@ struct ModifyRuleOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for ModifyTargetGroupAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyTargetGroupAttributesInput {
                 #[doc="<p>The attributes.</p>"]
@@ -2975,6 +2996,7 @@ params.put(&format!("{}{}", prefix, "TargetGroupArn"), &obj.target_group_arn);
                 }
             }
             
+#[doc="<p>Contains the output of ModifyTargetGroupAttributes.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyTargetGroupAttributesOutput {
                 #[doc="<p>Information about the attributes.</p>"]
@@ -3017,6 +3039,7 @@ struct ModifyTargetGroupAttributesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for ModifyTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyTargetGroupInput {
                 #[doc="<p>The approximate amount of time, in seconds, between health checks of an individual target.</p>"]
@@ -3082,6 +3105,7 @@ if let Some(ref field_value) = obj.unhealthy_threshold_count {
                 }
             }
             
+#[doc="<p>Contains the output of ModifyTargetGroup.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct ModifyTargetGroupOutput {
                 #[doc="<p>Information about the target group.</p>"]
@@ -3167,6 +3191,7 @@ struct ProtocolEnumDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for RegisterTargets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct RegisterTargetsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the target group.</p>"]
@@ -3195,6 +3220,7 @@ TargetDescriptionsSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of RegisterTargets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct RegisterTargetsOutput;
             
@@ -3213,6 +3239,7 @@ struct RegisterTargetsOutputDeserializer;
             
                 }
             }
+#[doc="<p>Contains the parameters for RemoveTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct RemoveTagsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the resource.</p>"]
@@ -3245,6 +3272,7 @@ TagKeysSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of RemoveTags.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct RemoveTagsOutput;
             
@@ -3383,9 +3411,9 @@ params.put(&key, &obj);
 #[doc="<p>Information about a condition for a rule.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct RuleCondition {
-                #[doc="<p>The name of the field. The possible values are <code>host-header</code> and <code>path-pattern</code>.</p>"]
+                #[doc="<p>The only possible value is <code>path-pattern</code>.</p>"]
 pub field: Option<ConditionFieldName>,
-#[doc="<p>The condition value.</p> <p>If the field name is <code>host-header</code>, you can specify a single host name (for example, my.example.com). A host name is case insensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>- .</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul> <p>If the field name is <code>path-pattern</code>, you can specify a single path pattern (for example, /img/*). A path pattern is case sensitive, can be up to 128 characters in length, and can contain any of the following characters. Note that you can include up to three wildcard characters.</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>_ - . $ / ~ \" ' @ : +</p> </li> <li> <p>&amp; (using &amp;amp;)</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul>"]
+#[doc="<p>The path pattern. You can specify a single path pattern.</p> <p>A path pattern is case sensitive, can be up to 255 characters in length, and can contain any of the following characters:</p> <ul> <li> <p>A-Z, a-z, 0-9</p> </li> <li> <p>_ - . $ / ~ \" ' @ : +</p> </li> <li> <p>&amp; (using &amp;amp;)</p> </li> <li> <p>* (matches 0 or more characters)</p> </li> <li> <p>? (matches exactly 1 character)</p> </li> </ul>"]
 pub values: Option<ListOfString>,
             }
             
@@ -3644,72 +3672,7 @@ params.put(&key, &obj);
                 }
             }
             
-#[derive(Default,Debug,Clone)]
-            pub struct SetIpAddressTypeInput {
-                #[doc="<p>The IP address type. The possible values are <code>ipv4</code> (for IPv4 addresses) and <code>dualstack</code> (for IPv4 and IPv6 addresses). Internal load balancers must use <code>ipv4</code>.</p>"]
-pub ip_address_type: IpAddressType,
-#[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
-pub load_balancer_arn: LoadBalancerArn,
-            }
-            
-
-            /// Serialize `SetIpAddressTypeInput` contents to a `SignedRequest`.
-            struct SetIpAddressTypeInputSerializer;
-            impl SetIpAddressTypeInputSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &SetIpAddressTypeInput) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        params.put(&format!("{}{}", prefix, "IpAddressType"), &obj.ip_address_type);
-params.put(&format!("{}{}", prefix, "LoadBalancerArn"), &obj.load_balancer_arn);
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct SetIpAddressTypeOutput {
-                #[doc="<p>The IP address type.</p>"]
-pub ip_address_type: Option<IpAddressType>,
-            }
-            
-struct SetIpAddressTypeOutputDeserializer;
-            impl SetIpAddressTypeOutputDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<SetIpAddressTypeOutput, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = SetIpAddressTypeOutput::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "IpAddressType" => {
-                obj.ip_address_type = Some(try!(IpAddressTypeDeserializer::deserialize("IpAddressType", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
+#[doc="<p>Contains the parameters for SetRulePriorities.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetRulePrioritiesInput {
                 #[doc="<p>The rule priorities.</p>"]
@@ -3735,6 +3698,7 @@ pub rule_priorities: RulePriorityList,
                 }
             }
             
+#[doc="<p>Contains the output of SetRulePriorities.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetRulePrioritiesOutput {
                 #[doc="<p>Information about the rules.</p>"]
@@ -3777,6 +3741,7 @@ struct SetRulePrioritiesOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for SetSecurityGroups.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetSecurityGroupsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
@@ -3805,6 +3770,7 @@ SecurityGroupsSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of SetSecurityGroups.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetSecurityGroupsOutput {
                 #[doc="<p>The IDs of the security groups associated with the load balancer.</p>"]
@@ -3847,6 +3813,7 @@ struct SetSecurityGroupsOutputDeserializer;
         
                 }
             }
+#[doc="<p>Contains the parameters for SetSubnets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetSubnetsInput {
                 #[doc="<p>The Amazon Resource Name (ARN) of the load balancer.</p>"]
@@ -3875,6 +3842,7 @@ SubnetsSerializer::serialize(
                 }
             }
             
+#[doc="<p>Contains the output of SetSubnets.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SetSubnetsOutput {
                 #[doc="<p>Information about the subnet and Availability Zone.</p>"]
@@ -5178,7 +5146,7 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateLoadBalancerError {
                     
-///<p>A load balancer with the specified name already exists.</p>
+///<p>A load balancer with the specified name already exists for this account.</p>
 DuplicateLoadBalancerName(String),
 ///<p>You've reached the limit on the number of load balancers for your AWS account.</p>
 TooManyLoadBalancers(String),
@@ -6664,68 +6632,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by SetIpAddressType
-                #[derive(Debug, PartialEq)]
-                pub enum SetIpAddressTypeError {
-                    
-///<p>The specified load balancer does not exist.</p>
-LoadBalancerNotFound(String),
-///<p>The requested configuration is not valid.</p>
-InvalidConfigurationRequest(String),
-///<p>The specified subnet is out of available addresses.</p>
-InvalidSubnet(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl SetIpAddressTypeError {
-                    pub fn from_body(body: &str) -> SetIpAddressTypeError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "LoadBalancerNotFoundException" => SetIpAddressTypeError::LoadBalancerNotFound(String::from(parsed_error.message)),"InvalidConfigurationRequestException" => SetIpAddressTypeError::InvalidConfigurationRequest(String::from(parsed_error.message)),"InvalidSubnetException" => SetIpAddressTypeError::InvalidSubnet(String::from(parsed_error.message)),_ => SetIpAddressTypeError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => SetIpAddressTypeError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for SetIpAddressTypeError {
-                    fn from(err: XmlParseError) -> SetIpAddressTypeError {
-                        let XmlParseError(message) = err;
-                        SetIpAddressTypeError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for SetIpAddressTypeError {
-                    fn from(err: CredentialsError) -> SetIpAddressTypeError {
-                        SetIpAddressTypeError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for SetIpAddressTypeError {
-                    fn from(err: HttpDispatchError) -> SetIpAddressTypeError {
-                        SetIpAddressTypeError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for SetIpAddressTypeError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for SetIpAddressTypeError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            SetIpAddressTypeError::LoadBalancerNotFound(ref cause) => cause,SetIpAddressTypeError::InvalidConfigurationRequest(ref cause) => cause,SetIpAddressTypeError::InvalidSubnet(ref cause) => cause,SetIpAddressTypeError::Validation(ref cause) => cause,SetIpAddressTypeError::Credentials(ref err) => err.description(),SetIpAddressTypeError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SetIpAddressTypeError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by SetRulePriorities
                 #[derive(Debug, PartialEq)]
                 pub enum SetRulePrioritiesError {
@@ -7014,7 +6920,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Creates an Application Load Balancer.</p> <p>When you create a load balancer, you can specify security groups, subnets, IP address type, and tags. Otherwise, you could do so later using <a>SetSecurityGroups</a>, <a>SetSubnets</a>, <a>SetIpAddressType</a>, and <a>AddTags</a>.</p> <p>To create listeners for your load balancer, use <a>CreateListener</a>. To describe your current load balancers, see <a>DescribeLoadBalancers</a>. When you are finished with a load balancer, you can delete it using <a>DeleteLoadBalancer</a>.</p> <p>You can create up to 20 load balancers per region per account. You can request an increase for the number of load balancers for your account. For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html\">Limits for Your Application Load Balancer</a> in the <i>Application Load Balancers Guide</i>.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html\">Application Load Balancers</a> in the <i>Application Load Balancers Guide</i>.</p>"]
+                #[doc="<p>Creates an Application Load Balancer.</p> <p>To create listeners for your load balancer, use <a>CreateListener</a>. You can add security groups, subnets, and tags when you create your load balancer, or you can add them later using <a>SetSecurityGroups</a>, <a>SetSubnets</a>, and <a>AddTags</a>.</p> <p>To describe your current load balancers, see <a>DescribeLoadBalancers</a>. When you are finished with a load balancer, you can delete it using <a>DeleteLoadBalancer</a>.</p> <p>You can create up to 20 load balancers per region per account. You can request an increase for the number of load balancers for your account. For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html\">Limits for Your Application Load Balancer</a> in the <i>Application Load Balancers Guide</i>.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html\">Application Load Balancers</a> in the <i>Application Load Balancers Guide</i>.</p>"]
                 pub fn create_load_balancer(&self, input: &CreateLoadBalancerInput) -> Result<CreateLoadBalancerOutput, CreateLoadBalancerError> {
                     let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
                     let mut params = Params::new();
@@ -7506,7 +7412,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes the specified policies or all policies used for SSL negotiation.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#describe-ssl-policies\">Security Policies</a> in the <i>Application Load Balancers Guide</i>.</p>"]
+                #[doc="<p>Describes the specified policies or all policies used for SSL negotiation.</p> <p>Note that the only supported policy at this time is ELBSecurityPolicy-2015-05.</p>"]
                 pub fn describe_ssl_policies(&self, input: &DescribeSSLPoliciesInput) -> Result<DescribeSSLPoliciesOutput, DescribeSSLPoliciesError> {
                     let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
                     let mut params = Params::new();
@@ -7547,7 +7453,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes the tags for the specified resources. You can describe the tags for one or more Application Load Balancers and target groups.</p>"]
+                #[doc="<p>Describes the tags for the specified resources.</p>"]
                 pub fn describe_tags(&self, input: &DescribeTagsInput) -> Result<DescribeTagsOutput, DescribeTagsError> {
                     let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
                     let mut params = Params::new();
@@ -7711,7 +7617,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Modifies the specified properties of the specified listener.</p> <p>Any properties that you do not specify retain their current values. However, changing the protocol from HTTPS to HTTP removes the security policy and SSL certificate properties. If you change the protocol from HTTP to HTTPS, you must add the security policy and server certificate.</p>"]
+                #[doc="<p>Modifies the specified properties of the specified listener.</p> <p>Any properties that you do not specify retain their current values. However, changing the protocol from HTTPS to HTTP removes the security policy and SSL certificate properties. If you change the protocol from HTTP to HTTPS, you must add the security policy.</p>"]
                 pub fn modify_listener(&self, input: &ModifyListenerInput) -> Result<ModifyListenerOutput, ModifyListenerError> {
                     let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
                     let mut params = Params::new();
@@ -7916,7 +7822,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Registers the specified targets with the specified target group.</p> <p>By default, the load balancer routes requests to registered targets using the protocol and port number for the target group. Alternatively, you can override the port for a target when you register it.</p> <p>The target must be in the virtual private cloud (VPC) that you specified for the target group. If the target is an EC2 instance, it must be in the <code>running</code> state when you register it.</p> <p>To remove a target from a target group, use <a>DeregisterTargets</a>.</p>"]
+                #[doc="<p>Registers the specified targets with the specified target group.</p> <p>By default, the load balancer routes requests to registered targets using the protocol and port number for the target group. Alternatively, you can override the port for a target when you register it.</p> <p>The target must be in the virtual private cloud (VPC) that you specified for the target group. If the target is an EC2 instance, it can't be in the <code>stopped</code> or <code>running</code> state when you register it.</p> <p>To remove a target from a target group, use <a>DeregisterTargets</a>.</p>"]
                 pub fn register_targets(&self, input: &RegisterTargetsInput) -> Result<RegisterTargetsOutput, RegisterTargetsError> {
                     let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
                     let mut params = Params::new();
@@ -7993,47 +7899,6 @@ Unknown(String)
                         }
                         _ => {
                             Err(RemoveTagsError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Sets the type of IP addresses used by the subnets of the specified Application Load Balancer.</p>"]
-                pub fn set_ip_address_type(&self, input: &SetIpAddressTypeInput) -> Result<SetIpAddressTypeOutput, SetIpAddressTypeError> {
-                    let mut request = SignedRequest::new("POST", "elasticloadbalancing", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "SetIpAddressType");
-                    params.put("Version", "2015-12-01");
-                    SetIpAddressTypeInputSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = SetIpAddressTypeOutput::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(SetIpAddressTypeOutputDeserializer::deserialize("SetIpAddressTypeResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(SetIpAddressTypeError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
                         }
                     }
                 }

@@ -80,13 +80,13 @@ impl GenerateProtocol for RestXmlGenerator {
         let mut imports = "
             use std::str::{FromStr};
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::EventReader;
             use xml::reader::XmlEvent;
-            use rusoto::xmlerror::*;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{peek_at_name, characters, end_element, start_element, skip_tree};
+            use rusoto_core::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{peek_at_name, characters, end_element, start_element, skip_tree};
             enum DeserializerNext {
                 Close,
                 Skip,

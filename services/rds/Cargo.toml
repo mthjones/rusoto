@@ -15,7 +15,7 @@ homepage = "https://www.rusoto.org/"
 hyper = "0.10.0"
 xml-rs = "0.3"
 
-[dependencies.rusoto]
+[dependencies.rusoto_core]
 version = "0.24.0"
 path = "../../core"
 features = ["xml"]

@@ -95,8 +95,8 @@ impl GenerateProtocol for RestJsonGenerator {
 
     fn generate_prelude(&self, writer: &mut FileWriter, _: &Service) -> IoResult {
         writeln!(writer,
-                 "use rusoto::param::{{Params, ServiceParams}};
-        use rusoto::signature::SignedRequest;
+                 "use rusoto_core::param::{{Params, ServiceParams}};
+        use rusoto_core::signature::SignedRequest;
         use serde_json::from_str;
         use serde_json::Value as SerdeJsonValue;")
 

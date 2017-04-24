@@ -1,26 +1,26 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate xml;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
 use std::str::FromStr;
             use xml::EventReader;
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::reader::XmlEvent;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
-            use rusoto::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
+            use rusoto_core::xmlerror::*;
 
             enum DeserializerNext {
                 Close,
@@ -931,12 +931,7 @@ struct CopyDBClusterParameterGroupResultDeserializer;
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone)]
             pub struct CopyDBClusterSnapshotMessage {
-                pub copy_tags: Option<BooleanOptional>,
-#[doc="<p>The AWS KMS key ID for an encrypted DB cluster snapshot. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key. </p> <p>If you copy an unencrypted DB cluster snapshot and specify a value for the <code>KmsKeyId</code> parameter, Amazon RDS encrypts the target DB cluster snapshot using the specified KMS encryption key. </p> <p>If you copy an encrypted DB cluster snapshot from your AWS account, you can specify a value for <code>KmsKeyId</code> to encrypt the copy with a new KMS encryption key. If you don't specify a value for <code>KmsKeyId</code>, then the copy of the DB cluster snapshot is encrypted with the same KMS key as the source DB cluster snapshot. </p> <p>If you copy an encrypted DB cluster snapshot that is shared from another AWS account, then you must specify a value for <code>KmsKeyId</code>. </p> <p>To copy an encrypted DB cluster snapshot to another region, you must set <code>KmsKeyId</code> to the KMS key ID you want to use to encrypt the copy of the DB cluster snapshot in the destination region. KMS encryption keys are specific to the region that they are created in, and you cannot use encryption keys from one region in another region.</p>"]
-pub kms_key_id: Option<String>,
-#[doc="<p>The URL that contains a Signature Version 4 signed request for the <code>CopyDBClusterSnapshot</code> API action in the AWS region that contains the source DB cluster snapshot to copy. The <code>PreSignedUrl</code> parameter must be used when copying an encrypted DB cluster snapshot from another AWS region.</p> <p>The pre-signed URL must be a valid request for the <code>CopyDBSClusterSnapshot</code> API action that can be executed in the source region that contains the encrypted DB cluster snapshot to be copied. The pre-signed URL request must contain the following parameter values:</p> <ul> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the copy of the DB cluster snapshot in the destination region. This is the same identifier for both the <code>CopyDBClusterSnapshot</code> action that is called in the destination region, and the action contained in the pre-signed URL.</p> </li> <li> <p> <code>DestinationRegion</code> - The name of the region that the DB cluster snapshot will be created in.</p> </li> <li> <p> <code>SourceDBClusterSnapshotIdentifier</code> - The DB cluster snapshot identifier for the encrypted DB cluster snapshot to be copied. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you are copying an encrypted DB cluster snapshot from the us-west-2 region, then your <code>SourceDBClusterSnapshotIdentifier</code> looks like the following example: <code>arn:aws:rds:us-west-2:123456789012:cluster-snapshot:aurora-cluster1-snapshot-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p>"]
-pub pre_signed_url: Option<String>,
-#[doc="<p>The identifier of the DB cluster snapshot to copy. This parameter is not case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>my-cluster-snapshot1</code> </p>"]
+                #[doc="<p>The identifier of the DB cluster snapshot to copy. This parameter is not case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>my-cluster-snapshot1</code> </p>"]
 pub source_db_cluster_snapshot_identifier: String,
 pub tags: Option<TagList>,
 #[doc="<p>The identifier of the new DB cluster snapshot to create from the source DB cluster snapshot. This parameter is not case-sensitive.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>my-cluster-snapshot2</code> </p>"]
@@ -953,16 +948,7 @@ pub target_db_cluster_snapshot_identifier: String,
             prefix.push_str(".");
         }
 
-        if let Some(ref field_value) = obj.copy_tags {
-                params.put(&format!("{}{}", prefix, "CopyTags"), &field_value.to_string());
-            }
-if let Some(ref field_value) = obj.kms_key_id {
-                params.put(&format!("{}{}", prefix, "KmsKeyId"), &field_value);
-            }
-if let Some(ref field_value) = obj.pre_signed_url {
-                params.put(&format!("{}{}", prefix, "PreSignedUrl"), &field_value);
-            }
-params.put(&format!("{}{}", prefix, "SourceDBClusterSnapshotIdentifier"), &obj.source_db_cluster_snapshot_identifier);
+        params.put(&format!("{}{}", prefix, "SourceDBClusterSnapshotIdentifier"), &obj.source_db_cluster_snapshot_identifier);
 if let Some(ref field_value) = obj.tags {
                 TagListSerializer::serialize(
                     params,
@@ -1098,9 +1084,9 @@ struct CopyDBParameterGroupResultDeserializer;
             pub struct CopyDBSnapshotMessage {
                 #[doc="<p>True to copy all tags from the source DB snapshot to the target DB snapshot; otherwise false. The default is false.</p>"]
 pub copy_tags: Option<BooleanOptional>,
-#[doc="<p>The AWS KMS key ID for an encrypted DB snapshot. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key. </p> <p>If you copy an unencrypted DB snapshot and specify a value for the <code>KmsKeyId</code> parameter, Amazon RDS encrypts the target DB snapshot using the specified KMS encryption key. </p> <p>If you copy an encrypted DB snapshot from your AWS account, you can specify a value for <code>KmsKeyId</code> to encrypt the copy with a new KMS encryption key. If you don't specify a value for <code>KmsKeyId</code>, then the copy of the DB snapshot is encrypted with the same KMS key as the source DB snapshot. </p> <p>If you copy an encrypted snapshot to a different AWS region, then you must specify a KMS key for the destination AWS region.</p> <p>If you copy an encrypted DB snapshot that is shared from another AWS account, then you must specify a value for <code>KmsKeyId</code>. </p> <p>To copy an encrypted DB snapshot to another region, you must set <code>KmsKeyId</code> to the KMS key ID used to encrypt the copy of the DB snapshot in the destination region. KMS encryption keys are specific to the region that they are created in, and you cannot use encryption keys from one region in another region.</p>"]
+#[doc="<p>The AWS KMS key ID for an encrypted DB snapshot. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key. </p> <p>If you copy an unencrypted DB snapshot and specify a value for the <code>KmsKeyId</code> parameter, Amazon RDS encrypts the target DB snapshot using the specified KMS encryption key. </p> <p>If you copy an encrypted DB snapshot from your AWS account, you can specify a value for <code>KmsKeyId</code> to encrypt the copy with a new KMS encryption key. If you don't specify a value for <code>KmsKeyId</code>, then the copy of the DB snapshot is encrypted with the same KMS key as the source DB snapshot. </p> <p>If you copy an encrypted DB snapshot from your AWS account, you can specify a value for <code>KmsKeyId</code> to encrypt the copy with a new KMS encryption key. If you don't specify a value for <code>KmsKeyId</code>, then the copy of the DB snapshot is encrypted with the same KMS key as the source DB snapshot. If you copy an encrypted snapshot to a different AWS region, then you must specify a KMS key for the destination AWS region.</p> <p>If you copy an encrypted DB snapshot that is shared from another AWS account, then you must specify a value for <code>KmsKeyId</code>. </p> <p>To copy an encrypted DB snapshot to another region, you must set <code>KmsKeyId</code> to the KMS key ID used to encrypt the copy of the DB snapshot in the destination region. KMS encryption keys are specific to the region that they are created in, and you cannot use encryption keys from one region in another region.</p>"]
 pub kms_key_id: Option<String>,
-#[doc="<p>The URL that contains a Signature Version 4 signed request for the <code>CopyDBSnapshot</code> API action in the AWS region that contains the source DB snapshot to copy. The <code>PreSignedUrl</code> parameter must be used when copying an encrypted DB snapshot from another AWS region.</p> <p>The presigned URL must be a valid request for the <code>CopyDBSnapshot</code> API action that can be executed in the source region that contains the encrypted DB snapshot to be copied. The presigned URL request must contain the following parameter values:</p> <ul> <li> <p> <code>DestinationRegion</code> - The AWS Region that the encrypted DB snapshot will be copied to. This region is the same one where the <code>CopyDBSnapshot</code> action is called that contains this presigned URL. </p> <p>For example, if you copy an encrypted DB snapshot from the us-west-2 region to the us-east-1 region, then you will call the <code>CopyDBSnapshot</code> action in the us-east-1 region and provide a presigned URL that contains a call to the <code>CopyDBSnapshot</code> action in the us-west-2 region. For this example, the <code>DestinationRegion</code> in the presigned URL must be set to the us-east-1 region.</p> </li> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the copy of the DB snapshot in the destination region. This is the same identifier for both the <code>CopyDBSnapshot</code> action that is called in the destination region, and the action contained in the presigned URL.</p> </li> <li> <p> <code>SourceDBSnapshotIdentifier</code> - The DB snapshot identifier for the encrypted snapshot to be copied. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you are copying an encrypted DB snapshot from the us-west-2 region, then your <code>SourceDBSnapshotIdentifier</code> would look like Example: <code>arn:aws:rds:us-west-2:123456789012:snapshot:mysql-instance1-snapshot-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p>"]
+#[doc="<p>The URL that contains a Signature Version 4 signed request for the <code>CopyDBSnapshot</code> API action in the AWS region that contains the source DB snapshot to copy. The <code>PreSignedUrl</code> parameter must be used when copying an encrypted DB snapshot from another AWS region.</p> <p>The presigned URL must be a valid request for the <code>CopyDBSnapshot</code> API action that can be executed in the source region that contains the encrypted DB snapshot to be copied. The presigned URL request must contain the following parameter values:</p> <ul> <li> <p> <code>DestinationRegion</code> - The AWS Region that the encrypted DB snapshot will be copied to. This region is the same one where the <code>CopyDBSnapshot</code> action is called that contains this presigned URL. </p> <p>For example, if you copy an encrypted DB snapshot from the us-west-2 region to the us-east-1 region, then you will call the <code>CopyDBSnapshot</code> action in the us-east-1 region and provide a presigned URL that contains a call to the <code>CopyDBSnapshot</code> action in the us-west-2 region. For this example, the <code>DestinationRegion</code> in the presigned URL must be set to the us-east-1 region.</p> </li> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the copy of the DB snapshot in the destination region. This is the same identifier for both the <code>CopyDBSnapshot</code> action that is called in the destination region, and the action contained in the presigned URL.</p> </li> <li> <p> <code>SourceDBSnapshotIdentifier</code> - The DB snapshot identifier for the encrypted snapshot to be copied. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you are copying an encrypted DB snapshot from the us-west-2 region, then your <code>SourceDBSnapshotIdentifier</code> would look like Example: <code>arn:aws:rds:us-west-2:123456789012:snapshot:mysql-instance1-snapshot-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/http:/docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/http:/docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p>"]
 pub pre_signed_url: Option<String>,
 #[doc="<p>The identifier for the source DB snapshot.</p> <p>If you are copying from a shared manual DB snapshot, this must be the ARN of the shared DB snapshot.</p> <p>You cannot copy an encrypted, shared DB snapshot from one AWS region to another.</p> <p>Constraints:</p> <ul> <li> <p>Must specify a valid system snapshot in the \"available\" state.</p> </li> <li> <p>If the source snapshot is in the same region as the copy, specify a valid DB snapshot identifier.</p> </li> <li> <p>If the source snapshot is in a different region than the copy, specify a valid DB snapshot ARN. For more information, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CopySnapshot.html\"> Copying a DB Snapshot</a>.</p> </li> </ul> <p>Example: <code>rds:mydb-2012-04-02-00-01</code> </p> <p>Example: <code>arn:aws:rds:us-west-2:123456789012:snapshot:mysql-instance1-snapshot-20130805</code> </p>"]
 pub source_db_snapshot_identifier: String,
@@ -1280,7 +1266,7 @@ pub database_name: Option<String>,
 pub engine: String,
 #[doc="<p>The version number of the database engine to use.</p> <p> <b>Aurora</b> </p> <p>Example: <code>5.6.10a</code> </p>"]
 pub engine_version: Option<String>,
-#[doc="<p>The KMS key identifier for an encrypted DB cluster.</p> <p>The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key.</p> <p>If the <code>StorageEncrypted</code> parameter is true, and you do not specify a value for the <code>KmsKeyId</code> parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region.</p> <p>If you create a Read Replica of an encrypted DB cluster in another region, you must set <code>KmsKeyId</code> to a KMS key ID that is valid in the destination region. This key is used to encrypt the Read Replica in that region.</p>"]
+#[doc="<p>The KMS key identifier for an encrypted DB cluster.</p> <p>The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KM encryption key.</p> <p>If the <code>StorageEncrypted</code> parameter is true, and you do not specify a value for the <code>KmsKeyId</code> parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS region.</p>"]
 pub kms_key_id: Option<String>,
 #[doc="<p>The password for the master database user. This password can contain any printable ASCII character except \"/\", \"\"\", or \"@\".</p> <p>Constraints: Must contain from 8 to 41 characters.</p>"]
 pub master_user_password: Option<String>,
@@ -1290,13 +1276,11 @@ pub master_username: Option<String>,
 pub option_group_name: Option<String>,
 #[doc="<p>The port number on which the instances in the DB cluster accept connections.</p> <p> Default: <code>3306</code> </p>"]
 pub port: Option<IntegerOptional>,
-#[doc="<p>A URL that contains a Signature Version 4 signed request for the <code>CreateDBCluster</code> action to be called in the source region where the DB cluster will be replicated from. You only need to specify <code>PreSignedUrl</code> when you are performing cross-region replication from an encrypted DB cluster.</p> <p>The pre-signed URL must be a valid request for the <code>CreateDBCluster</code> API action that can be executed in the source region that contains the encrypted DB cluster to be copied.</p> <p>The pre-signed URL request must contain the following parameter values:</p> <ul> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the copy of the DB cluster in the destination region. This should refer to the same KMS key for both the <code>CreateDBCluster</code> action that is called in the destination region, and the action contained in the pre-signed URL.</p> </li> <li> <p> <code>DestinationRegion</code> - The name of the region that Aurora Read Replica will be created in.</p> </li> <li> <p> <code>ReplicationSourceIdentifier</code> - The DB cluster identifier for the encrypted DB cluster to be copied. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you are copying an encrypted DB cluster from the us-west-2 region, then your <code>ReplicationSourceIdentifier</code> would look like Example: <code>arn:aws:rds:us-west-2:123456789012:cluster:aurora-cluster1</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p>"]
-pub pre_signed_url: Option<String>,
 #[doc="<p>The daily time range during which automated backups are created if automated backups are enabled using the <code>BackupRetentionPeriod</code> parameter. </p> <p>Default: A 30-minute window selected at random from an 8-hour block of time per region. To see the time blocks available, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html\"> Adjusting the Preferred Maintenance Window</a> in the <i>Amazon RDS User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Must be in the format <code>hh24:mi-hh24:mi</code>.</p> </li> <li> <p>Times should be in Universal Coordinated Time (UTC).</p> </li> <li> <p>Must not conflict with the preferred maintenance window.</p> </li> <li> <p>Must be at least 30 minutes.</p> </li> </ul>"]
 pub preferred_backup_window: Option<String>,
 #[doc="<p>The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC).</p> <p> Format: <code>ddd:hh24:mi-ddd:hh24:mi</code> </p> <p>Default: A 30-minute window selected at random from an 8-hour block of time per region, occurring on a random day of the week. To see the time blocks available, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html\"> Adjusting the Preferred Maintenance Window</a> in the <i>Amazon RDS User Guide.</i> </p> <p>Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun</p> <p>Constraints: Minimum 30-minute window.</p>"]
 pub preferred_maintenance_window: Option<String>,
-#[doc="<p>The Amazon Resource Name (ARN) of the source DB instance or DB cluster if this DB cluster is created as a Read Replica.</p>"]
+#[doc="<p>The Amazon Resource Name (ARN) of the source DB cluster if this DB cluster is created as a Read Replica.</p>"]
 pub replication_source_identifier: Option<String>,
 #[doc="<p>Specifies whether the DB cluster is encrypted.</p>"]
 pub storage_encrypted: Option<BooleanOptional>,
@@ -1356,9 +1340,6 @@ if let Some(ref field_value) = obj.option_group_name {
             }
 if let Some(ref field_value) = obj.port {
                 params.put(&format!("{}{}", prefix, "Port"), &field_value.to_string());
-            }
-if let Some(ref field_value) = obj.pre_signed_url {
-                params.put(&format!("{}{}", prefix, "PreSignedUrl"), &field_value);
             }
 if let Some(ref field_value) = obj.preferred_backup_window {
                 params.put(&format!("{}{}", prefix, "PreferredBackupWindow"), &field_value);
@@ -1600,7 +1581,7 @@ pub character_set_name: Option<String>,
 pub copy_tags_to_snapshot: Option<BooleanOptional>,
 #[doc="<p>The identifier of the DB cluster that the instance will belong to.</p> <p>For information on creating a DB cluster, see <a>CreateDBCluster</a>.</p> <p>Type: String</p>"]
 pub db_cluster_identifier: Option<String>,
-#[doc="<p>The compute and memory capacity of the DB instance. Note that not all instance classes are available in all regions for all DB engines.</p> <p> Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p>"]
+#[doc="<p>The compute and memory capacity of the DB instance.</p> <p> Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p>"]
 pub db_instance_class: String,
 #[doc="<p>The DB instance identifier. This parameter is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens (1 to 15 for SQL Server).</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> </ul> <p>Example: <code>mydbinstance</code> </p>"]
 pub db_instance_identifier: String,
@@ -1618,7 +1599,7 @@ pub domain: Option<String>,
 pub domain_iam_role_name: Option<String>,
 #[doc="<p>The name of the database engine to be used for this instance.</p> <p> Valid Values: <code>mysql</code> | <code>mariadb</code> | <code>oracle-se1</code> | <code>oracle-se2</code> | <code>oracle-se</code> | <code>oracle-ee</code> | <code>sqlserver-ee</code> | <code>sqlserver-se</code> | <code>sqlserver-ex</code> | <code>sqlserver-web</code> | <code>postgres</code> | <code>aurora</code> </p> <p>Not every database engine is available for every AWS region.</p>"]
 pub engine: String,
-#[doc="<p>The version number of the database engine to use.</p> <p>The following are the database engines and major and minor versions that are available with Amazon RDS. Not every database engine is available for every AWS region.</p> <p> <b>Amazon Aurora</b> </p> <ul> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-2, eu-west-1, us-east-1, us-east-2, us-west-2):</b> <code> 5.6.10a</code> </p> </li> </ul> <p> <b>MariaDB</b> </p> <ul> <li> <p> <b>Version 10.1 (available in these AWS regions: us-east-2):</b> <code> 10.1.16</code> </p> </li> <li> <p> <b>Version 10.1 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 10.1.14</code> </p> </li> <li> <p> <b>Version 10.0 (available in all AWS regions):</b> <code> 10.0.24</code> </p> </li> <li> <p> <b>Version 10.0 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 10.0.17</code> </p> </li> </ul> <p> <b>Microsoft SQL Server 2016</b> </p> <ul> <li> <p> <code>13.00.2164.0.v1</code> (supported for all editions, and all AWS regions except sa-east-1)</p> </li> </ul> <p> <b>Microsoft SQL Server 2014</b> </p> <ul> <li> <p> <code>12.00.5000.0.v1</code> (supported for all editions, and all AWS regions)</p> </li> <li> <p> <code>12.00.4422.0.v1</code> (supported for all editions except Enterprise Edition, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>Microsoft SQL Server 2012</b> </p> <ul> <li> <p> <code>11.00.6020.0.v1</code> (supported for all editions, and all AWS regions)</p> </li> <li> <p> <code>11.00.5058.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>11.00.2100.60.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>Microsoft SQL Server 2008 R2</b> </p> <ul> <li> <p> <code>10.50.6529.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>10.50.6000.34.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>10.50.2789.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>MySQL</b> </p> <ul> <li> <p> <b>Version 5.7 (available in all AWS regions):</b> <code> 5.7.11</code> </p> </li> <li> <p> <b>Version 5.7 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.7.10</code> </p> </li> <li> <p> <b>Version 5.6 (available in all AWS regions):</b> <code> 5.6.29</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.27</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.23</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </p> </li> <li> <p> <b>Version 5.5 (available in all AWS regions):</b> <code> 5.5.46</code> </p> </li> <li> <p> <b>Version 5.1 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.1.73a | 5.1.73b</code> </p> </li> </ul> <p> <b>Oracle Database Enterprise Edition (oracle-ee)</b> </p> <ul> <li> <p> <b>Version 12.1 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 12.1.0.1.v1 | 12.1.0.1.v2</code> </p> </li> <li> <p> <b>Version 12.1 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 12.1.0.1.v3 | 12.1.0.1.v4 | 12.1.0.1.v5</code> </p> </li> <li> <p> <b>Version 12.1 (available in all AWS regions):</b> <code> 12.1.0.2.v1</code> </p> </li> <li> <p> <b>Version 12.1 (available in all AWS regions except us-gov-west-1):</b> <code> 12.1.0.2.v2 | 12.1.0.2.v3 | 12.1.0.2.v4</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.3.v3</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 11.2.0.3.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions):</b> <code> 11.2.0.4.v1 | 11.2.0.4.v3 | 11.2.0.4.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except us-gov-west-1):</b> <code> 11.2.0.4.v5 | 11.2.0.4.v6 | 11.2.0.4.v7 | 11.2.0.4.v8</code> </p> </li> </ul> <p> <b>Oracle Database Standard Edition (oracle-se)</b> </p> <ul> <li> <p> <b>Version 12.1 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 12.1.0.1.v1 | 12.1.0.1.v2</code> </p> </li> <li> <p> <b>Version 12.1 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 12.1.0.1.v3 | 12.1.0.1.v4 | 12.1.0.1.v5</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.3.v3</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 11.2.0.3.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions):</b> <code> 11.2.0.4.v1 | 11.2.0.4.v3 | 11.2.0.4.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except us-gov-west-1):</b> <code> 11.2.0.4.v5 | 11.2.0.4.v6 | 11.2.0.4.v7 | 11.2.0.4.v8</code> </p> </li> </ul> <p> <b>Oracle Database Standard Edition One (oracle-se1)</b> </p> <ul> <li> <p> <b>Version 12.1 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 12.1.0.1.v1 | 12.1.0.1.v2</code> </p> </li> <li> <p> <b>Version 12.1 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 12.1.0.1.v3 | 12.1.0.1.v4 | 12.1.0.1.v5</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except ap-south-1, ap-northeast-2):</b> <code> 11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.3.v3</code> </p> </li> <li> <p> <b>Version 11.2 (only available in AWS regions ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 11.2.0.3.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions):</b> <code> 11.2.0.4.v1 | 11.2.0.4.v3 | 11.2.0.4.v4</code> </p> </li> <li> <p> <b>Version 11.2 (available in all AWS regions except us-gov-west-1):</b> <code> 11.2.0.4.v5 | 11.2.0.4.v6 | 11.2.0.4.v7 | 11.2.0.4.v8</code> </p> </li> </ul> <p> <b>Oracle Database Standard Edition Two (oracle-se2)</b> </p> <ul> <li> <p> <b>Version 12.1 (available in all AWS regions except us-gov-west-1):</b> <code> 12.1.0.2.v2 | 12.1.0.2.v3 | 12.1.0.2.v4</code> </p> </li> </ul> <p> <b>PostgreSQL</b> </p> <ul> <li> <p> <b>Version 9.6:</b> <code> 9.6.1</code> </p> </li> <li> <p> <b>Version 9.5:</b> <code>9.5.4 | 9.5.2</code> </p> </li> <li> <p> <b>Version 9.4:</b> <code> 9.4.9 | 9.4.7 | 9.4.5 | 9.4.4 | 9.4.1</code> </p> </li> <li> <p> <b>Version 9.3:</b> <code> 9.3.14 | 9.3.12 | 9.3.10 | 9.3.9 | 9.3.6 | 9.3.5 | 9.3.3 | 9.3.2 | 9.3.1</code> </p> </li> </ul> <p/> <p> <b>Oracle 12c</b> </p> <ul> <li> <p> <code>12.1.0.2.v6</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v5</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v4</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v3</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v2</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v1</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> </ul> <p/> <ul> <li> <p> <code>12.1.0.1.v6</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v5</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v4</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v3</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v2</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v1</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> </ul> <p> <b>Oracle 11g</b> </p> <ul> <li> <p> <code>11.2.0.4.v10</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v9</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v8</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v7</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v6</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v5</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v4</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v3</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v1</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> </ul> <p> <b>PostgreSQL</b> </p> <ul> <li> <p> <b>Version 9.5 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.5.4</code> </p> </li> <li> <p> <b>Version 9.5 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-west-1, us-west-2):</b> <code> 9.5.2</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.4.9</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-west-1, us-west-2):</b> <code> 9.4.7</code> </p> </li> <li> <p> <b>Version 9.4 (available in all AWS regions):</b> <code> 9.4.5</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.4.4</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.4.1</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.3.10 | 9.3.3 | 9.3.5 | 9.3.6 | 9.3.9</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.3.1 | 9.3.2</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.3.12 | 9.3.14</code> </p> </li> </ul>"]
+#[doc="<p>The version number of the database engine to use.</p> <p>The following are the database engines and major and minor versions that are available with Amazon RDS. Not every database engine is available for every AWS region.</p> <p> <b>Amazon Aurora</b> </p> <ul> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-2, eu-west-1, us-east-1, us-east-2, us-west-2):</b> <code> 5.6.10a</code> </p> </li> </ul> <p> <b>MariaDB</b> </p> <ul> <li> <p> <b>Version 10.1 (available in these AWS regions: us-east-2):</b> <code> 10.1.16</code> </p> </li> <li> <p> <b>Version 10.1 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 10.1.14</code> </p> </li> <li> <p> <b>Version 10.0 (available in all AWS regions):</b> <code> 10.0.24</code> </p> </li> <li> <p> <b>Version 10.0 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 10.0.17</code> </p> </li> </ul> <p> <b>Microsoft SQL Server 2016</b> </p> <ul> <li> <p> <code>13.00.2164.0.v1</code> (supported for all editions, and all AWS regions except sa-east-1)</p> </li> </ul> <p> <b>Microsoft SQL Server 2014</b> </p> <ul> <li> <p> <code>12.00.5000.0.v1</code> (supported for all editions, and all AWS regions)</p> </li> <li> <p> <code>12.00.4422.0.v1</code> (supported for all editions except Enterprise Edition, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>Microsoft SQL Server 2012</b> </p> <ul> <li> <p> <code>11.00.6020.0.v1</code> (supported for all editions, and all AWS regions)</p> </li> <li> <p> <code>11.00.5058.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>11.00.2100.60.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>Microsoft SQL Server 2008 R2</b> </p> <ul> <li> <p> <code>10.50.6529.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>10.50.6000.34.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> <li> <p> <code>10.50.2789.0.v1</code> (supported for all editions, and all AWS regions except us-east-2)</p> </li> </ul> <p> <b>MySQL</b> </p> <ul> <li> <p> <b>Version 5.7 (available in all AWS regions):</b> <code> 5.7.11</code> </p> </li> <li> <p> <b>Version 5.7 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.7.10</code> </p> </li> <li> <p> <b>Version 5.6 (available in all AWS regions):</b> <code> 5.6.29</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.27</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.23</code> </p> </li> <li> <p> <b>Version 5.6 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.6.19a | 5.6.19b | 5.6.21 | 5.6.21b | 5.6.22</code> </p> </li> <li> <p> <b>Version 5.5 (available in all AWS regions):</b> <code> 5.5.46</code> </p> </li> <li> <p> <b>Version 5.5 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.5.42</code> </p> </li> <li> <p> <b>Version 5.5 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.5.40b | 5.5.41</code> </p> </li> <li> <p> <b>Version 5.5 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 5.5.40 | 5.5.40a</code> </p> </li> </ul> <p/> <p> <b>Oracle 12c</b> </p> <ul> <li> <p> <code>12.1.0.2.v6</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v5</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v4</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v3</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v2</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> <li> <p> <code>12.1.0.2.v1</code> (supported for EE in all AWS regions, and SE2 in all AWS regions except us-gov-west-1)</p> </li> </ul> <p/> <ul> <li> <p> <code>12.1.0.1.v6</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v5</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v4</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v3</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v2</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> <li> <p> <code>12.1.0.1.v1</code> (supported for EE, SE1, and SE, in all AWS regions except ap-south-1, ap-northeast-2)</p> </li> </ul> <p> <b>Oracle 11g</b> </p> <ul> <li> <p> <code>11.2.0.4.v10</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v9</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v8</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v7</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v6</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v5</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v4</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v3</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> <li> <p> <code>11.2.0.4.v1</code> (supported for EE, SE1, and SE, in all AWS regions)</p> </li> </ul> <p> <b>PostgreSQL</b> </p> <ul> <li> <p> <b>Version 9.5 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.5.4</code> </p> </li> <li> <p> <b>Version 9.5 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-west-1, us-west-2):</b> <code> 9.5.2</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.4.9</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-south-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-west-1, us-west-2):</b> <code> 9.4.7</code> </p> </li> <li> <p> <b>Version 9.4 (available in all AWS regions):</b> <code> 9.4.5</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.4.4</code> </p> </li> <li> <p> <b>Version 9.4 (available in these AWS regions: ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-east-2, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.4.1</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.3.10 | 9.3.3 | 9.3.5 | 9.3.6 | 9.3.9</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-east-1, us-gov-west-1, us-west-1, us-west-2):</b> <code> 9.3.1 | 9.3.2</code> </p> </li> <li> <p> <b>Version 9.3 (available in these AWS regions: ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-central-1, eu-west-1, sa-east-1, us-east-1, us-west-1, us-west-2):</b> <code> 9.3.12 | 9.3.14</code> </p> </li> </ul>"]
 pub engine_version: Option<String>,
 #[doc="<p>The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance.</p> <p>Constraints: Must be a multiple between 3 and 10 of the storage amount for the DB instance. Must also be an integer multiple of 1000. For example, if the size of your DB instance is 500 GB, then your <code>Iops</code> value can be 2000, 3000, 4000, or 5000. </p>"]
 pub iops: Option<IntegerOptional>,
@@ -1805,7 +1786,7 @@ pub auto_minor_version_upgrade: Option<BooleanOptional>,
 pub availability_zone: Option<String>,
 #[doc="<p>True to copy all tags from the Read Replica to snapshots of the Read Replica; otherwise false. The default is false.</p>"]
 pub copy_tags_to_snapshot: Option<BooleanOptional>,
-#[doc="<p>The compute and memory capacity of the Read Replica. Note that not all instance classes are available in all regions for all DB engines.</p> <p> Valid Values: <code>db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p> <p>Default: Inherits from the source DB instance.</p>"]
+#[doc="<p>The compute and memory capacity of the Read Replica.</p> <p> Valid Values: <code>db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge |db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p> <p>Default: Inherits from the source DB instance.</p>"]
 pub db_instance_class: Option<String>,
 #[doc="<p>The DB instance identifier of the Read Replica. This identifier is the unique key that identifies a DB instance. This parameter is stored as a lowercase string.</p>"]
 pub db_instance_identifier: String,
@@ -1813,8 +1794,6 @@ pub db_instance_identifier: String,
 pub db_subnet_group_name: Option<String>,
 #[doc="<p>The amount of Provisioned IOPS (input/output operations per second) to be initially allocated for the DB instance.</p>"]
 pub iops: Option<IntegerOptional>,
-#[doc="<p>The AWS KMS key ID for an encrypted Read Replica. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key. </p> <p>If you create an unencrypted Read Replica and specify a value for the <code>KmsKeyId</code> parameter, Amazon RDS encrypts the target Read Replica using the specified KMS encryption key. </p> <p>If you create an encrypted Read Replica from your AWS account, you can specify a value for <code>KmsKeyId</code> to encrypt the Read Replica with a new KMS encryption key. If you don't specify a value for <code>KmsKeyId</code>, then the Read Replica is encrypted with the same KMS key as the source DB instance. </p> <p> If you create an encrypted Read Replica in a different AWS region, then you must specify a KMS key for the destination AWS region. KMS encryption keys are specific to the region that they are created in, and you cannot use encryption keys from one region in another region.</p>"]
-pub kms_key_id: Option<String>,
 #[doc="<p>The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the Read Replica. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0.</p> <p>If <code>MonitoringRoleArn</code> is specified, then you must also set <code>MonitoringInterval</code> to a value other than 0.</p> <p>Valid Values: <code>0, 1, 5, 10, 15, 30, 60</code> </p>"]
 pub monitoring_interval: Option<IntegerOptional>,
 #[doc="<p>The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. For example, <code>arn:aws:iam:123456789012:role/emaccess</code>. For information on creating a monitoring role, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.html#USER_Monitoring.OS.IAMRole\">To create an IAM role for Amazon RDS Enhanced Monitoring</a>.</p> <p>If <code>MonitoringInterval</code> is set to a value other than 0, then you must supply a <code>MonitoringRoleArn</code> value.</p>"]
@@ -1823,11 +1802,9 @@ pub monitoring_role_arn: Option<String>,
 pub option_group_name: Option<String>,
 #[doc="<p>The port number that the DB instance uses for connections.</p> <p>Default: Inherits from the source DB instance</p> <p>Valid Values: <code>1150-65535</code> </p>"]
 pub port: Option<IntegerOptional>,
-#[doc="<p>The URL that contains a Signature Version 4 signed request for the <code> CreateDBInstanceReadReplica</code> API action in the AWS region that contains the source DB instance. The <code>PreSignedUrl</code> parameter must be used when encrypting a Read Replica from another AWS region.</p> <p>The presigned URL must be a valid request for the <code>CreateDBInstanceReadReplica</code> API action that can be executed in the source region that contains the encrypted DB instance. The presigned URL request must contain the following parameter values:</p> <ul> <li> <p> <code>DestinationRegion</code> - The AWS Region that the Read Replica is created in. This region is the same one where the <code>CreateDBInstanceReadReplica</code> action is called that contains this presigned URL. </p> <p> For example, if you create an encrypted Read Replica in the us-east-1 region, and the source DB instance is in the west-2 region, then you call the <code>CreateDBInstanceReadReplica</code> action in the us-east-1 region and provide a presigned URL that contains a call to the <code>CreateDBInstanceReadReplica</code> action in the us-west-2 region. For this example, the <code>DestinationRegion</code> in the presigned URL must be set to the us-east-1 region.</p> </li> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the Read Replica in the destination region. This is the same identifier for both the <code>CreateDBInstanceReadReplica</code> action that is called in the destination region, and the action contained in the presigned URL.</p> </li> <li> <p> <code>SourceDBInstanceIdentifier</code> - The DB instance identifier for the encrypted Read Replica to be created. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you create an encrypted Read Replica from a DB instance in the us-west-2 region, then your <code>SourceDBInstanceIdentifier</code> would look like this example: <code> arn:aws:rds:us-west-2:123456789012:instance:mysql-instance1-instance-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p>"]
-pub pre_signed_url: Option<String>,
 #[doc="<p>Specifies the accessibility options for the DB instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.</p> <p>Default: The default behavior varies depending on whether a VPC has been requested or not. The following list shows the default behavior in each case.</p> <ul> <li> <p> <b>Default VPC:</b>true</p> </li> <li> <p> <b>VPC:</b>false</p> </li> </ul> <p>If no DB subnet group has been specified as part of the request and the PubliclyAccessible value has not been set, the DB instance will be publicly accessible. If a specific DB subnet group has been specified as part of the request and the PubliclyAccessible value has not been set, the DB instance will be private.</p>"]
 pub publicly_accessible: Option<BooleanOptional>,
-#[doc="<p>The identifier of the DB instance that will act as the source for the Read Replica. Each DB instance can have up to five Read Replicas.</p> <p>Constraints:</p> <ul> <li> <p>Must be the identifier of an existing MySQL, MariaDB, or PostgreSQL DB instance.</p> </li> <li> <p>Can specify a DB instance that is a MySQL Read Replica only if the source is running MySQL 5.6.</p> </li> <li> <p>Can specify a DB instance that is a PostgreSQL DB instance only if the source is running PostgreSQL 9.3.5 or later.</p> </li> <li> <p>The specified DB instance must have automatic backups enabled, its backup retention period must be greater than 0.</p> </li> <li> <p>If the source DB instance is in the same region as the Read Replica, specify a valid DB instance identifier.</p> </li> <li> <p>If the source DB instance is in a different region than the Read Replica, specify a valid DB instance ARN. For more information, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing a Amazon RDS Amazon Resource Name (ARN)</a>.</p> </li> </ul>"]
+#[doc="<p>The identifier of the DB instance that will act as the source for the Read Replica. Each DB instance can have up to five Read Replicas.</p> <p>Constraints:</p> <ul> <li> <p>Must be the identifier of an existing MySQL, MariaDB, or PostgreSQL DB instance.</p> </li> <li> <p>Can specify a DB instance that is a MySQL Read Replica only if the source is running MySQL 5.6.</p> </li> <li> <p>Can specify a DB instance that is a PostgreSQL Read Replica only if the source is running PostgreSQL 9.3.5.</p> </li> <li> <p>The specified DB instance must have automatic backups enabled, its backup retention period must be greater than 0.</p> </li> <li> <p>If the source DB instance is in the same region as the Read Replica, specify a valid DB instance identifier.</p> </li> <li> <p>If the source DB instance is in a different region than the Read Replica, specify a valid DB instance ARN. For more information, go to <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.ARN.html#USER_Tagging.ARN.Constructing\"> Constructing a Amazon RDS Amazon Resource Name (ARN)</a>.</p> </li> </ul>"]
 pub source_db_instance_identifier: String,
 #[doc="<p>Specifies the storage type to be associated with the Read Replica.</p> <p> Valid values: <code>standard | gp2 | io1</code> </p> <p> If you specify <code>io1</code>, you must also include a value for the <code>Iops</code> parameter. </p> <p> Default: <code>io1</code> if the <code>Iops</code> parameter is specified; otherwise <code>standard</code> </p>"]
 pub storage_type: Option<String>,
@@ -1863,9 +1840,6 @@ if let Some(ref field_value) = obj.db_subnet_group_name {
 if let Some(ref field_value) = obj.iops {
                 params.put(&format!("{}{}", prefix, "Iops"), &field_value.to_string());
             }
-if let Some(ref field_value) = obj.kms_key_id {
-                params.put(&format!("{}{}", prefix, "KmsKeyId"), &field_value);
-            }
 if let Some(ref field_value) = obj.monitoring_interval {
                 params.put(&format!("{}{}", prefix, "MonitoringInterval"), &field_value.to_string());
             }
@@ -1877,9 +1851,6 @@ if let Some(ref field_value) = obj.option_group_name {
             }
 if let Some(ref field_value) = obj.port {
                 params.put(&format!("{}{}", prefix, "Port"), &field_value.to_string());
-            }
-if let Some(ref field_value) = obj.pre_signed_url {
-                params.put(&format!("{}{}", prefix, "PreSignedUrl"), &field_value);
             }
 if let Some(ref field_value) = obj.publicly_accessible {
                 params.put(&format!("{}{}", prefix, "PubliclyAccessible"), &field_value.to_string());
@@ -3849,8 +3820,6 @@ pub preferred_maintenance_window: Option<String>,
 pub promotion_tier: Option<IntegerOptional>,
 #[doc="<p>Specifies the accessibility options for the DB instance. A value of true specifies an Internet-facing instance with a publicly resolvable DNS name, which resolves to a public IP address. A value of false specifies an internal instance with a DNS name that resolves to a private IP address.</p> <p>Default: The default behavior varies depending on whether a VPC has been requested or not. The following list shows the default behavior in each case.</p> <ul> <li> <p> <b>Default VPC:</b>true</p> </li> <li> <p> <b>VPC:</b>false</p> </li> </ul> <p>If no DB subnet group has been specified as part of the request and the PubliclyAccessible value has not been set, the DB instance will be publicly accessible. If a specific DB subnet group has been specified as part of the request and the PubliclyAccessible value has not been set, the DB instance will be private.</p>"]
 pub publicly_accessible: Option<Boolean>,
-#[doc="<p>Contains one or more identifiers of Aurora DB clusters that are Read Replicas of this DB instance.</p>"]
-pub read_replica_db_cluster_identifiers: Option<ReadReplicaDBClusterIdentifierList>,
 #[doc="<p>Contains one or more identifiers of the Read Replicas associated with this DB instance.</p>"]
 pub read_replica_db_instance_identifiers: Option<ReadReplicaDBInstanceIdentifierList>,
 #[doc="<p>Contains the identifier of the source DB instance if this DB instance is a Read Replica.</p>"]
@@ -4003,9 +3972,6 @@ struct DBInstanceDeserializer;
             }
 "PubliclyAccessible" => {
                 obj.publicly_accessible = Some(try!(BooleanDeserializer::deserialize("PubliclyAccessible", stack)));
-            }
-"ReadReplicaDBClusterIdentifiers" => {
-                obj.read_replica_db_cluster_identifiers = Some(try!(ReadReplicaDBClusterIdentifierListDeserializer::deserialize("ReadReplicaDBClusterIdentifiers", stack)));
             }
 "ReadReplicaDBInstanceIdentifiers" => {
                 obj.read_replica_db_instance_identifiers = Some(try!(ReadReplicaDBInstanceIdentifierListDeserializer::deserialize("ReadReplicaDBInstanceIdentifiers", stack)));
@@ -8850,7 +8816,7 @@ pub backup_retention_period: Option<IntegerOptional>,
 pub ca_certificate_identifier: Option<String>,
 #[doc="<p>True to copy all tags from the DB instance to snapshots of the DB instance; otherwise false. The default is false.</p>"]
 pub copy_tags_to_snapshot: Option<BooleanOptional>,
-#[doc="<p> The new compute and memory capacity of the DB instance. To determine the instance classes that are available for a particular DB engine, use the <a>DescribeOrderableDBInstanceOptions</a> action. Note that not all instance classes are available in all regions for all DB engines. </p> <p> Passing a value for this setting causes an outage during the change and is applied during the next maintenance window, unless <code>ApplyImmediately</code> is specified as <code>true</code> for this request. </p> <p>Default: Uses existing setting</p> <p>Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge | db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p>"]
+#[doc="<p> The new compute and memory capacity of the DB instance. To determine the instance classes that are available for a particular DB engine, use the <a>DescribeOrderableDBInstanceOptions</a> action. </p> <p> Passing a value for this setting causes an outage during the change and is applied during the next maintenance window, unless <code>ApplyImmediately</code> is specified as <code>true</code> for this request. </p> <p>Default: Uses existing setting</p> <p>Valid Values: <code>db.t1.micro | db.m1.small | db.m1.medium | db.m1.large | db.m1.xlarge | db.m2.xlarge | db.m2.2xlarge | db.m2.4xlarge | db.m3.medium | db.m3.large | db.m3.xlarge | db.m3.2xlarge | db.m4.large | db.m4.xlarge | db.m4.2xlarge | db.m4.4xlarge | db.m4.10xlarge | db.r3.large | db.r3.xlarge | db.r3.2xlarge | db.r3.4xlarge | db.r3.8xlarge | db.t2.micro | db.t2.small | db.t2.medium | db.t2.large</code> </p>"]
 pub db_instance_class: Option<String>,
 #[doc="<p>The DB instance identifier. This value is stored as a lowercase string.</p> <p>Constraints:</p> <ul> <li> <p>Must be the identifier for an existing DB instance</p> </li> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens</p> </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p> </li> </ul>"]
 pub db_instance_identifier: String,
@@ -9157,73 +9123,6 @@ struct ModifyDBSnapshotAttributeResultDeserializer;
                     match &name[..] {
                         "DBSnapshotAttributesResult" => {
                 obj.db_snapshot_attributes_result = Some(try!(DBSnapshotAttributesResultDeserializer::deserialize("DBSnapshotAttributesResult", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[derive(Default,Debug,Clone)]
-            pub struct ModifyDBSnapshotMessage {
-                #[doc="<p>The identifier of the DB snapshot to modify.</p>"]
-pub db_snapshot_identifier: String,
-#[doc="<p>The engine version to update the DB snapshot to. </p>"]
-pub engine_version: Option<String>,
-            }
-            
-
-            /// Serialize `ModifyDBSnapshotMessage` contents to a `SignedRequest`.
-            struct ModifyDBSnapshotMessageSerializer;
-            impl ModifyDBSnapshotMessageSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &ModifyDBSnapshotMessage) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        params.put(&format!("{}{}", prefix, "DBSnapshotIdentifier"), &obj.db_snapshot_identifier);
-if let Some(ref field_value) = obj.engine_version {
-                params.put(&format!("{}{}", prefix, "EngineVersion"), &field_value);
-            }
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct ModifyDBSnapshotResult {
-                pub db_snapshot: Option<DBSnapshot>,
-            }
-            
-struct ModifyDBSnapshotResultDeserializer;
-            impl ModifyDBSnapshotResultDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<ModifyDBSnapshotResult, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = ModifyDBSnapshotResult::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "DBSnapshot" => {
-                obj.db_snapshot = Some(try!(DBSnapshotDeserializer::deserialize("DBSnapshot", stack)));
             }
                         _ => skip_tree(stack),
                     }
@@ -11435,43 +11334,6 @@ struct PurchaseReservedDBInstancesOfferingResultDeserializer;
         }
 
         try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type ReadReplicaDBClusterIdentifierList = Vec<String>;
-struct ReadReplicaDBClusterIdentifierListDeserializer;
-            impl ReadReplicaDBClusterIdentifierListDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<ReadReplicaDBClusterIdentifierList, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "ReadReplicaDBClusterIdentifier" {
-                        obj.push(try!(StringDeserializer::deserialize("ReadReplicaDBClusterIdentifier", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
 
         Ok(obj)
         
@@ -14611,11 +14473,7 @@ DBClusterParameterGroupNotFoundFault(String),
 ///<p>Error accessing KMS key.</p>
 KMSKeyNotAccessibleFault(String),
 ///<p> <i>DBClusterIdentifier</i> does not refer to an existing DB cluster. </p>
-DBClusterNotFoundFault(String),
-///<p> <i>DBInstanceIdentifier</i> does not refer to an existing DB instance. </p>
-DBInstanceNotFoundFault(String),
-///<p>Subnets in the DB subnet group should cover at least two Availability Zones unless there is only one Availability Zone.</p>
-DBSubnetGroupDoesNotCoverEnoughAZs(String),/// An error occurred dispatching the HTTP request
+DBClusterNotFoundFault(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -14632,7 +14490,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "DBClusterAlreadyExistsFault" => CreateDBClusterError::DBClusterAlreadyExistsFault(String::from(parsed_error.message)),"InsufficientStorageClusterCapacityFault" => CreateDBClusterError::InsufficientStorageClusterCapacityFault(String::from(parsed_error.message)),"DBClusterQuotaExceededFault" => CreateDBClusterError::DBClusterQuotaExceededFault(String::from(parsed_error.message)),"StorageQuotaExceededFault" => CreateDBClusterError::StorageQuotaExceededFault(String::from(parsed_error.message)),"DBSubnetGroupNotFoundFault" => CreateDBClusterError::DBSubnetGroupNotFoundFault(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => CreateDBClusterError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"InvalidDBClusterStateFault" => CreateDBClusterError::InvalidDBClusterStateFault(String::from(parsed_error.message)),"InvalidDBSubnetGroupStateFault" => CreateDBClusterError::InvalidDBSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateDBClusterError::InvalidSubnet(String::from(parsed_error.message)),"InvalidDBInstanceStateFault" => CreateDBClusterError::InvalidDBInstanceStateFault(String::from(parsed_error.message)),"DBClusterParameterGroupNotFoundFault" => CreateDBClusterError::DBClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"KMSKeyNotAccessibleFault" => CreateDBClusterError::KMSKeyNotAccessibleFault(String::from(parsed_error.message)),"DBClusterNotFoundFault" => CreateDBClusterError::DBClusterNotFoundFault(String::from(parsed_error.message)),"DBInstanceNotFoundFault" => CreateDBClusterError::DBInstanceNotFoundFault(String::from(parsed_error.message)),"DBSubnetGroupDoesNotCoverEnoughAZs" => CreateDBClusterError::DBSubnetGroupDoesNotCoverEnoughAZs(String::from(parsed_error.message)),_ => CreateDBClusterError::Unknown(String::from(body))
+                                    "DBClusterAlreadyExistsFault" => CreateDBClusterError::DBClusterAlreadyExistsFault(String::from(parsed_error.message)),"InsufficientStorageClusterCapacityFault" => CreateDBClusterError::InsufficientStorageClusterCapacityFault(String::from(parsed_error.message)),"DBClusterQuotaExceededFault" => CreateDBClusterError::DBClusterQuotaExceededFault(String::from(parsed_error.message)),"StorageQuotaExceededFault" => CreateDBClusterError::StorageQuotaExceededFault(String::from(parsed_error.message)),"DBSubnetGroupNotFoundFault" => CreateDBClusterError::DBSubnetGroupNotFoundFault(String::from(parsed_error.message)),"InvalidVPCNetworkStateFault" => CreateDBClusterError::InvalidVPCNetworkStateFault(String::from(parsed_error.message)),"InvalidDBClusterStateFault" => CreateDBClusterError::InvalidDBClusterStateFault(String::from(parsed_error.message)),"InvalidDBSubnetGroupStateFault" => CreateDBClusterError::InvalidDBSubnetGroupStateFault(String::from(parsed_error.message)),"InvalidSubnet" => CreateDBClusterError::InvalidSubnet(String::from(parsed_error.message)),"InvalidDBInstanceStateFault" => CreateDBClusterError::InvalidDBInstanceStateFault(String::from(parsed_error.message)),"DBClusterParameterGroupNotFoundFault" => CreateDBClusterError::DBClusterParameterGroupNotFoundFault(String::from(parsed_error.message)),"KMSKeyNotAccessibleFault" => CreateDBClusterError::KMSKeyNotAccessibleFault(String::from(parsed_error.message)),"DBClusterNotFoundFault" => CreateDBClusterError::DBClusterNotFoundFault(String::from(parsed_error.message)),_ => CreateDBClusterError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateDBClusterError::Unknown(body.to_string())
@@ -14664,7 +14522,7 @@ Unknown(String)
                 impl Error for CreateDBClusterError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateDBClusterError::DBClusterAlreadyExistsFault(ref cause) => cause,CreateDBClusterError::InsufficientStorageClusterCapacityFault(ref cause) => cause,CreateDBClusterError::DBClusterQuotaExceededFault(ref cause) => cause,CreateDBClusterError::StorageQuotaExceededFault(ref cause) => cause,CreateDBClusterError::DBSubnetGroupNotFoundFault(ref cause) => cause,CreateDBClusterError::InvalidVPCNetworkStateFault(ref cause) => cause,CreateDBClusterError::InvalidDBClusterStateFault(ref cause) => cause,CreateDBClusterError::InvalidDBSubnetGroupStateFault(ref cause) => cause,CreateDBClusterError::InvalidSubnet(ref cause) => cause,CreateDBClusterError::InvalidDBInstanceStateFault(ref cause) => cause,CreateDBClusterError::DBClusterParameterGroupNotFoundFault(ref cause) => cause,CreateDBClusterError::KMSKeyNotAccessibleFault(ref cause) => cause,CreateDBClusterError::DBClusterNotFoundFault(ref cause) => cause,CreateDBClusterError::DBInstanceNotFoundFault(ref cause) => cause,CreateDBClusterError::DBSubnetGroupDoesNotCoverEnoughAZs(ref cause) => cause,CreateDBClusterError::Validation(ref cause) => cause,CreateDBClusterError::Credentials(ref err) => err.description(),CreateDBClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDBClusterError::Unknown(ref cause) => cause
+                            CreateDBClusterError::DBClusterAlreadyExistsFault(ref cause) => cause,CreateDBClusterError::InsufficientStorageClusterCapacityFault(ref cause) => cause,CreateDBClusterError::DBClusterQuotaExceededFault(ref cause) => cause,CreateDBClusterError::StorageQuotaExceededFault(ref cause) => cause,CreateDBClusterError::DBSubnetGroupNotFoundFault(ref cause) => cause,CreateDBClusterError::InvalidVPCNetworkStateFault(ref cause) => cause,CreateDBClusterError::InvalidDBClusterStateFault(ref cause) => cause,CreateDBClusterError::InvalidDBSubnetGroupStateFault(ref cause) => cause,CreateDBClusterError::InvalidSubnet(ref cause) => cause,CreateDBClusterError::InvalidDBInstanceStateFault(ref cause) => cause,CreateDBClusterError::DBClusterParameterGroupNotFoundFault(ref cause) => cause,CreateDBClusterError::KMSKeyNotAccessibleFault(ref cause) => cause,CreateDBClusterError::DBClusterNotFoundFault(ref cause) => cause,CreateDBClusterError::Validation(ref cause) => cause,CreateDBClusterError::Credentials(ref err) => err.description(),CreateDBClusterError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDBClusterError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -18112,64 +17970,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by ModifyDBSnapshot
-                #[derive(Debug, PartialEq)]
-                pub enum ModifyDBSnapshotError {
-                    
-///<p> <i>DBSnapshotIdentifier</i> does not refer to an existing DB snapshot. </p>
-DBSnapshotNotFoundFault(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl ModifyDBSnapshotError {
-                    pub fn from_body(body: &str) -> ModifyDBSnapshotError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "DBSnapshotNotFoundFault" => ModifyDBSnapshotError::DBSnapshotNotFoundFault(String::from(parsed_error.message)),_ => ModifyDBSnapshotError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => ModifyDBSnapshotError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for ModifyDBSnapshotError {
-                    fn from(err: XmlParseError) -> ModifyDBSnapshotError {
-                        let XmlParseError(message) = err;
-                        ModifyDBSnapshotError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for ModifyDBSnapshotError {
-                    fn from(err: CredentialsError) -> ModifyDBSnapshotError {
-                        ModifyDBSnapshotError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for ModifyDBSnapshotError {
-                    fn from(err: HttpDispatchError) -> ModifyDBSnapshotError {
-                        ModifyDBSnapshotError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for ModifyDBSnapshotError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for ModifyDBSnapshotError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            ModifyDBSnapshotError::DBSnapshotNotFoundFault(ref cause) => cause,ModifyDBSnapshotError::Validation(ref cause) => cause,ModifyDBSnapshotError::Credentials(ref err) => err.description(),ModifyDBSnapshotError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ModifyDBSnapshotError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by ModifyDBSnapshotAttribute
                 #[derive(Debug, PartialEq)]
                 pub enum ModifyDBSnapshotAttributeError {
@@ -19712,7 +19512,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Copies a snapshot of a DB cluster.</p> <p>To copy a DB cluster snapshot from a shared manual DB cluster snapshot, <code>SourceDBClusterSnapshotIdentifier</code> must be the Amazon Resource Name (ARN) of the shared DB cluster snapshot.</p> <p>You can copy an encrypted DB cluster snapshot from another AWS region. In that case, the region where you call the <code>CopyDBClusterSnapshot</code> action is the destination region for the encrypted DB cluster snapshot to be copied to. To copy an encrypted DB cluster snapshot from another region, you must provide the following values:</p> <ul> <li> <p> <code>KmsKeyId</code> - The AWS Key Management System (KMS) key identifier for the key to use to encrypt the copy of the DB cluster snapshot in the destination region.</p> </li> <li> <p> <code>PreSignedUrl</code> - A URL that contains a Signature Version 4 signed request for the <code>CopyDBClusterSnapshot</code> action to be called in the source region where the DB cluster snapshot will be copied from. The pre-signed URL must be a valid request for the <code>CopyDBClusterSnapshot</code> API action that can be executed in the source region that contains the encrypted DB cluster snapshot to be copied.</p> <p>The pre-signed URL request must contain the following parameter values:</p> <ul> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the copy of the DB cluster snapshot in the destination region. This is the same identifier for both the <code>CopyDBClusterSnapshot</code> action that is called in the destination region, and the action contained in the pre-signed URL.</p> </li> <li> <p> <code>DestinationRegion</code> - The name of the region that the DB cluster snapshot will be created in.</p> </li> <li> <p> <code>SourceDBClusterSnapshotIdentifier</code> - The DB cluster snapshot identifier for the encrypted DB cluster snapshot to be copied. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you are copying an encrypted DB cluster snapshot from the us-west-2 region, then your <code>SourceDBClusterSnapshotIdentifier</code> looks like the following example: <code>arn:aws:rds:us-west-2:123456789012:cluster-snapshot:aurora-cluster1-snapshot-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p> </li> <li> <p> <code>TargetDBClusterSnapshotIdentifier</code> - The identifier for the new copy of the DB cluster snapshot in the destination region.</p> </li> <li> <p> <code>SourceDBClusterSnapshotIdentifier</code> - The DB cluster snapshot identifier for the encrypted DB cluster snapshot to be copied. This identifier must be in the ARN format for the source region and is the same value as the <code>SourceDBClusterSnapshotIdentifier</code> in the pre-signed URL. </p> </li> </ul> <p>To cancel the copy operation once it is in progress, delete the target DB cluster snapshot identified by <code>TargetDBClusterSnapshotIdentifier</code> while that DB cluster snapshot is in \"copying\" status.</p> <p>For more information on copying encrypted DB cluster snapshots from one region to another, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CopySnapshot.html#USER_CopyDBClusterSnapshot.CrossRegion\"> Copying a DB Cluster Snapshot in the Same Account, Either in the Same Region or Across Regions</a> in the Amazon RDS User Guide.</p> <p>For more information on Amazon Aurora, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html\">Aurora on Amazon RDS</a> in the <i>Amazon RDS User Guide.</i> </p>"]
+                #[doc="<p>Creates a snapshot of a DB cluster. For more information on Amazon Aurora, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html\">Aurora on Amazon RDS</a> in the <i>Amazon RDS User Guide.</i> </p>"]
                 pub fn copy_db_cluster_snapshot(&self, input: &CopyDBClusterSnapshotMessage) -> Result<CopyDBClusterSnapshotResult, CopyDBClusterSnapshotError> {
                     let mut request = SignedRequest::new("POST", "rds", self.region, "/");
                     let mut params = Params::new();
@@ -19876,7 +19676,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Creates a new Amazon Aurora DB cluster.</p> <p>You can use the <code>ReplicationSourceIdentifier</code> parameter to create the DB cluster as a Read Replica of another DB cluster or Amazon RDS MySQL DB instance. For cross-region replication where the DB cluster identified by <code>ReplicationSourceIdentifier</code> is encrypted, you must also specify the <code>PreSignedUrl</code> parameter.</p> <p>For more information on Amazon Aurora, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html\">Aurora on Amazon RDS</a> in the <i>Amazon RDS User Guide.</i> </p>"]
+                #[doc="<p>Creates a new Amazon Aurora DB cluster.</p> <p>You can use the <code>ReplicationSourceIdentifier</code> parameter to create the DB cluster as a Read Replica of another DB cluster.</p> <p>For more information on Amazon Aurora, see <a href=\"http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Aurora.html\">Aurora on Amazon RDS</a> in the <i>Amazon RDS User Guide.</i> </p>"]
                 pub fn create_db_cluster(&self, input: &CreateDBClusterMessage) -> Result<CreateDBClusterResult, CreateDBClusterError> {
                     let mut request = SignedRequest::new("POST", "rds", self.region, "/");
                     let mut params = Params::new();
@@ -20040,7 +19840,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Creates a DB instance for a DB instance running MySQL, MariaDB, or PostgreSQL that acts as a Read Replica of a source DB instance.</p> <p>All Read Replica DB instances are created as Single-AZ deployments with backups disabled. All other DB instance attributes (including DB security groups and DB parameter groups) are inherited from the source DB instance, except as specified below.</p> <important> <p>The source DB instance must have backup retention enabled.</p> </important> <p>You can create an encrypted Read Replica in a different AWS Region than the source DB instance. In that case, the region where you call the <code>CreateDBInstanceReadReplica</code> action is the destination region of the encrypted Read Replica. The source DB instance must be encrypted.</p> <p>To create an encrypted Read Replica in another AWS Region, you must provide the following values:</p> <ul> <li> <p> <code>KmsKeyId</code> - The AWS Key Management System (KMS) key identifier for the key to use to encrypt the Read Replica in the destination region.</p> </li> <li> <p> <code>PreSignedUrl</code> - A URL that contains a Signature Version 4 signed request for the <code> CreateDBInstanceReadReplica</code> API action in the AWS region that contains the source DB instance. The <code>PreSignedUrl</code> parameter must be used when encrypting a Read Replica from another AWS region.</p> <p>The presigned URL must be a valid request for the <code>CreateDBInstanceReadReplica</code> API action that can be executed in the source region that contains the encrypted DB instance. The presigned URL request must contain the following parameter values:</p> <ul> <li> <p> <code>DestinationRegion</code> - The AWS Region that the Read Replica is created in. This region is the same one where the <code>CreateDBInstanceReadReplica</code> action is called that contains this presigned URL. </p> <p> For example, if you create an encrypted Read Replica in the us-east-1 region, and the source DB instance is in the west-2 region, then you call the <code>CreateDBInstanceReadReplica</code> action in the us-east-1 region and provide a presigned URL that contains a call to the <code>CreateDBInstanceReadReplica</code> action in the us-west-2 region. For this example, the <code>DestinationRegion</code> in the presigned URL must be set to the us-east-1 region.</p> </li> <li> <p> <code>KmsKeyId</code> - The KMS key identifier for the key to use to encrypt the Read Replica in the destination region. This is the same identifier for both the <code>CreateDBInstanceReadReplica</code> action that is called in the destination region, and the action contained in the presigned URL.</p> </li> <li> <p> <code>SourceDBInstanceIdentifier</code> - The DB instance identifier for the encrypted Read Replica to be created. This identifier must be in the Amazon Resource Name (ARN) format for the source region. For example, if you create an encrypted Read Replica from a DB instance in the us-west-2 region, then your <code>SourceDBInstanceIdentifier</code> would look like this example: <code> arn:aws:rds:us-west-2:123456789012:instance:mysql-instance1-instance-20161115</code>.</p> </li> </ul> <p>To learn how to generate a Signature Version 4 signed request, see <a href=\"http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html\"> Authenticating Requests: Using Query Parameters (AWS Signature Version 4)</a> and <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\"> Signature Version 4 Signing Process</a>.</p> </li> <li> <p> <code>DBInstanceIdentifier</code> - The identifier for the encrypted Read Replica in the destination region.</p> </li> <li> <p> <code>SourceDBInstanceIdentifier</code> - The DB instance identifier for the encrypted Read Replica. This identifier must be in the ARN format for the source region and is the same value as the <code>SourceDBInstanceIdentifier</code> in the presigned URL. </p> </li> </ul>"]
+                #[doc="<p>Creates a DB instance for a DB instance running MySQL, MariaDB, or PostgreSQL that acts as a Read Replica of a source DB instance.</p> <p>All Read Replica DB instances are created as Single-AZ deployments with backups disabled. All other DB instance attributes (including DB security groups and DB parameter groups) are inherited from the source DB instance, except as specified below.</p> <important> <p>The source DB instance must have backup retention enabled.</p> </important>"]
                 pub fn create_db_instance_read_replica(&self, input: &CreateDBInstanceReadReplicaMessage) -> Result<CreateDBInstanceReadReplicaResult, CreateDBInstanceReadReplicaError> {
                     let mut request = SignedRequest::new("POST", "rds", self.region, "/");
                     let mut params = Params::new();
@@ -22123,47 +21923,6 @@ Unknown(String)
                         }
                         _ => {
                             Err(ModifyDBParameterGroupError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Updates a manual DB snapshot, which can be encrypted or not encrypted, with a new engine version. You can update the engine version to either a new major or minor engine version. </p> <p>Amazon RDS supports upgrading a MySQL DB snapshot from MySQL 5.1 to MySQL 5.5.</p>"]
-                pub fn modify_db_snapshot(&self, input: &ModifyDBSnapshotMessage) -> Result<ModifyDBSnapshotResult, ModifyDBSnapshotError> {
-                    let mut request = SignedRequest::new("POST", "rds", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "ModifyDBSnapshot");
-                    params.put("Version", "2014-10-31");
-                    ModifyDBSnapshotMessageSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = ModifyDBSnapshotResult::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(ModifyDBSnapshotResultDeserializer::deserialize("ModifyDBSnapshotResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(ModifyDBSnapshotError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
                         }
                     }
                 }

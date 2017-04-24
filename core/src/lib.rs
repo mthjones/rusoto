@@ -1,5 +1,3 @@
-#![crate_name = "rusoto"]
-#![crate_type = "lib"]
 #![cfg_attr(feature = "unstable", feature(proc_macro))]
 #![cfg_attr(feature = "nightly-testing", feature(plugin))]
 #![cfg_attr(feature = "nightly-testing", plugin(clippy))]

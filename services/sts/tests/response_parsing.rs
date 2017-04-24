@@ -1,11 +1,11 @@
 
                 extern crate rusoto_sts;
                 extern crate rusoto_mock;
-                extern crate rusoto;
+                extern crate rusoto_core;
 
                 use rusoto_sts::*;
                 use rusoto_mock::*;
-                use rusoto::Region as rusoto_region;
+                use rusoto_core::Region as rusoto_region;
 
                 
         #[test]

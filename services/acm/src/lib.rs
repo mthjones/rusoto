@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 #[derive(Default,Debug,Clone,Serialize)]
@@ -33,7 +33,7 @@ pub type CertificateBody = String;
 pub type CertificateBodyBlob = Vec<u8>;
 pub type CertificateChain = String;
 pub type CertificateChainBlob = Vec<u8>;
-#[doc="<p>Contains metadata about an ACM certificate. This structure is returned in the response to a <a>DescribeCertificate</a> request.</p>"]
+#[doc="<p>Contains detailed metadata about an ACM Certificate. This structure is returned in the response to a <a>DescribeCertificate</a> request.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct CertificateDetail {
                 #[doc="<p>The Amazon Resource Name (ARN) of the certificate. For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
@@ -45,7 +45,7 @@ pub created_at: Option<TStamp>,
 #[doc="<p>The fully qualified domain name for the certificate, such as www.example.com or example.com.</p>"]
 #[serde(rename="DomainName")]
 pub domain_name: Option<DomainNameString>,
-#[doc="<p>Contains information about the initial validation of each domain name that occurs as a result of the <a>RequestCertificate</a> request. This field exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
+#[doc="<p>Contains information about the email address or addresses used for domain validation. This field exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
 #[serde(rename="DomainValidationOptions")]
 pub domain_validation_options: Option<DomainValidationList>,
 #[doc="<p>The reason the certificate request failed. This value exists only when the certificate status is <code>FAILED</code>. For more information, see <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/troubleshooting.html#troubleshooting-failed\">Certificate Request Failed</a> in the <i>AWS Certificate Manager User Guide</i>.</p>"]
@@ -72,9 +72,6 @@ pub not_after: Option<TStamp>,
 #[doc="<p>The time before which the certificate is not valid.</p>"]
 #[serde(rename="NotBefore")]
 pub not_before: Option<TStamp>,
-#[doc="<p>Contains information about the status of ACM's <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a> for the certificate. This field exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
-#[serde(rename="RenewalSummary")]
-pub renewal_summary: Option<RenewalSummary>,
 #[doc="<p>The reason the certificate was revoked. This value exists only when the certificate status is <code>REVOKED</code>.</p>"]
 #[serde(rename="RevocationReason")]
 pub revocation_reason: Option<RevocationReason>,
@@ -125,46 +122,42 @@ pub certificate_arn: Arn,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct DescribeCertificateRequest {
-                #[doc="<p>The Amazon Resource Name (ARN) of the ACM Certificate. The ARN must have the following form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
+                #[doc="<p>String that contains an ACM Certificate ARN. The ARN must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
 #[serde(rename="CertificateArn")]
 pub certificate_arn: Arn,
             }
             
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DescribeCertificateResponse {
-                #[doc="<p>Metadata about an ACM certificate.</p>"]
+                #[doc="<p>Contains a <a>CertificateDetail</a> structure that lists the fields of an ACM Certificate.</p>"]
 #[serde(rename="Certificate")]
 pub certificate: Option<CertificateDetail>,
             }
             
 pub type DomainList = Vec<DomainNameString>;
 pub type DomainNameString = String;
-pub type DomainStatus = String;
-#[doc="<p>Contains information about the validation of each domain name in the certificate.</p>"]
+#[doc="<p>Structure that contains the domain name, the base validation domain to which validation email is sent, and the email addresses used to validate the domain identity.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DomainValidation {
-                #[doc="<p>A fully qualified domain name (FQDN) in the certificate. For example, <code>www.example.com</code> or <code>example.com</code>.</p>"]
+                #[doc="<p>Fully Qualified Domain Name (FQDN) of the form <code>www.example.com or </code> <code>example.com</code>.</p>"]
 #[serde(rename="DomainName")]
 pub domain_name: DomainNameString,
-#[doc="<p>The domain name that ACM used to send domain validation emails.</p>"]
+#[doc="<p>The base validation domain that acts as the suffix of the email addresses that are used to send the emails.</p>"]
 #[serde(rename="ValidationDomain")]
 pub validation_domain: Option<DomainNameString>,
-#[doc="<p>A list of email addresses that ACM used to send domain validation emails.</p>"]
+#[doc="<p>A list of contact address for the domain registrant.</p>"]
 #[serde(rename="ValidationEmails")]
 pub validation_emails: Option<ValidationEmailList>,
-#[doc="<p>The validation status of the domain name.</p>"]
-#[serde(rename="ValidationStatus")]
-pub validation_status: Option<DomainStatus>,
             }
             
 pub type DomainValidationList = Vec<DomainValidation>;
-#[doc="<p>Contains information about the domain names that you want ACM to use to send you emails to validate your ownership of the domain.</p>"]
+#[doc="<p>This structure is used in the request object of the <a>RequestCertificate</a> action.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct DomainValidationOption {
-                #[doc="<p>A fully qualified domain name (FQDN) in the certificate request.</p>"]
+                #[doc="<p>Fully Qualified Domain Name (FQDN) of the certificate being requested.</p>"]
 #[serde(rename="DomainName")]
 pub domain_name: DomainNameString,
-#[doc="<p>The domain name that you want ACM to use to send you validation emails. This domain name is the suffix of the email addresses that you want ACM to use. This must be the same as the <code>DomainName</code> value or a superdomain of the <code>DomainName</code> value. For example, if you request a certificate for <code>testing.example.com</code>, you can specify <code>example.com</code> for this value. In that case, ACM sends domain validation emails to the following five addresses:</p> <ul> <li> <p>admin@example.com</p> </li> <li> <p>administrator@example.com</p> </li> <li> <p>hostmaster@example.com</p> </li> <li> <p>postmaster@example.com</p> </li> <li> <p>webmaster@example.com</p> </li> </ul>"]
+#[doc="<p>The domain to which validation email is sent. This is the base validation domain that will act as the suffix of the email addresses. This must be the same as the <code>DomainName</code> value or a superdomain of the <code>DomainName</code> value. For example, if you requested a certificate for <code>site.subdomain.example.com</code> and specify a <b>ValidationDomain</b> of <code>subdomain.example.com</code>, ACM sends email to the domain registrant, technical contact, and administrative contact in WHOIS for the base domain and the following five addresses:</p> <ul> <li> <p>admin@subdomain.example.com</p> </li> <li> <p>administrator@subdomain.example.com</p> </li> <li> <p>hostmaster@subdomain.example.com</p> </li> <li> <p>postmaster@subdomain.example.com</p> </li> <li> <p>webmaster@subdomain.example.com</p> </li> </ul>"]
 #[serde(rename="ValidationDomain")]
 pub validation_domain: DomainNameString,
             }
@@ -194,8 +187,8 @@ pub type IdempotencyToken = String;
                 #[doc="<p>The certificate to import. It must meet the following requirements:</p> <ul> <li> <p>Must be PEM-encoded.</p> </li> <li> <p>Must contain a 1024-bit or 2048-bit RSA public key.</p> </li> <li> <p>Must be valid at the time of import. You cannot import a certificate before its validity period begins (the certificate's <code>NotBefore</code> date) or after it expires (the certificate's <code>NotAfter</code> date).</p> </li> </ul>"]
 #[serde(rename="Certificate")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub certificate: CertificateBodyBlob,
@@ -205,16 +198,16 @@ pub certificate_arn: Option<Arn>,
 #[doc="<p>The certificate chain. It must be PEM-encoded.</p>"]
 #[serde(rename="CertificateChain")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub certificate_chain: Option<CertificateChainBlob>,
 #[doc="<p>The private key that matches the public key in the certificate. It must meet the following requirements:</p> <ul> <li> <p>Must be PEM-encoded.</p> </li> <li> <p>Must be unencrypted. You cannot import a private key that is protected by a password or passphrase.</p> </li> </ul>"]
 #[serde(rename="PrivateKey")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub private_key: PrivateKeyBlob,
@@ -254,7 +247,7 @@ pub next_token: Option<NextToken>,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct ListTagsForCertificateRequest {
-                #[doc="<p>String that contains the ARN of the ACM Certificate for which you want to list the tags. This has the following form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
+                #[doc="<p>String that contains the ARN of the ACM Certificate for which you want to list the tags. This must be of the form:</p> <p> <code>arn:aws:acm:region:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a>.</p>"]
 #[serde(rename="CertificateArn")]
 pub certificate_arn: Arn,
             }
@@ -279,24 +272,12 @@ pub certificate_arn: Arn,
 pub tags: TagList,
             }
             
-pub type RenewalStatus = String;
-#[doc="<p>Contains information about the status of ACM's <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a> for the certificate. This structure exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct RenewalSummary {
-                #[doc="<p>Contains information about the validation of each domain name in the certificate, as it pertains to ACM's <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a>. This is different from the initial validation that occurs as a result of the <a>RequestCertificate</a> request. This field exists only when the certificate type is <code>AMAZON_ISSUED</code>.</p>"]
-#[serde(rename="DomainValidationOptions")]
-pub domain_validation_options: DomainValidationList,
-#[doc="<p>The status of ACM's <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html\">managed renewal</a> of the certificate.</p>"]
-#[serde(rename="RenewalStatus")]
-pub renewal_status: RenewalStatus,
-            }
-            
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct RequestCertificateRequest {
-                #[doc="<p>Fully qualified domain name (FQDN), such as www.example.com, of the site that you want to secure with an ACM Certificate. Use an asterisk (*) to create a wildcard certificate that protects several sites in the same domain. For example, *.example.com protects www.example.com, site.example.com, and images.example.com.</p>"]
+                #[doc="<p>Fully qualified domain name (FQDN), such as www.example.com, of the site you want to secure with an ACM Certificate. Use an asterisk (*) to create a wildcard certificate that protects several sites in the same domain. For example, *.example.com protects www.example.com, site.example.com, and images.example.com.</p>"]
 #[serde(rename="DomainName")]
 pub domain_name: DomainNameString,
-#[doc="<p>The domain name that you want ACM to use to send you emails to validate your ownership of the domain.</p>"]
+#[doc="<p>The base validation domain that will act as the suffix of the email addresses that are used to send the emails. This must be the same as the <code>Domain</code> value or a superdomain of the <code>Domain</code> value. For example, if you requested a certificate for <code>test.example.com</code> and specify <b>DomainValidationOptions</b> of <code>example.com</code>, ACM sends email to the domain registrant, technical contact, and administrative contact in WHOIS and the following five addresses:</p> <ul> <li> <p>admin@example.com</p> </li> <li> <p>administrator@example.com</p> </li> <li> <p>hostmaster@example.com</p> </li> <li> <p>postmaster@example.com</p> </li> <li> <p>webmaster@example.com</p> </li> </ul>"]
 #[serde(rename="DomainValidationOptions")]
 pub domain_validation_options: Option<DomainValidationOptionList>,
 #[doc="<p>Customer chosen string that can be used to distinguish between calls to <code>RequestCertificate</code>. Idempotency tokens time out after one hour. Therefore, if you call <code>RequestCertificate</code> multiple times with the same idempotency token within one hour, ACM recognizes that you are requesting only one certificate and will issue only one. If you change the idempotency token for each call, ACM recognizes that you are requesting multiple certificates.</p>"]
@@ -319,7 +300,7 @@ pub certificate_arn: Option<Arn>,
                 #[doc="<p>String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the <a>RequestCertificate</a> action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request.</p> <p>The ARN must be of the form:</p> <p> <code>arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012</code> </p>"]
 #[serde(rename="CertificateArn")]
 pub certificate_arn: Arn,
-#[doc="<p>The fully qualified domain name (FQDN) of the certificate that needs to be validated.</p>"]
+#[doc="<p>The Fully Qualified Domain Name (FQDN) of the certificate that needs to be validated.</p>"]
 #[serde(rename="Domain")]
 pub domain: DomainNameString,
 #[doc="<p>The base validation domain that will act as the suffix of the email addresses that are used to send the emails. This must be the same as the <code>Domain</code> value or a superdomain of the <code>Domain</code> value. For example, if you requested a certificate for <code>site.subdomain.example.com</code> and specify a <b>ValidationDomain</b> of <code>subdomain.example.com</code>, ACM sends email to the domain registrant, technical contact, and administrative contact in WHOIS and the following five addresses:</p> <ul> <li> <p>admin@subdomain.example.com</p> </li> <li> <p>administrator@subdomain.example.com</p> </li> <li> <p>hostmaster@subdomain.example.com</p> </li> <li> <p>postmaster@subdomain.example.com</p> </li> <li> <p>webmaster@subdomain.example.com</p> </li> </ul>"]
@@ -1026,7 +1007,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Returns detailed metadata about the specified ACM Certificate.</p>"]
+                #[doc="<p>Returns a list of the fields contained in the specified ACM Certificate. For example, this action returns the certificate status, a flag that indicates whether the certificate is associated with any other AWS service, and the date at which the certificate request was created. You specify the ACM Certificate on input by its Amazon Resource Name (ARN).</p>"]
                 pub fn describe_certificate(&self, input: &DescribeCertificateRequest)  -> Result<DescribeCertificateResponse, DescribeCertificateError> {
                     let mut request = SignedRequest::new("POST", "acm", self.region, "/");
                     
@@ -1114,7 +1095,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Lists the tags that have been applied to the ACM Certificate. Use the certificate's Amazon Resource Name (ARN) to specify the certificate. To add a tag to an ACM Certificate, use the <a>AddTagsToCertificate</a> action. To delete a tag, use the <a>RemoveTagsFromCertificate</a> action.</p>"]
+                #[doc="<p>Lists the tags that have been applied to the ACM Certificate. Use the certificate ARN to specify the certificate. To add a tag to an ACM Certificate, use the <a>AddTagsToCertificate</a> action. To delete a tag, use the <a>RemoveTagsFromCertificate</a> action.</p>"]
                 pub fn list_tags_for_certificate(&self, input: &ListTagsForCertificateRequest)  -> Result<ListTagsForCertificateResponse, ListTagsForCertificateError> {
                     let mut request = SignedRequest::new("POST", "acm", self.region, "/");
                     

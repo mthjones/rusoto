@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 pub type ActivityId = String;

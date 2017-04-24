@@ -1,26 +1,26 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate xml;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
 use std::str::FromStr;
             use xml::EventReader;
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::reader::XmlEvent;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
-            use rusoto::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
+            use rusoto_core::xmlerror::*;
 
             enum DeserializerNext {
                 Close,

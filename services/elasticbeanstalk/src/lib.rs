@@ -1,46 +1,32 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate xml;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
 use std::str::FromStr;
             use xml::EventReader;
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::reader::XmlEvent;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
-            use rusoto::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
+            use rusoto_core::xmlerror::*;
 
             enum DeserializerNext {
                 Close,
                 Skip,
                 Element(String),
         }
-pub type ARN = String;
-struct ARNDeserializer;
-            impl ARNDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<ARN, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone)]
             pub struct AbortEnvironmentUpdateMessage {
@@ -327,7 +313,7 @@ struct ApplicationDescriptionsMessageDeserializer;
             pub struct ApplicationMetrics {
                 #[doc="<p>The amount of time that the metrics cover (usually 10 seconds). For example, you might have 5 requests (<code>request_count</code>) within the most recent time slice of 10 seconds (<code>duration</code>).</p>"]
 pub duration: Option<NullableInteger>,
-#[doc="<p>Represents the average latency for the slowest X percent of requests over the last 10 seconds. Latencies are in seconds with one millisecond resolution.</p>"]
+#[doc="<p>Represents the average latency for the slowest X percent of requests over the last 10 seconds. Latencies are in seconds with one milisecond resolution.</p>"]
 pub latency: Option<Latency>,
 #[doc="<p>Average number of requests handled by the web server per second over the last 10 seconds.</p>"]
 pub request_count: Option<RequestCount>,
@@ -1141,49 +1127,6 @@ if let Some(ref field_value) = obj.timeout_in_minutes {
                 }
             }
             
-#[doc="<p>The builder used to build the custom platform.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct Builder {
-                #[doc="<p>The ARN of the builder.</p>"]
-pub arn: Option<ARN>,
-            }
-            
-struct BuilderDeserializer;
-            impl BuilderDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<Builder, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = Builder::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "ARN" => {
-                obj.arn = Some(try!(ARNDeserializer::deserialize("ARN", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>CPU utilization metrics for an instance.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CPUUtilization {
@@ -1834,8 +1777,6 @@ struct ConfigurationOptionValueTypeDeserializer;
             pub struct ConfigurationOptionsDescription {
                 #[doc="<p> A list of <a>ConfigurationOptionDescription</a>. </p>"]
 pub options: Option<ConfigurationOptionDescriptionsList>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The name of the solution stack these configuration options belong to.</p>"]
 pub solution_stack_name: Option<SolutionStackName>,
             }
@@ -1861,9 +1802,6 @@ struct ConfigurationOptionsDescriptionDeserializer;
                     match &name[..] {
                         "Options" => {
                 obj.options = Some(try!(ConfigurationOptionDescriptionsListDeserializer::deserialize("Options", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
             }
 "SolutionStackName" => {
                 obj.solution_stack_name = Some(try!(SolutionStackNameDeserializer::deserialize("SolutionStackName", stack)));
@@ -1899,8 +1837,6 @@ pub description: Option<Description>,
 pub environment_name: Option<EnvironmentName>,
 #[doc="<p>A list of the configuration options and their values in this configuration set.</p>"]
 pub option_settings: Option<ConfigurationOptionSettingsList>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The name of the solution stack this configuration set uses.</p>"]
 pub solution_stack_name: Option<SolutionStackName>,
 #[doc="<p> If not <code>null</code>, the name of the configuration template for this configuration set. </p>"]
@@ -1946,9 +1882,6 @@ struct ConfigurationSettingsDescriptionDeserializer;
             }
 "OptionSettings" => {
                 obj.option_settings = Some(try!(ConfigurationOptionSettingsListDeserializer::deserialize("OptionSettings", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
             }
 "SolutionStackName" => {
                 obj.solution_stack_name = Some(try!(SolutionStackNameDeserializer::deserialize("SolutionStackName", stack)));
@@ -2258,8 +2191,6 @@ pub description: Option<Description>,
 pub environment_id: Option<EnvironmentId>,
 #[doc="<p>If specified, AWS Elastic Beanstalk sets the specified configuration option to the requested value. The new value overrides the value obtained from the solution stack or the source configuration template.</p>"]
 pub option_settings: Option<ConfigurationOptionSettingsList>,
-#[doc="<p>The ARN of the custome platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The name of the solution stack used by this configuration. The solution stack specifies the operating system, architecture, and application server for a configuration template. It determines the set of configuration options as well as the possible and default values.</p> <p> Use <a>ListAvailableSolutionStacks</a> to obtain a list of available solution stacks. </p> <p> A solution stack name or a source configuration parameter must be specified, otherwise AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p> <p>If a solution stack name is not specified and the source configuration parameter is specified, AWS Elastic Beanstalk uses the same solution stack as the source configuration template.</p>"]
 pub solution_stack_name: Option<SolutionStackName>,
 #[doc="<p>If specified, AWS Elastic Beanstalk uses the configuration values from the specified configuration template to create a new configuration.</p> <p> Values specified in the <code>OptionSettings</code> parameter of this call overrides any values obtained from the <code>SourceConfiguration</code>. </p> <p> If no configuration template is found, returns an <code>InvalidParameterValue</code> error. </p> <p> Constraint: If both the solution stack name parameter and the source configuration parameters are specified, the solution stack of the source configuration template must match the specified solution stack name or else AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. </p>"]
@@ -2291,9 +2222,6 @@ if let Some(ref field_value) = obj.option_settings {
                     &format!("{}{}", prefix, "OptionSettings"),
                     field_value,
                 );
-            }
-if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
             }
 if let Some(ref field_value) = obj.solution_stack_name {
                 params.put(&format!("{}{}", prefix, "SolutionStackName"), &field_value);
@@ -2327,13 +2255,11 @@ pub group_name: Option<GroupName>,
 pub option_settings: Option<ConfigurationOptionSettingsList>,
 #[doc="<p>A list of custom user-defined configuration options to remove from the configuration set for this new environment.</p>"]
 pub options_to_remove: Option<OptionsSpecifierList>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
-#[doc="<p>This is an alternative to specifying a template name. If specified, AWS Elastic Beanstalk sets the configuration values to the default values associated with the specified solution stack.</p>"]
+#[doc="<p>This is an alternative to specifying a template name. If specified, AWS Elastic Beanstalk sets the configuration values to the default values associated with the specified solution stack.</p> <p> Condition: You must specify either this or a <code>TemplateName</code>, but not both. If you specify both, AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. If you do not specify either, AWS Elastic Beanstalk returns a <code>MissingRequiredParameter</code> error. </p>"]
 pub solution_stack_name: Option<SolutionStackName>,
 #[doc="<p>This specifies the tags applied to resources in the environment.</p>"]
 pub tags: Option<Tags>,
-#[doc="<p> The name of the configuration template to use in deployment. If no configuration template is found with this name, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p>"]
+#[doc="<p> The name of the configuration template to use in deployment. If no configuration template is found with this name, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p> <p> Condition: You must specify either this parameter or a <code>SolutionStackName</code>, but not both. If you specify both, AWS Elastic Beanstalk returns an <code>InvalidParameterCombination</code> error. If you do not specify either, AWS Elastic Beanstalk returns a <code>MissingRequiredParameter</code> error. </p>"]
 pub template_name: Option<ConfigurationTemplateName>,
 #[doc="<p>This specifies the tier to use for creating this environment.</p>"]
 pub tier: Option<EnvironmentTier>,
@@ -2378,9 +2304,6 @@ if let Some(ref field_value) = obj.options_to_remove {
                     field_value,
                 );
             }
-if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
-            }
 if let Some(ref field_value) = obj.solution_stack_name {
                 params.put(&format!("{}{}", prefix, "SolutionStackName"), &field_value);
             }
@@ -2408,99 +2331,6 @@ if let Some(ref field_value) = obj.version_label {
                 }
             }
             
-#[doc="<p>Request to create a new platform version.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct CreatePlatformVersionRequest {
-                #[doc="<p>The name of the builder environment.</p>"]
-pub environment_name: Option<EnvironmentName>,
-#[doc="<p>The configuration option settings to apply to the builder environment.</p>"]
-pub option_settings: Option<ConfigurationOptionSettingsList>,
-#[doc="<p>The location of the platform definition archive in Amazon S3.</p>"]
-pub platform_definition_bundle: S3Location,
-#[doc="<p>The name of your custom platform.</p>"]
-pub platform_name: PlatformName,
-#[doc="<p>The number, such as 1.0.2, for the new platform version.</p>"]
-pub platform_version: PlatformVersion,
-            }
-            
-
-            /// Serialize `CreatePlatformVersionRequest` contents to a `SignedRequest`.
-            struct CreatePlatformVersionRequestSerializer;
-            impl CreatePlatformVersionRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &CreatePlatformVersionRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        if let Some(ref field_value) = obj.environment_name {
-                params.put(&format!("{}{}", prefix, "EnvironmentName"), &field_value);
-            }
-if let Some(ref field_value) = obj.option_settings {
-                ConfigurationOptionSettingsListSerializer::serialize(
-                    params,
-                    &format!("{}{}", prefix, "OptionSettings"),
-                    field_value,
-                );
-            }
-S3LocationSerializer::serialize(
-                params,
-                &format!("{}{}", prefix, "PlatformDefinitionBundle"),
-                &obj.platform_definition_bundle,
-            );
-params.put(&format!("{}{}", prefix, "PlatformName"), &obj.platform_name);
-params.put(&format!("{}{}", prefix, "PlatformVersion"), &obj.platform_version);
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct CreatePlatformVersionResult {
-                #[doc="<p>The builder used to create the custom platform.</p>"]
-pub builder: Option<Builder>,
-#[doc="<p>Detailed information about the new version of the custom platform.</p>"]
-pub platform_summary: Option<PlatformSummary>,
-            }
-            
-struct CreatePlatformVersionResultDeserializer;
-            impl CreatePlatformVersionResultDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<CreatePlatformVersionResult, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = CreatePlatformVersionResult::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "Builder" => {
-                obj.builder = Some(try!(BuilderDeserializer::deserialize("Builder", stack)));
-            }
-"PlatformSummary" => {
-                obj.platform_summary = Some(try!(PlatformSummaryDeserializer::deserialize("PlatformSummary", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>Results of a <a>CreateStorageLocationResult</a> call.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct CreateStorageLocationResultMessage {
@@ -2553,91 +2383,6 @@ struct CreationDateDeserializer;
                     try!(start_element(tag_name, stack));
         let obj = try!(characters(stack));
         try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[doc="<p>A custom AMI available to platforms.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct CustomAmi {
-                #[doc="<p>THe ID of the image used to create the custom AMI.</p>"]
-pub image_id: Option<ImageId>,
-#[doc="<p>The type of virtualization used to create the custom AMI.</p>"]
-pub virtualization_type: Option<VirtualizationType>,
-            }
-            
-struct CustomAmiDeserializer;
-            impl CustomAmiDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<CustomAmi, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = CustomAmi::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "ImageId" => {
-                obj.image_id = Some(try!(ImageIdDeserializer::deserialize("ImageId", stack)));
-            }
-"VirtualizationType" => {
-                obj.virtualization_type = Some(try!(VirtualizationTypeDeserializer::deserialize("VirtualizationType", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type CustomAmiList = Vec<CustomAmi>;
-struct CustomAmiListDeserializer;
-            impl CustomAmiListDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<CustomAmiList, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(CustomAmiDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
 
         Ok(obj)
         
@@ -2765,71 +2510,6 @@ params.put(&format!("{}{}", prefix, "EnvironmentName"), &obj.environment_name);
                 }
             }
             
-#[derive(Default,Debug,Clone)]
-            pub struct DeletePlatformVersionRequest {
-                #[doc="<p>The ARN of the version of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
-            }
-            
-
-            /// Serialize `DeletePlatformVersionRequest` contents to a `SignedRequest`.
-            struct DeletePlatformVersionRequestSerializer;
-            impl DeletePlatformVersionRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &DeletePlatformVersionRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
-            }
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct DeletePlatformVersionResult {
-                #[doc="<p>Detailed information about the version of the custom platform.</p>"]
-pub platform_summary: Option<PlatformSummary>,
-            }
-            
-struct DeletePlatformVersionResultDeserializer;
-            impl DeletePlatformVersionResultDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<DeletePlatformVersionResult, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = DeletePlatformVersionResult::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "PlatformSummary" => {
-                obj.platform_summary = Some(try!(PlatformSummaryDeserializer::deserialize("PlatformSummary", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 pub type DeleteSourceBundle = bool;
 #[doc="<p>Information about an application version deployment.</p>"]
 #[derive(Default,Debug,Clone)]
@@ -2974,7 +2654,7 @@ pub application_names: Option<ApplicationNamesList>,
                 }
             }
             
-#[doc="<p>Result message containing a list of application version descriptions.</p>"]
+#[doc="<p>Result message containig a list of application version descriptions.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct DescribeConfigurationOptionsMessage {
                 #[doc="<p>The name of the application associated with the configuration template or environment. Only needed if you want to describe the configuration options associated with either the configuration template or environment.</p>"]
@@ -2983,8 +2663,6 @@ pub application_name: Option<ApplicationName>,
 pub environment_name: Option<EnvironmentName>,
 #[doc="<p>If specified, restricts the descriptions to only the specified options.</p>"]
 pub options: Option<OptionsSpecifierList>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The name of the solution stack whose configuration options you want to describe.</p>"]
 pub solution_stack_name: Option<SolutionStackName>,
 #[doc="<p>The name of the configuration template whose configuration options you want to describe.</p>"]
@@ -3013,9 +2691,6 @@ if let Some(ref field_value) = obj.options {
                     &format!("{}{}", prefix, "Options"),
                     field_value,
                 );
-            }
-if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
             }
 if let Some(ref field_value) = obj.solution_stack_name {
                 params.put(&format!("{}{}", prefix, "SolutionStackName"), &field_value);
@@ -3440,8 +3115,6 @@ pub environment_name: Option<EnvironmentName>,
 pub max_records: Option<MaxRecords>,
 #[doc="<p>Pagination token. If specified, the events return the next batch of results.</p>"]
 pub next_token: Option<Token>,
-#[doc="<p>The ARN of the version of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>If specified, AWS Elastic Beanstalk restricts the described events to include only those associated with this request ID.</p>"]
 pub request_id: Option<RequestId>,
 #[doc="<p>If specified, limits the events returned from this call to include only those with the specified severity or higher.</p>"]
@@ -3481,9 +3154,6 @@ if let Some(ref field_value) = obj.max_records {
             }
 if let Some(ref field_value) = obj.next_token {
                 params.put(&format!("{}{}", prefix, "NextToken"), &field_value);
-            }
-if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
             }
 if let Some(ref field_value) = obj.request_id {
                 params.put(&format!("{}{}", prefix, "RequestId"), &field_value);
@@ -3600,71 +3270,6 @@ struct DescribeInstancesHealthResultDeserializer;
         
                 }
             }
-#[derive(Default,Debug,Clone)]
-            pub struct DescribePlatformVersionRequest {
-                #[doc="<p>The ARN of the version of the platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
-            }
-            
-
-            /// Serialize `DescribePlatformVersionRequest` contents to a `SignedRequest`.
-            struct DescribePlatformVersionRequestSerializer;
-            impl DescribePlatformVersionRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &DescribePlatformVersionRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
-            }
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct DescribePlatformVersionResult {
-                #[doc="<p>Detailed information about the version of the platform.</p>"]
-pub platform_description: Option<PlatformDescription>,
-            }
-            
-struct DescribePlatformVersionResultDeserializer;
-            impl DescribePlatformVersionResultDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<DescribePlatformVersionResult, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = DescribePlatformVersionResult::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "PlatformDescription" => {
-                obj.platform_description = Some(try!(PlatformDescriptionDeserializer::deserialize("PlatformDescription", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 pub type Description = String;
 struct DescriptionDeserializer;
             impl DescriptionDeserializer {
@@ -3734,8 +3339,6 @@ pub environment_name: Option<EnvironmentName>,
 pub health: Option<EnvironmentHealth>,
 #[doc="<p>Returns the health status of the application running in your environment. For more information, see <a href=\"http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/health-enhanced-status.html\">Health Colors and Statuses</a>.</p>"]
 pub health_status: Option<EnvironmentHealthStatus>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The description of the AWS resources used by this environment.</p>"]
 pub resources: Option<EnvironmentResourcesDescription>,
 #[doc="<p> The name of the <code>SolutionStack</code> deployed with this environment. </p>"]
@@ -3804,9 +3407,6 @@ struct EnvironmentDescriptionDeserializer;
             }
 "HealthStatus" => {
                 obj.health_status = Some(try!(EnvironmentHealthStatusDeserializer::deserialize("HealthStatus", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
             }
 "Resources" => {
                 obj.resources = Some(try!(EnvironmentResourcesDescriptionDeserializer::deserialize("Resources", stack)));
@@ -4484,8 +4084,6 @@ pub environment_name: Option<EnvironmentName>,
 pub event_date: Option<EventDate>,
 #[doc="<p>The event message.</p>"]
 pub message: Option<EventMessage>,
-#[doc="<p>The ARN of the custom platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>The web service request ID for the activity of this event.</p>"]
 pub request_id: Option<RequestId>,
 #[doc="<p>The severity level of this event.</p>"]
@@ -4526,9 +4124,6 @@ struct EventDescriptionDeserializer;
             }
 "Message" => {
                 obj.message = Some(try!(EventMessageDeserializer::deserialize("Message", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
             }
 "RequestId" => {
                 obj.request_id = Some(try!(RequestIdDeserializer::deserialize("RequestId", stack)));
@@ -4700,20 +4295,6 @@ struct FileTypeExtensionDeserializer;
             }
 pub type ForceTerminate = bool;
 pub type GroupName = String;
-pub type ImageId = String;
-struct ImageIdDeserializer;
-            impl ImageIdDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<ImageId, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 pub type IncludeDeleted = bool;
 pub type IncludeDeletedBackTo = String;
 #[doc="<p>The description of an Amazon EC2 instance.</p>"]
@@ -5173,90 +4754,6 @@ struct ListAvailableSolutionStacksResultMessageDeserializer;
         
                 }
             }
-#[derive(Default,Debug,Clone)]
-            pub struct ListPlatformVersionsRequest {
-                #[doc="<p>List only the platforms where the platform member value relates to one of the supplied values.</p>"]
-pub filters: Option<PlatformFilters>,
-#[doc="<p>The maximum number of platform values returned in one call.</p>"]
-pub max_records: Option<PlatformMaxRecords>,
-#[doc="<p>The starting index into the remaining list of platforms. Use the <code>NextToken</code> value from a previous <code>ListPlatformVersion</code> call.</p>"]
-pub next_token: Option<Token>,
-            }
-            
-
-            /// Serialize `ListPlatformVersionsRequest` contents to a `SignedRequest`.
-            struct ListPlatformVersionsRequestSerializer;
-            impl ListPlatformVersionsRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &ListPlatformVersionsRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        if let Some(ref field_value) = obj.filters {
-                PlatformFiltersSerializer::serialize(
-                    params,
-                    &format!("{}{}", prefix, "Filters"),
-                    field_value,
-                );
-            }
-if let Some(ref field_value) = obj.max_records {
-                params.put(&format!("{}{}", prefix, "MaxRecords"), &field_value.to_string());
-            }
-if let Some(ref field_value) = obj.next_token {
-                params.put(&format!("{}{}", prefix, "NextToken"), &field_value);
-            }
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct ListPlatformVersionsResult {
-                #[doc="<p>The starting index into the remaining list of platforms. if this value is not <code>null</code>, you can use it in a subsequent <code>ListPlatformVersion</code> call. </p>"]
-pub next_token: Option<Token>,
-#[doc="<p>Detailed information about the platforms.</p>"]
-pub platform_summary_list: Option<PlatformSummaryList>,
-            }
-            
-struct ListPlatformVersionsResultDeserializer;
-            impl ListPlatformVersionsResultDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<ListPlatformVersionsResult, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = ListPlatformVersionsResult::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "NextToken" => {
-                obj.next_token = Some(try!(TokenDeserializer::deserialize("NextToken", stack)));
-            }
-"PlatformSummaryList" => {
-                obj.platform_summary_list = Some(try!(PlatformSummaryListDeserializer::deserialize("PlatformSummaryList", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>Describes the properties of a Listener for the LoadBalancer.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct Listener {
@@ -5521,20 +5018,6 @@ struct LoadBalancerListenersDescriptionDeserializer;
                 DeserializerNext::Skip => { stack.next(); },
             }
         }
-
-        Ok(obj)
-        
-                }
-            }
-pub type Maintainer = String;
-struct MaintainerDeserializer;
-            impl MaintainerDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<Maintainer, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
 
         Ok(obj)
         
@@ -5975,34 +5458,6 @@ struct NullableLongDeserializer;
         
                 }
             }
-pub type OperatingSystemName = String;
-struct OperatingSystemNameDeserializer;
-            impl OperatingSystemNameDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<OperatingSystemName, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type OperatingSystemVersion = String;
-struct OperatingSystemVersionDeserializer;
-            impl OperatingSystemVersionDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<OperatingSystemVersion, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 pub type OptionNamespace = String;
 struct OptionNamespaceDeserializer;
             impl OptionNamespaceDeserializer {
@@ -6154,571 +5609,6 @@ OptionSpecificationSerializer::serialize(params, &key, obj);
                 }
             }
             
-pub type PlatformArn = String;
-struct PlatformArnDeserializer;
-            impl PlatformArnDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformArn, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformCategory = String;
-struct PlatformCategoryDeserializer;
-            impl PlatformCategoryDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformCategory, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[doc="<p>Detailed information about a platform.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct PlatformDescription {
-                #[doc="<p>The custom AMIs supported by the platform.</p>"]
-pub custom_ami_list: Option<CustomAmiList>,
-#[doc="<p>The date when the platform was created.</p>"]
-pub date_created: Option<CreationDate>,
-#[doc="<p>The date when the platform was last updated.</p>"]
-pub date_updated: Option<UpdateDate>,
-#[doc="<p>The description of the platform.</p>"]
-pub description: Option<Description>,
-#[doc="<p>The frameworks supported by the platform.</p>"]
-pub frameworks: Option<PlatformFrameworks>,
-#[doc="<p>Information about the maintainer of the platform.</p>"]
-pub maintainer: Option<Maintainer>,
-#[doc="<p>The operating system used by the platform.</p>"]
-pub operating_system_name: Option<OperatingSystemName>,
-#[doc="<p>The version of the operating system used by the platform.</p>"]
-pub operating_system_version: Option<OperatingSystemVersion>,
-#[doc="<p>The ARN of the platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
-#[doc="<p>The category of the platform.</p>"]
-pub platform_category: Option<PlatformCategory>,
-#[doc="<p>The name of the platform.</p>"]
-pub platform_name: Option<PlatformName>,
-#[doc="<p>The AWS account ID of the person who created the platform.</p>"]
-pub platform_owner: Option<PlatformOwner>,
-#[doc="<p>The status of the platform.</p>"]
-pub platform_status: Option<PlatformStatus>,
-#[doc="<p>The version of the platform.</p>"]
-pub platform_version: Option<PlatformVersion>,
-#[doc="<p>The programming languages supported by the platform.</p>"]
-pub programming_languages: Option<PlatformProgrammingLanguages>,
-#[doc="<p>The name of the solution stack used by the platform.</p>"]
-pub solution_stack_name: Option<SolutionStackName>,
-#[doc="<p>The additions supported by the platform.</p>"]
-pub supported_addon_list: Option<SupportedAddonList>,
-#[doc="<p>The tiers supported by the platform.</p>"]
-pub supported_tier_list: Option<SupportedTierList>,
-            }
-            
-struct PlatformDescriptionDeserializer;
-            impl PlatformDescriptionDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformDescription, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = PlatformDescription::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "CustomAmiList" => {
-                obj.custom_ami_list = Some(try!(CustomAmiListDeserializer::deserialize("CustomAmiList", stack)));
-            }
-"DateCreated" => {
-                obj.date_created = Some(try!(CreationDateDeserializer::deserialize("DateCreated", stack)));
-            }
-"DateUpdated" => {
-                obj.date_updated = Some(try!(UpdateDateDeserializer::deserialize("DateUpdated", stack)));
-            }
-"Description" => {
-                obj.description = Some(try!(DescriptionDeserializer::deserialize("Description", stack)));
-            }
-"Frameworks" => {
-                obj.frameworks = Some(try!(PlatformFrameworksDeserializer::deserialize("Frameworks", stack)));
-            }
-"Maintainer" => {
-                obj.maintainer = Some(try!(MaintainerDeserializer::deserialize("Maintainer", stack)));
-            }
-"OperatingSystemName" => {
-                obj.operating_system_name = Some(try!(OperatingSystemNameDeserializer::deserialize("OperatingSystemName", stack)));
-            }
-"OperatingSystemVersion" => {
-                obj.operating_system_version = Some(try!(OperatingSystemVersionDeserializer::deserialize("OperatingSystemVersion", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
-            }
-"PlatformCategory" => {
-                obj.platform_category = Some(try!(PlatformCategoryDeserializer::deserialize("PlatformCategory", stack)));
-            }
-"PlatformName" => {
-                obj.platform_name = Some(try!(PlatformNameDeserializer::deserialize("PlatformName", stack)));
-            }
-"PlatformOwner" => {
-                obj.platform_owner = Some(try!(PlatformOwnerDeserializer::deserialize("PlatformOwner", stack)));
-            }
-"PlatformStatus" => {
-                obj.platform_status = Some(try!(PlatformStatusDeserializer::deserialize("PlatformStatus", stack)));
-            }
-"PlatformVersion" => {
-                obj.platform_version = Some(try!(PlatformVersionDeserializer::deserialize("PlatformVersion", stack)));
-            }
-"ProgrammingLanguages" => {
-                obj.programming_languages = Some(try!(PlatformProgrammingLanguagesDeserializer::deserialize("ProgrammingLanguages", stack)));
-            }
-"SolutionStackName" => {
-                obj.solution_stack_name = Some(try!(SolutionStackNameDeserializer::deserialize("SolutionStackName", stack)));
-            }
-"SupportedAddonList" => {
-                obj.supported_addon_list = Some(try!(SupportedAddonListDeserializer::deserialize("SupportedAddonList", stack)));
-            }
-"SupportedTierList" => {
-                obj.supported_tier_list = Some(try!(SupportedTierListDeserializer::deserialize("SupportedTierList", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[doc="<p>Specify criteria to restrict the results when listing custom platforms.</p> <p>The filter is evaluated as the expression:</p> <p> <code>Type</code> <code>Operator</code> <code>Values[i]</code> </p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct PlatformFilter {
-                #[doc="<p>The operator to apply to the <code>Type</code> with each of the <code>Values</code>.</p> <p> Valid Values: <code>=</code> (equal to) | <code>!=</code> (not equal to) | <code>&lt;</code> (less than) | <code>&lt;=</code> (less than or equal to) | <code>&gt;</code> (greater than) | <code>&gt;=</code> (greater than or equal to) | <code>contains</code> | <code>begins_with</code> | <code>ends_with</code> </p>"]
-pub operator: Option<PlatformFilterOperator>,
-#[doc="<p>The custom platform attribute to which the filter values are applied.</p> <p>Valid Values: <code>PlatformName</code> | <code>PlatformVersion</code> | <code>PlatformStatus</code> | <code>PlatformOwner</code> </p>"]
-pub type_: Option<PlatformFilterType>,
-#[doc="<p>The list of values applied to the custom platform attribute.</p>"]
-pub values: Option<PlatformFilterValueList>,
-            }
-            
-
-            /// Serialize `PlatformFilter` contents to a `SignedRequest`.
-            struct PlatformFilterSerializer;
-            impl PlatformFilterSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &PlatformFilter) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        if let Some(ref field_value) = obj.operator {
-                params.put(&format!("{}{}", prefix, "Operator"), &field_value);
-            }
-if let Some(ref field_value) = obj.type_ {
-                params.put(&format!("{}{}", prefix, "Type"), &field_value);
-            }
-if let Some(ref field_value) = obj.values {
-                PlatformFilterValueListSerializer::serialize(
-                    params,
-                    &format!("{}{}", prefix, "Values"),
-                    field_value,
-                );
-            }
-        
-                }
-            }
-            
-pub type PlatformFilterOperator = String;
-pub type PlatformFilterType = String;
-pub type PlatformFilterValue = String;
-pub type PlatformFilterValueList = Vec<PlatformFilterValue>;
-
-            /// Serialize `PlatformFilterValueList` contents to a `SignedRequest`.
-            struct PlatformFilterValueListSerializer;
-            impl PlatformFilterValueListSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &PlatformFilterValueList) {
-                    for (index, obj) in obj.iter().enumerate() {
-                    let key = format!("{}.member.{}", name, index+1);
-params.put(&key, &obj);
-}
-                }
-            }
-            
-pub type PlatformFilters = Vec<PlatformFilter>;
-
-            /// Serialize `PlatformFilters` contents to a `SignedRequest`.
-            struct PlatformFiltersSerializer;
-            impl PlatformFiltersSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &PlatformFilters) {
-                    for (index, obj) in obj.iter().enumerate() {
-                    let key = format!("{}.member.{}", name, index+1);
-PlatformFilterSerializer::serialize(params, &key, obj);
-}
-                }
-            }
-            
-#[doc="<p>A framework supported by the custom platform.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct PlatformFramework {
-                #[doc="<p>The name of the framework.</p>"]
-pub name: Option<String>,
-#[doc="<p>The version of the framework.</p>"]
-pub version: Option<String>,
-            }
-            
-struct PlatformFrameworkDeserializer;
-            impl PlatformFrameworkDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformFramework, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = PlatformFramework::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "Name" => {
-                obj.name = Some(try!(StringDeserializer::deserialize("Name", stack)));
-            }
-"Version" => {
-                obj.version = Some(try!(StringDeserializer::deserialize("Version", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformFrameworks = Vec<PlatformFramework>;
-struct PlatformFrameworksDeserializer;
-            impl PlatformFrameworksDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformFrameworks, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(PlatformFrameworkDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformMaxRecords = i64;
-pub type PlatformName = String;
-struct PlatformNameDeserializer;
-            impl PlatformNameDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformName, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformOwner = String;
-struct PlatformOwnerDeserializer;
-            impl PlatformOwnerDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformOwner, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[doc="<p>A programming language supported by the platform.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct PlatformProgrammingLanguage {
-                #[doc="<p>The name of the programming language.</p>"]
-pub name: Option<String>,
-#[doc="<p>The version of the programming language.</p>"]
-pub version: Option<String>,
-            }
-            
-struct PlatformProgrammingLanguageDeserializer;
-            impl PlatformProgrammingLanguageDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformProgrammingLanguage, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = PlatformProgrammingLanguage::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "Name" => {
-                obj.name = Some(try!(StringDeserializer::deserialize("Name", stack)));
-            }
-"Version" => {
-                obj.version = Some(try!(StringDeserializer::deserialize("Version", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformProgrammingLanguages = Vec<PlatformProgrammingLanguage>;
-struct PlatformProgrammingLanguagesDeserializer;
-            impl PlatformProgrammingLanguagesDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformProgrammingLanguages, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(PlatformProgrammingLanguageDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformStatus = String;
-struct PlatformStatusDeserializer;
-            impl PlatformStatusDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformStatus, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[doc="<p>Detailed information about a platform.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct PlatformSummary {
-                #[doc="<p>The operating system used by the platform.</p>"]
-pub operating_system_name: Option<OperatingSystemName>,
-#[doc="<p>The version of the operating system used by the platform.</p>"]
-pub operating_system_version: Option<OperatingSystemVersion>,
-#[doc="<p>The ARN of the platform.</p>"]
-pub platform_arn: Option<PlatformArn>,
-#[doc="<p>The category of platform.</p>"]
-pub platform_category: Option<PlatformCategory>,
-#[doc="<p>The AWS account ID of the person who created the platform.</p>"]
-pub platform_owner: Option<PlatformOwner>,
-#[doc="<p>The status of the platform. You can create an environment from the platform once it is ready.</p>"]
-pub platform_status: Option<PlatformStatus>,
-#[doc="<p>The additions associated with the platform.</p>"]
-pub supported_addon_list: Option<SupportedAddonList>,
-#[doc="<p>The tiers in which the platform runs.</p>"]
-pub supported_tier_list: Option<SupportedTierList>,
-            }
-            
-struct PlatformSummaryDeserializer;
-            impl PlatformSummaryDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformSummary, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = PlatformSummary::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "OperatingSystemName" => {
-                obj.operating_system_name = Some(try!(OperatingSystemNameDeserializer::deserialize("OperatingSystemName", stack)));
-            }
-"OperatingSystemVersion" => {
-                obj.operating_system_version = Some(try!(OperatingSystemVersionDeserializer::deserialize("OperatingSystemVersion", stack)));
-            }
-"PlatformArn" => {
-                obj.platform_arn = Some(try!(PlatformArnDeserializer::deserialize("PlatformArn", stack)));
-            }
-"PlatformCategory" => {
-                obj.platform_category = Some(try!(PlatformCategoryDeserializer::deserialize("PlatformCategory", stack)));
-            }
-"PlatformOwner" => {
-                obj.platform_owner = Some(try!(PlatformOwnerDeserializer::deserialize("PlatformOwner", stack)));
-            }
-"PlatformStatus" => {
-                obj.platform_status = Some(try!(PlatformStatusDeserializer::deserialize("PlatformStatus", stack)));
-            }
-"SupportedAddonList" => {
-                obj.supported_addon_list = Some(try!(SupportedAddonListDeserializer::deserialize("SupportedAddonList", stack)));
-            }
-"SupportedTierList" => {
-                obj.supported_tier_list = Some(try!(SupportedTierListDeserializer::deserialize("SupportedTierList", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformSummaryList = Vec<PlatformSummary>;
-struct PlatformSummaryListDeserializer;
-            impl PlatformSummaryListDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformSummaryList, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(PlatformSummaryDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        Ok(obj)
-        
-                }
-            }
-pub type PlatformVersion = String;
-struct PlatformVersionDeserializer;
-            impl PlatformVersionDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<PlatformVersion, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>Describes a queue.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct Queue {
@@ -7576,108 +6466,6 @@ struct StringDeserializer;
         
                 }
             }
-pub type SupportedAddon = String;
-struct SupportedAddonDeserializer;
-            impl SupportedAddonDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<SupportedAddon, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type SupportedAddonList = Vec<SupportedAddon>;
-struct SupportedAddonListDeserializer;
-            impl SupportedAddonListDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<SupportedAddonList, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(SupportedAddonDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        Ok(obj)
-        
-                }
-            }
-pub type SupportedTier = String;
-struct SupportedTierDeserializer;
-            impl SupportedTierDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<SupportedTier, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type SupportedTierList = Vec<SupportedTier>;
-struct SupportedTierListDeserializer;
-            impl SupportedTierListDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<SupportedTierList, XmlParseError> {
-                    
-        let mut obj = vec![];
-        try!(start_element(tag_name, stack));
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    if name == "member" {
-                        obj.push(try!(SupportedTierDeserializer::deserialize("member", stack)));
-                    } else {
-                        skip_tree(stack);
-                    }
-                },
-                DeserializerNext::Close => {
-                    try!(end_element(tag_name, stack));
-                    break;
-                }
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>Swaps the CNAMEs of two environments.</p>"]
 #[derive(Default,Debug,Clone)]
             pub struct SwapEnvironmentCNAMEsMessage {
@@ -7722,7 +6510,7 @@ if let Some(ref field_value) = obj.source_environment_name {
             pub struct SystemStatus {
                 #[doc="<p>CPU utilization metrics for the instance.</p>"]
 pub cpu_utilization: Option<CPUUtilization>,
-#[doc="<p>Load average in the last 1-minute, 5-minute, and 15-minute periods. For more information, see <a href=\"http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/health-enhanced-metrics.html#health-enhanced-metrics-os\">Operating System Metrics</a>.</p>"]
+#[doc="<p>Load average in the last 1-minute and 5-minute periods. For more information, see <a href=\"http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/health-enhanced-metrics.html#health-enhanced-metrics-os\">Operating System Metrics</a>.</p>"]
 pub load_average: Option<LoadAverage>,
             }
             
@@ -8124,8 +6912,6 @@ pub group_name: Option<GroupName>,
 pub option_settings: Option<ConfigurationOptionSettingsList>,
 #[doc="<p>A list of custom user-defined configuration options to remove from the configuration set for this environment.</p>"]
 pub options_to_remove: Option<OptionsSpecifierList>,
-#[doc="<p>The ARN of the platform, if used.</p>"]
-pub platform_arn: Option<PlatformArn>,
 #[doc="<p>This specifies the platform version that the environment will run after the environment is updated.</p>"]
 pub solution_stack_name: Option<SolutionStackName>,
 #[doc="<p>If this parameter is specified, AWS Elastic Beanstalk deploys this configuration template to the environment. If no such configuration template is found, AWS Elastic Beanstalk returns an <code>InvalidParameterValue</code> error. </p>"]
@@ -8174,9 +6960,6 @@ if let Some(ref field_value) = obj.options_to_remove {
                     &format!("{}{}", prefix, "OptionsToRemove"),
                     field_value,
                 );
-            }
-if let Some(ref field_value) = obj.platform_arn {
-                params.put(&format!("{}{}", prefix, "PlatformArn"), &field_value);
             }
 if let Some(ref field_value) = obj.solution_stack_name {
                 params.put(&format!("{}{}", prefix, "SolutionStackName"), &field_value);
@@ -8450,20 +7233,6 @@ params.put(&key, &obj);
                 }
             }
             
-pub type VirtualizationType = String;
-struct VirtualizationTypeDeserializer;
-            impl VirtualizationTypeDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<VirtualizationType, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 /// Errors returned by AbortEnvironmentUpdate
                 #[derive(Debug, PartialEq)]
                 pub enum AbortEnvironmentUpdateError {
@@ -8944,68 +7713,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by CreatePlatformVersion
-                #[derive(Debug, PartialEq)]
-                pub enum CreatePlatformVersionError {
-                    
-///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),
-///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),
-///<p>You have exceeded the maximum number of allowed platforms associated with the account.</p>
-TooManyPlatforms(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl CreatePlatformVersionError {
-                    pub fn from_body(body: &str) -> CreatePlatformVersionError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "InsufficientPrivilegesException" => CreatePlatformVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => CreatePlatformVersionError::ElasticBeanstalkService(String::from(parsed_error.message)),"TooManyPlatformsException" => CreatePlatformVersionError::TooManyPlatforms(String::from(parsed_error.message)),_ => CreatePlatformVersionError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => CreatePlatformVersionError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for CreatePlatformVersionError {
-                    fn from(err: XmlParseError) -> CreatePlatformVersionError {
-                        let XmlParseError(message) = err;
-                        CreatePlatformVersionError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for CreatePlatformVersionError {
-                    fn from(err: CredentialsError) -> CreatePlatformVersionError {
-                        CreatePlatformVersionError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for CreatePlatformVersionError {
-                    fn from(err: HttpDispatchError) -> CreatePlatformVersionError {
-                        CreatePlatformVersionError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for CreatePlatformVersionError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for CreatePlatformVersionError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            CreatePlatformVersionError::InsufficientPrivileges(ref cause) => cause,CreatePlatformVersionError::ElasticBeanstalkService(ref cause) => cause,CreatePlatformVersionError::TooManyPlatforms(ref cause) => cause,CreatePlatformVersionError::Validation(ref cause) => cause,CreatePlatformVersionError::Credentials(ref err) => err.description(),CreatePlatformVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreatePlatformVersionError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by CreateStorageLocation
                 #[derive(Debug, PartialEq)]
                 pub enum CreateStorageLocationError {
@@ -9301,70 +8008,6 @@ Unknown(String)
                     fn description(&self) -> &str {
                         match *self {
                             DeleteEnvironmentConfigurationError::Validation(ref cause) => cause,DeleteEnvironmentConfigurationError::Credentials(ref err) => err.description(),DeleteEnvironmentConfigurationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteEnvironmentConfigurationError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by DeletePlatformVersion
-                #[derive(Debug, PartialEq)]
-                pub enum DeletePlatformVersionError {
-                    
-///<p>Unable to perform the specified operation because another operation that effects an element in this activity is already in progress.</p>
-OperationInProgress(String),
-///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),
-///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),
-///<p>You cannot delete the platform version because there are still environments running on it.</p>
-PlatformVersionStillReferenced(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl DeletePlatformVersionError {
-                    pub fn from_body(body: &str) -> DeletePlatformVersionError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "OperationInProgressException" => DeletePlatformVersionError::OperationInProgress(String::from(parsed_error.message)),"InsufficientPrivilegesException" => DeletePlatformVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => DeletePlatformVersionError::ElasticBeanstalkService(String::from(parsed_error.message)),"PlatformVersionStillReferencedException" => DeletePlatformVersionError::PlatformVersionStillReferenced(String::from(parsed_error.message)),_ => DeletePlatformVersionError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => DeletePlatformVersionError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for DeletePlatformVersionError {
-                    fn from(err: XmlParseError) -> DeletePlatformVersionError {
-                        let XmlParseError(message) = err;
-                        DeletePlatformVersionError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for DeletePlatformVersionError {
-                    fn from(err: CredentialsError) -> DeletePlatformVersionError {
-                        DeletePlatformVersionError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for DeletePlatformVersionError {
-                    fn from(err: HttpDispatchError) -> DeletePlatformVersionError {
-                        DeletePlatformVersionError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for DeletePlatformVersionError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for DeletePlatformVersionError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            DeletePlatformVersionError::OperationInProgress(ref cause) => cause,DeletePlatformVersionError::InsufficientPrivileges(ref cause) => cause,DeletePlatformVersionError::ElasticBeanstalkService(ref cause) => cause,DeletePlatformVersionError::PlatformVersionStillReferenced(ref cause) => cause,DeletePlatformVersionError::Validation(ref cause) => cause,DeletePlatformVersionError::Credentials(ref err) => err.description(),DeletePlatformVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeletePlatformVersionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -10002,66 +8645,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by DescribePlatformVersion
-                #[derive(Debug, PartialEq)]
-                pub enum DescribePlatformVersionError {
-                    
-///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),
-///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl DescribePlatformVersionError {
-                    pub fn from_body(body: &str) -> DescribePlatformVersionError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "InsufficientPrivilegesException" => DescribePlatformVersionError::InsufficientPrivileges(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => DescribePlatformVersionError::ElasticBeanstalkService(String::from(parsed_error.message)),_ => DescribePlatformVersionError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => DescribePlatformVersionError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for DescribePlatformVersionError {
-                    fn from(err: XmlParseError) -> DescribePlatformVersionError {
-                        let XmlParseError(message) = err;
-                        DescribePlatformVersionError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for DescribePlatformVersionError {
-                    fn from(err: CredentialsError) -> DescribePlatformVersionError {
-                        DescribePlatformVersionError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for DescribePlatformVersionError {
-                    fn from(err: HttpDispatchError) -> DescribePlatformVersionError {
-                        DescribePlatformVersionError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for DescribePlatformVersionError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for DescribePlatformVersionError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            DescribePlatformVersionError::InsufficientPrivileges(ref cause) => cause,DescribePlatformVersionError::ElasticBeanstalkService(ref cause) => cause,DescribePlatformVersionError::Validation(ref cause) => cause,DescribePlatformVersionError::Credentials(ref err) => err.description(),DescribePlatformVersionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DescribePlatformVersionError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by ListAvailableSolutionStacks
                 #[derive(Debug, PartialEq)]
                 pub enum ListAvailableSolutionStacksError {
@@ -10115,66 +8698,6 @@ Unknown(String)
                     fn description(&self) -> &str {
                         match *self {
                             ListAvailableSolutionStacksError::Validation(ref cause) => cause,ListAvailableSolutionStacksError::Credentials(ref err) => err.description(),ListAvailableSolutionStacksError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListAvailableSolutionStacksError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by ListPlatformVersions
-                #[derive(Debug, PartialEq)]
-                pub enum ListPlatformVersionsError {
-                    
-///<p>The specified account does not have sufficient privileges for one of more AWS services.</p>
-InsufficientPrivileges(String),
-///<p>A generic service exception has occurred.</p>
-ElasticBeanstalkService(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl ListPlatformVersionsError {
-                    pub fn from_body(body: &str) -> ListPlatformVersionsError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "InsufficientPrivilegesException" => ListPlatformVersionsError::InsufficientPrivileges(String::from(parsed_error.message)),"ElasticBeanstalkServiceException" => ListPlatformVersionsError::ElasticBeanstalkService(String::from(parsed_error.message)),_ => ListPlatformVersionsError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => ListPlatformVersionsError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for ListPlatformVersionsError {
-                    fn from(err: XmlParseError) -> ListPlatformVersionsError {
-                        let XmlParseError(message) = err;
-                        ListPlatformVersionsError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for ListPlatformVersionsError {
-                    fn from(err: CredentialsError) -> ListPlatformVersionsError {
-                        ListPlatformVersionsError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for ListPlatformVersionsError {
-                    fn from(err: HttpDispatchError) -> ListPlatformVersionsError {
-                        ListPlatformVersionsError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for ListPlatformVersionsError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for ListPlatformVersionsError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            ListPlatformVersionsError::InsufficientPrivileges(ref cause) => cause,ListPlatformVersionsError::ElasticBeanstalkService(ref cause) => cause,ListPlatformVersionsError::Validation(ref cause) => cause,ListPlatformVersionsError::Credentials(ref err) => err.description(),ListPlatformVersionsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListPlatformVersionsError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11197,47 +9720,6 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Create a new version of your custom platform.</p>"]
-                pub fn create_platform_version(&self, input: &CreatePlatformVersionRequest) -> Result<CreatePlatformVersionResult, CreatePlatformVersionError> {
-                    let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "CreatePlatformVersion");
-                    params.put("Version", "2010-12-01");
-                    CreatePlatformVersionRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = CreatePlatformVersionResult::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(CreatePlatformVersionResultDeserializer::deserialize("CreatePlatformVersionResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(CreatePlatformVersionError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
                 #[doc="<p>Creates the Amazon S3 storage location for the account.</p> <p>This location is used to store user log files.</p>"]
                 pub fn create_storage_location(&self) -> Result<CreateStorageLocationResultMessage, CreateStorageLocationError> {
                     let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
@@ -11370,47 +9852,6 @@ Unknown(String)
                         }
                         _ => {
                             Err(DeleteEnvironmentConfigurationError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Deletes the specified version of a custom platform.</p>"]
-                pub fn delete_platform_version(&self, input: &DeletePlatformVersionRequest) -> Result<DeletePlatformVersionResult, DeletePlatformVersionError> {
-                    let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "DeletePlatformVersion");
-                    params.put("Version", "2010-12-01");
-                    DeletePlatformVersionRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = DeletePlatformVersionResult::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(DeletePlatformVersionResultDeserializer::deserialize("DeletePlatformVersionResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(DeletePlatformVersionError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
                         }
                     }
                 }
@@ -11867,48 +10308,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes the version of the platform.</p>"]
-                pub fn describe_platform_version(&self, input: &DescribePlatformVersionRequest) -> Result<DescribePlatformVersionResult, DescribePlatformVersionError> {
-                    let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "DescribePlatformVersion");
-                    params.put("Version", "2010-12-01");
-                    DescribePlatformVersionRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = DescribePlatformVersionResult::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(DescribePlatformVersionResultDeserializer::deserialize("DescribePlatformVersionResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(DescribePlatformVersionError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Returns a list of the available solution stack names, with the public version first and then in reverse chronological order.</p>"]
+                #[doc="<p>Returns a list of the available solution stack names.</p>"]
                 pub fn list_available_solution_stacks(&self) -> Result<ListAvailableSolutionStacksResultMessage, ListAvailableSolutionStacksError> {
                     let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
                     let mut params = Params::new();
@@ -11944,47 +10344,6 @@ Unknown(String)
                         }
                         _ => {
                             Err(ListAvailableSolutionStacksError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Lists the available platforms.</p>"]
-                pub fn list_platform_versions(&self, input: &ListPlatformVersionsRequest) -> Result<ListPlatformVersionsResult, ListPlatformVersionsError> {
-                    let mut request = SignedRequest::new("POST", "elasticbeanstalk", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "ListPlatformVersions");
-                    params.put("Version", "2010-12-01");
-                    ListPlatformVersionsRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = ListPlatformVersionsResult::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(ListPlatformVersionsResultDeserializer::deserialize("ListPlatformVersionsResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(ListPlatformVersionsError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
                         }
                     }
                 }

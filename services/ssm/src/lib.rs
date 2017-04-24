@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 pub type AccountId = String;
@@ -75,7 +75,7 @@ pub tags: TagList,
             
 pub type AgentErrorCode = String;
 pub type ApproveAfterDays = i64;
-#[doc="<p>Describes an association of a Systems Manager document and an instance.</p>"]
+#[doc="<p>Describes an association of an SSM document and an instance.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct Association {
                 #[doc="<p>The ID created by the system when you create an association. An association is a binding between a document and a set of targets with a schedule.</p>"]
@@ -326,7 +326,7 @@ pub comment: Option<Comment>,
 #[doc="<p>The number of targets for which the command invocation reached a terminal state. Terminal states include the following: <code>Success</code>, <code>Failed</code>, <code>Execution Timed Out</code>, <code>Delivery Timed Out</code>, <code>Canceled</code>, <code>Terminated</code>, or <code>Undeliverable</code>.</p>"]
 #[serde(rename="CompletedCount")]
 pub completed_count: Option<CompletedCount>,
-#[doc="<p>The name of the document requested for execution.</p>"]
+#[doc="<p>The name of the SSM document requested for execution.</p>"]
 #[serde(rename="DocumentName")]
 pub document_name: Option<DocumentName>,
 #[doc="<p>The number of targets for which the status is <code>Failed</code> or <code>Execution Timed Out</code>.</p>"]
@@ -338,12 +338,12 @@ pub expires_after: Option<DateTime>,
 #[doc="<p>The instance IDs against which this command was requested.</p>"]
 #[serde(rename="InstanceIds")]
 pub instance_ids: Option<InstanceIdList>,
-#[doc="<p>The maximum number of instances that are allowed to execute the command at the same time. You can specify a number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information about how to use <code>MaxConcurrency</code>, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+#[doc="<p>The maximum number of instances that are allowed to execute the command at the same time. You can specify a number of instances, such as 10, or a percentage of instances, such as 10%. The default value is 50. For more information about how to use <code>MaxConcurrency</code>, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows). </p>"]
 #[serde(rename="MaxConcurrency")]
-pub max_concurrency: Option<MaxConcurrency>,
-#[doc="<p>The maximum number of errors allowed before the system stops sending the command to additional targets. You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more information about how to use <code>MaxErrors</code>, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+pub max_concurrency: Option<VelocityConstraint>,
+#[doc="<p>The maximum number of errors allowed before the system stops sending the command to additional targets. You can specify a number of errors, such as 10, or a percentage or errors, such as 10%. The default value is 50. For more information about how to use <code>MaxErrors</code>, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="MaxErrors")]
-pub max_errors: Option<MaxErrors>,
+pub max_errors: Option<VelocityConstraint>,
 #[doc="<p>Configurations for sending notifications about command status changes. </p>"]
 #[serde(rename="NotificationConfig")]
 pub notification_config: Option<NotificationConfig>,
@@ -356,7 +356,7 @@ pub output_s3_key_prefix: Option<S3KeyPrefix>,
 #[doc="<p>The region where the Amazon Simple Storage Service (Amazon S3) output bucket is located. The default value is the region where Run Command is being called.</p>"]
 #[serde(rename="OutputS3Region")]
 pub output_s3_region: Option<S3Region>,
-#[doc="<p>The parameter values to be inserted in the document when executing the command.</p>"]
+#[doc="<p>The parameter values to be inserted in the SSM document when executing the command.</p>"]
 #[serde(rename="Parameters")]
 pub parameters: Option<Parameters>,
 #[doc="<p>The date and time the command was requested.</p>"]
@@ -368,13 +368,13 @@ pub service_role: Option<ServiceRole>,
 #[doc="<p>The status of the command.</p>"]
 #[serde(rename="Status")]
 pub status: Option<CommandStatus>,
-#[doc="<p>A detailed status of the command execution. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html\">Run Command Status</a>. <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to any instances.</p> </li> <li> <p>In Progress – The command has been sent to at least one instance but has not reached a final state on all instances.</p> </li> <li> <p>Success – The command successfully executed on all invocations. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Delivery Timed Out</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Execution Timed Out</code>. This is a terminal state.</p> </li> <li> <p>Failed – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Failed</code>. This is a terminal state.</p> </li> <li> <p>Incomplete – The command was attempted on all instances and one or more invocations does not have a value of <code>Success</code> but not enough invocations failed for the status to be <code>Failed</code>. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Rate Exceeded – The number of instances targeted by the command exceeded the account limit for pending invocations. The system has canceled the command before executing it on any instance. This is a terminal state.</p> </li> </ul>"]
+#[doc="<p>A detailed status of the command execution. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-commands.html\">Monitor Commands</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-commands.html\">Monitor Commands</a> (Windows). <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to any instances.</p> </li> <li> <p>In Progress – The command has been sent to at least one instance but has not reached a final state on all instances.</p> </li> <li> <p>Success – The command successfully executed on all invocations. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Delivery Timed Out</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Execution Timed Out</code>. This is a terminal state.</p> </li> <li> <p>Failed – The value of <code>MaxErrors</code> or more command invocations shows a status of <code>Failed</code>. This is a terminal state.</p> </li> <li> <p>Incomplete – The command was attempted on all instances and one or more invocations does not have a value of <code>Success</code> but not enough invocations failed for the status to be <code>Failed</code>. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Rate Exceeded – The number of instances targeted by the command exceeded the account limit for pending invocations. The system has canceled the command before executing it on any instance. This is a terminal state.</p> </li> </ul>"]
 #[serde(rename="StatusDetails")]
 pub status_details: Option<StatusDetails>,
 #[doc="<p>The number of targets for the command.</p>"]
 #[serde(rename="TargetCount")]
 pub target_count: Option<TargetCount>,
-#[doc="<p>An array of search criteria that targets instances using a <code>Key</code>,<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p>"]
+#[doc="<p>An array of search criteria that targets instances using a <code>Key</code>;<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p>"]
 #[serde(rename="Targets")]
 pub targets: Option<Targets>,
             }
@@ -432,7 +432,7 @@ pub standard_output_url: Option<Url>,
 #[doc="<p>Whether or not the invocation succeeded, failed, or is pending.</p>"]
 #[serde(rename="Status")]
 pub status: Option<CommandInvocationStatus>,
-#[doc="<p>A detailed status of the command execution for each invocation (each instance targeted by the command). <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html\">Run Command Status</a>. <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Success – The execution of the command or plugin was successfully completed. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – Command execution started on the instance, but the execution was not complete before the execution timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command was not successful on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist or might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit and don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
+#[doc="<p>A detailed status of the command execution for each invocation (each instance targeted by the command). <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-commands.html\">Monitor Commands</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-commands.html\">Monitor Commands</a> (Windows). <code>StatusDetails</code> can be one of the following values: </p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Success – The execution of the command or plugin was successfully completed. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – Command execution started on the instance, but the execution was not complete before the execution timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command was not successful on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist or might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit and don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
 #[serde(rename="StatusDetails")]
 pub status_details: Option<StatusDetails>,
 #[doc="<p> Gets the trace output sent by the agent. </p>"]
@@ -480,7 +480,7 @@ pub standard_output_url: Option<Url>,
 #[doc="<p>The status of this plugin. You can execute a document with multiple plugins.</p>"]
 #[serde(rename="Status")]
 pub status: Option<CommandPluginStatus>,
-#[doc="<p>A detailed status of the plugin execution. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html\">Run Command Status</a>. <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Success – The execution of the command or plugin was successfully completed. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – Command execution started on the instance, but the execution was not complete before the execution timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command was not successful on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist, or it might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit, and they don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
+#[doc="<p>A detailed status of the plugin execution. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-commands.html\">Monitor Commands</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-commands.html\">Monitor Commands</a> (Windows). <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Success – The execution of the command or plugin was successfully completed. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – Command execution started on the instance, but the execution was not complete before the execution timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command was not successful on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist, or it might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit, and they don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
 #[serde(rename="StatusDetails")]
 pub status_details: Option<StatusDetails>,
             }
@@ -530,7 +530,7 @@ pub entries: CreateAssociationBatchRequestEntries,
             }
             
 pub type CreateAssociationBatchRequestEntries = Vec<CreateAssociationBatchRequestEntry>;
-#[doc="<p> Describes the association of a Systems Manager document and an instance.</p>"]
+#[doc="<p> Describes the association of an SSM document and an instance. </p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
             pub struct CreateAssociationBatchRequestEntry {
                 #[doc="<p>The document version.</p>"]
@@ -574,7 +574,7 @@ pub document_version: Option<DocumentVersion>,
 #[doc="<p>The instance ID.</p>"]
 #[serde(rename="InstanceId")]
 pub instance_id: Option<InstanceId>,
-#[doc="<p>The name of the Systems Manager document.</p>"]
+#[doc="<p>The name of the SSM document.</p>"]
 #[serde(rename="Name")]
 pub name: DocumentName,
 #[doc="<p>An Amazon S3 bucket where you want to store the output details of the request. For example:</p> <p> <code>\"{ \\\"S3Location\\\": { \\\"OutputS3Region\\\": \\\"&lt;region&gt;\\\", \\\"OutputS3BucketName\\\": \\\"bucket name\\\", \\\"OutputS3KeyPrefix\\\": \\\"folder name\\\" } }\"</code> </p>"]
@@ -606,14 +606,14 @@ pub content: DocumentContent,
 #[doc="<p>The type of document to create. Valid document types include: Policy, Automation, and Command.</p>"]
 #[serde(rename="DocumentType")]
 pub document_type: Option<DocumentType>,
-#[doc="<p>A name for the Systems Manager document.</p>"]
+#[doc="<p>A name for the SSM document.</p>"]
 #[serde(rename="Name")]
 pub name: DocumentName,
             }
             
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct CreateDocumentResult {
-                #[doc="<p>Information about the Systems Manager document.</p>"]
+                #[doc="<p>Information about the SSM document.</p>"]
 #[serde(rename="DocumentDescription")]
 pub document_description: Option<DocumentDescription>,
             }
@@ -701,7 +701,7 @@ pub association_id: Option<AssociationId>,
 #[doc="<p>The ID of the instance.</p>"]
 #[serde(rename="InstanceId")]
 pub instance_id: Option<InstanceId>,
-#[doc="<p>The name of the Systems Manager document.</p>"]
+#[doc="<p>The name of the SSM document.</p>"]
 #[serde(rename="Name")]
 pub name: Option<DocumentName>,
             }
@@ -711,7 +711,7 @@ pub name: Option<DocumentName>,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct DeleteDocumentRequest {
-                #[doc="<p>The name of the document.</p>"]
+                #[doc="<p>The name of the SSM document.</p>"]
 #[serde(rename="Name")]
 pub name: DocumentName,
             }
@@ -1401,7 +1401,7 @@ pub name: Option<DocumentName>,
 #[doc="<p> Describes an SSM document. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DocumentDescription {
-                #[doc="<p> The date when the document was created.</p>"]
+                #[doc="<p> The date when the SSM document was created. </p>"]
 #[serde(rename="CreatedDate")]
 pub created_date: Option<DateTime>,
 #[doc="<p>The default version.</p>"]
@@ -1490,7 +1490,7 @@ pub schema_version: Option<DocumentSchemaVersion>,
 pub type DocumentIdentifierList = Vec<DocumentIdentifier>;
 pub type DocumentName = String;
 pub type DocumentOwner = String;
-#[doc="<p>Parameters specified in a System Manager document that execute on the server when the command is run. </p>"]
+#[doc="<p>Parameters specified in the SSM document that execute on the server when the command is run. </p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DocumentParameter {
                 #[doc="<p>If specified, the default values for the parameters. Parameters without a default value are required. Parameters with a default value are optional.</p>"]
@@ -1591,7 +1591,7 @@ pub command_id: CommandId,
 #[doc="<p>(Required) The ID of the managed instance targeted by the command. A managed instance can be an Amazon EC2 instance or an instance in your hybrid environment that is configured for Systems Manager.</p>"]
 #[serde(rename="InstanceId")]
 pub instance_id: InstanceId,
-#[doc="<p>(Optional) The name of the plugin for which you want detailed results. If the document contains only one plugin, the name can be omitted and the details will be returned.</p>"]
+#[doc="<p>(Optional) The name of the plugin for which you want detailed results. If the SSM document contains only one plugin, the name can be omitted and the details will be returned.</p>"]
 #[serde(rename="PluginName")]
 pub plugin_name: Option<CommandPluginName>,
             }
@@ -1604,7 +1604,7 @@ pub command_id: Option<CommandId>,
 #[doc="<p>The comment text for the command.</p>"]
 #[serde(rename="Comment")]
 pub comment: Option<Comment>,
-#[doc="<p>The name of the document that was executed. For example, AWS-RunShellScript.</p>"]
+#[doc="<p>The name of the SSM document that was executed. For example, AWS-RunShellScript is an SSM document.</p>"]
 #[serde(rename="DocumentName")]
 pub document_name: Option<DocumentName>,
 #[doc="<p>Duration since <code>ExecutionStartDateTime</code>.</p>"]
@@ -1640,7 +1640,7 @@ pub standard_output_url: Option<Url>,
 #[doc="<p>The status of the parent command for this invocation. This status can be different than <code>StatusDetails</code>.</p>"]
 #[serde(rename="Status")]
 pub status: Option<CommandInvocationStatus>,
-#[doc="<p>A detailed status of the command execution for an invocation. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-about-status.html\">Run Command Status</a>. <code>StatusDetails</code> can be one of the following values:</p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Delayed – The system attempted to send the command to the target, but the target was not available. The instance might not be available because of network issues, the instance was stopped, etc. The system will try to deliver the command again.</p> </li> <li> <p>Success – The command or plugin was executed successfully. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – The command started to execute on the instance, but the execution was not complete before the timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command wasn't executed successfully on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist or might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit and don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
+#[doc="<p>A detailed status of the command execution for an invocation. <code>StatusDetails</code> includes more information than <code>Status</code> because it includes states resulting from error and concurrency control parameters. <code>StatusDetails</code> can show different results than <code>Status</code>. For more information about these statuses, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-commands.html\">Monitor Commands</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-commands.html\">Monitor Commands</a> (Windows). <code>StatusDetails</code> can be one of the following values: </p> <ul> <li> <p>Pending – The command has not been sent to the instance.</p> </li> <li> <p>In Progress – The command has been sent to the instance but has not reached a terminal state.</p> </li> <li> <p>Delayed – The system attempted to send the command to the target, but the target was not available. The instance might not be available because of network issues, the instance was stopped, etc. The system will try to deliver the command again.</p> </li> <li> <p>Success – The command or plugin was executed successfully. This is a terminal state.</p> </li> <li> <p>Delivery Timed Out – The command was not delivered to the instance before the delivery timeout expired. Delivery timeouts do not count against the parent command’s <code>MaxErrors</code> limit, but they do contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Execution Timed Out – The command started to execute on the instance, but the execution was not complete before the timeout expired. Execution timeouts count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Failed – The command wasn't executed successfully on the instance. For a plugin, this indicates that the result code was not zero. For a command invocation, this indicates that the result code for one or more plugins was not zero. Invocation failures count against the <code>MaxErrors</code> limit of the parent command. This is a terminal state.</p> </li> <li> <p>Canceled – The command was terminated before it was completed. This is a terminal state.</p> </li> <li> <p>Undeliverable – The command can't be delivered to the instance. The instance might not exist or might not be responding. Undeliverable invocations don't count against the parent command’s <code>MaxErrors</code> limit and don't contribute to whether the parent command status is <code>Success</code> or <code>Incomplete</code>. This is a terminal state.</p> </li> <li> <p>Terminated – The parent command exceeded its <code>MaxErrors</code> limit and subsequent command invocations were canceled by the system. This is a terminal state.</p> </li> </ul>"]
 #[serde(rename="StatusDetails")]
 pub status_details: Option<StatusDetails>,
             }
@@ -1800,10 +1800,10 @@ pub window_execution_id: MaintenanceWindowExecutionId,
 pub end_time: Option<DateTime>,
 #[doc="<p>The defined maximum number of task executions that could be run in parallel.</p>"]
 #[serde(rename="MaxConcurrency")]
-pub max_concurrency: Option<MaxConcurrency>,
+pub max_concurrency: Option<VelocityConstraint>,
 #[doc="<p>The defined maximum number of task execution errors allowed before scheduling of the task execution would have been stopped.</p>"]
 #[serde(rename="MaxErrors")]
-pub max_errors: Option<MaxErrors>,
+pub max_errors: Option<VelocityConstraint>,
 #[doc="<p>The priority of the task.</p>"]
 #[serde(rename="Priority")]
 pub priority: Option<MaintenanceWindowTaskPriority>,
@@ -1919,7 +1919,7 @@ pub with_decryption: Option<Boolean>,
                 #[doc="<p>A list of parameters that are not formatted correctly or do not run when executed.</p>"]
 #[serde(rename="InvalidParameters")]
 pub invalid_parameters: Option<ParameterNameList>,
-#[doc="<p>A list of details for a parameter.</p>"]
+#[doc="<p>A list of parameters used by the AWS account.</p>"]
 #[serde(rename="Parameters")]
 pub parameters: Option<ParameterList>,
             }
@@ -2073,7 +2073,7 @@ pub type InstanceIdList = Vec<InstanceId>;
                 #[doc="<p>The activation ID created by Systems Manager when the server or VM was registered.</p>"]
 #[serde(rename="ActivationId")]
 pub activation_id: Option<ActivationId>,
-#[doc="<p>The version of the SSM Agent running on your Linux instance. </p>"]
+#[doc="<p>The version of the SSM agent running on your Linux instance. </p>"]
 #[serde(rename="AgentVersion")]
 pub agent_version: Option<Version>,
 #[doc="<p>Information about the association.</p>"]
@@ -2094,7 +2094,7 @@ pub iam_role: Option<IamRole>,
 #[doc="<p>The instance ID. </p>"]
 #[serde(rename="InstanceId")]
 pub instance_id: Option<InstanceId>,
-#[doc="<p>Indicates whether latest version of the SSM Agent is running on your instance. </p>"]
+#[doc="<p>Indicates whether latest version of the SSM agent is running on your instance. </p>"]
 #[serde(rename="IsLatestVersion")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
 pub is_latest_version: Option<Boolean>,
@@ -2110,7 +2110,7 @@ pub last_successful_association_execution_date: Option<DateTime>,
 #[doc="<p>The name of the managed instance.</p>"]
 #[serde(rename="Name")]
 pub name: Option<String>,
-#[doc="<p>Connection status of the SSM Agent. </p>"]
+#[doc="<p>Connection status of the SSM agent. </p>"]
 #[serde(rename="PingStatus")]
 pub ping_status: Option<PingStatus>,
 #[doc="<p>The name of the operating system platform running on your instance. </p>"]
@@ -2719,10 +2719,10 @@ pub type MaintenanceWindowTargetList = Vec<MaintenanceWindowTarget>;
 pub logging_info: Option<LoggingInfo>,
 #[doc="<p>The maximum number of targets this task can be run for in parallel.</p>"]
 #[serde(rename="MaxConcurrency")]
-pub max_concurrency: Option<MaxConcurrency>,
+pub max_concurrency: Option<VelocityConstraint>,
 #[doc="<p>The maximum number of errors allowed before this task stops being scheduled.</p>"]
 #[serde(rename="MaxErrors")]
-pub max_errors: Option<MaxErrors>,
+pub max_errors: Option<VelocityConstraint>,
 #[doc="<p>The priority of the task in the Maintenance Window, the lower the number the higher the priority. Tasks in a Maintenance Window are scheduled in priority order with tasks that have the same priority scheduled in parallel.</p>"]
 #[serde(rename="Priority")]
 pub priority: Option<MaintenanceWindowTaskPriority>,
@@ -2769,8 +2769,6 @@ pub type MaintenanceWindowTaskPriority = i64;
 pub type MaintenanceWindowTaskTargetId = String;
 pub type MaintenanceWindowTaskType = String;
 pub type ManagedInstanceId = String;
-pub type MaxConcurrency = String;
-pub type MaxErrors = String;
 pub type MaxResults = i64;
 pub type MaxResultsEC2Compatible = i64;
 #[derive(Default,Debug,Clone,Serialize)]
@@ -2801,7 +2799,7 @@ pub type NotificationArn = String;
                 #[doc="<p>An Amazon Resource Name (ARN) for a Simple Notification Service (SNS) topic. Run Command pushes notifications about command status changes to this topic.</p>"]
 #[serde(rename="NotificationArn")]
 pub notification_arn: Option<NotificationArn>,
-#[doc="<p>The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html\">Setting Up Events and Notifications</a> in the <i>Amazon EC2 Systems Manager User Guide</i>.</p>"]
+#[doc="<p>The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-commands.html\">Monitoring Commands</a> in the <i>Amazon Elastic Compute Cloud User Guide </i>.</p>"]
 #[serde(rename="NotificationEvents")]
 pub notification_events: Option<NotificationEventList>,
 #[doc="<p>Command: Receive notification when the status of a command changes. Invocation: For commands sent to multiple instances, receive notification on a per-instance basis when the status of a command changes. </p>"]
@@ -3129,7 +3127,7 @@ pub key_id: Option<ParameterKeyId>,
 #[doc="<p>The name of the parameter that you want to add to the system.</p>"]
 #[serde(rename="Name")]
 pub name: PSParameterName,
-#[doc="<p>Overwrite an existing parameter. If not specified, will default to \"false\".</p>"]
+#[doc="<p>Overwrite an existing parameter.</p>"]
 #[serde(rename="Overwrite")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
 pub overwrite: Option<Boolean>,
@@ -3214,10 +3212,10 @@ pub client_token: Option<ClientToken>,
 pub logging_info: Option<LoggingInfo>,
 #[doc="<p>The maximum number of targets this task can be run for in parallel.</p>"]
 #[serde(rename="MaxConcurrency")]
-pub max_concurrency: MaxConcurrency,
+pub max_concurrency: VelocityConstraint,
 #[doc="<p>The maximum number of errors allowed before this task stops being scheduled.</p>"]
 #[serde(rename="MaxErrors")]
-pub max_errors: MaxErrors,
+pub max_errors: VelocityConstraint,
 #[doc="<p>The priority of the task in the Maintenance Window, the lower the number the higher the priority. Tasks in a Maintenance Window are scheduled in priority order with tasks that have the same priority scheduled in parallel.</p>"]
 #[serde(rename="Priority")]
 pub priority: Option<MaintenanceWindowTaskPriority>,
@@ -3316,18 +3314,18 @@ pub document_hash: Option<DocumentHash>,
 #[doc="<p>Sha256 or Sha1.</p> <note> <p>Sha1 hashes have been deprecated.</p> </note>"]
 #[serde(rename="DocumentHashType")]
 pub document_hash_type: Option<DocumentHashType>,
-#[doc="<p>Required. The name of the Systems Manager document to execute. This can be a public document or a custom document.</p>"]
+#[doc="<p>Required. The name of the SSM document to execute. This can be an SSM public document or a custom document.</p>"]
 #[serde(rename="DocumentName")]
 pub document_name: DocumentARN,
 #[doc="<p>Required. The instance IDs where the command should execute. You can specify a maximum of 50 IDs.</p>"]
 #[serde(rename="InstanceIds")]
 pub instance_ids: Option<InstanceIdList>,
-#[doc="<p>(Optional) The maximum number of instances that are allowed to execute the command at the same time. You can specify a number such as “10” or a percentage such as “10%”. The default value is 50. For more information about how to use <code>MaxConcurrency</code>, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+#[doc="<p>(Optional) The maximum number of instances that are allowed to execute the command at the same time. You can specify a number such as “10” or a percentage such as “10%”. The default value is 50. For more information about how to use <code>MaxConcurrency</code>, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="MaxConcurrency")]
-pub max_concurrency: Option<MaxConcurrency>,
-#[doc="<p>The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of <code>MaxErrors</code>, the systems stops sending the command to additional targets. You can specify a number like “10” or a percentage like “10%”. The default value is 50. For more information about how to use <code>MaxErrors</code>, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+pub max_concurrency: Option<VelocityConstraint>,
+#[doc="<p>The maximum number of errors allowed without the command failing. When the command fails one more time beyond the value of <code>MaxErrors</code>, the systems stops sending the command to additional targets. You can specify a number like “10” or a percentage like “10%”. The default value is 50. For more information about how to use <code>MaxErrors</code>, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="MaxErrors")]
-pub max_errors: Option<MaxErrors>,
+pub max_errors: Option<VelocityConstraint>,
 #[doc="<p>Configurations for sending notifications.</p>"]
 #[serde(rename="NotificationConfig")]
 pub notification_config: Option<NotificationConfig>,
@@ -3340,13 +3338,13 @@ pub output_s3_key_prefix: Option<S3KeyPrefix>,
 #[doc="<p>(Optional) The region where the Amazon Simple Storage Service (Amazon S3) output bucket is located. The default value is the region where Run Command is being called.</p>"]
 #[serde(rename="OutputS3Region")]
 pub output_s3_region: Option<S3Region>,
-#[doc="<p>The required and optional parameters specified in the document being executed.</p>"]
+#[doc="<p>The required and optional parameters specified in the SSM document being executed.</p>"]
 #[serde(rename="Parameters")]
 pub parameters: Option<Parameters>,
 #[doc="<p>The IAM role that Systems Manager uses to send notifications. </p>"]
 #[serde(rename="ServiceRoleArn")]
 pub service_role_arn: Option<ServiceRole>,
-#[doc="<p>(Optional) An array of search criteria that targets instances using a <code>Key</code>,<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call. For more information about how to use <code>Targets</code>, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+#[doc="<p>(Optional) An array of search criteria that targets instances using a <code>Key</code>;<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call. For more information about how to use <code>Targets</code>, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="Targets")]
 pub targets: Option<Targets>,
 #[doc="<p>If this time is reached and the command has not already started executing, it will not execute.</p>"]
@@ -3452,13 +3450,13 @@ pub value: TagValue,
 pub type TagKey = String;
 pub type TagList = Vec<Tag>;
 pub type TagValue = String;
-#[doc="<p>An array of search criteria that targets instances using a <code>Key</code>,<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p>"]
+#[doc="<p>An array of search criteria that targets instances using a <code>Key</code>;<code>Value</code> combination that you specify. <code>Targets</code> is required if you don't provide one or more instance IDs in the call.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
             pub struct Target {
-                #[doc="<p>User-defined criteria for sending commands that target instances that meet the criteria. <code>Key</code> can be <code>tag:&lt;Amazon EC2 tag&gt;</code> or <code>InstanceIds</code>. For more information about how to send commands that target instances using <code>Key</code>,<code>Value</code> parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+                #[doc="<p>User-defined criteria for sending commands that target instances that meet the criteria. <code>Key</code> can be <code>tag:&lt;Amazon EC2 tag&gt;</code> or <code>name:&lt;Amazon EC2 instance ID&gt;</code>. For example, <code>tag:ServerRole</code> or <code>name:0123456789012345</code>. For more information about how to send commands that target instances using <code>Key</code>;<code>Value</code> parameters, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="Key")]
 pub key: Option<TargetKey>,
-#[doc="<p>User-defined criteria that maps to <code>Key</code>. For example, if you specified <code>tag:ServerRole</code>, you could specify <code>value:WebServer</code> to execute a command on instances that include Amazon EC2 tags of ServerRole,WebServer. For more information about how to send commands that target instances using <code>Key</code>,<code>Value</code> parameters, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/run-command.html\">Executing a Command Using Systems Manager Run Command</a>.</p>"]
+#[doc="<p>User-defined criteria that maps to <code>Key</code>. For example, if you specified <code>tag:ServerRole</code>, you could specify <code>value:WebServer</code> to execute a command on instances that include Amazon EC2 tags of ServerRole;WebServer. For more information about how to send commands that target instances using <code>Key</code>;<code>Value</code> parameters, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Linux) or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/run-command.html\">Executing a Command Using Amazon EC2 Run Command</a> (Windows).</p>"]
 #[serde(rename="Values")]
 pub values: Option<TargetValues>,
             }
@@ -3676,6 +3674,7 @@ pub rejected_patches: Option<PatchIdList>,
             }
             
 pub type Url = String;
+pub type VelocityConstraint = String;
 pub type Version = String;
 /// Errors returned by AddTagsToResource
                 #[derive(Debug, PartialEq)]
@@ -3750,7 +3749,7 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>You cannot specify an instance ID in more than one association.</p>
 DuplicateInstanceId(String),/// An error occurred dispatching the HTTP request
@@ -3880,9 +3879,9 @@ InternalServerError(String),
 InvalidDocument(String),
 ///<p>The document version is not valid or does not exist.</p>
 InvalidDocumentVersion(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an document for a Windows instance to a Linux instance.</p>
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
 UnsupportedPlatformType(String),
 ///<p>The output location is not valid or does not exist.</p>
 InvalidOutputLocation(String),
@@ -3955,7 +3954,7 @@ InternalServerError(String),
 InvalidDocument(String),
 ///<p>The document version is not valid or does not exist.</p>
 InvalidDocumentVersion(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
 InvalidParameters(String),
@@ -3963,7 +3962,7 @@ InvalidParameters(String),
 DuplicateInstanceId(String),
 ///<p>You can have at most 2,000 active associations.</p>
 AssociationLimitExceeded(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an document for a Windows instance to a Linux instance.</p>
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
 UnsupportedPlatformType(String),
 ///<p>The output location is not valid or does not exist.</p>
 InvalidOutputLocation(String),
@@ -4028,13 +4027,13 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum CreateDocumentError {
                     
-///<p>The specified document already exists.</p>
+///<p>The specified SSM document already exists.</p>
 DocumentAlreadyExists(String),
-///<p>The size limit of a document is 64 KB.</p>
+///<p>The size limit of an SSM document is 64 KB.</p>
 MaxDocumentSizeExceeded(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The content for the document is not valid.</p>
+///<p>The content for the SSM document is not valid.</p>
 InvalidDocumentContent(String),
 ///<p>You can have at most 200 active SSM documents.</p>
 DocumentLimitExceeded(String),
@@ -4292,7 +4291,7 @@ AssociationDoesNotExist(String),
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>There are concurrent updates for a resource that supports one update at a time.</p>
 TooManyUpdates(String),/// An error occurred dispatching the HTTP request
@@ -4359,7 +4358,7 @@ InternalServerError(String),
 InvalidDocument(String),
 ///<p>You attempted to delete a document while it is still shared. You must stop sharing the document before you can delete it.</p>
 InvalidDocumentOperation(String),
-///<p>You must disassociate a document from all instances before you can delete it.</p>
+///<p>You must disassociate an SSM document from all instances before you can delete it.</p>
 AssociatedInstances(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
@@ -4599,7 +4598,7 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum DeregisterManagedInstanceError {
                     
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),/// An error occurred dispatching the HTTP request
@@ -4912,7 +4911,7 @@ AssociationDoesNotExist(String),
 InternalServerError(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
@@ -5219,7 +5218,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),/// An error occurred dispatching the HTTP request
@@ -5345,7 +5344,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),/// An error occurred dispatching the HTTP request
@@ -5408,7 +5407,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified token is not valid.</p>
 InvalidNextToken(String),
@@ -5599,7 +5598,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The filter name is not valid. Verify the you entered the correct name and try again.</p>
 InvalidFilter(String),
@@ -6331,7 +6330,7 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The plugin name is not valid.</p>
 InvalidPluginName(String),
@@ -7197,7 +7196,7 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified key is not valid.</p>
 InvalidFilterKey(String),
@@ -7264,7 +7263,7 @@ Unknown(String)
 InternalServerError(String),
 ///
 InvalidCommandId(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified key is not valid.</p>
 InvalidFilterKey(String),
@@ -7455,7 +7454,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The parameter type name is not valid.</p>
 InvalidTypeName(String),
@@ -7652,7 +7651,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The parameter type name is not valid.</p>
 InvalidTypeName(String),
@@ -8121,7 +8120,7 @@ Unknown(String)
 DuplicateInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
@@ -8129,11 +8128,11 @@ InvalidDocument(String),
 InvalidOutputFolder(String),
 ///<p>You must specify values for all required parameters in the SSM document. You can only supply values to parameters defined in the SSM document.</p>
 InvalidParameters(String),
-///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an document for a Windows instance to a Linux instance.</p>
+///<p>The document does not support the platform type of the given instance ID(s). For example, you sent an SSM document for a Windows instance to a Linux instance.</p>
 UnsupportedPlatformType(String),
-///<p>The size limit of a document is 64 KB.</p>
+///<p>The size limit of an SSM document is 64 KB.</p>
 MaxDocumentSizeExceeded(String),
-///<p>The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <a href="http://docs.aws.amazon.com/systems-manager/latest/userguide/rc-sns-notifications.html">Configuring Amazon SNS Notifications for Run Command</a> in the <i>Amazon EC2 Systems Manager User Guide</i>.</p>
+///<p>The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/rc-sns.html">Getting Amazon SNS Notifications When a Command Changes Status</a> in the <i>Amazon Elastic Compute Cloud User Guide </i>.</p>
 InvalidRole(String),
 ///<p>One or more configuration items is not valid. Verify that a valid Amazon Resource Name (ARN) was provided for an Amazon SNS topic.</p>
 InvalidNotificationConfig(String),/// An error occurred dispatching the HTTP request
@@ -8397,7 +8396,7 @@ Unknown(String)
                     
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>The specified document does not exist.</p>
 InvalidDocument(String),
@@ -8464,7 +8463,7 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateDocumentError {
                     
-///<p>The size limit of a document is 64 KB.</p>
+///<p>The size limit of an SSM document is 64 KB.</p>
 MaxDocumentSizeExceeded(String),
 ///<p>The document has too many versions. Delete one or more document versions and try again.</p>
 DocumentVersionLimitExceeded(String),
@@ -8472,7 +8471,7 @@ DocumentVersionLimitExceeded(String),
 InternalServerError(String),
 ///<p>The content of the association document matches another document. Change the content of the document and try again.</p>
 DuplicateDocumentContent(String),
-///<p>The content for the document is not valid.</p>
+///<p>The content for the SSM document is not valid.</p>
 InvalidDocumentContent(String),
 ///<p>The document version is not valid or does not exist.</p>
 InvalidDocumentVersion(String),
@@ -8663,7 +8662,7 @@ Unknown(String)
                 #[derive(Debug, PartialEq)]
                 pub enum UpdateManagedInstanceRoleError {
                     
-///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM Agent is not running. On managed instances and Linux instances, verify that the SSM Agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM Agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM Agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
+///<p>The following problems can cause this exception:</p> <p>You do not have permission to access the instance.</p> <p>The SSM agent is not running. On managed instances and Linux instances, verify that the SSM agent is running. On EC2 Windows instances, verify that the EC2Config service is running.</p> <p>The SSM agent or EC2Config service is not registered to the SSM endpoint. Try reinstalling the SSM agent or EC2Config service.</p> <p>The instance is not in valid state. Valid states are: Running, Pending, Stopped, Stopping. Invalid states are: Shutting-down and Terminated.</p>
 InvalidInstanceId(String),
 ///<p>An error occurred on the server side.</p>
 InternalServerError(String),/// An error occurred dispatching the HTTP request
@@ -8799,7 +8798,7 @@ Unknown(String)
 
         
 
-                #[doc="<p>Adds or overwrites one or more tags for the specified resource. Tags are metadata that you assign to your managed instances. Tags enable you to categorize your managed instances in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 10 tags. </p> <p>We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters. </p> <p>For more information about tags, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">Tagging Your Amazon EC2 Resources</a> in the <i>Amazon EC2 User Guide</i>.</p>"]
+                #[doc="<p>Adds or overwrites one or more tags for the specified resource. Tags are metadata that you assign to your managed instances. Tags enable you to categorize your managed instances in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed instances that helps you track each instance's owner and stack level. For example: Key=Owner and Value=DbAdmin, SysAdmin, or Dev. Or Key=Stack and Value=Production, Pre-Production, or Test. Each resource can have a maximum of 10 tags. </p> <p>We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to Amazon EC2 and are interpreted strictly as a string of characters. </p> <p>For more information about tags, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">Tagging Your Amazon EC2 Resources</a> in the Amazon EC2 User Guide. </p>"]
                 pub fn add_tags_to_resource(&self, input: &AddTagsToResourceRequest)  -> Result<AddTagsToResourceResult, AddTagsToResourceError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -8843,7 +8842,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Registers your on-premises server or virtual machine with Amazon EC2 so that you can manage these resources using Run Command. An on-premises server or virtual machine that has been registered with EC2 is called a managed instance. For more information about activations, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances.html\">Setting Up Systems Manager in Hybrid Environments</a>.</p>"]
+                #[doc="<p>Registers your on-premises server or virtual machine with Amazon EC2 so that you can manage these resources using Run Command. An on-premises server or virtual machine that has been registered with EC2 is called a managed instance. For more information about activations, see <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managed-instances.html\">Setting Up Managed Instances (Linux)</a> or <a href=\"http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/managed-instances.html\">Setting Up Managed Instances (Windows)</a> in the Amazon EC2 User Guide. </p>"]
                 pub fn create_activation(&self, input: &CreateActivationRequest)  -> Result<CreateActivationResult, CreateActivationError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -8865,7 +8864,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Associates the specified Systems Manager document with the specified instances or targets.</p> <p>When you associate a document with one or more instances using instance IDs or tags, the SSM Agent running on the instance processes the document and configures the instance as specified.</p> <p>If you associate a document with an instance that already has an associated document, the system throws the AssociationAlreadyExists exception.</p>"]
+                #[doc="<p>Associates the specified SSM document with the specified instances or targets.</p> <p>When you associate an SSM document with one or more instances using instance IDs or tags, the SSM agent running on the instance processes the document and configures the instance as specified.</p> <p>If you associate a document with an instance that already has an associated document, the system throws the AssociationAlreadyExists exception.</p>"]
                 pub fn create_association(&self, input: &CreateAssociationRequest)  -> Result<CreateAssociationResult, CreateAssociationError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -8887,7 +8886,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Associates the specified Systems Manager document with the specified instances or targets.</p> <p>When you associate a document with one or more instances using instance IDs or tags, the SSM Agent running on the instance processes the document and configures the instance as specified.</p> <p>If you associate a document with an instance that already has an associated document, the system throws the AssociationAlreadyExists exception.</p>"]
+                #[doc="<p>Associates the specified SSM document with the specified instances or targets.</p> <p>When you associate an SSM document with one or more instances using instance IDs or tags, the SSM agent running on the instance processes the document and configures the instance as specified.</p> <p>If you associate a document with an instance that already has an associated document, the system throws the AssociationAlreadyExists exception.</p>"]
                 pub fn create_association_batch(&self, input: &CreateAssociationBatchRequest)  -> Result<CreateAssociationBatchResult, CreateAssociationBatchError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -8909,7 +8908,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Creates a Systems Manager document.</p> <p>After you create a document, you can use CreateAssociation to associate it with one or more running instances.</p>"]
+                #[doc="<p>Creates an SSM document.</p> <p>After you create an SSM document, you can use CreateAssociation to associate it with one or more running instances.</p>"]
                 pub fn create_document(&self, input: &CreateDocumentRequest)  -> Result<CreateDocumentResult, CreateDocumentError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -8997,7 +8996,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Disassociates the specified Systems Manager document from the specified instance.</p> <p>When you disassociate a document from an instance, it does not change the configuration of the instance. To change the configuration state of an instance after you disassociate a document, you must create a new document with the desired configuration and associate it with the instance.</p>"]
+                #[doc="<p>Disassociates the specified SSM document from the specified instance.</p> <p>When you disassociate an SSM document from an instance, it does not change the configuration of the instance. To change the configuration state of an instance after you disassociate a document, you must create a new document with the desired configuration and associate it with the instance.</p>"]
                 pub fn delete_association(&self, input: &DeleteAssociationRequest)  -> Result<DeleteAssociationResult, DeleteAssociationError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9019,7 +9018,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Deletes the Systems Manager document and all instance associations to the document.</p> <p>Before you delete the document, we recommend that you use <a>DeleteAssociation</a> to disassociate all instances that are associated with the document.</p>"]
+                #[doc="<p>Deletes the SSM document and all instance associations to the document.</p> <p>Before you delete the SSM document, we recommend that you use DeleteAssociation to disassociate all instances that are associated with the document.</p>"]
                 pub fn delete_document(&self, input: &DeleteDocumentRequest)  -> Result<DeleteDocumentResult, DeleteDocumentError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9107,7 +9106,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Removes the server or virtual machine from the list of registered servers. You can reregister the instance again at any time. If you don’t plan to use Run Command on the server, we suggest uninstalling the SSM Agent first.</p>"]
+                #[doc="<p>Removes the server or virtual machine from the list of registered servers. You can reregister the instance again at any time. If you don’t plan to use Run Command on the server, we suggest uninstalling the SSM agent first.</p>"]
                 pub fn deregister_managed_instance(&self, input: &DeregisterManagedInstanceRequest)  -> Result<DeregisterManagedInstanceResult, DeregisterManagedInstanceError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9217,7 +9216,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes the associations for the specified Systems Manager document or instance.</p>"]
+                #[doc="<p>Describes the associations for the specified SSM document or instance.</p>"]
                 pub fn describe_association(&self, input: &DescribeAssociationRequest)  -> Result<DescribeAssociationResult, DescribeAssociationError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9305,7 +9304,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes the permissions for a Systems Manager document. If you created the document, you are the owner. If a document is shared, it can either be shared privately (by specifying a user’s AWS account ID) or publicly (<i>All</i>). </p>"]
+                #[doc="<p>Describes the permissions for an SSM document. If you created the document, you are the owner. If a document is shared, it can either be shared privately (by specifying a user’s AWS account ID) or publicly (<i>All</i>). </p>"]
                 pub fn describe_document_permission(&self, input: &DescribeDocumentPermissionRequest)  -> Result<DescribeDocumentPermissionResponse, DescribeDocumentPermissionError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9393,7 +9392,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Describes one or more of your instances. You can use this to get information about instances like the operating system platform, the SSM Agent version (Linux), status etc. If you specify one or more instance IDs, it returns information for those instances. If you do not specify instance IDs, it returns information for all your instances. If you specify an instance ID that is not valid or an instance that you do not own, you receive an error. </p>"]
+                #[doc="<p>Describes one or more of your instances. You can use this to get information about instances like the operating system platform, the SSM agent version (Linux), status etc. If you specify one or more instance IDs, it returns information for those instances. If you do not specify instance IDs, it returns information for all your instances. If you specify an instance ID that is not valid or an instance that you do not own, you receive an error. </p>"]
                 pub fn describe_instance_information(&self, input: &DescribeInstanceInformationRequest)  -> Result<DescribeInstanceInformationResult, DescribeInstanceInformationError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -9943,7 +9942,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Get details of a parameter.</p>"]
+                #[doc="<p>Get a list of parameters used by the AWS account.&gt;</p>"]
                 pub fn get_parameters(&self, input: &GetParametersRequest)  -> Result<GetParametersResult, GetParametersError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -10009,7 +10008,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Lists the associations for the specified Systems Manager document or instance.</p>"]
+                #[doc="<p>Lists the associations for the specified SSM document or instance.</p>"]
                 pub fn list_associations(&self, input: &ListAssociationsRequest)  -> Result<ListAssociationsResult, ListAssociationsError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -10163,7 +10162,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Shares a Systems Manager document publicly or privately. If you share a document privately, you must specify the AWS user account IDs for those people who can use the document. If you share a document publicly, you must specify <i>All</i> as the account ID.</p>"]
+                #[doc="<p>Share a document publicly or privately. If you share a document privately, you must specify the AWS user account IDs for those people who can use the document. If you share a document publicly, you must specify <i>All</i> as the account ID.</p>"]
                 pub fn modify_document_permission(&self, input: &ModifyDocumentPermissionRequest)  -> Result<ModifyDocumentPermissionResponse, ModifyDocumentPermissionError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     
@@ -10427,7 +10426,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Updates the status of the Systems Manager document associated with the specified instance.</p>"]
+                #[doc="<p>Updates the status of the SSM document associated with the specified instance.</p>"]
                 pub fn update_association_status(&self, input: &UpdateAssociationStatusRequest)  -> Result<UpdateAssociationStatusResult, UpdateAssociationStatusError> {
                     let mut request = SignedRequest::new("POST", "ssm", self.region, "/");
                     

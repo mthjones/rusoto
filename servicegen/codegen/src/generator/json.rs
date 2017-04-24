@@ -53,7 +53,7 @@ impl GenerateProtocol for JsonGenerator {
 
     fn generate_prelude(&self, writer: &mut FileWriter, _service: &Service) -> IoResult {
         writeln!(writer,
-                 "use rusoto::signature::SignedRequest;
+                 "use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;")
     }

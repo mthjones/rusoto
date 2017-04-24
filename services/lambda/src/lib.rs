@@ -1,7 +1,7 @@
 extern crate hyper;
 #[macro_use]
 extern crate log;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -9,16 +9,16 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::param::{Params, ServiceParams};
-        use rusoto::signature::SignedRequest;
+use rusoto_core::param::{Params, ServiceParams};
+        use rusoto_core::signature::SignedRequest;
         use serde_json::from_str;
         use serde_json::Value as SerdeJsonValue;
 #[doc="<p>Provides limits of code size and concurrency associated with the current account and region.</p>"]
@@ -33,7 +33,7 @@ pub code_size_zipped: Option<Long>,
 #[doc="<p>Number of simultaneous executions of your function per region. For more information or to request a limit increase for concurrent executions, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html\">Lambda Function Concurrent Executions</a>. The default limit is 100.</p>"]
 #[serde(rename="ConcurrentExecutions")]
 pub concurrent_executions: Option<Integer>,
-#[doc="<p>Maximum size, in bytes, of a code package you can upload per region. The default size is 75 GB. </p>"]
+#[doc="<p>Maximum size, in megabytes, of a code package you can upload per region. The default size is 75 GB. </p>"]
 #[serde(rename="TotalCodeSize")]
 pub total_code_size: Option<Long>,
             }
@@ -59,7 +59,7 @@ pub action: Action,
 #[doc="<p>A unique token that must be supplied by the principal invoking the function. This is currently only used for Alexa Smart Home functions.</p>"]
 #[serde(rename="EventSourceToken")]
 pub event_source_token: Option<EventSourceToken>,
-#[doc="<p>Name of the Lambda function whose resource policy you are updating by adding a new permission.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+#[doc="<p>Name of the Lambda function whose resource policy you are updating by adding a new permission.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>The principal who is getting this permission. It can be Amazon S3 service Principal (<code>s3.amazonaws.com</code>) if you want Amazon S3 to invoke the function, an AWS account ID if you are granting cross-account permission, or any valid AWS service principal such as <code>sns.amazonaws.com</code>. For example, you might want to allow a custom application in another AWS account to push events to AWS Lambda by invoking your function. </p>"]
@@ -68,10 +68,10 @@ pub principal: Principal,
 #[doc="<p>You can use this optional query parameter to describe a qualified ARN using a function version or an alias name. The permission will then apply to the specific qualified ARN. For example, if you specify function version 2 as the qualifier, then permission applies only when request is made using qualified function ARN:</p> <p> <code>arn:aws:lambda:aws-region:acct-id:function:function-name:2</code> </p> <p>If you specify an alias name, for example <code>PROD</code>, then the permission is valid only for requests made using the alias ARN:</p> <p> <code>arn:aws:lambda:aws-region:acct-id:function:function-name:PROD</code> </p> <p>If the qualifier is not specified, the permission is valid only when requests is made using unqualified function ARN.</p> <p> <code>arn:aws:lambda:aws-region:acct-id:function:function-name</code> </p>"]
 #[serde(rename="Qualifier")]
 pub qualifier: Option<Qualifier>,
-#[doc="<p>This parameter is used for S3 and SES. The AWS account ID (without a hyphen) of the source owner. For example, if the <code>SourceArn</code> identifies a bucket, then this is the bucket owner's account ID. You can use this additional condition to ensure the bucket you specify is owned by a specific account (it is possible the bucket owner deleted the bucket and some other AWS account created the bucket). You can also use this condition to specify all sources (that is, you don't specify the <code>SourceArn</code>) owned by a specific account. </p>"]
+#[doc="<p>This parameter is used for S3, SES, CloudWatch Logs and CloudWatch Rules only. The AWS account ID (without a hyphen) of the source owner. For example, if the <code>SourceArn</code> identifies a bucket, then this is the bucket owner's account ID. You can use this additional condition to ensure the bucket you specify is owned by a specific account (it is possible the bucket owner deleted the bucket and some other AWS account created the bucket). You can also use this condition to specify all sources (that is, you don't specify the <code>SourceArn</code>) owned by a specific account. </p>"]
 #[serde(rename="SourceAccount")]
 pub source_account: Option<SourceOwner>,
-#[doc="<p>This is optional; however, when granting permission to invoke your function, you should specify this field with the Amazon Resource Name (ARN) as its value. This ensures that only events generated from the specified source can invoke the function.</p> <important> <p>If you add a permission without providing the source ARN, any AWS account that creates a mapping to your function ARN can send events to invoke your Lambda function.</p> </important>"]
+#[doc="<p>This is optional; however, when granting Amazon S3 permission to invoke your function, you should specify this field with the Amazon Resource Name (ARN) as its value. This ensures that only events generated from the specified source can invoke the function.</p> <important><p>If you add a permission for the Amazon S3 principal without providing the source ARN, any AWS account that creates a mapping to your function ARN can send events to invoke your Lambda function from Amazon S3.</p> </important>"]
 #[serde(rename="SourceArn")]
 pub source_arn: Option<Arn>,
 #[doc="<p>A unique statement identifier.</p>"]
@@ -116,7 +116,7 @@ pub type Boolean = bool;
                 #[doc="<p>Description of the alias.</p>"]
 #[serde(rename="Description")]
 pub description: Option<Description>,
-#[doc="<p>Name of the Lambda function for which you want to create an alias. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+#[doc="<p>Name of the Lambda function for which you want to create an alias.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Lambda function version for which you are creating the alias.</p>"]
@@ -140,7 +140,7 @@ pub enabled: Option<Enabled>,
 #[doc="<p>The Amazon Resource Name (ARN) of the Amazon Kinesis or the Amazon DynamoDB stream that is the event source. Any record added to this stream could cause AWS Lambda to invoke your Lambda function, it depends on the <code>BatchSize</code>. AWS Lambda POSTs the Amazon Kinesis event, containing records, to your Lambda function as JSON.</p>"]
 #[serde(rename="EventSourceArn")]
 pub event_source_arn: Arn,
-#[doc="<p>The Lambda function to invoke when AWS Lambda detects an event on the stream.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). </p> <p> If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a> </p> <p>AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). </p> <p>Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+#[doc="<p>The Lambda function to invoke when AWS Lambda detects an event on the stream.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). </p> <p> If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a> </p> <p>AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). </p> <p>Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>The position in the stream where AWS Lambda should start reading. Valid only for Kinesis streams. For more information, see <a href=\"http://docs.aws.amazon.com/kinesis/latest/APIReference/API_GetShardIterator.html#Kinesis-GetShardIterator-request-ShardIteratorType\">ShardIteratorType</a> in the <i>Amazon Kinesis API Reference</i>. </p>"]
@@ -157,7 +157,7 @@ pub starting_position_timestamp: Option<Date>,
                 #[doc="<p>The code for the Lambda function.</p>"]
 #[serde(rename="Code")]
 pub code: FunctionCode,
-#[doc="<p>The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic. </p>"]
+#[doc="<p>The parent object that contains the target Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic. </p>"]
 #[serde(rename="DeadLetterConfig")]
 pub dead_letter_config: Option<DeadLetterConfig>,
 #[doc="<p>A short, user-defined function description. Lambda does not use this value. Assign a meaningful description as you see fit.</p>"]
@@ -165,7 +165,7 @@ pub dead_letter_config: Option<DeadLetterConfig>,
 pub description: Option<Description>,
 #[serde(rename="Environment")]
 pub environment: Option<Environment>,
-#[doc="<p>The name you want to assign to the function you are uploading. The function names appear in the console and are returned in the <a>ListFunctions</a> API. Function names are used to specify functions to other AWS Lambda API operations, such as <a>Invoke</a>. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+#[doc="<p>The name you want to assign to the function you are uploading. The function names appear in the console and are returned in the <a>ListFunctions</a> API. Function names are used to specify functions to other AWS Lambda API operations, such as <a>Invoke</a>. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>The function within your code that Lambda calls to begin execution. For Node.js, it is the <i>module-name</i>.<i>export</i> value in your function. For Java, it can be <code>package.class-name::handler</code> or <code>package.class-name</code>. For more information, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/java-programming-model-handler-types.html\">Lambda Function Handler (Java)</a>. </p>"]
@@ -184,25 +184,19 @@ pub publish: Option<Boolean>,
 #[doc="<p>The Amazon Resource Name (ARN) of the IAM role that Lambda assumes when it executes your function to access any other Amazon Web Services (AWS) resources. For more information, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html\">AWS Lambda: How it Works</a>. </p>"]
 #[serde(rename="Role")]
 pub role: RoleArn,
-#[doc="<p>The runtime environment for the Lambda function you are uploading.</p> <p>To use the Python runtime v3.6, set the value to \"python3.6\". To use the Python runtime v2.7, set the value to \"python2.7\". To use the Node.js runtime v6.10, set the value to \"nodejs6.10\". To use the Node.js runtime v4.3, set the value to \"nodejs4.3\".</p> <note> <p>You can no longer create functions using the v0.10.42 runtime version as of November, 2016. Existing functions will be supported until early 2017, but we recommend you migrate them to either nodejs6.10 or nodejs4.3 runtime version as soon as possible.</p> </note>"]
+#[doc="<p>The runtime environment for the Lambda function you are uploading.</p> <p>To use the Node.js runtime v4.3, set the value to \"nodejs4.3\". To use earlier runtime (v0.10.42), set the value to \"nodejs\".</p> <note> <p>You can no longer create functions using the v0.10.42 runtime version as of November, 2016. Existing functions will be supported until early 2017, but we recommend you migrate them to nodejs4.3 runtime version as soon as possible.</p> </note>"]
 #[serde(rename="Runtime")]
 pub runtime: Runtime,
-#[doc="<p>The list of tags (key-value pairs) assigned to the new function.</p>"]
-#[serde(rename="Tags")]
-pub tags: Option<Tags>,
 #[doc="<p>The function execution time at which Lambda should terminate the function. Because the execution time has cost implications, we recommend you set this value based on your expected execution time. The default is 3 seconds.</p>"]
 #[serde(rename="Timeout")]
 pub timeout: Option<Timeout>,
-#[doc="<p>The parent object that contains your function's tracing settings.</p>"]
-#[serde(rename="TracingConfig")]
-pub tracing_config: Option<TracingConfig>,
 #[doc="<p>If your Lambda function accesses resources in a VPC, you provide this parameter identifying the list of security group IDs and subnet IDs. These must belong to the same VPC. You must provide at least one security group and one subnet ID.</p>"]
 #[serde(rename="VpcConfig")]
 pub vpc_config: Option<VpcConfig>,
             }
             
 pub type Date = f64;
-#[doc="<p>The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.</p>"]
+#[doc="<p>The parent object that contains the target Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
             pub struct DeadLetterConfig {
                 #[doc="<p>The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic you specify as your Dead Letter Queue (DLQ).</p>"]
@@ -212,7 +206,7 @@ pub target_arn: Option<ResourceArn>,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct DeleteAliasRequest {
-                #[doc="<p>The Lambda function name for which the alias is created. Deleting an alias does not delete the function version to which it is pointing. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+                #[doc="<p>The Lambda function name for which the alias is created. Deleting an alias does not delete the function version to which it is pointing.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Name of the alias to delete.</p>"]
@@ -230,7 +224,7 @@ pub uuid: String,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct DeleteFunctionRequest {
-                #[doc="<p>The Lambda function to delete.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>The Lambda function to delete.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Using this optional parameter you can specify a function version (but not the <code>$LATEST</code> version) to direct AWS Lambda to delete a specific function version. If the function version has one or more aliases pointing to it, you will get an error because you cannot have aliases pointing to it. You can delete any function version but not the <code>$LATEST</code>, that is, you cannot specify <code>$LATEST</code> as the value of this parameter. The <code>$LATEST</code> version can be deleted only when you want to delete all the function versions and aliases.</p> <p>You can only specify a function version, not an alias name, using this parameter. You cannot delete a function version using its alias.</p> <p>If you don't specify this parameter, AWS Lambda will delete the function, including all of its versions and aliases.</p>"]
@@ -320,8 +314,8 @@ pub s3_object_version: Option<S3ObjectVersion>,
 #[doc="<p>The contents of your zip file containing your deployment package. If you are using the web API directly, the contents of the zip file must be base64-encoded. If you are using the AWS SDKs or the AWS CLI, the SDKs or CLI will do the encoding for you. For more information about creating a .zip file, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html\">Execution Permissions</a> in the <i>AWS Lambda Developer Guide</i>. </p>"]
 #[serde(rename="ZipFile")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub zip_file: Option<Blob>,
@@ -347,7 +341,7 @@ pub code_sha_256: Option<String>,
 #[doc="<p>The size, in bytes, of the function .zip file you uploaded.</p>"]
 #[serde(rename="CodeSize")]
 pub code_size: Option<Long>,
-#[doc="<p>The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.</p>"]
+#[doc="<p>The parent object that contains the target Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.</p>"]
 #[serde(rename="DeadLetterConfig")]
 pub dead_letter_config: Option<DeadLetterConfig>,
 #[doc="<p>The user-provided description.</p>"]
@@ -359,7 +353,7 @@ pub environment: Option<EnvironmentResponse>,
 #[doc="<p>The Amazon Resource Name (ARN) assigned to the function.</p>"]
 #[serde(rename="FunctionArn")]
 pub function_arn: Option<FunctionArn>,
-#[doc="<p>The name of the function. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+#[doc="<p>The name of the function.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: Option<FunctionName>,
 #[doc="<p>The function Lambda calls to begin executing your function.</p>"]
@@ -377,15 +371,12 @@ pub memory_size: Option<MemorySize>,
 #[doc="<p>The Amazon Resource Name (ARN) of the IAM role that Lambda assumes when it executes your function to access any other Amazon Web Services (AWS) resources.</p>"]
 #[serde(rename="Role")]
 pub role: Option<RoleArn>,
-#[doc="<p>The runtime environment for the Lambda function.</p>"]
+#[doc="<p>The runtime environment for the Lambda function.</p> <p>To use the Node.js runtime v4.3, set the value to \"nodejs4.3\". To use earlier runtime (v0.10.42), set the value to \"nodejs\".</p>"]
 #[serde(rename="Runtime")]
 pub runtime: Option<Runtime>,
 #[doc="<p>The function execution time at which Lambda should terminate the function. Because the execution time has cost implications, we recommend you set this value based on your expected execution time. The default is 3 seconds.</p>"]
 #[serde(rename="Timeout")]
 pub timeout: Option<Timeout>,
-#[doc="<p>The parent object that contains your function's tracing settings.</p>"]
-#[serde(rename="TracingConfig")]
-pub tracing_config: Option<TracingConfigResponse>,
 #[doc="<p>The version of the Lambda function.</p>"]
 #[serde(rename="Version")]
 pub version: Option<Version>,
@@ -409,7 +400,7 @@ pub account_usage: Option<AccountUsage>,
             
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct GetAliasRequest {
-                #[doc="<p>Function name for which the alias is created. An alias is a subresource that exists only in the context of an existing Lambda function so you must specify the function name. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+                #[doc="<p>Function name for which the alias is created. An alias is a subresource that exists only in the context of an existing Lambda function so you must specify the function name.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Name of the alias for which you want to retrieve information.</p>"]
@@ -428,7 +419,7 @@ pub uuid: String,
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct GetFunctionConfigurationRequest {
-                #[doc="<p>The name of the Lambda function for which you want to retrieve the configuration information.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>The name of the Lambda function for which you want to retrieve the configuration information.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Using this optional parameter you can specify a function version or an alias name. If you specify function version, the API uses qualified function ARN and returns information about the specific function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points.</p> <p>If you don't specify this parameter, the API uses unqualified function ARN, and returns information about the <code>$LATEST</code> function version.</p>"]
@@ -439,7 +430,7 @@ pub qualifier: Option<Qualifier>,
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct GetFunctionRequest {
-                #[doc="<p>The Lambda function name.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>The Lambda function name.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Using this optional parameter to specify a function version or an alias name. If you specify function version, the API uses qualified function ARN for the request and returns information about the specific Lambda function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points. If you don't provide this parameter, the API uses unqualified function ARN and returns information about the <code>$LATEST</code> version of the Lambda function.</p>"]
@@ -454,15 +445,12 @@ pub qualifier: Option<Qualifier>,
 pub code: Option<FunctionCodeLocation>,
 #[serde(rename="Configuration")]
 pub configuration: Option<FunctionConfiguration>,
-#[doc="<p>Returns the list of tags associated with the function.</p>"]
-#[serde(rename="Tags")]
-pub tags: Option<Tags>,
             }
             
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct GetPolicyRequest {
-                #[doc="<p>Function name whose resource policy you want to retrieve.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>Function name whose resource policy you want to retrieve.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>You can specify this optional query parameter to specify a function version or an alias name in which case this API will return all permissions associated with the specific qualified ARN. If you don't provide this parameter, the API will return permissions that apply to the unqualified function ARN.</p>"]
@@ -487,7 +475,7 @@ pub type Integer = i64;
                 #[doc="<p>Using the <code>ClientContext</code> you can pass client-specific information to the Lambda function you are invoking. You can then process the client information in your Lambda function as you choose through the context variable. For an example of a <code>ClientContext</code> JSON, see <a href=\"http://docs.aws.amazon.com/mobileanalytics/latest/ug/PutEvents.html\">PutEvents</a> in the <i>Amazon Mobile Analytics API Reference and User Guide</i>.</p> <p>The ClientContext JSON must be base64-encoded.</p>"]
 #[serde(rename="ClientContext")]
 pub client_context: Option<String>,
-#[doc="<p>The Lambda function name.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+#[doc="<p>The Lambda function name.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>By default, the <code>Invoke</code> API assumes <code>RequestResponse</code> invocation type. You can optionally request asynchronous execution by specifying <code>Event</code> as the <code>InvocationType</code>. You can also use this parameter to request AWS Lambda to not execute the function but do some verification, such as if the caller is authorized to invoke the function and if the inputs are valid. You request this by specifying <code>DryRun</code> as the <code>InvocationType</code>. This is useful in a cross-account scenario when you want to verify access to a function without running it. </p>"]
@@ -499,8 +487,8 @@ pub log_type: Option<LogType>,
 #[doc="<p>JSON that you want to provide to your Lambda function as input.</p>"]
 #[serde(rename="Payload")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub payload: Option<Blob>,
@@ -521,8 +509,8 @@ pub log_result: Option<String>,
 #[doc="<p> It is the JSON representation of the object returned by the Lambda function. This is present only if the invocation type is <code>RequestResponse</code>. </p> <p>In the event of a function error this field contains a message describing the error. For the <code>Handled</code> errors the Lambda function will report this message. For <code>Unhandled</code> errors AWS Lambda reports the message. </p>"]
 #[serde(rename="Payload")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub payload: Option<Blob>,
@@ -535,14 +523,14 @@ pub type InvocationType = String;
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct InvokeAsyncRequest {
-                #[doc="<p>The Lambda function name. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+                #[doc="<p>The Lambda function name.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>JSON that you want to provide to your Lambda function as input.</p>"]
 #[serde(rename="InvokeArgs")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub invoke_args: BlobStream,
@@ -559,7 +547,7 @@ pub status: Option<HttpStatus>,
 pub type KMSKeyArn = String;
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct ListAliasesRequest {
-                #[doc="<p>Lambda function name for which the alias is created. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+                #[doc="<p>Lambda function name for which the alias is created.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>If you specify this optional parameter, the API returns only the aliases that are pointing to the specific Lambda function version, otherwise the API returns all of the aliases created for the Lambda function.</p>"]
@@ -589,7 +577,7 @@ pub next_marker: Option<String>,
                 #[doc="<p>The Amazon Resource Name (ARN) of the Amazon Kinesis stream. (This parameter is optional.)</p>"]
 #[serde(rename="EventSourceArn")]
 pub event_source_arn: Option<Arn>,
-#[doc="<p>The name of the Lambda function.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+#[doc="<p>The name of the Lambda function.</p> <p> You can specify the function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). AWS Lambda also allows you to specify only the function name with the account ID qualifier (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: Option<FunctionName>,
 #[doc="<p>Optional string. An opaque pagination token returned from a previous <code>ListEventSourceMappings</code> operation. If present, specifies to continue the list from where the returning call left off. </p>"]
@@ -633,24 +621,10 @@ pub functions: Option<FunctionList>,
 pub next_marker: Option<String>,
             }
             
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct ListTagsRequest {
-                #[doc="<p>The ARN (Amazon Resource Name) of the function.</p>"]
-#[serde(rename="Resource")]
-pub resource: FunctionArn,
-            }
-            
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct ListTagsResponse {
-                #[doc="<p>The list of tags assigned to the function.</p>"]
-#[serde(rename="Tags")]
-pub tags: Option<Tags>,
-            }
-            
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct ListVersionsByFunctionRequest {
-                #[doc="<p>Function name whose versions to list. You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>Function name whose versions to list. You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p> Optional string. An opaque pagination token returned from a previous <code>ListVersionsByFunction</code> operation. If present, indicates where to continue the listing. </p>"]
@@ -686,7 +660,7 @@ pub code_sha_256: Option<String>,
 #[doc="<p>The description for the version you are publishing. If not provided, AWS Lambda copies the description from the $LATEST version.</p>"]
 #[serde(rename="Description")]
 pub description: Option<Description>,
-#[doc="<p>The Lambda function name. You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+#[doc="<p>The Lambda function name. You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
             }
@@ -695,7 +669,7 @@ pub type Qualifier = String;
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct RemovePermissionRequest {
-                #[doc="<p>Lambda function whose resource policy you want to remove a permission from.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>Lambda function whose resource policy you want to remove a permission from.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>You can specify this optional parameter to remove permission associated with a specific function version or function alias. If you don't specify this parameter, the API removes permission associated with the unqualified function ARN.</p>"]
@@ -719,56 +693,15 @@ pub type SourceOwner = String;
 pub type StatementId = String;
 pub type SubnetId = String;
 pub type SubnetIds = Vec<SubnetId>;
-pub type TagKey = String;
-pub type TagKeyList = Vec<TagKey>;
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct TagResourceRequest {
-                #[doc="<p>The ARN (Amazon Resource Name) of the Lambda function.</p>"]
-#[serde(rename="Resource")]
-pub resource: FunctionArn,
-#[doc="<p>The list of tags (key-value pairs) you are assigning to the Lambda function.</p>"]
-#[serde(rename="Tags")]
-pub tags: Tags,
-            }
-            
-pub type TagValue = String;
-pub type Tags = ::std::collections::HashMap<TagKey, TagValue>;
 pub type ThrottleReason = String;
 pub type Timeout = i64;
 pub type Timestamp = String;
-#[doc="<p>The parent object that contains your function's tracing settings.</p>"]
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct TracingConfig {
-                #[doc="<p>Can be either PassThrough or Active. If PassThrough, Lambda will only trace the request from an upstream service if it contains a tracing header with \"sampled=1\". If Active, Lambda will respect any tracing header it receives from an upstream service. If no tracing header is received, Lambda will call X-Ray for a tracing decision.</p>"]
-#[serde(rename="Mode")]
-pub mode: Option<TracingMode>,
-            }
-            
-#[doc="<p>Parent object of the tracing information associated with your Lambda function.</p>"]
-#[derive(Default,Debug,Clone,Deserialize)]
-            pub struct TracingConfigResponse {
-                #[doc="<p>The tracing mode associated with your Lambda function.</p>"]
-#[serde(rename="Mode")]
-pub mode: Option<TracingMode>,
-            }
-            
-pub type TracingMode = String;
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct UntagResourceRequest {
-                #[doc="<p>The ARN (Amazon Resource Name) of the function.</p>"]
-#[serde(rename="Resource")]
-pub resource: FunctionArn,
-#[doc="<p>The list of tag keys to be deleted from the function.</p>"]
-#[serde(rename="TagKeys")]
-pub tag_keys: TagKeyList,
-            }
-            
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct UpdateAliasRequest {
                 #[doc="<p>You can change the description of the alias using this parameter.</p>"]
 #[serde(rename="Description")]
 pub description: Option<Description>,
-#[doc="<p>The function name for which the alias is created. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.</p>"]
+#[doc="<p>The function name for which the alias is created.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>Using this parameter you can change the Lambda function version to which the alias points.</p>"]
@@ -789,7 +722,7 @@ pub batch_size: Option<BatchSize>,
 #[serde(rename="Enabled")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
 pub enabled: Option<Enabled>,
-#[doc="<p>The Lambda function to which you want the stream records sent.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p> <p>If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a> </p> <p>Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.</p>"]
+#[doc="<p>The Lambda function to which you want the stream records sent.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). </p> <p>If you are using versioning, you can also provide a qualified function ARN (ARN that is qualified with function version or alias name as suffix). For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a> </p> <p>Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.</p>"]
 #[serde(rename="FunctionName")]
 pub function_name: Option<FunctionName>,
 #[doc="<p>The event source mapping identifier.</p>"]
@@ -800,7 +733,7 @@ pub uuid: String,
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct UpdateFunctionCodeRequest {
-                #[doc="<p>The existing Lambda function name whose code you want to replace.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length. </p>"]
+                #[doc="<p>The existing Lambda function name whose code you want to replace.</p> <p> You can specify a function name (for example, <code>Thumbnail</code>) or you can specify Amazon Resource Name (ARN) of the function (for example, <code>arn:aws:lambda:us-west-2:account-id:function:ThumbNail</code>). AWS Lambda also allows you to specify a partial ARN (for example, <code>account-id:Thumbnail</code>). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length. </p>"]
 #[serde(rename="FunctionName")]
 pub function_name: FunctionName,
 #[doc="<p>This boolean parameter can be used to request AWS Lambda to update the Lambda function and publish a version as an atomic operation.</p>"]
@@ -819,8 +752,8 @@ pub s3_object_version: Option<S3ObjectVersion>,
 #[doc="<p>The contents of your zip file containing your deployment package. If you are using the web API directly, the contents of the zip file must be base64-encoded. If you are using the AWS SDKs or the AWS CLI, the SDKs or CLI will do the encoding for you. For more information about creating a .zip file, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html\">Execution Permissions</a> in the <i>AWS Lambda Developer Guide</i>. </p>"]
 #[serde(rename="ZipFile")]
 #[serde(
-                            deserialize_with="rusoto::serialization::SerdeBlob::deserialize_blob",
-                            serialize_with="rusoto::serialization::SerdeBlob::serialize_blob",
+                            deserialize_with="rusoto_core::serialization::SerdeBlob::deserialize_blob",
+                            serialize_with="rusoto_core::serialization::SerdeBlob::serialize_blob",
                             default,
                         )]
 pub zip_file: Option<Blob>,
@@ -829,7 +762,7 @@ pub zip_file: Option<Blob>,
 #[doc="<p/>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct UpdateFunctionConfigurationRequest {
-                #[doc="<p>The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.</p>"]
+                #[doc="<p>The parent object that contains the target Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.</p>"]
 #[serde(rename="DeadLetterConfig")]
 pub dead_letter_config: Option<DeadLetterConfig>,
 #[doc="<p>A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as you see fit.</p>"]
@@ -853,15 +786,12 @@ pub memory_size: Option<MemorySize>,
 #[doc="<p>The Amazon Resource Name (ARN) of the IAM role that Lambda will assume when it executes your function.</p>"]
 #[serde(rename="Role")]
 pub role: Option<RoleArn>,
-#[doc="<p>The runtime environment for the Lambda function.</p> <p>To use the Python runtime v3.6, set the value to \"python3.6\". To use the Python runtime v2.7, set the value to \"python2.7\". To use the Node.js runtime v6.10, set the value to \"nodejs6.10\". To use the Node.js runtime v4.3, set the value to \"nodejs4.3\". To use the Python runtime v3.6, set the value to \"python3.6\". To use the Python runtime v2.7, set the value to \"python2.7\".</p> <note> <p>You can no longer downgrade to the v0.10.42 runtime version. This version will no longer be supported as of early 2017.</p> </note>"]
+#[doc="<p>The runtime environment for the Lambda function.</p> <p>To use the Node.js runtime v4.3, set the value to \"nodejs4.3\". To use earlier runtime (v0.10.42), set the value to \"nodejs\".</p> <note> <p>You can no longer downgrade to the v0.10.42 runtime version. This version will no longer be supported as of early 2017.</p> </note>"]
 #[serde(rename="Runtime")]
 pub runtime: Option<Runtime>,
 #[doc="<p>The function execution time at which AWS Lambda should terminate the function. Because the execution time has cost implications, we recommend you set this value based on your expected execution time. The default is 3 seconds.</p>"]
 #[serde(rename="Timeout")]
 pub timeout: Option<Timeout>,
-#[doc="<p>The parent object that contains your function's tracing settings.</p>"]
-#[serde(rename="TracingConfig")]
-pub tracing_config: Option<TracingConfig>,
 #[serde(rename="VpcConfig")]
 pub vpc_config: Option<VpcConfig>,
             }
@@ -2095,71 +2025,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by ListTags
-                #[derive(Debug, PartialEq)]
-                pub enum ListTagsError {
-                    
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),
-///<p/>
-TooManyRequests(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl ListTagsError {
-                    pub fn from_body(body: &str) -> ListTagsError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "ServiceException" => ListTagsError::Service(String::from(error_message)),"ResourceNotFoundException" => ListTagsError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => ListTagsError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => ListTagsError::TooManyRequests(String::from(error_message)),"ValidationException" => ListTagsError::Validation(error_message.to_string()),_ => ListTagsError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => ListTagsError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for ListTagsError {
-                    fn from(err: serde_json::error::Error) -> ListTagsError {
-                        ListTagsError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for ListTagsError {
-                    fn from(err: CredentialsError) -> ListTagsError {
-                        ListTagsError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for ListTagsError {
-                    fn from(err: HttpDispatchError) -> ListTagsError {
-                        ListTagsError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for ListTagsError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for ListTagsError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            ListTagsError::Service(ref cause) => cause,ListTagsError::ResourceNotFound(ref cause) => cause,ListTagsError::InvalidParameterValue(ref cause) => cause,ListTagsError::TooManyRequests(ref cause) => cause,ListTagsError::Validation(ref cause) => cause,ListTagsError::Credentials(ref err) => err.description(),ListTagsError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListTagsError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by ListVersionsByFunction
                 #[derive(Debug, PartialEq)]
                 pub enum ListVersionsByFunctionError {
@@ -2354,136 +2219,6 @@ Unknown(String)
                     fn description(&self) -> &str {
                         match *self {
                             RemovePermissionError::Service(ref cause) => cause,RemovePermissionError::ResourceNotFound(ref cause) => cause,RemovePermissionError::InvalidParameterValue(ref cause) => cause,RemovePermissionError::TooManyRequests(ref cause) => cause,RemovePermissionError::Validation(ref cause) => cause,RemovePermissionError::Credentials(ref err) => err.description(),RemovePermissionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemovePermissionError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by TagResource
-                #[derive(Debug, PartialEq)]
-                pub enum TagResourceError {
-                    
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),
-///<p/>
-TooManyRequests(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl TagResourceError {
-                    pub fn from_body(body: &str) -> TagResourceError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "ServiceException" => TagResourceError::Service(String::from(error_message)),"ResourceNotFoundException" => TagResourceError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => TagResourceError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => TagResourceError::TooManyRequests(String::from(error_message)),"ValidationException" => TagResourceError::Validation(error_message.to_string()),_ => TagResourceError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => TagResourceError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for TagResourceError {
-                    fn from(err: serde_json::error::Error) -> TagResourceError {
-                        TagResourceError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for TagResourceError {
-                    fn from(err: CredentialsError) -> TagResourceError {
-                        TagResourceError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for TagResourceError {
-                    fn from(err: HttpDispatchError) -> TagResourceError {
-                        TagResourceError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for TagResourceError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for TagResourceError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            TagResourceError::Service(ref cause) => cause,TagResourceError::ResourceNotFound(ref cause) => cause,TagResourceError::InvalidParameterValue(ref cause) => cause,TagResourceError::TooManyRequests(ref cause) => cause,TagResourceError::Validation(ref cause) => cause,TagResourceError::Credentials(ref err) => err.description(),TagResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),TagResourceError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by UntagResource
-                #[derive(Debug, PartialEq)]
-                pub enum UntagResourceError {
-                    
-///<p>The AWS Lambda service encountered an internal error.</p>
-Service(String),
-///<p>The resource (for example, a Lambda function or access policy statement) specified in the request does not exist.</p>
-ResourceNotFound(String),
-///<p>One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the <code>CreateFunction</code> or the <code>UpdateFunctionConfiguration</code> API, that AWS Lambda is unable to assume you will get this exception. </p>
-InvalidParameterValue(String),
-///<p/>
-TooManyRequests(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl UntagResourceError {
-                    pub fn from_body(body: &str) -> UntagResourceError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "ServiceException" => UntagResourceError::Service(String::from(error_message)),"ResourceNotFoundException" => UntagResourceError::ResourceNotFound(String::from(error_message)),"InvalidParameterValueException" => UntagResourceError::InvalidParameterValue(String::from(error_message)),"TooManyRequestsException" => UntagResourceError::TooManyRequests(String::from(error_message)),"ValidationException" => UntagResourceError::Validation(error_message.to_string()),_ => UntagResourceError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => UntagResourceError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for UntagResourceError {
-                    fn from(err: serde_json::error::Error) -> UntagResourceError {
-                        UntagResourceError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for UntagResourceError {
-                    fn from(err: CredentialsError) -> UntagResourceError {
-                        UntagResourceError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for UntagResourceError {
-                    fn from(err: HttpDispatchError) -> UntagResourceError {
-                        UntagResourceError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for UntagResourceError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for UntagResourceError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            UntagResourceError::Service(ref cause) => cause,UntagResourceError::ResourceNotFound(ref cause) => cause,UntagResourceError::InvalidParameterValue(ref cause) => cause,UntagResourceError::TooManyRequests(ref cause) => cause,UntagResourceError::Validation(ref cause) => cause,UntagResourceError::Credentials(ref err) => err.description(),UntagResourceError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UntagResourceError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2846,7 +2581,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Identifies a stream as an event source for a Lambda function. It can be either an Amazon Kinesis stream or an Amazon DynamoDB stream. AWS Lambda invokes the specified function when records are posted to the stream.</p> <p>This association between a stream source and a Lambda function is called the event source mapping.</p> <important> <p>This event source mapping is relevant only in the AWS Lambda pull model, where AWS Lambda invokes the function. For more information, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html\">AWS Lambda: How it Works</a> in the <i>AWS Lambda Developer Guide</i>.</p> </important> <p>You provide mapping information (for example, which stream to read from and which Lambda function to invoke) in the request body.</p> <p>Each event source, such as an Amazon Kinesis or a DynamoDB stream, can be associated with multiple AWS Lambda function. A given Lambda function can be associated with multiple AWS event sources.</p> <p>If you are using versioning, you can specify a specific function version or an alias via the function name parameter. For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a>. </p> <p>This operation requires permission for the <code>lambda:CreateEventSourceMapping</code> action.</p>"]
+                #[doc="<p>Identifies a stream as an event source for a Lambda function. It can be either an Amazon Kinesis stream or an Amazon DynamoDB stream. AWS Lambda invokes the specified function when records are posted to the stream.</p> <p>This association between a stream source and a Lambda function is called the event source mapping.</p> <important><p>This event source mapping is relevant only in the AWS Lambda pull model, where AWS Lambda invokes the function. For more information, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/lambda-introduction.html\">AWS Lambda: How it Works</a> in the <i>AWS Lambda Developer Guide</i>.</p> </important> <p>You provide mapping information (for example, which stream to read from and which Lambda function to invoke) in the request body.</p> <p>Each event source, such as an Amazon Kinesis or a DynamoDB stream, can be associated with multiple AWS Lambda function. A given Lambda function can be associated with multiple AWS event sources.</p> <p>If you are using versioning, you can specify a specific function version or an alias via the function name parameter. For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a>. </p> <p>This operation requires permission for the <code>lambda:CreateEventSourceMapping</code> action.</p>"]
                 pub fn create_event_source_mapping(&self, input: &CreateEventSourceMappingRequest) -> Result<EventSourceMappingConfiguration, CreateEventSourceMappingError> {
                     let encoded = serde_json::to_string(input).unwrap();
 
@@ -3221,7 +2956,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Returns the resource policy associated with the specified Lambda function.</p> <p> If you are using the versioning feature, you can get the resource policy associated with the specific Lambda function version or alias by specifying the version or alias name using the <code>Qualifier</code> parameter. For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a>. </p> <p>You need permission for the <code>lambda:GetPolicy action.</code> </p>"]
+                #[doc="<p>Returns the resource policy associated with the specified Lambda function.</p> <p> If you are using the versioning feature, you can get the resource policy associated with the specific Lambda function version or alias by specifying the version or alias name using the <code>Qualifier</code> parameter. For more information about versioning, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a>. </p> <p>For information about adding permissions, see <a>AddPermission</a>.</p> <p>You need permission for the <code>lambda:GetPolicy action.</code> </p>"]
                 pub fn get_policy(&self, input: &GetPolicyRequest) -> Result<GetPolicyResponse, GetPolicyError> {
                     
 
@@ -3303,7 +3038,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<important> <p>This API is deprecated. We recommend you use <code>Invoke</code> API (see <a>Invoke</a>).</p> </important> <p>Submits an invocation request to AWS Lambda. Upon receiving the request, Lambda executes the specified function asynchronously. To see the logs generated by the Lambda function execution, see the CloudWatch Logs console.</p> <p>This operation requires permission for the <code>lambda:InvokeFunction</code> action.</p>"]
+                #[doc="<important><p>This API is deprecated. We recommend you use <code>Invoke</code> API (see <a>Invoke</a>).</p> </important> <p>Submits an invocation request to AWS Lambda. Upon receiving the request, Lambda executes the specified function asynchronously. To see the logs generated by the Lambda function execution, see the CloudWatch Logs console.</p> <p>This operation requires permission for the <code>lambda:InvokeFunction</code> action.</p>"]
                 pub fn invoke_async(&self, input: &InvokeAsyncRequest) -> Result<InvokeAsyncResponse, InvokeAsyncError> {
                     let encoded = serde_json::to_string(input).unwrap();
 
@@ -3486,42 +3221,6 @@ match input.max_items {
                 }
                 
 
-                #[doc="<p>Returns a list of tags assigned to a function when supplied the function ARN (Amazon Resource Name).</p>"]
-                pub fn list_tags(&self, input: &ListTagsRequest) -> Result<ListTagsResponse, ListTagsError> {
-                    
-
-                    let request_uri = format!("/2017-03-31/tags/{arn}", arn = input.resource);
-
-                    let mut request = SignedRequest::new("GET", "lambda", self.region, &request_uri);
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    
-                    
-                    
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let result = try!(self.dispatcher.dispatch(&request));
-                    let mut body = result.body;
-
-                    // `serde-json` serializes field-less structs as "null", but AWS returns
-                    // "{}" for a field-less response, so we must check for this result
-                    // and convert it if necessary.
-                    if body == b"{}" {
-                        body = b"null".to_vec();
-                    }
-
-                    debug!("Response body: {:?}", body);
-                    debug!("Response status: {}", result.status);
-
-                    match result.status {
-                        StatusCode::Ok => {
-                            Ok(serde_json::from_str::<ListTagsResponse>(String::from_utf8_lossy(&body).as_ref()).unwrap())
-                        }
-                         _ => Err(ListTagsError::from_body(String::from_utf8_lossy(&body).as_ref())),
-                    }
-                }
-                
-
                 #[doc="<p>List all versions of a function. For information about the versioning feature, see <a href=\"http://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html\">AWS Lambda Function Versioning and Aliases</a>. </p>"]
                 pub fn list_versions_by_function(&self, input: &ListVersionsByFunctionRequest) -> Result<ListVersionsByFunctionResponse, ListVersionsByFunctionError> {
                     
@@ -3640,80 +3339,6 @@ match input.max_items {
                             Ok(())
                         }
                          _ => Err(RemovePermissionError::from_body(String::from_utf8_lossy(&body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>Creates a list of tags (key-value pairs) on the Lambda function. Requires the Lambda function ARN (Amazon Resource Name). If a key is specified without a value, Lambda creates a tag with the specified key and a value of null. </p>"]
-                pub fn tag_resource(&self, input: &TagResourceRequest) -> Result<(), TagResourceError> {
-                    let encoded = serde_json::to_string(input).unwrap();
-
-                    let request_uri = format!("/2017-03-31/tags/{arn}", arn = input.resource);
-
-                    let mut request = SignedRequest::new("POST", "lambda", self.region, &request_uri);
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    
-                    request.set_payload(Some(encoded.into_bytes()));
-                    
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let result = try!(self.dispatcher.dispatch(&request));
-                    let mut body = result.body;
-
-                    // `serde-json` serializes field-less structs as "null", but AWS returns
-                    // "{}" for a field-less response, so we must check for this result
-                    // and convert it if necessary.
-                    if body == b"{}" {
-                        body = b"null".to_vec();
-                    }
-
-                    debug!("Response body: {:?}", body);
-                    debug!("Response status: {}", result.status);
-
-                    match result.status {
-                        StatusCode::NoContent => {
-                            Ok(())
-                        }
-                         _ => Err(TagResourceError::from_body(String::from_utf8_lossy(&body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>Removes tags from a Lambda function. Requires the function ARN (Amazon Resource Name). </p>"]
-                pub fn untag_resource(&self, input: &UntagResourceRequest) -> Result<(), UntagResourceError> {
-                    
-
-                    let request_uri = format!("/2017-03-31/tags/{arn}", arn = input.resource);
-
-                    let mut request = SignedRequest::new("DELETE", "lambda", self.region, &request_uri);
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    
-                    
-                    let mut params = Params::new();
-                params.put("TagKeys", &input.tag_keys.to_string());
-                request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let result = try!(self.dispatcher.dispatch(&request));
-                    let mut body = result.body;
-
-                    // `serde-json` serializes field-less structs as "null", but AWS returns
-                    // "{}" for a field-less response, so we must check for this result
-                    // and convert it if necessary.
-                    if body == b"{}" {
-                        body = b"null".to_vec();
-                    }
-
-                    debug!("Response body: {:?}", body);
-                    debug!("Response status: {}", result.status);
-
-                    match result.status {
-                        StatusCode::NoContent => {
-                            Ok(())
-                        }
-                         _ => Err(UntagResourceError::from_body(String::from_utf8_lossy(&body).as_ref())),
                     }
                 }
                 

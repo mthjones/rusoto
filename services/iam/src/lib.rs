@@ -1,26 +1,26 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate xml;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
 use std::str::FromStr;
             use xml::EventReader;
             use xml::reader::ParserConfig;
-            use rusoto::param::{Params, ServiceParams};
-            use rusoto::signature::SignedRequest;
+            use rusoto_core::param::{Params, ServiceParams};
+            use rusoto_core::signature::SignedRequest;
             use xml::reader::XmlEvent;
-            use rusoto::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
-            use rusoto::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
-            use rusoto::xmlerror::*;
+            use rusoto_core::xmlutil::{Next, Peek, XmlParseError, XmlResponse};
+            use rusoto_core::xmlutil::{characters, end_element, start_element, skip_tree, peek_at_name};
+            use rusoto_core::xmlerror::*;
 
             enum DeserializerNext {
                 Close,
@@ -109,9 +109,9 @@ struct AccessKeyIdTypeDeserializer;
             pub struct AccessKeyLastUsed {
                 #[doc="<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>"]
 pub last_used_date: DateType,
-#[doc="<p>The AWS region where this access key was most recently used. This field is displays \"N/A\" when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul> <p>For more information about AWS regions, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html\">Regions and Endpoints</a> in the Amazon Web Services General Reference.</p>"]
+#[doc="<p>The AWS region where this access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul> <p>For more information about AWS regions, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/rande.html\">Regions and Endpoints</a> in the Amazon Web Services General Reference.</p>"]
 pub region: StringType,
-#[doc="<p>The name of the AWS service with which this access key was most recently used. This field displays \"N/A\" when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>"]
+#[doc="<p>The name of the AWS service with which this access key was most recently used. This field is null when:</p> <ul> <li> <p>The user does not have an access key.</p> </li> <li> <p>An access key exists but has never been used, at least not since IAM started tracking this information on April 22nd, 2015.</p> </li> <li> <p>There is no sign-in data associated with the user</p> </li> </ul>"]
 pub service_name: StringType,
             }
             
@@ -373,7 +373,7 @@ params.put(&format!("{}{}", prefix, "OpenIDConnectProviderArn"), &obj.open_id_co
             pub struct AddRoleToInstanceProfileRequest {
                 #[doc="<p>The name of the instance profile to update.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub instance_profile_name: InstanceProfileNameType,
-#[doc="<p>The name of the role to add.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to add.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -461,7 +461,7 @@ params.put(&format!("{}{}", prefix, "PolicyArn"), &obj.policy_arn);
             pub struct AttachRolePolicyRequest {
                 #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy you want to attach.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
 pub policy_arn: ArnType,
-#[doc="<p>The name (friendly name, not ARN) of the role to attach the policy to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name (friendly name, not ARN) of the role to attach the policy to.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -1474,11 +1474,9 @@ struct CreatePolicyVersionResponseDeserializer;
             pub struct CreateRoleRequest {
                 #[doc="<p>The trust relationship policy document that grants an entity permission to assume the role.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of any printable ASCII character ranging from the space character (\\u0020) through end of the ASCII character range as well as the printable characters in the Basic Latin and Latin-1 Supplement character set (through \\u00FF). It also includes the special characters tab (\\u0009), line feed (\\u000A), and carriage return (\\u000D).</p>"]
 pub assume_role_policy_document: PolicyDocumentType,
-#[doc="<p>A customer-provided description of the role.</p>"]
-pub description: Option<RoleDescriptionType>,
 #[doc="<p> The path to the role. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i>.</p> <p>This parameter is optional. If it is not included, it defaults to a slash (/).</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
 pub path: Option<PathType>,
-#[doc="<p>The name of the role to create.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p> <p>Role names are not distinguished by case. For example, you cannot create roles named both \"PRODROLE\" and \"prodrole\".</p>"]
+#[doc="<p>The name of the role to create.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-. Role names are not distinguished by case. For example, you cannot create roles named both \"PRODROLE\" and \"prodrole\".</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -1493,9 +1491,6 @@ pub role_name: RoleNameType,
         }
 
         params.put(&format!("{}{}", prefix, "AssumeRolePolicyDocument"), &obj.assume_role_policy_document);
-if let Some(ref field_value) = obj.description {
-                params.put(&format!("{}{}", prefix, "Description"), &field_value);
-            }
 if let Some(ref field_value) = obj.path {
                 params.put(&format!("{}{}", prefix, "Path"), &field_value);
             }
@@ -1599,79 +1594,6 @@ struct CreateSAMLProviderResponseDeserializer;
                     match &name[..] {
                         "SAMLProviderArn" => {
                 obj.saml_provider_arn = Some(try!(ArnTypeDeserializer::deserialize("SAMLProviderArn", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-#[derive(Default,Debug,Clone)]
-            pub struct CreateServiceLinkedRoleRequest {
-                #[doc="<p>The AWS service to which this role is attached. You use a string similar to a URL but without the http:// in front. For example: <code>elasticbeanstalk.amazonaws.com</code> </p>"]
-pub aws_service_name: GroupNameType,
-#[doc="<p>A string that you provide, which is combined with the service name to form the complete role name. If you make multiple requests for the same service, then you must supply a different <code>CustomSuffix</code> for each request. Otherwise the request fails with a duplicate role name error. For example, you could add <code>-1</code> or <code>-debug</code> to the suffix.</p>"]
-pub custom_suffix: Option<CustomSuffixType>,
-#[doc="<p>The description of the role.</p>"]
-pub description: Option<RoleDescriptionType>,
-            }
-            
-
-            /// Serialize `CreateServiceLinkedRoleRequest` contents to a `SignedRequest`.
-            struct CreateServiceLinkedRoleRequestSerializer;
-            impl CreateServiceLinkedRoleRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &CreateServiceLinkedRoleRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        params.put(&format!("{}{}", prefix, "AWSServiceName"), &obj.aws_service_name);
-if let Some(ref field_value) = obj.custom_suffix {
-                params.put(&format!("{}{}", prefix, "CustomSuffix"), &field_value);
-            }
-if let Some(ref field_value) = obj.description {
-                params.put(&format!("{}{}", prefix, "Description"), &field_value);
-            }
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct CreateServiceLinkedRoleResponse {
-                #[doc="<p>A <a>Role</a> object that contains details about the newly created role.</p>"]
-pub role: Option<Role>,
-            }
-            
-struct CreateServiceLinkedRoleResponseDeserializer;
-            impl CreateServiceLinkedRoleResponseDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<CreateServiceLinkedRoleResponse, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = CreateServiceLinkedRoleResponse::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "Role" => {
-                obj.role = Some(try!(RoleDeserializer::deserialize("Role", stack)));
             }
                         _ => skip_tree(stack),
                     }
@@ -1894,7 +1816,6 @@ struct CreateVirtualMFADeviceResponseDeserializer;
 pub type CredentialReportExpiredExceptionMessage = String;
 pub type CredentialReportNotPresentExceptionMessage = String;
 pub type CredentialReportNotReadyExceptionMessage = String;
-pub type CustomSuffixType = String;
 pub type DateType = String;
 struct DateTypeDeserializer;
             impl DateTypeDeserializer {
@@ -1911,7 +1832,7 @@ struct DateTypeDeserializer;
             }
 #[derive(Default,Debug,Clone)]
             pub struct DeactivateMFADeviceRequest {
-                #[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the device ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@:/-</p>"]
+                #[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the device ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =/:,.@-</p>"]
 pub serial_number: SerialNumberType,
 #[doc="<p>The name of the user whose MFA device you want to deactivate.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub user_name: ExistingUserNameType,
@@ -2138,7 +2059,7 @@ params.put(&format!("{}{}", prefix, "VersionId"), &obj.version_id);
             pub struct DeleteRolePolicyRequest {
                 #[doc="<p>The name of the inline policy to delete from the specified IAM role.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub policy_name: PolicyNameType,
-#[doc="<p>The name (friendly name, not ARN) identifying the role that the policy is embedded in.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name (friendly name, not ARN) identifying the role that the policy is embedded in.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -2160,7 +2081,7 @@ params.put(&format!("{}{}", prefix, "RoleName"), &obj.role_name);
             
 #[derive(Default,Debug,Clone)]
             pub struct DeleteRoleRequest {
-                #[doc="<p>The name of the role to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+                #[doc="<p>The name of the role to delete.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -2344,7 +2265,7 @@ pub user_name: ExistingUserNameType,
             
 #[derive(Default,Debug,Clone)]
             pub struct DeleteVirtualMFADeviceRequest {
-                #[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the same as the ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@:/-</p>"]
+                #[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the same as the ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =/:,.@-</p>"]
 pub serial_number: SerialNumberType,
             }
             
@@ -2391,7 +2312,7 @@ params.put(&format!("{}{}", prefix, "PolicyArn"), &obj.policy_arn);
             pub struct DetachRolePolicyRequest {
                 #[doc="<p>The Amazon Resource Name (ARN) of the IAM policy you want to detach.</p> <p>For more information about ARNs, see <a href=\"http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and AWS Service Namespaces</a> in the <i>AWS General Reference</i>.</p>"]
 pub policy_arn: ArnType,
-#[doc="<p>The name (friendly name, not ARN) of the IAM role to detach the policy from.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name (friendly name, not ARN) of the IAM role to detach the policy from.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -2439,11 +2360,11 @@ pub type DuplicateCertificateMessage = String;
 pub type DuplicateSSHPublicKeyMessage = String;
 #[derive(Default,Debug,Clone)]
             pub struct EnableMFADeviceRequest {
-                #[doc="<p>An authentication code emitted by the device. </p> <p>The format for this parameter is a string of 6 digits.</p> <important> <p>Submit your request immediately after generating the authentication codes. If you generate the codes and then wait too long to submit the request, the MFA device successfully associates with the user but the MFA device becomes out of sync. This happens because time-based one-time passwords (TOTP) expire after a short period of time. If this happens, you can <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_sync.html\">resync the device</a>.</p> </important>"]
+                #[doc="<p>An authentication code emitted by the device.</p> <p>The format for this parameter is a string of 6 digits.</p>"]
 pub authentication_code_1: AuthenticationCodeType,
-#[doc="<p>A subsequent authentication code emitted by the device.</p> <p>The format for this parameter is a string of 6 digits.</p> <important> <p>Submit your request immediately after generating the authentication codes. If you generate the codes and then wait too long to submit the request, the MFA device successfully associates with the user but the MFA device becomes out of sync. This happens because time-based one-time passwords (TOTP) expire after a short period of time. If this happens, you can <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_sync.html\">resync the device</a>.</p> </important>"]
+#[doc="<p>A subsequent authentication code emitted by the device.</p> <p>The format for this parameter is a string of 6 digits.</p>"]
 pub authentication_code_2: AuthenticationCodeType,
-#[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the device ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@:/-</p>"]
+#[doc="<p>The serial number that uniquely identifies the MFA device. For virtual MFA devices, the serial number is the device ARN.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =/:,.@-</p>"]
 pub serial_number: SerialNumberType,
 #[doc="<p>The name of the IAM user for whom you want to enable the MFA device.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub user_name: ExistingUserNameType,
@@ -2536,8 +2457,6 @@ pub eval_resource_name: Option<ResourceNameType>,
 pub matched_statements: Option<StatementListType>,
 #[doc="<p>A list of context keys that are required by the included input policies but that were not provided by one of the input parameters. This list is used when the resource in a simulation is \"*\", either explicitly, or when the <code>ResourceArns</code> parameter blank. If you include a list of resources, then any missing context values are instead included under the <code>ResourceSpecificResults</code> section. To discover the context keys used by a set of policies, you can call <a>GetContextKeysForCustomPolicy</a> or <a>GetContextKeysForPrincipalPolicy</a>.</p>"]
 pub missing_context_values: Option<ContextKeyNamesResultListType>,
-#[doc="<p>A structure that details how AWS Organizations and its service control policies affect the results of the simulation. Only applies if the simulated user's account is part of an organization.</p>"]
-pub organizations_decision_detail: Option<OrganizationsDecisionDetail>,
 #[doc="<p>The individual results of the simulation of the API action specified in EvalActionName on each resource.</p>"]
 pub resource_specific_results: Option<ResourceSpecificResultListType>,
             }
@@ -2578,9 +2497,6 @@ struct EvaluationResultDeserializer;
             }
 "MissingContextValues" => {
                 obj.missing_context_values = Some(try!(ContextKeyNamesResultListTypeDeserializer::deserialize("MissingContextValues", stack)));
-            }
-"OrganizationsDecisionDetail" => {
-                obj.organizations_decision_detail = Some(try!(OrganizationsDecisionDetailDeserializer::deserialize("OrganizationsDecisionDetail", stack)));
             }
 "ResourceSpecificResults" => {
                 obj.resource_specific_results = Some(try!(ResourceSpecificResultListTypeDeserializer::deserialize("ResourceSpecificResults", stack)));
@@ -2875,7 +2791,7 @@ struct GetAccountAuthorizationDetailsResponseDeserializer;
 #[doc="<p>Contains the response to a successful <a>GetAccountPasswordPolicy</a> request. </p>"]
 #[derive(Default,Debug,Clone)]
             pub struct GetAccountPasswordPolicyResponse {
-                #[doc="<p>A structure that contains details about the account's password policy.</p>"]
+                #[doc="<p>Contains information about the account password policy.</p>"]
 pub password_policy: PasswordPolicy,
             }
             
@@ -3617,7 +3533,7 @@ struct GetPolicyVersionResponseDeserializer;
             pub struct GetRolePolicyRequest {
                 #[doc="<p>The name of the policy document to get.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub policy_name: PolicyNameType,
-#[doc="<p>The name of the role associated with the policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role associated with the policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -3692,7 +3608,7 @@ struct GetRolePolicyResponseDeserializer;
             }
 #[derive(Default,Debug,Clone)]
             pub struct GetRoleRequest {
-                #[doc="<p>The name of the IAM role to get information about.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+                #[doc="<p>The name of the IAM role to get information about.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -4785,7 +4701,7 @@ pub marker: Option<MarkerType>,
 pub max_items: Option<MaxItemsType>,
 #[doc="<p>The path prefix for filtering the results. This parameter is optional. If it is not included, it defaults to a slash (/), listing all policies.</p> <p>This paramater allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of either a forward slash (/) by itself or a string that must begin and end with forward slashes, containing any ASCII character from the ! (\\u0021) thru the DEL character (\\u007F), including most punctuation characters, digits, and upper and lowercased letters.</p>"]
 pub path_prefix: Option<PolicyPathType>,
-#[doc="<p>The name (friendly name, not ARN) of the role to list attached policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name (friendly name, not ARN) of the role to list attached policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -5319,7 +5235,7 @@ struct ListGroupsResponseDeserializer;
 pub marker: Option<MarkerType>,
 #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
 pub max_items: Option<MaxItemsType>,
-#[doc="<p>The name of the role to list instance profiles for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to list instance profiles for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -5816,7 +5732,7 @@ struct ListPolicyVersionsResponseDeserializer;
 pub marker: Option<MarkerType>,
 #[doc="<p>(Optional) Use this only when paginating results to indicate the maximum number of items you want in the response. If additional items exist beyond the maximum you specify, the <code>IsTruncated</code> response element is <code>true</code>.</p> <p>If you do not include this parameter, it defaults to 100. Note that IAM might return fewer results, even when there are more results available. In that case, the <code>IsTruncated</code> response element returns <code>true</code> and <code>Marker</code> contains a value to include in the subsequent call that tells the service where to continue from.</p>"]
 pub max_items: Option<MaxItemsType>,
-#[doc="<p>The name of the role to list policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to list policies for.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -7039,49 +6955,6 @@ struct OpenIDConnectProviderUrlTypeDeserializer;
         
                 }
             }
-#[doc="<p>Contains information about AWS Organizations's affect on a policy simulation.</p>"]
-#[derive(Default,Debug,Clone)]
-            pub struct OrganizationsDecisionDetail {
-                #[doc="<p>Specifies whether the simulated action is allowed by the AWS Organizations service control policies that impact the simulated user's account.</p>"]
-pub allowed_by_organizations: Option<BooleanType>,
-            }
-            
-struct OrganizationsDecisionDetailDeserializer;
-            impl OrganizationsDecisionDetailDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<OrganizationsDecisionDetail, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = OrganizationsDecisionDetail::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "AllowedByOrganizations" => {
-                obj.allowed_by_organizations = Some(try!(BooleanTypeDeserializer::deserialize("AllowedByOrganizations", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[doc="<p>Contains information about the account password policy.</p> <p> This data type is used as a response element in the <a>GetAccountPasswordPolicy</a> action. </p>"]
 #[derive(Default,Debug,Clone)]
             pub struct PasswordPolicy {
@@ -8036,7 +7909,7 @@ params.put(&format!("{}{}", prefix, "PolicyName"), &obj.policy_name);
 pub policy_document: PolicyDocumentType,
 #[doc="<p>The name of the policy document.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub policy_name: PolicyNameType,
-#[doc="<p>The name of the role to associate the policy with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to associate the policy with.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -8112,7 +7985,7 @@ params.put(&format!("{}{}", prefix, "OpenIDConnectProviderArn"), &obj.open_id_co
             pub struct RemoveRoleFromInstanceProfileRequest {
                 #[doc="<p>The name of the instance profile to update.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub instance_profile_name: InstanceProfileNameType,
-#[doc="<p>The name of the role to remove.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to remove.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -8438,17 +8311,15 @@ params.put(&format!("{}{}", prefix, "UserName"), &obj.user_name);
                 }
             }
             
-#[doc="<p>Contains information about an IAM role. This structure is returned as a response element in several APIs that interact with roles.</p>"]
+#[doc="<p>Contains information about an IAM role.</p> <p>This data type is used as a response element in the following actions:</p> <ul> <li> <p> <a>CreateRole</a> </p> </li> <li> <p> <a>GetRole</a> </p> </li> <li> <p> <a>ListRoles</a> </p> </li> </ul>"]
 #[derive(Default,Debug,Clone)]
             pub struct Role {
-                #[doc="<p> The Amazon Resource Name (ARN) specifying the role. For more information about ARNs and how to use them in policies, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>IAM User Guide</i> guide. </p>"]
+                #[doc="<p> The Amazon Resource Name (ARN) specifying the role. For more information about ARNs and how to use them in policies, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>Using IAM</i> guide. </p>"]
 pub arn: ArnType,
 #[doc="<p>The policy that grants an entity permission to assume the role.</p>"]
 pub assume_role_policy_document: Option<PolicyDocumentType>,
 #[doc="<p>The date and time, in <a href=\"http://www.iso.org/iso/iso8601\">ISO 8601 date-time format</a>, when the role was created.</p>"]
 pub create_date: DateType,
-#[doc="<p>A description of the role that you provide.</p>"]
-pub description: Option<RoleDescriptionType>,
 #[doc="<p> The path to the role. For more information about paths, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>Using IAM</i> guide. </p>"]
 pub path: PathType,
 #[doc="<p> The stable and unique string identifying the role. For more information about IDs, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html\">IAM Identifiers</a> in the <i>Using IAM</i> guide. </p>"]
@@ -8485,9 +8356,6 @@ struct RoleDeserializer;
 "CreateDate" => {
                 obj.create_date = try!(DateTypeDeserializer::deserialize("CreateDate", stack));
             }
-"Description" => {
-                obj.description = Some(try!(RoleDescriptionTypeDeserializer::deserialize("Description", stack)));
-            }
 "Path" => {
                 obj.path = try!(PathTypeDeserializer::deserialize("Path", stack));
             }
@@ -8505,20 +8373,6 @@ struct RoleDeserializer;
             }
         }
 
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
-pub type RoleDescriptionType = String;
-struct RoleDescriptionTypeDeserializer;
-            impl RoleDescriptionTypeDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<RoleDescriptionType, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-        let obj = try!(characters(stack));
         try!(end_element(tag_name, stack));
 
         Ok(obj)
@@ -9943,7 +9797,6 @@ struct ThumbprintTypeDeserializer;
         
                 }
             }
-pub type UnmodifiableEntityMessage = String;
 pub type UnrecognizedPublicKeyEncodingMessage = String;
 #[derive(Default,Debug,Clone)]
             pub struct UpdateAccessKeyRequest {
@@ -10041,7 +9894,7 @@ if let Some(ref field_value) = obj.require_uppercase_characters {
             pub struct UpdateAssumeRolePolicyRequest {
                 #[doc="<p>The policy that grants an entity permission to assume the role.</p> <p>The <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a> used to validate this parameter is a string of characters consisting of any printable ASCII character ranging from the space character (\\u0020) through end of the ASCII character range as well as the printable characters in the Basic Latin and Latin-1 Supplement character set (through \\u00FF). It also includes the special characters tab (\\u0009), line feed (\\u000A), and carriage return (\\u000D).</p>"]
 pub policy_document: PolicyDocumentType,
-#[doc="<p>The name of the role to update with the new policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: _+=,.@-</p>"]
+#[doc="<p>The name of the role to update with the new policy.</p> <p>This parameter allows (per its <a href=\"http://wikipedia.org/wiki/regex\">regex pattern</a>) a string of characters consisting of upper and lowercase alphanumeric characters with no spaces. You can also include any of the following characters: =,.@-</p>"]
 pub role_name: RoleNameType,
             }
             
@@ -10151,72 +10004,6 @@ ThumbprintListTypeSerializer::serialize(
                 }
             }
             
-#[derive(Default,Debug,Clone)]
-            pub struct UpdateRoleDescriptionRequest {
-                #[doc="<p>The new description that you want to apply to the specified role.</p>"]
-pub description: RoleDescriptionType,
-#[doc="<p>The name of the role that you want to modify.</p>"]
-pub role_name: RoleNameType,
-            }
-            
-
-            /// Serialize `UpdateRoleDescriptionRequest` contents to a `SignedRequest`.
-            struct UpdateRoleDescriptionRequestSerializer;
-            impl UpdateRoleDescriptionRequestSerializer {
-                fn serialize(params: &mut Params, name: &str, obj: &UpdateRoleDescriptionRequest) {
-                    let mut prefix = name.to_string();
-        if prefix != "" {
-            prefix.push_str(".");
-        }
-
-        params.put(&format!("{}{}", prefix, "Description"), &obj.description);
-params.put(&format!("{}{}", prefix, "RoleName"), &obj.role_name);
-        
-                }
-            }
-            
-#[derive(Default,Debug,Clone)]
-            pub struct UpdateRoleDescriptionResponse {
-                #[doc="<p>A structure that contains details about the modified role.</p>"]
-pub role: Option<Role>,
-            }
-            
-struct UpdateRoleDescriptionResponseDeserializer;
-            impl UpdateRoleDescriptionResponseDeserializer {
-                #[allow(unused_variables)]
-                fn deserialize<'a, T: Peek + Next>(tag_name: &str, stack: &mut T)
-                -> Result<UpdateRoleDescriptionResponse, XmlParseError> {
-                    try!(start_element(tag_name, stack));
-
-        let mut obj = UpdateRoleDescriptionResponse::default();
-
-        loop {
-            let next_event = match stack.peek() {
-                Some(&Ok(XmlEvent::EndElement { ref name, .. })) => DeserializerNext::Close,
-                Some(&Ok(XmlEvent::StartElement { ref name, .. })) => DeserializerNext::Element(name.local_name.to_owned()),
-                _ => DeserializerNext::Skip,
-            };
-
-            match next_event {
-                DeserializerNext::Element(name) => {
-                    match &name[..] {
-                        "Role" => {
-                obj.role = Some(try!(RoleDeserializer::deserialize("Role", stack)));
-            }
-                        _ => skip_tree(stack),
-                    }
-                },
-                DeserializerNext::Close => break,
-                DeserializerNext::Skip => { stack.next(); },
-            }
-        }
-
-        try!(end_element(tag_name, stack));
-
-        Ok(obj)
-        
-                }
-            }
 #[derive(Default,Debug,Clone)]
             pub struct UpdateSAMLProviderRequest {
                 #[doc="<p>An XML document generated by an identity provider (IdP) that supports SAML 2.0. The document includes the issuer's name, expiration information, and keys that can be used to validate the SAML authentication response (assertions) that are received from the IdP. You must generate the metadata document using the identity management software that is used as your organization's IdP.</p>"]
@@ -10892,7 +10679,7 @@ pub enable_date: Option<DateType>,
 pub qr_code_png: Option<BootstrapDatum>,
 #[doc="<p>The serial number associated with <code>VirtualMFADevice</code>.</p>"]
 pub serial_number: SerialNumberType,
-#[doc="<p>The IAM user associated with this virtual MFA device.</p>"]
+#[doc="<p>The user to whom the MFA device is assigned.</p>"]
 pub user: Option<User>,
             }
             
@@ -11056,8 +10843,6 @@ NoSuchEntity(String),
 EntityAlreadyExists(String),
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -11076,7 +10861,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => AddRoleToInstanceProfileError::NoSuchEntity(String::from(parsed_error.message)),"EntityAlreadyExistsException" => AddRoleToInstanceProfileError::EntityAlreadyExists(String::from(parsed_error.message)),"LimitExceededException" => AddRoleToInstanceProfileError::LimitExceeded(String::from(parsed_error.message)),"UnmodifiableEntityException" => AddRoleToInstanceProfileError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => AddRoleToInstanceProfileError::ServiceFailure(String::from(parsed_error.message)),_ => AddRoleToInstanceProfileError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => AddRoleToInstanceProfileError::NoSuchEntity(String::from(parsed_error.message)),"EntityAlreadyExistsException" => AddRoleToInstanceProfileError::EntityAlreadyExists(String::from(parsed_error.message)),"LimitExceededException" => AddRoleToInstanceProfileError::LimitExceeded(String::from(parsed_error.message)),"ServiceFailureException" => AddRoleToInstanceProfileError::ServiceFailure(String::from(parsed_error.message)),_ => AddRoleToInstanceProfileError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => AddRoleToInstanceProfileError::Unknown(body.to_string())
@@ -11108,7 +10893,7 @@ Unknown(String)
                 impl Error for AddRoleToInstanceProfileError {
                     fn description(&self) -> &str {
                         match *self {
-                            AddRoleToInstanceProfileError::NoSuchEntity(ref cause) => cause,AddRoleToInstanceProfileError::EntityAlreadyExists(ref cause) => cause,AddRoleToInstanceProfileError::LimitExceeded(ref cause) => cause,AddRoleToInstanceProfileError::UnmodifiableEntity(ref cause) => cause,AddRoleToInstanceProfileError::ServiceFailure(ref cause) => cause,AddRoleToInstanceProfileError::Validation(ref cause) => cause,AddRoleToInstanceProfileError::Credentials(ref err) => err.description(),AddRoleToInstanceProfileError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddRoleToInstanceProfileError::Unknown(ref cause) => cause
+                            AddRoleToInstanceProfileError::NoSuchEntity(ref cause) => cause,AddRoleToInstanceProfileError::EntityAlreadyExists(ref cause) => cause,AddRoleToInstanceProfileError::LimitExceeded(ref cause) => cause,AddRoleToInstanceProfileError::ServiceFailure(ref cause) => cause,AddRoleToInstanceProfileError::Validation(ref cause) => cause,AddRoleToInstanceProfileError::Credentials(ref err) => err.description(),AddRoleToInstanceProfileError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AddRoleToInstanceProfileError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11248,8 +11033,6 @@ NoSuchEntity(String),
 LimitExceeded(String),
 ///<p>The request was rejected because an invalid or out-of-range value was supplied for an input parameter.</p>
 InvalidInput(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -11268,7 +11051,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => AttachRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => AttachRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"InvalidInputException" => AttachRolePolicyError::InvalidInput(String::from(parsed_error.message)),"UnmodifiableEntityException" => AttachRolePolicyError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => AttachRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => AttachRolePolicyError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => AttachRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => AttachRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"InvalidInputException" => AttachRolePolicyError::InvalidInput(String::from(parsed_error.message)),"ServiceFailureException" => AttachRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => AttachRolePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => AttachRolePolicyError::Unknown(body.to_string())
@@ -11300,7 +11083,7 @@ Unknown(String)
                 impl Error for AttachRolePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            AttachRolePolicyError::NoSuchEntity(ref cause) => cause,AttachRolePolicyError::LimitExceeded(ref cause) => cause,AttachRolePolicyError::InvalidInput(ref cause) => cause,AttachRolePolicyError::UnmodifiableEntity(ref cause) => cause,AttachRolePolicyError::ServiceFailure(ref cause) => cause,AttachRolePolicyError::Validation(ref cause) => cause,AttachRolePolicyError::Credentials(ref err) => err.description(),AttachRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachRolePolicyError::Unknown(ref cause) => cause
+                            AttachRolePolicyError::NoSuchEntity(ref cause) => cause,AttachRolePolicyError::LimitExceeded(ref cause) => cause,AttachRolePolicyError::InvalidInput(ref cause) => cause,AttachRolePolicyError::ServiceFailure(ref cause) => cause,AttachRolePolicyError::Validation(ref cause) => cause,AttachRolePolicyError::Credentials(ref err) => err.description(),AttachRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),AttachRolePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -11954,8 +11737,6 @@ Unknown(String)
                     
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because an invalid or out-of-range value was supplied for an input parameter.</p>
-InvalidInput(String),
 ///<p>The request was rejected because it attempted to create a resource that already exists.</p>
 EntityAlreadyExists(String),
 ///<p>The request was rejected because the policy document was malformed. The error message describes the specific error.</p>
@@ -11978,7 +11759,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LimitExceededException" => CreateRoleError::LimitExceeded(String::from(parsed_error.message)),"InvalidInputException" => CreateRoleError::InvalidInput(String::from(parsed_error.message)),"EntityAlreadyExistsException" => CreateRoleError::EntityAlreadyExists(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => CreateRoleError::MalformedPolicyDocument(String::from(parsed_error.message)),"ServiceFailureException" => CreateRoleError::ServiceFailure(String::from(parsed_error.message)),_ => CreateRoleError::Unknown(String::from(body))
+                                    "LimitExceededException" => CreateRoleError::LimitExceeded(String::from(parsed_error.message)),"EntityAlreadyExistsException" => CreateRoleError::EntityAlreadyExists(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => CreateRoleError::MalformedPolicyDocument(String::from(parsed_error.message)),"ServiceFailureException" => CreateRoleError::ServiceFailure(String::from(parsed_error.message)),_ => CreateRoleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => CreateRoleError::Unknown(body.to_string())
@@ -12010,7 +11791,7 @@ Unknown(String)
                 impl Error for CreateRoleError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateRoleError::LimitExceeded(ref cause) => cause,CreateRoleError::InvalidInput(ref cause) => cause,CreateRoleError::EntityAlreadyExists(ref cause) => cause,CreateRoleError::MalformedPolicyDocument(ref cause) => cause,CreateRoleError::ServiceFailure(ref cause) => cause,CreateRoleError::Validation(ref cause) => cause,CreateRoleError::Credentials(ref err) => err.description(),CreateRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRoleError::Unknown(ref cause) => cause
+                            CreateRoleError::LimitExceeded(ref cause) => cause,CreateRoleError::EntityAlreadyExists(ref cause) => cause,CreateRoleError::MalformedPolicyDocument(ref cause) => cause,CreateRoleError::ServiceFailure(ref cause) => cause,CreateRoleError::Validation(ref cause) => cause,CreateRoleError::Credentials(ref err) => err.description(),CreateRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateRoleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -12075,70 +11856,6 @@ Unknown(String)
                     fn description(&self) -> &str {
                         match *self {
                             CreateSAMLProviderError::InvalidInput(ref cause) => cause,CreateSAMLProviderError::EntityAlreadyExists(ref cause) => cause,CreateSAMLProviderError::LimitExceeded(ref cause) => cause,CreateSAMLProviderError::ServiceFailure(ref cause) => cause,CreateSAMLProviderError::Validation(ref cause) => cause,CreateSAMLProviderError::Credentials(ref err) => err.description(),CreateSAMLProviderError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateSAMLProviderError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by CreateServiceLinkedRole
-                #[derive(Debug, PartialEq)]
-                pub enum CreateServiceLinkedRoleError {
-                    
-///<p>The request was rejected because an invalid or out-of-range value was supplied for an input parameter.</p>
-InvalidInput(String),
-///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
-LimitExceeded(String),
-///<p>The request was rejected because it referenced an entity that does not exist. The error message describes the entity.</p>
-NoSuchEntity(String),
-///<p>The request processing has failed because of an unknown error, exception or failure.</p>
-ServiceFailure(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl CreateServiceLinkedRoleError {
-                    pub fn from_body(body: &str) -> CreateServiceLinkedRoleError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "InvalidInputException" => CreateServiceLinkedRoleError::InvalidInput(String::from(parsed_error.message)),"LimitExceededException" => CreateServiceLinkedRoleError::LimitExceeded(String::from(parsed_error.message)),"NoSuchEntityException" => CreateServiceLinkedRoleError::NoSuchEntity(String::from(parsed_error.message)),"ServiceFailureException" => CreateServiceLinkedRoleError::ServiceFailure(String::from(parsed_error.message)),_ => CreateServiceLinkedRoleError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => CreateServiceLinkedRoleError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for CreateServiceLinkedRoleError {
-                    fn from(err: XmlParseError) -> CreateServiceLinkedRoleError {
-                        let XmlParseError(message) = err;
-                        CreateServiceLinkedRoleError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for CreateServiceLinkedRoleError {
-                    fn from(err: CredentialsError) -> CreateServiceLinkedRoleError {
-                        CreateServiceLinkedRoleError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for CreateServiceLinkedRoleError {
-                    fn from(err: HttpDispatchError) -> CreateServiceLinkedRoleError {
-                        CreateServiceLinkedRoleError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for CreateServiceLinkedRoleError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for CreateServiceLinkedRoleError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            CreateServiceLinkedRoleError::InvalidInput(ref cause) => cause,CreateServiceLinkedRoleError::LimitExceeded(ref cause) => cause,CreateServiceLinkedRoleError::NoSuchEntity(ref cause) => cause,CreateServiceLinkedRoleError::ServiceFailure(ref cause) => cause,CreateServiceLinkedRoleError::Validation(ref cause) => cause,CreateServiceLinkedRoleError::Credentials(ref err) => err.description(),CreateServiceLinkedRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateServiceLinkedRoleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -13038,8 +12755,6 @@ NoSuchEntity(String),
 DeleteConflict(String),
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -13058,7 +12773,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => DeleteRoleError::NoSuchEntity(String::from(parsed_error.message)),"DeleteConflictException" => DeleteRoleError::DeleteConflict(String::from(parsed_error.message)),"LimitExceededException" => DeleteRoleError::LimitExceeded(String::from(parsed_error.message)),"UnmodifiableEntityException" => DeleteRoleError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => DeleteRoleError::ServiceFailure(String::from(parsed_error.message)),_ => DeleteRoleError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => DeleteRoleError::NoSuchEntity(String::from(parsed_error.message)),"DeleteConflictException" => DeleteRoleError::DeleteConflict(String::from(parsed_error.message)),"LimitExceededException" => DeleteRoleError::LimitExceeded(String::from(parsed_error.message)),"ServiceFailureException" => DeleteRoleError::ServiceFailure(String::from(parsed_error.message)),_ => DeleteRoleError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteRoleError::Unknown(body.to_string())
@@ -13090,7 +12805,7 @@ Unknown(String)
                 impl Error for DeleteRoleError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRoleError::NoSuchEntity(ref cause) => cause,DeleteRoleError::DeleteConflict(ref cause) => cause,DeleteRoleError::LimitExceeded(ref cause) => cause,DeleteRoleError::UnmodifiableEntity(ref cause) => cause,DeleteRoleError::ServiceFailure(ref cause) => cause,DeleteRoleError::Validation(ref cause) => cause,DeleteRoleError::Credentials(ref err) => err.description(),DeleteRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRoleError::Unknown(ref cause) => cause
+                            DeleteRoleError::NoSuchEntity(ref cause) => cause,DeleteRoleError::DeleteConflict(ref cause) => cause,DeleteRoleError::LimitExceeded(ref cause) => cause,DeleteRoleError::ServiceFailure(ref cause) => cause,DeleteRoleError::Validation(ref cause) => cause,DeleteRoleError::Credentials(ref err) => err.description(),DeleteRoleError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRoleError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -13102,8 +12817,6 @@ Unknown(String)
 NoSuchEntity(String),
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -13122,7 +12835,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => DeleteRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => DeleteRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"UnmodifiableEntityException" => DeleteRolePolicyError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => DeleteRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => DeleteRolePolicyError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => DeleteRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => DeleteRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"ServiceFailureException" => DeleteRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => DeleteRolePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DeleteRolePolicyError::Unknown(body.to_string())
@@ -13154,7 +12867,7 @@ Unknown(String)
                 impl Error for DeleteRolePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DeleteRolePolicyError::NoSuchEntity(ref cause) => cause,DeleteRolePolicyError::LimitExceeded(ref cause) => cause,DeleteRolePolicyError::UnmodifiableEntity(ref cause) => cause,DeleteRolePolicyError::ServiceFailure(ref cause) => cause,DeleteRolePolicyError::Validation(ref cause) => cause,DeleteRolePolicyError::Credentials(ref err) => err.description(),DeleteRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRolePolicyError::Unknown(ref cause) => cause
+                            DeleteRolePolicyError::NoSuchEntity(ref cause) => cause,DeleteRolePolicyError::LimitExceeded(ref cause) => cause,DeleteRolePolicyError::ServiceFailure(ref cause) => cause,DeleteRolePolicyError::Validation(ref cause) => cause,DeleteRolePolicyError::Credentials(ref err) => err.description(),DeleteRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DeleteRolePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -13728,8 +13441,6 @@ NoSuchEntity(String),
 LimitExceeded(String),
 ///<p>The request was rejected because an invalid or out-of-range value was supplied for an input parameter.</p>
 InvalidInput(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -13748,7 +13459,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => DetachRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => DetachRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"InvalidInputException" => DetachRolePolicyError::InvalidInput(String::from(parsed_error.message)),"UnmodifiableEntityException" => DetachRolePolicyError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => DetachRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => DetachRolePolicyError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => DetachRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => DetachRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"InvalidInputException" => DetachRolePolicyError::InvalidInput(String::from(parsed_error.message)),"ServiceFailureException" => DetachRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => DetachRolePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => DetachRolePolicyError::Unknown(body.to_string())
@@ -13780,7 +13491,7 @@ Unknown(String)
                 impl Error for DetachRolePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            DetachRolePolicyError::NoSuchEntity(ref cause) => cause,DetachRolePolicyError::LimitExceeded(ref cause) => cause,DetachRolePolicyError::InvalidInput(ref cause) => cause,DetachRolePolicyError::UnmodifiableEntity(ref cause) => cause,DetachRolePolicyError::ServiceFailure(ref cause) => cause,DetachRolePolicyError::Validation(ref cause) => cause,DetachRolePolicyError::Credentials(ref err) => err.description(),DetachRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachRolePolicyError::Unknown(ref cause) => cause
+                            DetachRolePolicyError::NoSuchEntity(ref cause) => cause,DetachRolePolicyError::LimitExceeded(ref cause) => cause,DetachRolePolicyError::InvalidInput(ref cause) => cause,DetachRolePolicyError::ServiceFailure(ref cause) => cause,DetachRolePolicyError::Validation(ref cause) => cause,DetachRolePolicyError::Credentials(ref err) => err.description(),DetachRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),DetachRolePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -16800,8 +16511,6 @@ LimitExceeded(String),
 MalformedPolicyDocument(String),
 ///<p>The request was rejected because it referenced an entity that does not exist. The error message describes the entity.</p>
 NoSuchEntity(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -16820,7 +16529,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "LimitExceededException" => PutRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => PutRolePolicyError::MalformedPolicyDocument(String::from(parsed_error.message)),"NoSuchEntityException" => PutRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"UnmodifiableEntityException" => PutRolePolicyError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => PutRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => PutRolePolicyError::Unknown(String::from(body))
+                                    "LimitExceededException" => PutRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => PutRolePolicyError::MalformedPolicyDocument(String::from(parsed_error.message)),"NoSuchEntityException" => PutRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"ServiceFailureException" => PutRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => PutRolePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => PutRolePolicyError::Unknown(body.to_string())
@@ -16852,7 +16561,7 @@ Unknown(String)
                 impl Error for PutRolePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            PutRolePolicyError::LimitExceeded(ref cause) => cause,PutRolePolicyError::MalformedPolicyDocument(ref cause) => cause,PutRolePolicyError::NoSuchEntity(ref cause) => cause,PutRolePolicyError::UnmodifiableEntity(ref cause) => cause,PutRolePolicyError::ServiceFailure(ref cause) => cause,PutRolePolicyError::Validation(ref cause) => cause,PutRolePolicyError::Credentials(ref err) => err.description(),PutRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRolePolicyError::Unknown(ref cause) => cause
+                            PutRolePolicyError::LimitExceeded(ref cause) => cause,PutRolePolicyError::MalformedPolicyDocument(ref cause) => cause,PutRolePolicyError::NoSuchEntity(ref cause) => cause,PutRolePolicyError::ServiceFailure(ref cause) => cause,PutRolePolicyError::Validation(ref cause) => cause,PutRolePolicyError::Credentials(ref err) => err.description(),PutRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),PutRolePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -16990,8 +16699,6 @@ Unknown(String)
 NoSuchEntity(String),
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -17010,7 +16717,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => RemoveRoleFromInstanceProfileError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => RemoveRoleFromInstanceProfileError::LimitExceeded(String::from(parsed_error.message)),"UnmodifiableEntityException" => RemoveRoleFromInstanceProfileError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => RemoveRoleFromInstanceProfileError::ServiceFailure(String::from(parsed_error.message)),_ => RemoveRoleFromInstanceProfileError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => RemoveRoleFromInstanceProfileError::NoSuchEntity(String::from(parsed_error.message)),"LimitExceededException" => RemoveRoleFromInstanceProfileError::LimitExceeded(String::from(parsed_error.message)),"ServiceFailureException" => RemoveRoleFromInstanceProfileError::ServiceFailure(String::from(parsed_error.message)),_ => RemoveRoleFromInstanceProfileError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => RemoveRoleFromInstanceProfileError::Unknown(body.to_string())
@@ -17042,7 +16749,7 @@ Unknown(String)
                 impl Error for RemoveRoleFromInstanceProfileError {
                     fn description(&self) -> &str {
                         match *self {
-                            RemoveRoleFromInstanceProfileError::NoSuchEntity(ref cause) => cause,RemoveRoleFromInstanceProfileError::LimitExceeded(ref cause) => cause,RemoveRoleFromInstanceProfileError::UnmodifiableEntity(ref cause) => cause,RemoveRoleFromInstanceProfileError::ServiceFailure(ref cause) => cause,RemoveRoleFromInstanceProfileError::Validation(ref cause) => cause,RemoveRoleFromInstanceProfileError::Credentials(ref err) => err.description(),RemoveRoleFromInstanceProfileError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveRoleFromInstanceProfileError::Unknown(ref cause) => cause
+                            RemoveRoleFromInstanceProfileError::NoSuchEntity(ref cause) => cause,RemoveRoleFromInstanceProfileError::LimitExceeded(ref cause) => cause,RemoveRoleFromInstanceProfileError::ServiceFailure(ref cause) => cause,RemoveRoleFromInstanceProfileError::Validation(ref cause) => cause,RemoveRoleFromInstanceProfileError::Credentials(ref err) => err.description(),RemoveRoleFromInstanceProfileError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),RemoveRoleFromInstanceProfileError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -17552,8 +17259,6 @@ NoSuchEntity(String),
 MalformedPolicyDocument(String),
 ///<p>The request was rejected because it attempted to create resources beyond the current AWS account limits. The error message describes the limit exceeded.</p>
 LimitExceeded(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
 ///<p>The request processing has failed because of an unknown error, exception or failure.</p>
 ServiceFailure(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
@@ -17572,7 +17277,7 @@ Unknown(String)
                         match XmlErrorDeserializer::deserialize("Error", &mut stack) {
                             Ok(parsed_error) => {
                                 match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => UpdateAssumeRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => UpdateAssumeRolePolicyError::MalformedPolicyDocument(String::from(parsed_error.message)),"LimitExceededException" => UpdateAssumeRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"UnmodifiableEntityException" => UpdateAssumeRolePolicyError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => UpdateAssumeRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => UpdateAssumeRolePolicyError::Unknown(String::from(body))
+                                    "NoSuchEntityException" => UpdateAssumeRolePolicyError::NoSuchEntity(String::from(parsed_error.message)),"MalformedPolicyDocumentException" => UpdateAssumeRolePolicyError::MalformedPolicyDocument(String::from(parsed_error.message)),"LimitExceededException" => UpdateAssumeRolePolicyError::LimitExceeded(String::from(parsed_error.message)),"ServiceFailureException" => UpdateAssumeRolePolicyError::ServiceFailure(String::from(parsed_error.message)),_ => UpdateAssumeRolePolicyError::Unknown(String::from(body))
                                 }
                            },
                            Err(_) => UpdateAssumeRolePolicyError::Unknown(body.to_string())
@@ -17604,7 +17309,7 @@ Unknown(String)
                 impl Error for UpdateAssumeRolePolicyError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateAssumeRolePolicyError::NoSuchEntity(ref cause) => cause,UpdateAssumeRolePolicyError::MalformedPolicyDocument(ref cause) => cause,UpdateAssumeRolePolicyError::LimitExceeded(ref cause) => cause,UpdateAssumeRolePolicyError::UnmodifiableEntity(ref cause) => cause,UpdateAssumeRolePolicyError::ServiceFailure(ref cause) => cause,UpdateAssumeRolePolicyError::Validation(ref cause) => cause,UpdateAssumeRolePolicyError::Credentials(ref err) => err.description(),UpdateAssumeRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssumeRolePolicyError::Unknown(ref cause) => cause
+                            UpdateAssumeRolePolicyError::NoSuchEntity(ref cause) => cause,UpdateAssumeRolePolicyError::MalformedPolicyDocument(ref cause) => cause,UpdateAssumeRolePolicyError::LimitExceeded(ref cause) => cause,UpdateAssumeRolePolicyError::ServiceFailure(ref cause) => cause,UpdateAssumeRolePolicyError::Validation(ref cause) => cause,UpdateAssumeRolePolicyError::Credentials(ref err) => err.description(),UpdateAssumeRolePolicyError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateAssumeRolePolicyError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -17797,68 +17502,6 @@ Unknown(String)
                     fn description(&self) -> &str {
                         match *self {
                             UpdateOpenIDConnectProviderThumbprintError::InvalidInput(ref cause) => cause,UpdateOpenIDConnectProviderThumbprintError::NoSuchEntity(ref cause) => cause,UpdateOpenIDConnectProviderThumbprintError::ServiceFailure(ref cause) => cause,UpdateOpenIDConnectProviderThumbprintError::Validation(ref cause) => cause,UpdateOpenIDConnectProviderThumbprintError::Credentials(ref err) => err.description(),UpdateOpenIDConnectProviderThumbprintError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateOpenIDConnectProviderThumbprintError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
-/// Errors returned by UpdateRoleDescription
-                #[derive(Debug, PartialEq)]
-                pub enum UpdateRoleDescriptionError {
-                    
-///<p>The request was rejected because it referenced an entity that does not exist. The error message describes the entity.</p>
-NoSuchEntity(String),
-///<p>The request was rejected because only the service that depends on the service-linked role can modify or delete the role on your behalf. The error message includes the name of the service that depends on this service-linked role. You must request the change through that service.</p>
-UnmodifiableEntity(String),
-///<p>The request processing has failed because of an unknown error, exception or failure.</p>
-ServiceFailure(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl UpdateRoleDescriptionError {
-                    pub fn from_body(body: &str) -> UpdateRoleDescriptionError {
-                        let reader = EventReader::new(body.as_bytes());
-                        let mut stack = XmlResponse::new(reader.into_iter().peekable());
-                        let _start_document = stack.next();
-                        let _response_envelope = stack.next();
-                        match XmlErrorDeserializer::deserialize("Error", &mut stack) {
-                            Ok(parsed_error) => {
-                                match &parsed_error.code[..] {
-                                    "NoSuchEntityException" => UpdateRoleDescriptionError::NoSuchEntity(String::from(parsed_error.message)),"UnmodifiableEntityException" => UpdateRoleDescriptionError::UnmodifiableEntity(String::from(parsed_error.message)),"ServiceFailureException" => UpdateRoleDescriptionError::ServiceFailure(String::from(parsed_error.message)),_ => UpdateRoleDescriptionError::Unknown(String::from(body))
-                                }
-                           },
-                           Err(_) => UpdateRoleDescriptionError::Unknown(body.to_string())
-                       }
-                    }
-                }
-                
-                impl From<XmlParseError> for UpdateRoleDescriptionError {
-                    fn from(err: XmlParseError) -> UpdateRoleDescriptionError {
-                        let XmlParseError(message) = err;
-                        UpdateRoleDescriptionError::Unknown(message.to_string())
-                    }
-                }
-                impl From<CredentialsError> for UpdateRoleDescriptionError {
-                    fn from(err: CredentialsError) -> UpdateRoleDescriptionError {
-                        UpdateRoleDescriptionError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for UpdateRoleDescriptionError {
-                    fn from(err: HttpDispatchError) -> UpdateRoleDescriptionError {
-                        UpdateRoleDescriptionError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for UpdateRoleDescriptionError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for UpdateRoleDescriptionError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            UpdateRoleDescriptionError::NoSuchEntity(ref cause) => cause,UpdateRoleDescriptionError::UnmodifiableEntity(ref cause) => cause,UpdateRoleDescriptionError::ServiceFailure(ref cause) => cause,UpdateRoleDescriptionError::Validation(ref cause) => cause,UpdateRoleDescriptionError::Credentials(ref err) => err.description(),UpdateRoleDescriptionError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateRoleDescriptionError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -18478,7 +18121,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Adds the specified IAM role to the specified instance profile. An instance profile can contain only one role, and this limit cannot be increased.</p> <note> <p>The caller of this API must be granted the <code>PassRole</code> permission on the IAM role by a permission policy.</p> </note> <p>For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance Profiles</a>.</p>"]
+                #[doc="<p>Adds the specified IAM role to the specified instance profile.</p> <note> <p>The caller of this API must be granted the <code>PassRole</code> permission on the IAM role by a permission policy.</p> </note> <p>For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance Profiles</a>.</p>"]
                 pub fn add_role_to_instance_profile(&self, input: &AddRoleToInstanceProfileRequest) -> Result<(), AddRoleToInstanceProfileError> {
                     let mut request = SignedRequest::new("POST", "iam", self.region, "/");
                     let mut params = Params::new();
@@ -18550,7 +18193,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Attaches the specified managed policy to the specified IAM role. When you attach a managed policy to a role, the managed policy becomes part of the role's permission (access) policy.</p> <note> <p>You cannot use a managed policy as the role's trust policy. The role's trust policy is created at the same time as the role, using <a>CreateRole</a>. You can update a role's trust policy using <a>UpdateAssumeRolePolicy</a>.</p> </note> <p>Use this API to attach a <i>managed</i> policy to a role. To embed an inline policy in a role, use <a>PutRolePolicy</a>. For more information about policies, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed Policies and Inline Policies</a> in the <i>IAM User Guide</i>.</p>"]
+                #[doc="<p>Attaches the specified managed policy to the specified IAM role.</p> <p>When you attach a managed policy to a role, the managed policy becomes part of the role's permission (access) policy. You cannot use a managed policy as the role's trust policy. The role's trust policy is created at the same time as the role, using <a>CreateRole</a>. You can update a role's trust policy using <a>UpdateAssumeRolePolicy</a>.</p> <p>Use this API to attach a <i>managed</i> policy to a role. To embed an inline policy in a role, use <a>PutRolePolicy</a>. For more information about policies, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-managed-vs-inline.html\">Managed Policies and Inline Policies</a> in the <i>IAM User Guide</i>.</p>"]
                 pub fn attach_role_policy(&self, input: &AttachRolePolicyRequest) -> Result<(), AttachRolePolicyError> {
                     let mut request = SignedRequest::new("POST", "iam", self.region, "/");
                     let mut params = Params::new();
@@ -19010,47 +18653,6 @@ Unknown(String)
                         }
                         _ => {
                             Err(CreateSAMLProviderError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
-                #[doc="<p>Creates an IAM role that is linked to a specific AWS service. The service controls the attached policies and when the role can be deleted. This helps ensure that the service is not broken by an unexpectedly changed or deleted role, which could put your AWS resources into an unknown state. Allowing the service to control the role helps improve service stability and proper cleanup when a service and its role are no longer needed.</p> <p>The name of the role is autogenerated by combining the string that you specify for the <code>AWSServiceName</code> parameter with the string that you specify for the <code>CustomSuffix</code> parameter. The resulting name must be unique in your account or the request fails.</p> <p>To attach a policy to this service-linked role, you must make the request using the AWS service that depends on this role.</p>"]
-                pub fn create_service_linked_role(&self, input: &CreateServiceLinkedRoleRequest) -> Result<CreateServiceLinkedRoleResponse, CreateServiceLinkedRoleError> {
-                    let mut request = SignedRequest::new("POST", "iam", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "CreateServiceLinkedRole");
-                    params.put("Version", "2010-05-08");
-                    CreateServiceLinkedRoleRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = CreateServiceLinkedRoleResponse::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(CreateServiceLinkedRoleResponseDeserializer::deserialize("CreateServiceLinkedRoleResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(CreateServiceLinkedRoleError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
                         }
                     }
                 }
@@ -21802,7 +21404,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Removes the specified IAM role from the specified EC2 instance profile.</p> <important> <p>Make sure you do not have any Amazon EC2 instances running with the role you are about to remove from the instance profile. Removing a role from an instance profile that is associated with a running instance might break any applications running on the instance.</p> </important> <p> For more information about IAM roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance Profiles</a>.</p>"]
+                #[doc="<p>Removes the specified IAM role from the specified EC2 instance profile.</p> <important> <p>Make sure you do not have any Amazon EC2 instances running with the role you are about to remove from the instance profile. Removing a role from an instance profile that is associated with a running instance break any applications running on the instance.</p> </important> <p> For more information about IAM roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance Profiles</a>.</p>"]
                 pub fn remove_role_from_instance_profile(&self, input: &RemoveRoleFromInstanceProfileRequest) -> Result<(), RemoveRoleFromInstanceProfileError> {
                     let mut request = SignedRequest::new("POST", "iam", self.region, "/");
                     let mut params = Params::new();
@@ -22165,47 +21767,6 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Modifies the description of a role.</p>"]
-                pub fn update_role_description(&self, input: &UpdateRoleDescriptionRequest) -> Result<UpdateRoleDescriptionResponse, UpdateRoleDescriptionError> {
-                    let mut request = SignedRequest::new("POST", "iam", self.region, "/");
-                    let mut params = Params::new();
-
-                    params.put("Action", "UpdateRoleDescription");
-                    params.put("Version", "2010-05-08");
-                    UpdateRoleDescriptionRequestSerializer::serialize(&mut params, "", &input);
-                    request.set_params(params);
-
-                    request.sign(&try!(self.credentials_provider.credentials()));
-                    let response = try!(self.dispatcher.dispatch(&request));
-                    match response.status {
-                        StatusCode::Ok => {
-                            
-        let result;
-
-        if response.body.is_empty() {
-            result = UpdateRoleDescriptionResponse::default();
-        } else {
-            let reader = EventReader::new_with_config(
-                response.body.as_slice(),
-                ParserConfig::new().trim_whitespace(true)
-            );
-            let mut stack = XmlResponse::new(reader.into_iter().peekable());
-            let _start_document = stack.next();
-            let actual_tag_name = try!(peek_at_name(&mut stack));
-            try!(start_element(&actual_tag_name, &mut stack));
-                     result = try!(UpdateRoleDescriptionResponseDeserializer::deserialize("UpdateRoleDescriptionResult", &mut stack));
-                     skip_tree(&mut stack);
-                     try!(end_element(&actual_tag_name, &mut stack));
-        }
-                            Ok(result)
-                        }
-                        _ => {
-                            Err(UpdateRoleDescriptionError::from_body(String::from_utf8_lossy(&response.body).as_ref()))
-                        }
-                    }
-                }
-                
-
                 #[doc="<p>Updates the metadata document for an existing SAML provider resource object.</p> <note> <p>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4</a>.</p> </note>"]
                 pub fn update_saml_provider(&self, input: &UpdateSAMLProviderRequest) -> Result<UpdateSAMLProviderResponse, UpdateSAMLProviderError> {
                     let mut request = SignedRequest::new("POST", "iam", self.region, "/");
@@ -22408,7 +21969,7 @@ Unknown(String)
                 }
                 
 
-                #[doc="<p>Uploads a server certificate entity for the AWS account. The server certificate entity includes a public key certificate, a private key, and an optional certificate chain, which should all be PEM-encoded.</p> <p>We recommend that you use <a href=\"https://aws.amazon.com/certificate-manager/\">AWS Certificate Manager</a> to provision, manage, and deploy your server certificates. With ACM you can request a certificate, deploy it to AWS resources, and let ACM handle certificate renewals for you. Certificates provided by ACM are free. For more information about using ACM, see the <a href=\"http://docs.aws.amazon.com/acm/latest/userguide/\">AWS Certificate Manager User Guide</a>.</p> <p>For more information about working with server certificates, including a list of AWS services that can use the server certificates that you manage with IAM, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html\">Working with Server Certificates</a> in the <i>IAM User Guide</i>.</p> <p>For information about the number of server certificates you can upload, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html\">Limitations on IAM Entities and Objects</a> in the <i>IAM User Guide</i>.</p> <note> <p>Because the body of the public key certificate, private key, and the certificate chain can be large, you should use POST rather than GET when calling <code>UploadServerCertificate</code>. For information about setting up signatures and authorization through the API, go to <a href=\"http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html\">Signing AWS API Requests</a> in the <i>AWS General Reference</i>. For general information about using the Query API with IAM, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/programming.html\">Calling the API by Making HTTP Query Requests</a> in the <i>IAM User Guide</i>.</p> </note>"]
+                #[doc="<p>Uploads a server certificate entity for the AWS account. The server certificate entity includes a public key certificate, a private key, and an optional certificate chain, which should all be PEM-encoded.</p> <p>For more information about working with server certificates, including a list of AWS services that can use the server certificates that you manage with IAM, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html\">Working with Server Certificates</a> in the <i>IAM User Guide</i>.</p> <p>For information about the number of server certificates you can upload, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_iam-limits.html\">Limitations on IAM Entities and Objects</a> in the <i>IAM User Guide</i>.</p> <note> <p>Because the body of the public key certificate, private key, and the certificate chain can be large, you should use POST rather than GET when calling <code>UploadServerCertificate</code>. For information about setting up signatures and authorization through the API, go to <a href=\"http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html\">Signing AWS API Requests</a> in the <i>AWS General Reference</i>. For general information about using the Query API with IAM, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/programming.html\">Calling the API by Making HTTP Query Requests</a> in the <i>IAM User Guide</i>.</p> </note>"]
                 pub fn upload_server_certificate(&self, input: &UploadServerCertificateRequest) -> Result<UploadServerCertificateResponse, UploadServerCertificateError> {
                     let mut request = SignedRequest::new("POST", "iam", self.region, "/");
                     let mut params = Params::new();

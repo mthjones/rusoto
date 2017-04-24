@@ -23,9 +23,9 @@ hyper = "0.10.0"
 optional = true
 version = "0.0"
 
-[dependencies.rusoto]
+[dependencies.rusoto_core]
 path = "../core"
 
 [features]
-nightly-testing = ["clippy", "rusoto/nightly-testing"]
+nightly-testing = ["clippy", "rusoto_core/nightly-testing"]
 unstable = []

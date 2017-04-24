@@ -36,7 +36,7 @@ fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, c
             dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
-            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+            dependencies.insert("rusoto_core".to_owned(), cargo::Dependency::Extended {
                 path: Some("../../core".into()),
                 version: Some(core_version.to_owned()),
                 optional: None,
@@ -46,7 +46,7 @@ fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, c
         },
         "query" | "ec2" => {
             dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
-            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+            dependencies.insert("rusoto_core".to_owned(), cargo::Dependency::Extended {
                 path: Some("../../core".into()),
                 version: Some(core_version.to_owned()),
                 optional: None,
@@ -59,7 +59,7 @@ fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, c
             dependencies.insert("serde".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_derive".to_owned(), cargo::Dependency::Simple("0.9.5".into()));
             dependencies.insert("serde_json".to_owned(), cargo::Dependency::Simple("0.9.4".into()));
-            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+            dependencies.insert("rusoto_core".to_owned(), cargo::Dependency::Extended {
                 path: Some("../../core".into()),
                 version: Some(core_version.to_owned()),
                 optional: None,
@@ -69,7 +69,7 @@ fn get_dependencies(service: &Service, core_version: &str) -> BTreeMap<String, c
         },
         "rest-xml" => {
             dependencies.insert("xml-rs".to_owned(), cargo::Dependency::Simple("0.3".into()));
-            dependencies.insert("rusoto".to_owned(), cargo::Dependency::Extended {
+            dependencies.insert("rusoto_core".to_owned(), cargo::Dependency::Extended {
                 path: Some("../../core".into()),
                 version: Some(core_version.to_owned()),
                 optional: None,

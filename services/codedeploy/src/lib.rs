@@ -1,5 +1,5 @@
 extern crate hyper;
-extern crate rusoto;
+extern crate rusoto_core;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -7,15 +7,15 @@ extern crate serde_json;
 #[allow(warnings)]
         use hyper::Client;
         use hyper::status::StatusCode;
-        use rusoto::request::DispatchSignedRequest;
-        use rusoto::region;
+        use rusoto_core::request::DispatchSignedRequest;
+        use rusoto_core::region;
 
         use std::fmt;
         use std::error::Error;
-        use rusoto::request::HttpDispatchError;
-        use rusoto::{CredentialsError, ProvideAwsCredentials};
+        use rusoto_core::request::HttpDispatchError;
+        use rusoto_core::{CredentialsError, ProvideAwsCredentials};
     
-use rusoto::signature::SignedRequest;
+use rusoto_core::signature::SignedRequest;
         use serde_json::Value as SerdeJsonValue;
         use serde_json::from_str;
 #[doc="<p>Represents the input of, and adds tags to, an on-premises instance operation.</p>"]
@@ -29,7 +29,6 @@ pub instance_names: InstanceNameList,
 pub tags: TagList,
             }
             
-pub type AdditionalDeploymentStatusInfo = String;
 #[doc="<p>Information about an alarm.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
             pub struct Alarm {
@@ -225,41 +224,9 @@ pub instance_names: Option<InstanceNameList>,
 pub instance_infos: Option<InstanceInfoList>,
             }
             
-#[doc="<p>Information about blue/green deployment options for a deployment group.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct BlueGreenDeploymentConfiguration {
-                #[doc="<p>Information about the action to take when newly provisioned instances are ready to receive traffic in a blue/green deployment.</p>"]
-#[serde(rename="deploymentReadyOption")]
-pub deployment_ready_option: Option<DeploymentReadyOption>,
-#[doc="<p>Information about how instances are provisioned for a replacement environment in a blue/green deployment.</p>"]
-#[serde(rename="greenFleetProvisioningOption")]
-pub green_fleet_provisioning_option: Option<GreenFleetProvisioningOption>,
-#[doc="<p>Information about whether to terminate instances in the original fleet during a blue/green deployment.</p>"]
-#[serde(rename="terminateBlueInstancesOnDeploymentSuccess")]
-pub terminate_blue_instances_on_deployment_success: Option<BlueInstanceTerminationOption>,
-            }
-            
-#[doc="<p>Information about whether instances in the original environment are terminated when a blue/green deployment is successful.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct BlueInstanceTerminationOption {
-                #[doc="<p>The action to take on instances in the original environment after a successful blue/green deployment.</p> <ul> <li> <p>TERMINATE: Instances are terminated after a specified wait time.</p> </li> <li> <p>KEEP_ALIVE: Instances are left running after they are deregistered from the load balancer and removed from the deployment group.</p> </li> </ul>"]
-#[serde(rename="action")]
-pub action: Option<InstanceAction>,
-#[doc="<p>The number of minutes to wait after a successful blue/green deployment before terminating instances from the original environment.</p>"]
-#[serde(rename="terminationWaitTimeInMinutes")]
-pub termination_wait_time_in_minutes: Option<Duration>,
-            }
-            
 pub type Boolean = bool;
 pub type BundleType = String;
 pub type CommitId = String;
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct ContinueDeploymentInput {
-                #[doc="<p>The deployment ID of the blue/green deployment for which you want to start rerouting traffic to the replacement environment.</p>"]
-#[serde(rename="deploymentId")]
-pub deployment_id: Option<DeploymentId>,
-            }
-            
 #[doc="<p>Represents the input of a create application operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct CreateApplicationInput {
@@ -310,24 +277,15 @@ pub auto_rollback_configuration: Option<AutoRollbackConfiguration>,
 #[doc="<p>A list of associated Auto Scaling groups.</p>"]
 #[serde(rename="autoScalingGroups")]
 pub auto_scaling_groups: Option<AutoScalingGroupNameList>,
-#[doc="<p>Information about blue/green deployment options for a deployment group.</p>"]
-#[serde(rename="blueGreenDeploymentConfiguration")]
-pub blue_green_deployment_configuration: Option<BlueGreenDeploymentConfiguration>,
 #[doc="<p>If specified, the deployment configuration name can be either one of the predefined configurations provided with AWS CodeDeploy or a custom deployment configuration that you create by calling the create deployment configuration operation.</p> <p>CodeDeployDefault.OneAtATime is the default deployment configuration. It is used if a configuration isn't specified for the deployment or the deployment group.</p> <p>For more information about the predefined deployment configurations in AWS CodeDeploy, see see <a href=\"http://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html\">Working with Deployment Groups in AWS CodeDeploy</a> in the AWS CodeDeploy User Guide.</p>"]
 #[serde(rename="deploymentConfigName")]
 pub deployment_config_name: Option<DeploymentConfigName>,
 #[doc="<p>The name of a new deployment group for the specified application.</p>"]
 #[serde(rename="deploymentGroupName")]
 pub deployment_group_name: DeploymentGroupName,
-#[doc="<p>Information about the type of deployment, standard or blue/green, that you want to run and whether to route deployment traffic behind a load balancer.</p>"]
-#[serde(rename="deploymentStyle")]
-pub deployment_style: Option<DeploymentStyle>,
 #[doc="<p>The Amazon EC2 tags on which to filter.</p>"]
 #[serde(rename="ec2TagFilters")]
 pub ec_2_tag_filters: Option<EC2TagFilterList>,
-#[doc="<p>Information about the load balancer used in a blue/green deployment.</p>"]
-#[serde(rename="loadBalancerInfo")]
-pub load_balancer_info: Option<LoadBalancerInfo>,
 #[doc="<p>The on-premises instance tags on which to filter.</p>"]
 #[serde(rename="onPremisesInstanceTagFilters")]
 pub on_premises_instance_tag_filters: Option<TagFilterList>,
@@ -372,9 +330,6 @@ pub ignore_application_stop_failures: Option<Boolean>,
 #[doc="<p>The type and location of the revision to deploy.</p>"]
 #[serde(rename="revision")]
 pub revision: Option<RevisionLocation>,
-#[doc="<p>Information about the instances that will belong to the replacement environment in a blue/green deployment.</p>"]
-#[serde(rename="targetInstances")]
-pub target_instances: Option<TargetInstances>,
 #[doc="<p>Indicates whether to deploy to all instances or only to instances that are not running the latest application revision.</p>"]
 #[serde(rename="updateOutdatedInstancesOnly")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
@@ -461,9 +416,6 @@ pub auto_rollback_configuration: Option<AutoRollbackConfiguration>,
 #[doc="<p>A list of associated Auto Scaling groups.</p>"]
 #[serde(rename="autoScalingGroups")]
 pub auto_scaling_groups: Option<AutoScalingGroupList>,
-#[doc="<p>Information about blue/green deployment options for a deployment group.</p>"]
-#[serde(rename="blueGreenDeploymentConfiguration")]
-pub blue_green_deployment_configuration: Option<BlueGreenDeploymentConfiguration>,
 #[doc="<p>The deployment configuration name.</p>"]
 #[serde(rename="deploymentConfigName")]
 pub deployment_config_name: Option<DeploymentConfigName>,
@@ -473,15 +425,9 @@ pub deployment_group_id: Option<DeploymentGroupId>,
 #[doc="<p>The deployment group name.</p>"]
 #[serde(rename="deploymentGroupName")]
 pub deployment_group_name: Option<DeploymentGroupName>,
-#[doc="<p>Information about the type of deployment, either standard or blue/green, you want to run and whether to route deployment traffic behind a load balancer.</p>"]
-#[serde(rename="deploymentStyle")]
-pub deployment_style: Option<DeploymentStyle>,
 #[doc="<p>The Amazon EC2 tags on which to filter.</p>"]
 #[serde(rename="ec2TagFilters")]
 pub ec_2_tag_filters: Option<EC2TagFilterList>,
-#[doc="<p>Information about the load balancer to use in a blue/green deployment.</p>"]
-#[serde(rename="loadBalancerInfo")]
-pub load_balancer_info: Option<LoadBalancerInfo>,
 #[doc="<p>The on-premises instance tags on which to filter.</p>"]
 #[serde(rename="onPremisesInstanceTagFilters")]
 pub on_premises_instance_tag_filters: Option<TagFilterList>,
@@ -503,18 +449,12 @@ pub type DeploymentId = String;
 #[doc="<p>Information about a deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DeploymentInfo {
-                #[doc="<p>Provides information about the results of a deployment, such as whether instances in the original environment in a blue/green deployment were not terminated.</p>"]
-#[serde(rename="additionalDeploymentStatusInfo")]
-pub additional_deployment_status_info: Option<AdditionalDeploymentStatusInfo>,
-#[doc="<p>The application name.</p>"]
+                #[doc="<p>The application name.</p>"]
 #[serde(rename="applicationName")]
 pub application_name: Option<ApplicationName>,
 #[doc="<p>Information about the automatic rollback configuration associated with the deployment.</p>"]
 #[serde(rename="autoRollbackConfiguration")]
 pub auto_rollback_configuration: Option<AutoRollbackConfiguration>,
-#[doc="<p>Information about blue/green deployment options for this deployment.</p>"]
-#[serde(rename="blueGreenDeploymentConfiguration")]
-pub blue_green_deployment_configuration: Option<BlueGreenDeploymentConfiguration>,
 #[doc="<p>A timestamp indicating when the deployment was complete.</p>"]
 #[serde(rename="completeTime")]
 pub complete_time: Option<Timestamp>,
@@ -536,9 +476,6 @@ pub deployment_id: Option<DeploymentId>,
 #[doc="<p>A summary of the deployment status of the instances in the deployment.</p>"]
 #[serde(rename="deploymentOverview")]
 pub deployment_overview: Option<DeploymentOverview>,
-#[doc="<p>Information about the type of deployment, either standard or blue/green, you want to run and whether to route deployment traffic behind a load balancer.</p>"]
-#[serde(rename="deploymentStyle")]
-pub deployment_style: Option<DeploymentStyle>,
 #[doc="<p>A comment about the deployment.</p>"]
 #[serde(rename="description")]
 pub description: Option<Description>,
@@ -549,13 +486,6 @@ pub error_information: Option<ErrorInformation>,
 #[serde(rename="ignoreApplicationStopFailures")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
 pub ignore_application_stop_failures: Option<Boolean>,
-#[doc="<p>Indicates whether the wait period set for the termination of instances in the original environment has started. Status is 'false' if the KEEP_ALIVE option is specified; otherwise, 'true' as soon as the termination wait period starts.</p>"]
-#[serde(rename="instanceTerminationWaitTimeStarted")]
-#[serde(skip_serializing_if="::std::option::Option::is_none")]
-pub instance_termination_wait_time_started: Option<Boolean>,
-#[doc="<p>Information about the load balancer used in this blue/green deployment.</p>"]
-#[serde(rename="loadBalancerInfo")]
-pub load_balancer_info: Option<LoadBalancerInfo>,
 #[doc="<p>Information about the location of stored application artifacts and the service from which to retrieve them.</p>"]
 #[serde(rename="revision")]
 pub revision: Option<RevisionLocation>,
@@ -568,16 +498,12 @@ pub start_time: Option<Timestamp>,
 #[doc="<p>The current state of the deployment as a whole.</p>"]
 #[serde(rename="status")]
 pub status: Option<DeploymentStatus>,
-#[doc="<p>Information about the instances that belong to the replacement environment in a blue/green deployment.</p>"]
-#[serde(rename="targetInstances")]
-pub target_instances: Option<TargetInstances>,
 #[doc="<p>Indicates whether only instances that are not running the latest application revision are to be deployed to.</p>"]
 #[serde(rename="updateOutdatedInstancesOnly")]
 #[serde(skip_serializing_if="::std::option::Option::is_none")]
 pub update_outdated_instances_only: Option<Boolean>,
             }
             
-pub type DeploymentOption = String;
 #[doc="<p>Information about the deployment status of the instances in the deployment.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct DeploymentOverview {
@@ -590,9 +516,6 @@ pub in_progress: Option<InstanceCount>,
 #[doc="<p>The number of instances in the deployment in a pending state.</p>"]
 #[serde(rename="Pending")]
 pub pending: Option<InstanceCount>,
-#[doc="<p>The number of instances in a replacement environment ready to receive traffic in a blue/green deployment.</p>"]
-#[serde(rename="Ready")]
-pub ready: Option<InstanceCount>,
 #[doc="<p>The number of instances in the deployment in a skipped state.</p>"]
 #[serde(rename="Skipped")]
 pub skipped: Option<InstanceCount>,
@@ -601,32 +524,8 @@ pub skipped: Option<InstanceCount>,
 pub succeeded: Option<InstanceCount>,
             }
             
-pub type DeploymentReadyAction = String;
-#[doc="<p>Information about how traffic is rerouted to instances in a replacement environment in a blue/green deployment.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct DeploymentReadyOption {
-                #[doc="<p>Information about when to reroute traffic from an original environment to a replacement environment in a blue/green deployment.</p> <ul> <li> <p>CONTINUE_DEPLOYMENT: Register new instances with the load balancer immediately after the new application revision is installed on the instances in the replacement environment.</p> </li> <li> <p>STOP_DEPLOYMENT: Do not register new instances with load balancer unless traffic is rerouted manually. If traffic is not rerouted manually before the end of the specified wait period, the deployment status is changed to Stopped.</p> </li> </ul>"]
-#[serde(rename="actionOnTimeout")]
-pub action_on_timeout: Option<DeploymentReadyAction>,
-#[doc="<p>The number of minutes to wait before the status of a blue/green deployment changed to Stopped if rerouting is not started manually. Applies only to the STOP_DEPLOYMENT option for actionOnTimeout</p>"]
-#[serde(rename="waitTimeInMinutes")]
-pub wait_time_in_minutes: Option<Duration>,
-            }
-            
 pub type DeploymentStatus = String;
 pub type DeploymentStatusList = Vec<DeploymentStatus>;
-#[doc="<p>Information about the type of deployment, either standard or blue/green, you want to run and whether to route deployment traffic behind a load balancer.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct DeploymentStyle {
-                #[doc="<p>Indicates whether to route deployment traffic behind a load balancer.</p>"]
-#[serde(rename="deploymentOption")]
-pub deployment_option: Option<DeploymentOption>,
-#[doc="<p>Indicates whether to run a standard deployment or a blue/green deployment.</p>"]
-#[serde(rename="deploymentType")]
-pub deployment_type: Option<DeploymentType>,
-            }
-            
-pub type DeploymentType = String;
 pub type DeploymentsInfoList = Vec<DeploymentInfo>;
 pub type DeploymentsList = Vec<DeploymentId>;
 #[doc="<p>Represents the input of a deregister on-premises instance operation.</p>"]
@@ -655,7 +554,6 @@ pub message: Option<LifecycleMessage>,
 pub script_name: Option<ScriptName>,
             }
             
-pub type Duration = i64;
 #[doc="<p>Information about a tag filter.</p>"]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
             pub struct EC2TagFilter {
@@ -672,22 +570,12 @@ pub value: Option<Value>,
             
 pub type EC2TagFilterList = Vec<EC2TagFilter>;
 pub type EC2TagFilterType = String;
-#[doc="<p>Information about a load balancer in Elastic Load Balancing to use in a blue/green deployment.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct ELBInfo {
-                #[doc="<p>The name of the load balancer that will be used to route traffic from original instances to replacement instances in a blue/green deployment.</p>"]
-#[serde(rename="name")]
-pub name: Option<ELBName>,
-            }
-            
-pub type ELBInfoList = Vec<ELBInfo>;
-pub type ELBName = String;
 pub type ETag = String;
 pub type ErrorCode = String;
 #[doc="<p>Information about a deployment error.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct ErrorInformation {
-                #[doc="<p>For information about additional error codes, see <a href=\"http://docs.aws.amazon.com/codedeploy/latest/userguide/error-codes.html\">Error Codes for AWS CodeDeploy</a> in the <a href=\"http://docs.aws.amazon.com/codedeploy/latest/userguide\">AWS CodeDeploy User Guide</a>.</p> <p>The error code:</p> <ul> <li> <p>APPLICATION_MISSING: The application was missing. This error code will most likely be raised if the application is deleted after the deployment is created but before it is started.</p> </li> <li> <p>DEPLOYMENT_GROUP_MISSING: The deployment group was missing. This error code will most likely be raised if the deployment group is deleted after the deployment is created but before it is started.</p> </li> <li> <p>HEALTH_CONSTRAINTS: The deployment failed on too many instances to be successfully deployed within the instance health constraints specified.</p> </li> <li> <p>HEALTH_CONSTRAINTS_INVALID: The revision cannot be successfully deployed within the instance health constraints specified.</p> </li> <li> <p>IAM_ROLE_MISSING: The service role cannot be accessed.</p> </li> <li> <p>IAM_ROLE_PERMISSIONS: The service role does not have the correct permissions.</p> </li> <li> <p>INTERNAL_ERROR: There was an internal error.</p> </li> <li> <p>NO_EC2_SUBSCRIPTION: The calling account is not subscribed to the Amazon EC2 service.</p> </li> <li> <p>NO_INSTANCES: No instance were specified, or no instance can be found.</p> </li> <li> <p>OVER_MAX_INSTANCES: The maximum number of instance was exceeded.</p> </li> <li> <p>THROTTLED: The operation was throttled because the calling account exceeded the throttling limits of one or more AWS services.</p> </li> <li> <p>TIMEOUT: The deployment has timed out.</p> </li> <li> <p>REVISION_MISSING: The revision ID was missing. This error code will most likely be raised if the revision is deleted after the deployment is created but before it is started.</p> </li> </ul>"]
+                #[doc="<p>The error code:</p> <ul> <li> <p>APPLICATION_MISSING: The application was missing. This error code will most likely be raised if the application is deleted after the deployment is created but before it is started.</p> </li> <li> <p>DEPLOYMENT_GROUP_MISSING: The deployment group was missing. This error code will most likely be raised if the deployment group is deleted after the deployment is created but before it is started.</p> </li> <li> <p>HEALTH_CONSTRAINTS: The deployment failed on too many instances to be successfully deployed within the instance health constraints specified.</p> </li> <li> <p>HEALTH_CONSTRAINTS_INVALID: The revision cannot be successfully deployed within the instance health constraints specified.</p> </li> <li> <p>IAM_ROLE_MISSING: The service role cannot be accessed.</p> </li> <li> <p>IAM_ROLE_PERMISSIONS: The service role does not have the correct permissions.</p> </li> <li> <p>INTERNAL_ERROR: There was an internal error.</p> </li> <li> <p>NO_EC2_SUBSCRIPTION: The calling account is not subscribed to the Amazon EC2 service.</p> </li> <li> <p>NO_INSTANCES: No instance were specified, or no instance can be found.</p> </li> <li> <p>OVER_MAX_INSTANCES: The maximum number of instance was exceeded.</p> </li> <li> <p>THROTTLED: The operation was throttled because the calling account exceeded the throttling limits of one or more AWS services.</p> </li> <li> <p>TIMEOUT: The deployment has timed out.</p> </li> <li> <p>REVISION_MISSING: The revision ID was missing. This error code will most likely be raised if the revision is deleted after the deployment is created but before it is started.</p> </li> </ul>"]
 #[serde(rename="code")]
 pub code: Option<ErrorCode>,
 #[doc="<p>An accompanying error message.</p>"]
@@ -854,18 +742,8 @@ pub commit_id: Option<CommitId>,
 pub repository: Option<Repository>,
             }
             
-pub type GreenFleetProvisioningAction = String;
-#[doc="<p>Information about the instances that belong to the replacement environment in a blue/green deployment.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct GreenFleetProvisioningOption {
-                #[doc="<p>The method used to add instances to a replacement environment.</p> <ul> <li> <p>DISCOVER_EXISTING: Use instances that already exist or will be created manually.</p> </li> <li> <p>COPY_AUTO_SCALING_GROUP: Use settings from a specified Auto Scaling group to define and create instances in a new Auto Scaling group.</p> </li> </ul>"]
-#[serde(rename="action")]
-pub action: Option<GreenFleetProvisioningAction>,
-            }
-            
 pub type IamSessionArn = String;
 pub type IamUserArn = String;
-pub type InstanceAction = String;
 pub type InstanceArn = String;
 pub type InstanceCount = i64;
 pub type InstanceId = String;
@@ -909,9 +787,6 @@ pub deployment_id: Option<DeploymentId>,
 #[doc="<p>The instance ID.</p>"]
 #[serde(rename="instanceId")]
 pub instance_id: Option<InstanceId>,
-#[doc="<p>Information about which environment an instance belongs to in a blue/green deployment.</p> <ul> <li> <p>BLUE: The instance is part of the original environment.</p> </li> <li> <p>GREEN: The instance is part of the replacement environment.</p> </li> </ul>"]
-#[serde(rename="instanceType")]
-pub instance_type: Option<InstanceType>,
 #[doc="<p>A timestamp indicating when the instance information was last updated.</p>"]
 #[serde(rename="lastUpdatedAt")]
 pub last_updated_at: Option<Timestamp>,
@@ -924,8 +799,6 @@ pub status: Option<InstanceStatus>,
             }
             
 pub type InstanceSummaryList = Vec<InstanceSummary>;
-pub type InstanceType = String;
-pub type InstanceTypeList = Vec<InstanceType>;
 pub type InstancesList = Vec<InstanceId>;
 pub type Key = String;
 pub type LifecycleErrorCode = String;
@@ -1062,9 +935,6 @@ pub deployment_id: DeploymentId,
 #[doc="<p>A subset of instances to list by status:</p> <ul> <li> <p>Pending: Include those instance with pending deployments.</p> </li> <li> <p>InProgress: Include those instance where deployments are still in progress.</p> </li> <li> <p>Succeeded: Include those instances with successful deployments.</p> </li> <li> <p>Failed: Include those instance with failed deployments.</p> </li> <li> <p>Skipped: Include those instance with skipped deployments.</p> </li> <li> <p>Unknown: Include those instance with deployments in an unknown state.</p> </li> </ul>"]
 #[serde(rename="instanceStatusFilter")]
 pub instance_status_filter: Option<InstanceStatusList>,
-#[doc="<p>The set of instances in a blue/green deployment, either those in the original environment (\"BLUE\") or those in the replacement environment (\"GREEN\"), for which you want to view instance information.</p>"]
-#[serde(rename="instanceTypeFilter")]
-pub instance_type_filter: Option<InstanceTypeList>,
 #[doc="<p>An identifier returned from the previous list deployment instances call. It can be used to return the next set of deployment instances in the list.</p>"]
 #[serde(rename="nextToken")]
 pub next_token: Option<NextToken>,
@@ -1138,14 +1008,6 @@ pub next_token: Option<NextToken>,
             }
             
 pub type ListStateFilterAction = String;
-#[doc="<p>Information about the load balancer used in a blue/green deployment.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct LoadBalancerInfo {
-                #[doc="<p>An array containing information about the load balancer in Elastic Load Balancing to use in a blue/green deployment.</p>"]
-#[serde(rename="elbInfoList")]
-pub elb_info_list: Option<ELBInfoList>,
-            }
-            
 pub type LogTail = String;
 pub type Message = String;
 #[doc="<p>Information about minimum healthy instance.</p>"]
@@ -1207,7 +1069,7 @@ pub type Repository = String;
 #[doc="<p>Information about an application revision.</p>"]
 #[derive(Default,Debug,Clone,Deserialize)]
             pub struct RevisionInfo {
-                #[doc="<p>Information about an application revision, including usage details and associated deployment groups.</p>"]
+                #[doc="<p>Information about an application revision, including usage details and currently associated deployment groups.</p>"]
 #[serde(rename="genericRevisionInfo")]
 pub generic_revision_info: Option<GenericRevisionInfo>,
 #[doc="<p>Information about the location and type of an application revision.</p>"]
@@ -1270,13 +1132,6 @@ pub version: Option<VersionId>,
             }
             
 pub type ScriptName = String;
-#[derive(Default,Debug,Clone,Serialize)]
-            pub struct SkipWaitTimeForInstanceTerminationInput {
-                #[doc="<p>The ID of the blue/green deployment for which you want to skip the instance termination wait time.</p>"]
-#[serde(rename="deploymentId")]
-pub deployment_id: Option<DeploymentId>,
-            }
-            
 pub type SortOrder = String;
 #[doc="<p>Represents the input of a stop deployment operation.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
@@ -1330,17 +1185,6 @@ pub value: Option<Value>,
 pub type TagFilterList = Vec<TagFilter>;
 pub type TagFilterType = String;
 pub type TagList = Vec<Tag>;
-#[doc="<p>Information about the instances to be used in the replacement environment in a blue/green deployment.</p>"]
-#[derive(Default,Debug,Clone,Serialize,Deserialize)]
-            pub struct TargetInstances {
-                #[doc="<p>The names of one or more Auto Scaling groups to identify a replacement environment for a blue/green deployment.</p>"]
-#[serde(rename="autoScalingGroups")]
-pub auto_scaling_groups: Option<AutoScalingGroupNameList>,
-#[doc="<p>The tag filter key, type, and value used to identify Amazon EC2 instances in a replacement environment for a blue/green deployment.</p>"]
-#[serde(rename="tagFilters")]
-pub tag_filters: Option<EC2TagFilterList>,
-            }
-            
 #[doc="<p>Information about a time range.</p>"]
 #[derive(Default,Debug,Clone,Serialize)]
             pub struct TimeRange {
@@ -1398,24 +1242,15 @@ pub auto_rollback_configuration: Option<AutoRollbackConfiguration>,
 #[doc="<p>The replacement list of Auto Scaling groups to be included in the deployment group, if you want to change them. To keep the Auto Scaling groups, enter their names. To remove Auto Scaling groups, do not enter any Auto Scaling group names.</p>"]
 #[serde(rename="autoScalingGroups")]
 pub auto_scaling_groups: Option<AutoScalingGroupNameList>,
-#[doc="<p>Information about blue/green deployment options for a deployment group.</p>"]
-#[serde(rename="blueGreenDeploymentConfiguration")]
-pub blue_green_deployment_configuration: Option<BlueGreenDeploymentConfiguration>,
 #[doc="<p>The current name of the deployment group.</p>"]
 #[serde(rename="currentDeploymentGroupName")]
 pub current_deployment_group_name: DeploymentGroupName,
 #[doc="<p>The replacement deployment configuration name to use, if you want to change it.</p>"]
 #[serde(rename="deploymentConfigName")]
 pub deployment_config_name: Option<DeploymentConfigName>,
-#[doc="<p>Information about the type of deployment, either standard or blue/green, you want to run and whether to route deployment traffic behind a load balancer.</p>"]
-#[serde(rename="deploymentStyle")]
-pub deployment_style: Option<DeploymentStyle>,
 #[doc="<p>The replacement set of Amazon EC2 tags on which to filter, if you want to change them. To keep the existing tags, enter their names. To remove tags, do not enter any tag names.</p>"]
 #[serde(rename="ec2TagFilters")]
 pub ec_2_tag_filters: Option<EC2TagFilterList>,
-#[doc="<p>Information about the load balancer used in a blue/green deployment.</p>"]
-#[serde(rename="loadBalancerInfo")]
-pub load_balancer_info: Option<LoadBalancerInfo>,
 #[doc="<p>The new name of the deployment group, if you want to change it.</p>"]
 #[serde(rename="newDeploymentGroupName")]
 pub new_deployment_group_name: Option<DeploymentGroupName>,
@@ -1907,75 +1742,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by ContinueDeployment
-                #[derive(Debug, PartialEq)]
-                pub enum ContinueDeploymentError {
-                    
-///<p>At least one deployment ID must be specified.</p>
-DeploymentIdRequired(String),
-///<p>The deployment does not exist with the applicable IAM user or AWS account.</p>
-DeploymentDoesNotExist(String),
-///<p>The deployment is already complete.</p>
-DeploymentAlreadyCompleted(String),
-///<p>At least one of the deployment IDs was specified in an invalid format.</p>
-InvalidDeploymentId(String),
-///<p>The deployment does not have a status of Ready and can't continue yet.</p>
-DeploymentIsNotInReadyState(String),
-///<p>A call was submitted that is not supported for the specified deployment type.</p>
-UnsupportedActionForDeploymentType(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl ContinueDeploymentError {
-                    pub fn from_body(body: &str) -> ContinueDeploymentError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "DeploymentIdRequiredException" => ContinueDeploymentError::DeploymentIdRequired(String::from(error_message)),"DeploymentDoesNotExistException" => ContinueDeploymentError::DeploymentDoesNotExist(String::from(error_message)),"DeploymentAlreadyCompletedException" => ContinueDeploymentError::DeploymentAlreadyCompleted(String::from(error_message)),"InvalidDeploymentIdException" => ContinueDeploymentError::InvalidDeploymentId(String::from(error_message)),"DeploymentIsNotInReadyStateException" => ContinueDeploymentError::DeploymentIsNotInReadyState(String::from(error_message)),"UnsupportedActionForDeploymentTypeException" => ContinueDeploymentError::UnsupportedActionForDeploymentType(String::from(error_message)),"ValidationException" => ContinueDeploymentError::Validation(error_message.to_string()),_ => ContinueDeploymentError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => ContinueDeploymentError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for ContinueDeploymentError {
-                    fn from(err: serde_json::error::Error) -> ContinueDeploymentError {
-                        ContinueDeploymentError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for ContinueDeploymentError {
-                    fn from(err: CredentialsError) -> ContinueDeploymentError {
-                        ContinueDeploymentError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for ContinueDeploymentError {
-                    fn from(err: HttpDispatchError) -> ContinueDeploymentError {
-                        ContinueDeploymentError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for ContinueDeploymentError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for ContinueDeploymentError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            ContinueDeploymentError::DeploymentIdRequired(ref cause) => cause,ContinueDeploymentError::DeploymentDoesNotExist(ref cause) => cause,ContinueDeploymentError::DeploymentAlreadyCompleted(ref cause) => cause,ContinueDeploymentError::InvalidDeploymentId(ref cause) => cause,ContinueDeploymentError::DeploymentIsNotInReadyState(ref cause) => cause,ContinueDeploymentError::UnsupportedActionForDeploymentType(ref cause) => cause,ContinueDeploymentError::Validation(ref cause) => cause,ContinueDeploymentError::Credentials(ref err) => err.description(),ContinueDeploymentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ContinueDeploymentError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by CreateApplication
                 #[derive(Debug, PartialEq)]
                 pub enum CreateApplicationError {
@@ -2071,12 +1837,8 @@ DeploymentConfigDoesNotExist(String),
 DescriptionTooLong(String),
 ///<p>The number of allowed deployments was exceeded.</p>
 DeploymentLimitExceeded(String),
-///<p>The target instance configuration is invalid. Possible causes include:</p> <ul> <li> <p>Configuration data for target instances was entered for an in-place deployment.</p> </li> <li> <p>The limit of 10 tags for a tag type was exceeded.</p> </li> <li> <p>The combined length of the tag names exceeded the limit. </p> </li> <li> <p>A specified tag is not currently applied to any instances.</p> </li> </ul>
-InvalidTargetInstances(String),
 ///<p>The automatic rollback configuration was specified in an invalid format. For example, automatic rollback is enabled but an invalid triggering event type or no event types were listed.</p>
-InvalidAutoRollbackConfig(String),
-///<p>An invalid load balancer name, or no load balancer name, was specified.</p>
-InvalidLoadBalancerInfo(String),/// An error occurred dispatching the HTTP request
+InvalidAutoRollbackConfig(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2095,7 +1857,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ApplicationNameRequiredException" => CreateDeploymentError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => CreateDeploymentError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => CreateDeploymentError::ApplicationDoesNotExist(String::from(error_message)),"DeploymentGroupNameRequiredException" => CreateDeploymentError::DeploymentGroupNameRequired(String::from(error_message)),"InvalidDeploymentGroupNameException" => CreateDeploymentError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupDoesNotExistException" => CreateDeploymentError::DeploymentGroupDoesNotExist(String::from(error_message)),"RevisionRequiredException" => CreateDeploymentError::RevisionRequired(String::from(error_message)),"RevisionDoesNotExistException" => CreateDeploymentError::RevisionDoesNotExist(String::from(error_message)),"InvalidRevisionException" => CreateDeploymentError::InvalidRevision(String::from(error_message)),"InvalidDeploymentConfigNameException" => CreateDeploymentError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => CreateDeploymentError::DeploymentConfigDoesNotExist(String::from(error_message)),"DescriptionTooLongException" => CreateDeploymentError::DescriptionTooLong(String::from(error_message)),"DeploymentLimitExceededException" => CreateDeploymentError::DeploymentLimitExceeded(String::from(error_message)),"InvalidTargetInstancesException" => CreateDeploymentError::InvalidTargetInstances(String::from(error_message)),"InvalidAutoRollbackConfigException" => CreateDeploymentError::InvalidAutoRollbackConfig(String::from(error_message)),"InvalidLoadBalancerInfoException" => CreateDeploymentError::InvalidLoadBalancerInfo(String::from(error_message)),"ValidationException" => CreateDeploymentError::Validation(error_message.to_string()),_ => CreateDeploymentError::Unknown(String::from(body))
+                                    "ApplicationNameRequiredException" => CreateDeploymentError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => CreateDeploymentError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => CreateDeploymentError::ApplicationDoesNotExist(String::from(error_message)),"DeploymentGroupNameRequiredException" => CreateDeploymentError::DeploymentGroupNameRequired(String::from(error_message)),"InvalidDeploymentGroupNameException" => CreateDeploymentError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupDoesNotExistException" => CreateDeploymentError::DeploymentGroupDoesNotExist(String::from(error_message)),"RevisionRequiredException" => CreateDeploymentError::RevisionRequired(String::from(error_message)),"RevisionDoesNotExistException" => CreateDeploymentError::RevisionDoesNotExist(String::from(error_message)),"InvalidRevisionException" => CreateDeploymentError::InvalidRevision(String::from(error_message)),"InvalidDeploymentConfigNameException" => CreateDeploymentError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => CreateDeploymentError::DeploymentConfigDoesNotExist(String::from(error_message)),"DescriptionTooLongException" => CreateDeploymentError::DescriptionTooLong(String::from(error_message)),"DeploymentLimitExceededException" => CreateDeploymentError::DeploymentLimitExceeded(String::from(error_message)),"InvalidAutoRollbackConfigException" => CreateDeploymentError::InvalidAutoRollbackConfig(String::from(error_message)),"ValidationException" => CreateDeploymentError::Validation(error_message.to_string()),_ => CreateDeploymentError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateDeploymentError::Unknown(String::from(body))
@@ -2126,7 +1888,7 @@ Unknown(String)
                 impl Error for CreateDeploymentError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateDeploymentError::ApplicationNameRequired(ref cause) => cause,CreateDeploymentError::InvalidApplicationName(ref cause) => cause,CreateDeploymentError::ApplicationDoesNotExist(ref cause) => cause,CreateDeploymentError::DeploymentGroupNameRequired(ref cause) => cause,CreateDeploymentError::InvalidDeploymentGroupName(ref cause) => cause,CreateDeploymentError::DeploymentGroupDoesNotExist(ref cause) => cause,CreateDeploymentError::RevisionRequired(ref cause) => cause,CreateDeploymentError::RevisionDoesNotExist(ref cause) => cause,CreateDeploymentError::InvalidRevision(ref cause) => cause,CreateDeploymentError::InvalidDeploymentConfigName(ref cause) => cause,CreateDeploymentError::DeploymentConfigDoesNotExist(ref cause) => cause,CreateDeploymentError::DescriptionTooLong(ref cause) => cause,CreateDeploymentError::DeploymentLimitExceeded(ref cause) => cause,CreateDeploymentError::InvalidTargetInstances(ref cause) => cause,CreateDeploymentError::InvalidAutoRollbackConfig(ref cause) => cause,CreateDeploymentError::InvalidLoadBalancerInfo(ref cause) => cause,CreateDeploymentError::Validation(ref cause) => cause,CreateDeploymentError::Credentials(ref err) => err.description(),CreateDeploymentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDeploymentError::Unknown(ref cause) => cause
+                            CreateDeploymentError::ApplicationNameRequired(ref cause) => cause,CreateDeploymentError::InvalidApplicationName(ref cause) => cause,CreateDeploymentError::ApplicationDoesNotExist(ref cause) => cause,CreateDeploymentError::DeploymentGroupNameRequired(ref cause) => cause,CreateDeploymentError::InvalidDeploymentGroupName(ref cause) => cause,CreateDeploymentError::DeploymentGroupDoesNotExist(ref cause) => cause,CreateDeploymentError::RevisionRequired(ref cause) => cause,CreateDeploymentError::RevisionDoesNotExist(ref cause) => cause,CreateDeploymentError::InvalidRevision(ref cause) => cause,CreateDeploymentError::InvalidDeploymentConfigName(ref cause) => cause,CreateDeploymentError::DeploymentConfigDoesNotExist(ref cause) => cause,CreateDeploymentError::DescriptionTooLong(ref cause) => cause,CreateDeploymentError::DeploymentLimitExceeded(ref cause) => cause,CreateDeploymentError::InvalidAutoRollbackConfig(ref cause) => cause,CreateDeploymentError::Validation(ref cause) => cause,CreateDeploymentError::Credentials(ref err) => err.description(),CreateDeploymentError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDeploymentError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -2240,13 +2002,7 @@ InvalidAlarmConfig(String),
 ///<p>The maximum number of alarms for a deployment group (10) was exceeded.</p>
 AlarmsLimitExceeded(String),
 ///<p>The automatic rollback configuration was specified in an invalid format. For example, automatic rollback is enabled but an invalid triggering event type or no event types were listed.</p>
-InvalidAutoRollbackConfig(String),
-///<p>An invalid load balancer name, or no load balancer name, was specified.</p>
-InvalidLoadBalancerInfo(String),
-///<p>An invalid deployment style was specified. Valid deployment types include "IN_PLACE" and "BLUE_GREEN". Valid deployment options for blue/green deployments include "WITH_TRAFFIC_CONTROL" and "WITHOUT_TRAFFIC_CONTROL".</p>
-InvalidDeploymentStyle(String),
-///<p>The configuration for the blue/green deployment group was provided in an invalid format. For information about deployment configuration format, see <a>CreateDeploymentConfig</a>.</p>
-InvalidBlueGreenDeploymentConfiguration(String),/// An error occurred dispatching the HTTP request
+InvalidAutoRollbackConfig(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -2265,7 +2021,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ApplicationNameRequiredException" => CreateDeploymentGroupError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => CreateDeploymentGroupError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => CreateDeploymentGroupError::ApplicationDoesNotExist(String::from(error_message)),"DeploymentGroupNameRequiredException" => CreateDeploymentGroupError::DeploymentGroupNameRequired(String::from(error_message)),"InvalidDeploymentGroupNameException" => CreateDeploymentGroupError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupAlreadyExistsException" => CreateDeploymentGroupError::DeploymentGroupAlreadyExists(String::from(error_message)),"InvalidEC2TagException" => CreateDeploymentGroupError::InvalidEC2Tag(String::from(error_message)),"InvalidTagException" => CreateDeploymentGroupError::InvalidTag(String::from(error_message)),"InvalidAutoScalingGroupException" => CreateDeploymentGroupError::InvalidAutoScalingGroup(String::from(error_message)),"InvalidDeploymentConfigNameException" => CreateDeploymentGroupError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => CreateDeploymentGroupError::DeploymentConfigDoesNotExist(String::from(error_message)),"RoleRequiredException" => CreateDeploymentGroupError::RoleRequired(String::from(error_message)),"InvalidRoleException" => CreateDeploymentGroupError::InvalidRole(String::from(error_message)),"DeploymentGroupLimitExceededException" => CreateDeploymentGroupError::DeploymentGroupLimitExceeded(String::from(error_message)),"LifecycleHookLimitExceededException" => CreateDeploymentGroupError::LifecycleHookLimitExceeded(String::from(error_message)),"InvalidTriggerConfigException" => CreateDeploymentGroupError::InvalidTriggerConfig(String::from(error_message)),"TriggerTargetsLimitExceededException" => CreateDeploymentGroupError::TriggerTargetsLimitExceeded(String::from(error_message)),"InvalidAlarmConfigException" => CreateDeploymentGroupError::InvalidAlarmConfig(String::from(error_message)),"AlarmsLimitExceededException" => CreateDeploymentGroupError::AlarmsLimitExceeded(String::from(error_message)),"InvalidAutoRollbackConfigException" => CreateDeploymentGroupError::InvalidAutoRollbackConfig(String::from(error_message)),"InvalidLoadBalancerInfoException" => CreateDeploymentGroupError::InvalidLoadBalancerInfo(String::from(error_message)),"InvalidDeploymentStyleException" => CreateDeploymentGroupError::InvalidDeploymentStyle(String::from(error_message)),"InvalidBlueGreenDeploymentConfigurationException" => CreateDeploymentGroupError::InvalidBlueGreenDeploymentConfiguration(String::from(error_message)),"ValidationException" => CreateDeploymentGroupError::Validation(error_message.to_string()),_ => CreateDeploymentGroupError::Unknown(String::from(body))
+                                    "ApplicationNameRequiredException" => CreateDeploymentGroupError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => CreateDeploymentGroupError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => CreateDeploymentGroupError::ApplicationDoesNotExist(String::from(error_message)),"DeploymentGroupNameRequiredException" => CreateDeploymentGroupError::DeploymentGroupNameRequired(String::from(error_message)),"InvalidDeploymentGroupNameException" => CreateDeploymentGroupError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupAlreadyExistsException" => CreateDeploymentGroupError::DeploymentGroupAlreadyExists(String::from(error_message)),"InvalidEC2TagException" => CreateDeploymentGroupError::InvalidEC2Tag(String::from(error_message)),"InvalidTagException" => CreateDeploymentGroupError::InvalidTag(String::from(error_message)),"InvalidAutoScalingGroupException" => CreateDeploymentGroupError::InvalidAutoScalingGroup(String::from(error_message)),"InvalidDeploymentConfigNameException" => CreateDeploymentGroupError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => CreateDeploymentGroupError::DeploymentConfigDoesNotExist(String::from(error_message)),"RoleRequiredException" => CreateDeploymentGroupError::RoleRequired(String::from(error_message)),"InvalidRoleException" => CreateDeploymentGroupError::InvalidRole(String::from(error_message)),"DeploymentGroupLimitExceededException" => CreateDeploymentGroupError::DeploymentGroupLimitExceeded(String::from(error_message)),"LifecycleHookLimitExceededException" => CreateDeploymentGroupError::LifecycleHookLimitExceeded(String::from(error_message)),"InvalidTriggerConfigException" => CreateDeploymentGroupError::InvalidTriggerConfig(String::from(error_message)),"TriggerTargetsLimitExceededException" => CreateDeploymentGroupError::TriggerTargetsLimitExceeded(String::from(error_message)),"InvalidAlarmConfigException" => CreateDeploymentGroupError::InvalidAlarmConfig(String::from(error_message)),"AlarmsLimitExceededException" => CreateDeploymentGroupError::AlarmsLimitExceeded(String::from(error_message)),"InvalidAutoRollbackConfigException" => CreateDeploymentGroupError::InvalidAutoRollbackConfig(String::from(error_message)),"ValidationException" => CreateDeploymentGroupError::Validation(error_message.to_string()),_ => CreateDeploymentGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => CreateDeploymentGroupError::Unknown(String::from(body))
@@ -2296,7 +2052,7 @@ Unknown(String)
                 impl Error for CreateDeploymentGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            CreateDeploymentGroupError::ApplicationNameRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidApplicationName(ref cause) => cause,CreateDeploymentGroupError::ApplicationDoesNotExist(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupNameRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidDeploymentGroupName(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupAlreadyExists(ref cause) => cause,CreateDeploymentGroupError::InvalidEC2Tag(ref cause) => cause,CreateDeploymentGroupError::InvalidTag(ref cause) => cause,CreateDeploymentGroupError::InvalidAutoScalingGroup(ref cause) => cause,CreateDeploymentGroupError::InvalidDeploymentConfigName(ref cause) => cause,CreateDeploymentGroupError::DeploymentConfigDoesNotExist(ref cause) => cause,CreateDeploymentGroupError::RoleRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidRole(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::LifecycleHookLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidTriggerConfig(ref cause) => cause,CreateDeploymentGroupError::TriggerTargetsLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidAlarmConfig(ref cause) => cause,CreateDeploymentGroupError::AlarmsLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidAutoRollbackConfig(ref cause) => cause,CreateDeploymentGroupError::InvalidLoadBalancerInfo(ref cause) => cause,CreateDeploymentGroupError::InvalidDeploymentStyle(ref cause) => cause,CreateDeploymentGroupError::InvalidBlueGreenDeploymentConfiguration(ref cause) => cause,CreateDeploymentGroupError::Validation(ref cause) => cause,CreateDeploymentGroupError::Credentials(ref err) => err.description(),CreateDeploymentGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDeploymentGroupError::Unknown(ref cause) => cause
+                            CreateDeploymentGroupError::ApplicationNameRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidApplicationName(ref cause) => cause,CreateDeploymentGroupError::ApplicationDoesNotExist(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupNameRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidDeploymentGroupName(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupAlreadyExists(ref cause) => cause,CreateDeploymentGroupError::InvalidEC2Tag(ref cause) => cause,CreateDeploymentGroupError::InvalidTag(ref cause) => cause,CreateDeploymentGroupError::InvalidAutoScalingGroup(ref cause) => cause,CreateDeploymentGroupError::InvalidDeploymentConfigName(ref cause) => cause,CreateDeploymentGroupError::DeploymentConfigDoesNotExist(ref cause) => cause,CreateDeploymentGroupError::RoleRequired(ref cause) => cause,CreateDeploymentGroupError::InvalidRole(ref cause) => cause,CreateDeploymentGroupError::DeploymentGroupLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::LifecycleHookLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidTriggerConfig(ref cause) => cause,CreateDeploymentGroupError::TriggerTargetsLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidAlarmConfig(ref cause) => cause,CreateDeploymentGroupError::AlarmsLimitExceeded(ref cause) => cause,CreateDeploymentGroupError::InvalidAutoRollbackConfig(ref cause) => cause,CreateDeploymentGroupError::Validation(ref cause) => cause,CreateDeploymentGroupError::Credentials(ref err) => err.description(),CreateDeploymentGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),CreateDeploymentGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3288,9 +3044,7 @@ InvalidNextToken(String),
 ///<p>At least one of the deployment IDs was specified in an invalid format.</p>
 InvalidDeploymentId(String),
 ///<p>The specified instance status does not exist.</p>
-InvalidInstanceStatus(String),
-///<p>An invalid instance type was specified for instances in a blue/green deployment. Valid values include "Blue" for an original environment and "Green" for a replacement environment.</p>
-InvalidInstanceType(String),/// An error occurred dispatching the HTTP request
+InvalidInstanceStatus(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3309,7 +3063,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "DeploymentIdRequiredException" => ListDeploymentInstancesError::DeploymentIdRequired(String::from(error_message)),"DeploymentDoesNotExistException" => ListDeploymentInstancesError::DeploymentDoesNotExist(String::from(error_message)),"DeploymentNotStartedException" => ListDeploymentInstancesError::DeploymentNotStarted(String::from(error_message)),"InvalidNextTokenException" => ListDeploymentInstancesError::InvalidNextToken(String::from(error_message)),"InvalidDeploymentIdException" => ListDeploymentInstancesError::InvalidDeploymentId(String::from(error_message)),"InvalidInstanceStatusException" => ListDeploymentInstancesError::InvalidInstanceStatus(String::from(error_message)),"InvalidInstanceTypeException" => ListDeploymentInstancesError::InvalidInstanceType(String::from(error_message)),"ValidationException" => ListDeploymentInstancesError::Validation(error_message.to_string()),_ => ListDeploymentInstancesError::Unknown(String::from(body))
+                                    "DeploymentIdRequiredException" => ListDeploymentInstancesError::DeploymentIdRequired(String::from(error_message)),"DeploymentDoesNotExistException" => ListDeploymentInstancesError::DeploymentDoesNotExist(String::from(error_message)),"DeploymentNotStartedException" => ListDeploymentInstancesError::DeploymentNotStarted(String::from(error_message)),"InvalidNextTokenException" => ListDeploymentInstancesError::InvalidNextToken(String::from(error_message)),"InvalidDeploymentIdException" => ListDeploymentInstancesError::InvalidDeploymentId(String::from(error_message)),"InvalidInstanceStatusException" => ListDeploymentInstancesError::InvalidInstanceStatus(String::from(error_message)),"ValidationException" => ListDeploymentInstancesError::Validation(error_message.to_string()),_ => ListDeploymentInstancesError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => ListDeploymentInstancesError::Unknown(String::from(body))
@@ -3340,7 +3094,7 @@ Unknown(String)
                 impl Error for ListDeploymentInstancesError {
                     fn description(&self) -> &str {
                         match *self {
-                            ListDeploymentInstancesError::DeploymentIdRequired(ref cause) => cause,ListDeploymentInstancesError::DeploymentDoesNotExist(ref cause) => cause,ListDeploymentInstancesError::DeploymentNotStarted(ref cause) => cause,ListDeploymentInstancesError::InvalidNextToken(ref cause) => cause,ListDeploymentInstancesError::InvalidDeploymentId(ref cause) => cause,ListDeploymentInstancesError::InvalidInstanceStatus(ref cause) => cause,ListDeploymentInstancesError::InvalidInstanceType(ref cause) => cause,ListDeploymentInstancesError::Validation(ref cause) => cause,ListDeploymentInstancesError::Credentials(ref err) => err.description(),ListDeploymentInstancesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDeploymentInstancesError::Unknown(ref cause) => cause
+                            ListDeploymentInstancesError::DeploymentIdRequired(ref cause) => cause,ListDeploymentInstancesError::DeploymentDoesNotExist(ref cause) => cause,ListDeploymentInstancesError::DeploymentNotStarted(ref cause) => cause,ListDeploymentInstancesError::InvalidNextToken(ref cause) => cause,ListDeploymentInstancesError::InvalidDeploymentId(ref cause) => cause,ListDeploymentInstancesError::InvalidInstanceStatus(ref cause) => cause,ListDeploymentInstancesError::Validation(ref cause) => cause,ListDeploymentInstancesError::Credentials(ref err) => err.description(),ListDeploymentInstancesError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),ListDeploymentInstancesError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -3697,75 +3451,6 @@ Unknown(String)
                         }
                     }
                  }
-/// Errors returned by SkipWaitTimeForInstanceTermination
-                #[derive(Debug, PartialEq)]
-                pub enum SkipWaitTimeForInstanceTerminationError {
-                    
-///<p>At least one deployment ID must be specified.</p>
-DeploymentIdRequired(String),
-///<p>The deployment does not exist with the applicable IAM user or AWS account.</p>
-DeploymentDoesNotExist(String),
-///<p>The deployment is already complete.</p>
-DeploymentAlreadyCompleted(String),
-///<p>At least one of the deployment IDs was specified in an invalid format.</p>
-InvalidDeploymentId(String),
-///<p>The specified deployment has not started.</p>
-DeploymentNotStarted(String),
-///<p>A call was submitted that is not supported for the specified deployment type.</p>
-UnsupportedActionForDeploymentType(String),/// An error occurred dispatching the HTTP request
-HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
-Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
-Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
-Unknown(String)
-                }
-
-                
-                impl SkipWaitTimeForInstanceTerminationError {
-                    pub fn from_body(body: &str) -> SkipWaitTimeForInstanceTerminationError {
-                        match from_str::<SerdeJsonValue>(body) {
-                            Ok(json) => {
-                                let raw_error_type = json.get("__type").and_then(|e| e.as_str()).unwrap_or("Unknown");
-                                let error_message = json.get("message").and_then(|m| m.as_str()).unwrap_or(body);
-
-                                let pieces: Vec<&str> = raw_error_type.split("#").collect();
-                                let error_type = pieces.last().expect("Expected error type");
-
-                                match *error_type {
-                                    "DeploymentIdRequiredException" => SkipWaitTimeForInstanceTerminationError::DeploymentIdRequired(String::from(error_message)),"DeploymentDoesNotExistException" => SkipWaitTimeForInstanceTerminationError::DeploymentDoesNotExist(String::from(error_message)),"DeploymentAlreadyCompletedException" => SkipWaitTimeForInstanceTerminationError::DeploymentAlreadyCompleted(String::from(error_message)),"InvalidDeploymentIdException" => SkipWaitTimeForInstanceTerminationError::InvalidDeploymentId(String::from(error_message)),"DeploymentNotStartedException" => SkipWaitTimeForInstanceTerminationError::DeploymentNotStarted(String::from(error_message)),"UnsupportedActionForDeploymentTypeException" => SkipWaitTimeForInstanceTerminationError::UnsupportedActionForDeploymentType(String::from(error_message)),"ValidationException" => SkipWaitTimeForInstanceTerminationError::Validation(error_message.to_string()),_ => SkipWaitTimeForInstanceTerminationError::Unknown(String::from(body))
-                                }
-                            },
-                            Err(_) => SkipWaitTimeForInstanceTerminationError::Unknown(String::from(body))
-                        }
-                    }
-                }
-                
-                impl From<serde_json::error::Error> for SkipWaitTimeForInstanceTerminationError {
-                    fn from(err: serde_json::error::Error) -> SkipWaitTimeForInstanceTerminationError {
-                        SkipWaitTimeForInstanceTerminationError::Unknown(err.description().to_string())
-                    }
-                }
-                impl From<CredentialsError> for SkipWaitTimeForInstanceTerminationError {
-                    fn from(err: CredentialsError) -> SkipWaitTimeForInstanceTerminationError {
-                        SkipWaitTimeForInstanceTerminationError::Credentials(err)
-                    }
-                }
-                impl From<HttpDispatchError> for SkipWaitTimeForInstanceTerminationError {
-                    fn from(err: HttpDispatchError) -> SkipWaitTimeForInstanceTerminationError {
-                        SkipWaitTimeForInstanceTerminationError::HttpDispatch(err)
-                    }
-                }
-                impl fmt::Display for SkipWaitTimeForInstanceTerminationError {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}", self.description())
-                    }
-                }
-                impl Error for SkipWaitTimeForInstanceTerminationError {
-                    fn description(&self) -> &str {
-                        match *self {
-                            SkipWaitTimeForInstanceTerminationError::DeploymentIdRequired(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::DeploymentDoesNotExist(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::DeploymentAlreadyCompleted(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::InvalidDeploymentId(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::DeploymentNotStarted(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::UnsupportedActionForDeploymentType(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::Validation(ref cause) => cause,SkipWaitTimeForInstanceTerminationError::Credentials(ref err) => err.description(),SkipWaitTimeForInstanceTerminationError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),SkipWaitTimeForInstanceTerminationError::Unknown(ref cause) => cause
-                        }
-                    }
-                 }
 /// Errors returned by StopDeployment
                 #[derive(Debug, PartialEq)]
                 pub enum StopDeploymentError {
@@ -3937,13 +3622,7 @@ InvalidAlarmConfig(String),
 ///<p>The maximum number of alarms for a deployment group (10) was exceeded.</p>
 AlarmsLimitExceeded(String),
 ///<p>The automatic rollback configuration was specified in an invalid format. For example, automatic rollback is enabled but an invalid triggering event type or no event types were listed.</p>
-InvalidAutoRollbackConfig(String),
-///<p>An invalid load balancer name, or no load balancer name, was specified.</p>
-InvalidLoadBalancerInfo(String),
-///<p>An invalid deployment style was specified. Valid deployment types include "IN_PLACE" and "BLUE_GREEN". Valid deployment options for blue/green deployments include "WITH_TRAFFIC_CONTROL" and "WITHOUT_TRAFFIC_CONTROL".</p>
-InvalidDeploymentStyle(String),
-///<p>The configuration for the blue/green deployment group was provided in an invalid format. For information about deployment configuration format, see <a>CreateDeploymentConfig</a>.</p>
-InvalidBlueGreenDeploymentConfiguration(String),/// An error occurred dispatching the HTTP request
+InvalidAutoRollbackConfig(String),/// An error occurred dispatching the HTTP request
 HttpDispatch(HttpDispatchError),/// An error was encountered with AWS credentials.
 Credentials(CredentialsError),/// A validation error occurred.  Details from AWS are provided.
 Validation(String),/// An unknown error occurred.  The raw HTTP response is provided.
@@ -3962,7 +3641,7 @@ Unknown(String)
                                 let error_type = pieces.last().expect("Expected error type");
 
                                 match *error_type {
-                                    "ApplicationNameRequiredException" => UpdateDeploymentGroupError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => UpdateDeploymentGroupError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => UpdateDeploymentGroupError::ApplicationDoesNotExist(String::from(error_message)),"InvalidDeploymentGroupNameException" => UpdateDeploymentGroupError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupAlreadyExistsException" => UpdateDeploymentGroupError::DeploymentGroupAlreadyExists(String::from(error_message)),"DeploymentGroupNameRequiredException" => UpdateDeploymentGroupError::DeploymentGroupNameRequired(String::from(error_message)),"DeploymentGroupDoesNotExistException" => UpdateDeploymentGroupError::DeploymentGroupDoesNotExist(String::from(error_message)),"InvalidEC2TagException" => UpdateDeploymentGroupError::InvalidEC2Tag(String::from(error_message)),"InvalidTagException" => UpdateDeploymentGroupError::InvalidTag(String::from(error_message)),"InvalidAutoScalingGroupException" => UpdateDeploymentGroupError::InvalidAutoScalingGroup(String::from(error_message)),"InvalidDeploymentConfigNameException" => UpdateDeploymentGroupError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => UpdateDeploymentGroupError::DeploymentConfigDoesNotExist(String::from(error_message)),"InvalidRoleException" => UpdateDeploymentGroupError::InvalidRole(String::from(error_message)),"LifecycleHookLimitExceededException" => UpdateDeploymentGroupError::LifecycleHookLimitExceeded(String::from(error_message)),"InvalidTriggerConfigException" => UpdateDeploymentGroupError::InvalidTriggerConfig(String::from(error_message)),"TriggerTargetsLimitExceededException" => UpdateDeploymentGroupError::TriggerTargetsLimitExceeded(String::from(error_message)),"InvalidAlarmConfigException" => UpdateDeploymentGroupError::InvalidAlarmConfig(String::from(error_message)),"AlarmsLimitExceededException" => UpdateDeploymentGroupError::AlarmsLimitExceeded(String::from(error_message)),"InvalidAutoRollbackConfigException" => UpdateDeploymentGroupError::InvalidAutoRollbackConfig(String::from(error_message)),"InvalidLoadBalancerInfoException" => UpdateDeploymentGroupError::InvalidLoadBalancerInfo(String::from(error_message)),"InvalidDeploymentStyleException" => UpdateDeploymentGroupError::InvalidDeploymentStyle(String::from(error_message)),"InvalidBlueGreenDeploymentConfigurationException" => UpdateDeploymentGroupError::InvalidBlueGreenDeploymentConfiguration(String::from(error_message)),"ValidationException" => UpdateDeploymentGroupError::Validation(error_message.to_string()),_ => UpdateDeploymentGroupError::Unknown(String::from(body))
+                                    "ApplicationNameRequiredException" => UpdateDeploymentGroupError::ApplicationNameRequired(String::from(error_message)),"InvalidApplicationNameException" => UpdateDeploymentGroupError::InvalidApplicationName(String::from(error_message)),"ApplicationDoesNotExistException" => UpdateDeploymentGroupError::ApplicationDoesNotExist(String::from(error_message)),"InvalidDeploymentGroupNameException" => UpdateDeploymentGroupError::InvalidDeploymentGroupName(String::from(error_message)),"DeploymentGroupAlreadyExistsException" => UpdateDeploymentGroupError::DeploymentGroupAlreadyExists(String::from(error_message)),"DeploymentGroupNameRequiredException" => UpdateDeploymentGroupError::DeploymentGroupNameRequired(String::from(error_message)),"DeploymentGroupDoesNotExistException" => UpdateDeploymentGroupError::DeploymentGroupDoesNotExist(String::from(error_message)),"InvalidEC2TagException" => UpdateDeploymentGroupError::InvalidEC2Tag(String::from(error_message)),"InvalidTagException" => UpdateDeploymentGroupError::InvalidTag(String::from(error_message)),"InvalidAutoScalingGroupException" => UpdateDeploymentGroupError::InvalidAutoScalingGroup(String::from(error_message)),"InvalidDeploymentConfigNameException" => UpdateDeploymentGroupError::InvalidDeploymentConfigName(String::from(error_message)),"DeploymentConfigDoesNotExistException" => UpdateDeploymentGroupError::DeploymentConfigDoesNotExist(String::from(error_message)),"InvalidRoleException" => UpdateDeploymentGroupError::InvalidRole(String::from(error_message)),"LifecycleHookLimitExceededException" => UpdateDeploymentGroupError::LifecycleHookLimitExceeded(String::from(error_message)),"InvalidTriggerConfigException" => UpdateDeploymentGroupError::InvalidTriggerConfig(String::from(error_message)),"TriggerTargetsLimitExceededException" => UpdateDeploymentGroupError::TriggerTargetsLimitExceeded(String::from(error_message)),"InvalidAlarmConfigException" => UpdateDeploymentGroupError::InvalidAlarmConfig(String::from(error_message)),"AlarmsLimitExceededException" => UpdateDeploymentGroupError::AlarmsLimitExceeded(String::from(error_message)),"InvalidAutoRollbackConfigException" => UpdateDeploymentGroupError::InvalidAutoRollbackConfig(String::from(error_message)),"ValidationException" => UpdateDeploymentGroupError::Validation(error_message.to_string()),_ => UpdateDeploymentGroupError::Unknown(String::from(body))
                                 }
                             },
                             Err(_) => UpdateDeploymentGroupError::Unknown(String::from(body))
@@ -3993,7 +3672,7 @@ Unknown(String)
                 impl Error for UpdateDeploymentGroupError {
                     fn description(&self) -> &str {
                         match *self {
-                            UpdateDeploymentGroupError::ApplicationNameRequired(ref cause) => cause,UpdateDeploymentGroupError::InvalidApplicationName(ref cause) => cause,UpdateDeploymentGroupError::ApplicationDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidDeploymentGroupName(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupAlreadyExists(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupNameRequired(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidEC2Tag(ref cause) => cause,UpdateDeploymentGroupError::InvalidTag(ref cause) => cause,UpdateDeploymentGroupError::InvalidAutoScalingGroup(ref cause) => cause,UpdateDeploymentGroupError::InvalidDeploymentConfigName(ref cause) => cause,UpdateDeploymentGroupError::DeploymentConfigDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidRole(ref cause) => cause,UpdateDeploymentGroupError::LifecycleHookLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidTriggerConfig(ref cause) => cause,UpdateDeploymentGroupError::TriggerTargetsLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidAlarmConfig(ref cause) => cause,UpdateDeploymentGroupError::AlarmsLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidAutoRollbackConfig(ref cause) => cause,UpdateDeploymentGroupError::InvalidLoadBalancerInfo(ref cause) => cause,UpdateDeploymentGroupError::InvalidDeploymentStyle(ref cause) => cause,UpdateDeploymentGroupError::InvalidBlueGreenDeploymentConfiguration(ref cause) => cause,UpdateDeploymentGroupError::Validation(ref cause) => cause,UpdateDeploymentGroupError::Credentials(ref err) => err.description(),UpdateDeploymentGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDeploymentGroupError::Unknown(ref cause) => cause
+                            UpdateDeploymentGroupError::ApplicationNameRequired(ref cause) => cause,UpdateDeploymentGroupError::InvalidApplicationName(ref cause) => cause,UpdateDeploymentGroupError::ApplicationDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidDeploymentGroupName(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupAlreadyExists(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupNameRequired(ref cause) => cause,UpdateDeploymentGroupError::DeploymentGroupDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidEC2Tag(ref cause) => cause,UpdateDeploymentGroupError::InvalidTag(ref cause) => cause,UpdateDeploymentGroupError::InvalidAutoScalingGroup(ref cause) => cause,UpdateDeploymentGroupError::InvalidDeploymentConfigName(ref cause) => cause,UpdateDeploymentGroupError::DeploymentConfigDoesNotExist(ref cause) => cause,UpdateDeploymentGroupError::InvalidRole(ref cause) => cause,UpdateDeploymentGroupError::LifecycleHookLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidTriggerConfig(ref cause) => cause,UpdateDeploymentGroupError::TriggerTargetsLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidAlarmConfig(ref cause) => cause,UpdateDeploymentGroupError::AlarmsLimitExceeded(ref cause) => cause,UpdateDeploymentGroupError::InvalidAutoRollbackConfig(ref cause) => cause,UpdateDeploymentGroupError::Validation(ref cause) => cause,UpdateDeploymentGroupError::Credentials(ref err) => err.description(),UpdateDeploymentGroupError::HttpDispatch(ref dispatch_error) => dispatch_error.description(),UpdateDeploymentGroupError::Unknown(ref cause) => cause
                         }
                     }
                  }
@@ -4165,28 +3844,6 @@ Unknown(String)
                             Ok(serde_json::from_str::<BatchGetOnPremisesInstancesOutput>(String::from_utf8_lossy(&response.body).as_ref()).unwrap())
                         }
                         _ => Err(BatchGetOnPremisesInstancesError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>Starts the process of rerouting traffic from instances in the original environment to instances in thereplacement environment without waiting for a specified wait time to elapse. (Traffic rerouting, which is achieved by registering instances in the replacement environment with the load balancer, can start as soon as all instances have a status of Ready.) </p>"]
-                pub fn continue_deployment(&self, input: &ContinueDeploymentInput)  -> Result<(), ContinueDeploymentError> {
-                    let mut request = SignedRequest::new("POST", "codedeploy", self.region, "/");
-                    
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    request.add_header("x-amz-target", "CodeDeploy_20141006.ContinueDeployment");
-                    let encoded = serde_json::to_string(input).unwrap();
-         request.set_payload(Some(encoded.into_bytes()));
-         
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let response = try!(self.dispatcher.dispatch(&request));
-
-                    match response.status {
-                        StatusCode::Ok => {
-                            Ok(())
-                        }
-                        _ => Err(ContinueDeploymentError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
                     }
                 }
                 
@@ -4737,28 +4394,6 @@ Unknown(String)
                             Ok(())
                         }
                         _ => Err(RemoveTagsFromOnPremisesInstancesError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
-                    }
-                }
-                
-
-                #[doc="<p>In a blue/green deployment, overrides any specified wait time and starts terminating instances immediately after the traffic routing is completed.</p>"]
-                pub fn skip_wait_time_for_instance_termination(&self, input: &SkipWaitTimeForInstanceTerminationInput)  -> Result<(), SkipWaitTimeForInstanceTerminationError> {
-                    let mut request = SignedRequest::new("POST", "codedeploy", self.region, "/");
-                    
-                    request.set_content_type("application/x-amz-json-1.1".to_owned());
-                    request.add_header("x-amz-target", "CodeDeploy_20141006.SkipWaitTimeForInstanceTermination");
-                    let encoded = serde_json::to_string(input).unwrap();
-         request.set_payload(Some(encoded.into_bytes()));
-         
-                    request.sign(&try!(self.credentials_provider.credentials()));
-
-                    let response = try!(self.dispatcher.dispatch(&request));
-
-                    match response.status {
-                        StatusCode::Ok => {
-                            Ok(())
-                        }
-                        _ => Err(SkipWaitTimeForInstanceTerminationError::from_body(String::from_utf8_lossy(&response.body).as_ref())),
                     }
                 }
                 
