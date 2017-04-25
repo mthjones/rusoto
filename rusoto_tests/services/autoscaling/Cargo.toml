@@ -1,0 +1,19 @@
+[package]
+authors = ["Anthony DiMarco <ocramida@gmail.com>", "Jimmy Cuadra <jimmy@jimmycuadra.com>", "Matthew Mayer <matthewkmayer@gmail.com>", "Nikita Pekin <contact@nikitapek.in>"]
+description = "AWS SDK for Rust - Auto Scaling - Integration Tests"
+documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
+keywords = ["AWS", "Amazon", "autoscaling", "Auto Scaling", "autoscaling"]
+license = "MIT"
+name = "rusoto_autoscaling"
+repository = "https://github.com/rusoto/rusoto"
+version = "0.24.0"
+homepage = "https://www.rusoto.org/"
+
+[dependencies.rusoto_core]
+version = "0.24.0"
+path = "../../../rusoto/core"
+features = ["xml"]
+
+[dependencies.rusoto_autoscaling]
+version = "0.24.0"
+path = "../../../rusoto/services/autoscaling"

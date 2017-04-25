@@ -1,0 +1,24 @@
+[package]
+authors = ["Anthony DiMarco <ocramida@gmail.com>", "Jimmy Cuadra <jimmy@jimmycuadra.com>", "Matthew Mayer <matthewkmayer@gmail.com>", "Nikita Pekin <contact@nikitapek.in>"]
+description = "AWS SDK for Rust - Amazon Inspector - Integration Tests"
+documentation = "http://rusoto.github.io/rusoto/rusoto/index.html"
+keywords = ["AWS", "Amazon", "inspector", "Amazon Inspector", "inspector"]
+license = "MIT"
+name = "rusoto_inspector"
+repository = "https://github.com/rusoto/rusoto"
+version = "0.24.0"
+homepage = "https://www.rusoto.org/"
+
+[build-dependencies]
+
+[dependencies]
+hyper = "0.10.0"
+serde = "0.9.5"
+serde_derive = "0.9.5"
+serde_json = "0.9.4"
+
+[dependencies.rusoto_core]
+version = "0.24.0"
+path = "../../core"
+[dev-dependencies.rusoto_mock]
+path = "../../mock"
