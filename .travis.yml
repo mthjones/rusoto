@@ -35,26 +35,12 @@ before_script:
 
 # the main build
 script:
-  - |
-      echo "Compiling Rusoto codegen" &&
-      (cd codegen && \
-        travis-cargo build -- $CARGO_ARGS && \
-        travis-cargo test -- --lib $CARGO_ARGS && \
-        travis-cargo bench -- $CARGO_ARGS)
-  - |
-      echo "Setting Rusoto compilation arguments" &&
-      export CARGO_ARGS="--features $RUSOTO_FEATURES -vv"
-  # get around our code being too big: split compilation up into A and B packages:
-  - echo "Running Rusoto tests A" && travis_wait 40 travis-cargo test -- --lib --features packagea -vv
-  - echo "Running Rusoto tests B" && travis_wait 40 travis-cargo test -- --lib --features packageb -vv
-  - echo "Running Rusoto benchmarks" && travis_wait travis-cargo bench -- $CARGO_ARGS
-  - echo "Running rusoto_credential tests" && (cd credential && travis_wait travis-cargo test)
+  - echo "Running Rusoto tests" && travis_wait 40 travis-cargo test -- --all -vv
+  - echo "Running Rusoto benchmarks" && travis_wait travis-cargo bench
   - |
       echo "Running cargo docs on stable Rust on Linux" &&
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        # Don't generate docs for `rusoto_codegen`, as it is intended entirely
-        # for internal use.
-        travis_wait travis-cargo --only stable doc -- --no-deps -p rusoto -p rusoto_credential $CARGO_ARGS
+        travis_wait travis-cargo --only stable doc -- --all --no-deps
       fi
 after_success:
   # upload the documentation from the build with stable (automatically only
@@ -73,7 +59,6 @@ after_success:
       fi
 env:
   global:
-    - RUSOTO_FEATURES="all"
     - RUST_BACKTRACE=1
     # encrypted Github token for doc upload
     - secure: rWVjaDybqYUL6pwb9JbKRAQJYJTTWkbIMsh92l1Y9vz+QJiF903HEaxea98Z7e1Qywizm60EoAu8CSj5e+TfOC9hb6ZwN9nQs4FPnywiAUXtiuxUXDpcjacXVXl8YcLG+mOnq/+thOo+J1l2+j7SLsBrP4ybHh4NS7rqj8Os/5fiIfHfwlSVPlbw1gtTmLv5SXyofWB9VHMgkDzzP9Bss5HwwXQyzyj1EF8AQNexSsWj/MPYhj3eQaBpIK49guCqe1JjWdKXoiu4XQFsWMV6LBf7OgrWHR9MNf1H6UHM97i8onTeDAviC3RaWQe8crb2cQwNXk/n/8kde0F/1oBaljbOHTbLScflQNRGxV2jpbiIMVLgxdXUWK8d2JveVrXM5TKx6Wp8IolJ8Cr8egzLn9dRn1OG5pwt7b/Cr6DRaXFH5TRSz0Uln0GMA08NWC2sbDz1xtlkiUkRpHmBPmAGNjjDPaJs+OLPyPFMw5Gqr8g/zzCbGI92t210oMsVoCci5S8MO74HExYhsyAz4/CI0fqSSXDKG1xveguktmKWSxH5idyAmfDg556nSmuP+5w69QM9Vcg8j0szuSzsVoc/YsHMsdbZPdANLagbU9K59M1OpMkL3RSAav/cyL41+pSI3zybHKGim+kHZSwBWlLVKCX7P2FmineEFriLK8UJFxo=
