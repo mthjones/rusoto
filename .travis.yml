@@ -36,7 +36,6 @@ before_script:
 # the main build
 script:
   - echo "Running Rusoto tests" && travis_wait 40 travis-cargo test -- --all --lib -vv
-  - echo "Running Rusoto benchmarks" && travis_wait travis-cargo bench
   - |
       echo "Running cargo docs on stable Rust on Linux" &&
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
