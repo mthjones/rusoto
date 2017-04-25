@@ -9508,3 +9508,102 @@ request.set_payload(Some(payload));
                 }
                 
 }
+
+            #[cfg(test)]
+            mod protocol_tests {
+                
+                extern crate rusoto_mock;
+
+                use super::*;
+                use self::rusoto_mock::*;
+                use rusoto_core::Region as rusoto_region;
+
+                
+        #[test]
+        fn test_parse_cloudfront_get_cloud_front_origin_access_identity() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-get-cloud-front-origin-access-identity.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = GetCloudFrontOriginAccessIdentityRequest::default();
+            let result = client.get_cloud_front_origin_access_identity(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_get_distribution() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-get-distribution.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = GetDistributionRequest::default();
+            let result = client.get_distribution(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_get_invalidation() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-get-invalidation.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = GetInvalidationRequest::default();
+            let result = client.get_invalidation(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_get_streaming_distribution() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-get-streaming-distribution.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = GetStreamingDistributionRequest::default();
+            let result = client.get_streaming_distribution(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_list_cloud_front_origin_access_identities() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-list-cloud-front-origin-access-identities.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListCloudFrontOriginAccessIdentitiesRequest::default();
+            let result = client.list_cloud_front_origin_access_identities(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_list_distributions() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-list-distributions.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListDistributionsRequest::default();
+            let result = client.list_distributions(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_list_invalidations() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-list-invalidations.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListInvalidationsRequest::default();
+            let result = client.list_invalidations(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudfront_list_streaming_distributions() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudfront-list-streaming-distributions.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFrontClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListStreamingDistributionsRequest::default();
+            let result = client.list_streaming_distributions(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+            }
+            

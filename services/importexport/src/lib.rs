@@ -1849,3 +1849,25 @@ Unknown(String)
                 }
                 
 }
+
+            #[cfg(test)]
+            mod protocol_tests {
+                
+                extern crate rusoto_mock;
+
+                use super::*;
+                use self::rusoto_mock::*;
+                use rusoto_core::Region as rusoto_region;
+
+                
+        #[test]
+        fn test_parse_importexport_list_jobs() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "importexport-list-jobs.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = ImportExportClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListJobsInput::default();
+            let result = client.list_jobs(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+            }
+            

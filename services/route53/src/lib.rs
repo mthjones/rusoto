@@ -12306,3 +12306,9 @@ request_uri = request_uri.replace("{Version}", &input.version.to_string());
                 }
                 
 }
+
+            #[cfg(test)]
+            mod protocol_tests {
+                
+            }
+            

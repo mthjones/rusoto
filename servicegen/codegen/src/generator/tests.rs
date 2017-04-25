@@ -1,7 +1,8 @@
 use std::fs;
+use std::io::Write;
 use std::path::{Path, PathBuf};
 
-use super::{capitalize_first, IoResult};
+use super::{capitalize_first, FileWriter, IoResult};
 use botocore::Service;
 use util::case_insensitive_btreemap_get;
 use inflector::Inflector;
@@ -10,14 +11,25 @@ const BOTOCORE_TESTS_DIR: &'static str = concat!(env!("CARGO_MANIFEST_DIR"),
                                                  "/botocore/tests/unit/response_parsing/xml/responses/");
 const OUR_TESTS_DIR: &'static str = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/unit/responses/");
 
-pub fn copy_test_response_files(service: &Service, out_dir: &Path) -> IoResult {
+pub fn copy_test_resource_files(service: &Service, out_dir: &Path) -> IoResult {
     for response in find_responses_for_service(service) {
         fs::copy(response.full_path, out_dir.join(response.file_name))?;
     }
     Ok(())
 }
 
-pub fn generate_tests_body(crate_name: &str, service: &Service) -> Option<String> {
+pub fn generate_tests(writer: &mut FileWriter, service: &Service) -> IoResult {
+    writeln!(writer,
+             "
+            #[cfg(test)]
+            mod protocol_tests {{
+                {tests_body}
+            }}
+            ",
+             tests_body = generate_tests_body(service).unwrap_or("".to_string()))
+}
+
+pub fn generate_tests_body(service: &Service) -> Option<String> {
     let responses = find_responses_for_service(service);
 
     let test_bodies: Vec<String> = responses.into_iter()
@@ -28,16 +40,13 @@ pub fn generate_tests_body(crate_name: &str, service: &Service) -> Option<String
         let tests_str = test_bodies.join("\n\n");
 
         Some(format!("
-                extern crate {crate_name};
                 extern crate rusoto_mock;
-                extern crate rusoto_core;
 
-                use {crate_name}::*;
-                use rusoto_mock::*;
+                use super::*;
+                use self::rusoto_mock::*;
                 use rusoto_core::Region as rusoto_region;
 
                 {test_bodies}",
-                    crate_name = crate_name,
                      test_bodies = tests_str))
     } else {
         None
@@ -66,8 +75,8 @@ fn generate_response_parse_test(service: &Service, response: Response) -> Option
     Some(format!("
         #[test]
         fn test_parse_{service_name}_{action}() {{
-            let mock = MockRequestDispatcher::with_status(200)
-                .with_body(include_str!(\"responses/{response_file_name}\"));
+            let mock_response =  MockResponseReader::read_response(\"test_resources\", \"{response_file_name}\");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
             let client = {client_type}::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
             {request_constructor}
             let result = client.{action}({request_params});

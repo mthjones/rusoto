@@ -8027,3 +8027,25 @@ Unknown(String)
                 }
                 
 }
+
+            #[cfg(test)]
+            mod protocol_tests {
+                
+                extern crate rusoto_mock;
+
+                use super::*;
+                use self::rusoto_mock::*;
+                use rusoto_core::Region as rusoto_region;
+
+                
+        #[test]
+        fn test_parse_elb_describe_load_balancers() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "elb-describe-load-balancers.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = ElbClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = DescribeLoadBalancersInput::default();
+            let result = client.describe_load_balancers(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+            }
+            

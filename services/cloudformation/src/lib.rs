@@ -7662,3 +7662,47 @@ Unknown(String)
                 }
                 
 }
+
+            #[cfg(test)]
+            mod protocol_tests {
+                
+                extern crate rusoto_mock;
+
+                use super::*;
+                use self::rusoto_mock::*;
+                use rusoto_core::Region as rusoto_region;
+
+                
+        #[test]
+        fn test_parse_cloudformation_describe_stacks() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudformation-describe-stacks.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFormationClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = DescribeStacksInput::default();
+            let result = client.describe_stacks(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudformation_get_template() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudformation-get-template.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFormationClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = GetTemplateInput::default();
+            let result = client.get_template(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+
+
+        #[test]
+        fn test_parse_cloudformation_list_stacks() {
+            let mock_response =  MockResponseReader::read_response("test_resources", "cloudformation-list-stacks.xml");
+            let mock = MockRequestDispatcher::with_status(200).with_body(&mock_response);
+            let client = CloudFormationClient::new(mock, MockCredentialsProvider, rusoto_region::UsEast1);
+            let request = ListStacksInput::default();
+            let result = client.list_stacks(&request);
+            assert!(result.is_ok(), "parse error: {:?}", result);
+        }
+            }
+            

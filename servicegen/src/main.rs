@@ -251,25 +251,15 @@ fn main() {
         }
 
         {
-            if let Some(generated_tests) = rusoto_codegen::generator::tests::generate_tests_body(&crate_name, &service) {
-                let tests_dir = crate_dir.join("tests");
+            let test_resources = rusoto_codegen::generator::tests::find_responses_for_service(&service);
+            if !test_resources.is_empty() {
+                let test_resources_dir = crate_dir.join("test_resources");
 
-                fs::create_dir(&tests_dir).expect(&format!("Unable to create directory at {}", tests_dir.display()));
+                fs::create_dir(&test_resources_dir).expect(&format!("Unable to create directory at {}", test_resources_dir.display()));
 
-                let response_parsing_tests_file = OpenOptions::new()
-                    .write(true)
-                    .create_new(true)
-                    .open(tests_dir.join("response_parsing.rs"))
-                    .expect("Unable to write response_parsing.rs");
-                
-                let mut writer = BufWriter::new(response_parsing_tests_file);
-                writer.write_all(generated_tests.as_bytes()).expect("Unable to write response parsing tests");
-
-                let responses_dir = tests_dir.join("responses");
-
-                fs::create_dir(&responses_dir).expect(&format!("Unable to create directory at {}", responses_dir.display()));
-
-                rusoto_codegen::generator::tests::copy_test_response_files(&service, &responses_dir).expect("Failed to copy response parsing test resources");
+                for resource in test_resources {
+                    fs::copy(resource.full_path, test_resources_dir.join(resource.file_name)).expect("Failed to copy test resource file");
+                }
             }
         }
     });
