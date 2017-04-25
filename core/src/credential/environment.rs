@@ -1,6 +1,6 @@
 use std::env;
 
-use {AwsCredentials, CredentialsError, ProvideAwsCredentials, in_ten_minutes};
+use super::{AwsCredentials, CredentialsError, ProvideAwsCredentials, in_ten_minutes};
 
 /// Provides AWS credentials from environment variables.
 #[derive(Debug)]

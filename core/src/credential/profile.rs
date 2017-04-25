@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 use regex::Regex;
 
-use {AwsCredentials, CredentialsError, ProvideAwsCredentials, in_ten_minutes};
+use super::{AwsCredentials, CredentialsError, ProvideAwsCredentials, in_ten_minutes};
 
 /// Provides AWS credentials from a profile in a credentials file.
 #[derive(Clone, Debug)]

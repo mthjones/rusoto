@@ -41,14 +41,17 @@
 //!     },
 //! }
 
+extern crate chrono;
 extern crate hyper;
 extern crate hyper_native_tls;
 #[macro_use]
 extern crate lazy_static;
 #[macro_use]
 extern crate log;
+extern crate regex;
+extern crate reqwest;
+extern crate retry;
 extern crate ring;
-extern crate rusoto_credential;
 extern crate rustc_serialize;
 extern crate serde;
 #[allow(unused_imports)]
@@ -60,18 +63,7 @@ extern crate url;
 #[cfg(feature="xml")]
 extern crate xml;
 
-pub use region::{ParseRegionError, Region};
-pub use rusoto_credential::{AwsCredentials, ChainProvider, ContainerProvider, CredentialsError,
-                            EnvironmentProvider, InstanceMetadataProvider, ProfileProvider,
-                            ProvideAwsCredentials, DefaultCredentialsProvider,
-                            DefaultCredentialsProviderSync, claims,
-                            AutoRefreshingProviderSync, AutoRefreshingProvider,
-                            BaseAutoRefreshingProvider};
-pub use request::{DispatchSignedRequest, HttpResponse, HttpDispatchError, TlsError};
-pub use signature::SignedRequest;
-pub use request::default_tls_client;
-pub use region::default_region;
-
+pub mod credential;
 pub mod param;
 pub mod region;
 pub mod request;
@@ -82,3 +74,15 @@ pub mod xmlutil;
 pub mod serialization;
 #[macro_use]
 pub mod signature;
+
+pub use region::{ParseRegionError, Region};
+pub use credential::{AwsCredentials, ChainProvider, ContainerProvider, CredentialsError,
+                            EnvironmentProvider, InstanceMetadataProvider, ProfileProvider,
+                            ProvideAwsCredentials, DefaultCredentialsProvider,
+                            DefaultCredentialsProviderSync, claims,
+                            AutoRefreshingProviderSync, AutoRefreshingProvider,
+                            BaseAutoRefreshingProvider};
+pub use request::{DispatchSignedRequest, HttpResponse, HttpDispatchError, TlsError};
+pub use signature::SignedRequest;
+pub use request::default_tls_client;
+pub use region::default_region;

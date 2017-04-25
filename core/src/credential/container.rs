@@ -5,7 +5,7 @@ use reqwest;
 use serde_json::{self, Value};
 use retry;
 
-use {AwsCredentials, CredentialsError, ProvideAwsCredentials, extract_string_value_from_json};
+use super::{AwsCredentials, CredentialsError, ProvideAwsCredentials, extract_string_value_from_json};
 
 const AWS_CREDENTIALS_PROVIDER_IP: &'static str = "169.254.170.2";
 

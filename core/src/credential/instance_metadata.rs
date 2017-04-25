@@ -4,7 +4,7 @@ use reqwest;
 use serde_json::{Value, from_str};
 use retry;
 
-use {AwsCredentials, CredentialsError, ProvideAwsCredentials};
+use super::{AwsCredentials, CredentialsError, ProvideAwsCredentials};
 
 /// Provides AWS credentials from a resource's IAM role.
 #[derive(Debug)]

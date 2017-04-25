@@ -1,19 +1,9 @@
-#![cfg_attr(feature = "nightly-testing", feature(plugin))]
-#![cfg_attr(feature = "nightly-testing", plugin(clippy))]
-#![cfg_attr(not(feature = "unstable"), deny(warnings))]
-
 //! Types for loading and managing AWS access credentials for API requests.
 
-extern crate chrono;
-extern crate reqwest;
-extern crate regex;
-extern crate serde_json;
-extern crate retry;
-
-pub use environment::EnvironmentProvider;
-pub use container::ContainerProvider;
-pub use instance_metadata::InstanceMetadataProvider;
-pub use profile::ProfileProvider;
+pub use self::environment::EnvironmentProvider;
+pub use self::container::ContainerProvider;
+pub use self::instance_metadata::InstanceMetadataProvider;
+pub use self::profile::ProfileProvider;
 
 mod container;
 mod environment;
