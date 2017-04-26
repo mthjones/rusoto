@@ -19,16 +19,10 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin;c:\cygwin\bin
   - rustc -Vv
   - cargo -V
-  - git submodule update --init --recursive
 
-# Equivalent to Travis' `script` phase
-build_script:
-  # We only build and test a subset due to https://github.com/rusoto/rusoto/issues/537
-  - cargo build --features "packagea" -vv
-  - cargo build --features "packageb" -vv
+build: false
 test_script:
-  - cargo test --lib --features "packagea"
-  - cargo test --lib --features "packageb"
+  - cd rusoto && cargo test --all --lib
 
 branches:
   only:
