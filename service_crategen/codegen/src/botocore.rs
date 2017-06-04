@@ -103,6 +103,7 @@ impl Service {
             "Amazon WorkSpaces" => "Workspaces",
             "Auto Scaling" => "Autoscaling",
             "Elastic Load Balancing" => "Elb",
+            "Application Auto Scaling" => "ApplicationAutoScaling",
             name => panic!("Unknown service full name: {}", name),
         }
     }

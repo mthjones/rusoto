@@ -4,6 +4,11 @@
     "coreVersion": "0.25.0",
     "protocolVersion": "2015-12-08"
   },
+  "application-autoscaling": {
+    "version": "0.25.0",
+    "coreVersion": "0.25.0",
+    "protocolVersion": "2016-02-06"
+  },
   "autoscaling": {
     "version": "0.25.0",
     "coreVersion": "0.25.0",
