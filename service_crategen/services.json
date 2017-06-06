@@ -9,6 +9,11 @@
     "coreVersion": "0.25.0",
     "protocolVersion": "2011-01-01"
   },
+  "budgets": {
+    "version": "0.25.0",
+    "coreVersion": "0.25.0",
+    "protocolVersion": "2016-10-20"
+  },
   "cloudformation": {
     "version": "0.25.0",
     "coreVersion": "0.25.0",
