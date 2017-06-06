@@ -219,6 +219,9 @@ fn mutate_type_name(type_name: &str) -> String {
         // RDS has a conveniently named "Option" type
         "Option" => "RDSOption".to_owned(),
 
+        // Budgets has a field named budgets, causing the type alias to conflict with the trait
+        "Budgets" => "BudgetList".to_owned(),
+
         // otherwise make sure it's rust-idiomatic and capitalized
         _ => without_underscores,
     }

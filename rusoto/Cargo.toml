@@ -4,6 +4,7 @@ members = [
     "credential",
     "services/acm",
     "services/autoscaling",
+    "services/budgets",
     "services/cloudformation",
     "services/cloudfront",
     "services/cloudhsm",

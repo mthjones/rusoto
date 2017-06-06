@@ -23,6 +23,10 @@ path = "../rusoto/services/acm"
 optional = true
 path = "../rusoto/services/autoscaling"
 
+[dependencies.rusoto_budgets]
+optional = true
+path = "../rusoto/services/budgets"
+
 [dependencies.rusoto_cloudformation]
 optional = true
 path = "../rusoto/services/cloudformation"
@@ -250,6 +254,7 @@ time = "0.1.37"
 all = [
 		"acm",
 	   	"autoscaling",
+		"budgets",
 	   	"cloudformation",
 	   	"cloudfront",
 	   	"cloudhsm",
@@ -307,6 +312,7 @@ all = [
 	]
 acm = ["rusoto_acm"]
 autoscaling = ["rusoto_autoscaling"]
+budgets = ["rusoto_budgets"]
 cloudformation = ["rusoto_cloudformation"]
 cloudfront = ["rusoto_cloudfront"]
 cloudhsm = ["rusoto_cloudhsm"]

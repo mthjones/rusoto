@@ -41,7 +41,7 @@ pub type BudgetName = String;
 #[doc="The type of a budget. Can be COST or USAGE."]
 pub type BudgetType = String;
 #[doc="A list of budgets"]
-pub type Budgets = Vec<Budget>;
+pub type BudgetList = Vec<Budget>;
 #[doc="A structure holds the actual and forecasted spend for a budget."]
 #[derive(Default,Debug,Clone,Serialize,Deserialize)]
 pub struct CalculatedSpend {
@@ -191,7 +191,7 @@ pub struct DescribeBudgetsRequest {
 #[derive(Default,Debug,Clone,Deserialize)]
 pub struct DescribeBudgetsResponse {
     #[serde(rename="Budgets")]
-    pub budgets: Option<Budgets>,
+    pub budgets: Option<BudgetList>,
     #[serde(rename="NextToken")]
     pub next_token: Option<GenericString>,
 }
