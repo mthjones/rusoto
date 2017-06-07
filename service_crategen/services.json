@@ -39,6 +39,11 @@
     "coreVersion": "0.25.0",
     "protocolVersion": "2010-08-01"
   },
+  "codebuild": {
+    "version": "0.25.0",
+    "coreVersion": "0.25.0",
+    "protocolVersion": "2016-10-06"
+  },
   "codecommit": {
     "version": "0.25.0",
     "coreVersion": "0.25.0",
