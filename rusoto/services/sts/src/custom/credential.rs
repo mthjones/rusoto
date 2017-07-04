@@ -6,19 +6,12 @@ use {Sts, GetSessionTokenRequest, AssumeRoleRequest, AssumeRoleWithWebIdentityRe
 pub const DEFAULT_DURATION_SECONDS: i32 = 3600;
 pub const DEFAULT_ROLE_DURATION_SECONDS: i32 = 900;
 
-/// Trait for conversions from STS Credentials to AWS Credentials.
-pub trait NewAwsCredsForStsCreds {
-    /// Creates an [AwsCredentials](../struct.AwsCredentials.html) from a [Credentials](struct.Credentials.html)
-    /// Returns a [CredentialsError](../struct.CredentialsError.html) in case of an error.
-    fn new_for_credentials(sts_creds: ::Credentials) -> Result<AwsCredentials, CredentialsError>;
-}
-
-impl NewAwsCredsForStsCreds for AwsCredentials {
-    fn new_for_credentials(sts_creds: ::Credentials) -> Result<AwsCredentials, CredentialsError> {
-        let expires_at = try!(sts_creds
-                                  .expiration
-                                  .parse::<DateTime<UTC>>()
-                                  .map_err(CredentialsError::from));
+impl Into<AwsCredentials> for ::Credentials {
+    fn into(self) -> AwsCredentials {
+        let expires_at = sts_creds
+            .expiration
+            .parse::<DateTime<UTC>>()
+            .expect("STS did not return a valid UTC DateTime in its credentials");
 
         Ok(AwsCredentials::new(sts_creds.access_key_id,
                                sts_creds.secret_access_key,
@@ -81,10 +74,9 @@ impl<T: Sts> StsSessionCredentialsProvider<T> {
                                           ..Default::default()
                                       }) {
             Ok(resp) => {
-                let creds = try!(resp.credentials
-                                     .ok_or(CredentialsError::new("no credentials in response")));
-
-                AwsCredentials::new_for_credentials(creds)
+                resp.credentials
+                    .ok_or(CredentialsError::new("no credentials in response"))?
+                    .into()
             }
             err => {
                 Err(CredentialsError::new(format!("StsProvider get_session_token error: {:?}",
@@ -177,10 +169,9 @@ impl<T: Sts> StsAssumeRoleSessionCredentialsProvider<T> {
                                 }) {
             Err(err) => Err(CredentialsError::new(format!("Sts AssumeRoleError: {:?}", err))),
             Ok(resp) => {
-                let creds = try!(resp.credentials
-                                     .ok_or(CredentialsError::new("no credentials in response")));
-
-                AwsCredentials::new_for_credentials(creds)
+                resp.credentials
+                    .ok_or(CredentialsError::new("no credentials in response"))?
+                    .into()
             }
         }
     }
@@ -254,10 +245,9 @@ impl<T: Sts> StsWebIdentityFederationSessionCredentialsProvider<T> {
                 Err(CredentialsError::new(format!("Sts AssumeRoleWithWebIdentityError: {:?}", err)))
             }
             Ok(resp) => {
-                let creds = try!(resp.credentials
-                                     .ok_or(CredentialsError::new("no credentials in response")));
-
-                let mut aws_creds = try!(AwsCredentials::new_for_credentials(creds));
+                let mut aws_creds: AwsCredentials = resp.credentials
+                    .ok_or(CredentialsError::new("no credentials in response"))?
+                    .into();
 
                 if let Some(subject_from_wif) = resp.subject_from_web_identity_token {
                     aws_creds
